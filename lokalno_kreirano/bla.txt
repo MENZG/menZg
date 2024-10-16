@@ -10,3 +10,5 @@ sad san nesto napisa
 ovo je promjena u kojoj grani/?
 
 joj jedna promjera
+
+ovo je u dev grani pisano
