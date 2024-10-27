@@ -1,14 +1,26 @@
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import LoginForm from "./Routes/LoginForm.tsx";
+import AdminLogin from "./Routes/AdminLogin.tsx";
 import "bootstrap/dist/css/bootstrap.min.css";
-import LoginForm from "./LoginForm.tsx";
-import "./App.css";
+import EmployeeLogin from "./Routes/EmployeeLogin.tsx";
 
 function App() {
   return (
-    <>
-      <LoginForm />
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Navigate to="/login/student" />} />
+        <Route path="/login" element={<Navigate to="/login/student" />} />
+        <Route path="/login/student" element={<LoginForm />} />
+        <Route path="/login/admin" element={<AdminLogin />} />
+        <Route path="/login/employee" element={<EmployeeLogin />} />
+      </Routes>
+    </Router>
   );
 }
 
 export default App;
-
