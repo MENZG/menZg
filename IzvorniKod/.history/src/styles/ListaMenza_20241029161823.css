@@ -26,14 +26,9 @@
   }
 
   .btn-primary{
-    background-color: #0098b3;
+    background-color: #198a8c;
     color: azure;
-    border-color: #0098b3;
-  }
-
-  .btn-primary:hover{
-    background-color: #00758a;
-    border-color: #00758a;
+    border-color: #198a8c;
   }
   
   .button-container {

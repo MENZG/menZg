@@ -1,16 +1,16 @@
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-function AdminLogin() {
+function LoginForm() {
   const navigate = useNavigate();
 
-  const handleStudentLogin = () => {
-    navigate("/login/student");
+  const handleAdminLogin = () => {
+    navigate("/login/admin");
   };
 
   const handleEmployeeLogin = () => {
-    navigate("/login/employee");
-  };
+    navigate("/login/employee")
+  }
 
   return (
     <Container
@@ -48,10 +48,14 @@ function AdminLogin() {
             lg={2}
             className="d-flex flex-column align-items-center"
           >
-            <Button onClick={handleStudentLogin} className="w-100 mb-2">
-              Ja sam Student
+            <Button
+              variant="link"
+              onClick={handleAdminLogin}
+              className="w-100 mb-2"
+            >
+              Ja sam Admin
             </Button>
-            <Button onClick={handleEmployeeLogin} className="w-100">
+            <Button variant="link" onClick={handleEmployeeLogin} className="w-100">
               Ja sam Djelatnik
             </Button>
           </Col>
@@ -61,4 +65,4 @@ function AdminLogin() {
   );
 }
 
-export default AdminLogin;
+export default LoginForm;

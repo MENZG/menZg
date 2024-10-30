@@ -1,6 +1,5 @@
 .logo-img {
     height: 15vh;
-    margin: 0;
 }
 
 .nav-item .nav-btn {
@@ -16,7 +15,6 @@
 
 .nav-item .nav-btn:hover {
     color: #0098b3; /* Promeni boju teksta na hover */
-    background: none;
 }
 
 .nav-btn-container {
@@ -26,19 +24,6 @@
     width: 100%; /* Proširi na celu širinu navigacije */
     align-items: center; /* Vertikalno centriraj dugmad */
 }
-.navbar-bg {
-    background-color: white !important; /* Prisiljava belu pozadinu */
-}
 .navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000; /* Ensures the navbar stays on top of other elements */
-    background-color: white; /* Ensures the navbar background stays visible */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds shadow */
-    padding: 0;
-}
-.container-fluid{
-    margin: 0;
+    background-color: white; /* Postavlja belu pozadinu */
 }

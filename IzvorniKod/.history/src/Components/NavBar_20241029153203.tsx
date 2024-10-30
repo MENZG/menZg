@@ -1,6 +1,5 @@
 import "/src/styles/NavBar.css";
 import { useNavigate } from "react-router-dom";
-import { Button } from "react-bootstrap";
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -17,29 +16,29 @@ const NavBar = () => {
     navigate("/profil");
   };
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary navbar-bg">
+    <nav className="navbar navbar-expand-lg bg-body-tertiary">
       <div className="container-fluid">
         <img
           src="/src/public/MenZg.png"
           alt="logo slika"
           className="logo-img"
         ></img>
-        <div className="nav-btn-container">
+        <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <Button className="nav-btn" onClick={handleOnClickMenze}>
+              <a className="nav-link active" aria-current="page" href="#">
                 Menze
-              </Button>
+              </a>
             </li>
             <li className="nav-item">
-              <Button className="nav-btn" onClick={handleOnClickFavoriti}>
+              <a className="nav-link" href="#">
                 Moji favoriti
-              </Button>
+              </a>
             </li>
             <li className="nav-item">
-              <Button className="nav-btn" onClick={handleOnClickProfil}>
+              <a className="nav-link" href="#">
                 Profil
-              </Button>
+              </a>
             </li>
           </ul>
         </div>

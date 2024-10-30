@@ -17,14 +17,14 @@ const NavBar = () => {
     navigate("/profil");
   };
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary navbar-bg">
+    <nav className="navbar navbar-expand-lg bg-body-tertiary">
       <div className="container-fluid">
         <img
           src="/src/public/MenZg.png"
           alt="logo slika"
           className="logo-img"
         ></img>
-        <div className="nav-btn-container">
+        <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
               <Button className="nav-btn" onClick={handleOnClickMenze}>

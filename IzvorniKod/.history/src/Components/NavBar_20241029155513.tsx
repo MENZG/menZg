@@ -17,7 +17,7 @@ const NavBar = () => {
     navigate("/profil");
   };
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary navbar-bg">
+    <nav className="navbar navbar-expand-lg bg-body-tertiary">
       <div className="container-fluid">
         <img
           src="/src/public/MenZg.png"

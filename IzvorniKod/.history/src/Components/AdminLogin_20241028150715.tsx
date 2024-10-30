@@ -48,10 +48,18 @@ function AdminLogin() {
             lg={2}
             className="d-flex flex-column align-items-center"
           >
-            <Button onClick={handleStudentLogin} className="w-100 mb-2">
+            <Button
+              variant="link"
+              onClick={handleStudentLogin}
+              className="w-100 mb-2"
+            >
               Ja sam Student
             </Button>
-            <Button onClick={handleEmployeeLogin} className="w-100">
+            <Button
+              variant="link"
+              onClick={handleEmployeeLogin}
+              className="w-100"
+            >
               Ja sam Djelatnik
             </Button>
           </Col>

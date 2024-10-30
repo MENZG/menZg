@@ -16,7 +16,7 @@
 
 .nav-item .nav-btn:hover {
     color: #0098b3; /* Promeni boju teksta na hover */
-    background: none;
+    background-color: none;
 }
 
 .nav-btn-container {
