@@ -1,0 +1,40 @@
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+    justify-items: center;
+    align-items: start;
+    padding-top: 15vh;
+  }
+  
+  .card {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+  }
+  
+  .card:hover {
+    transform: scale(1.05);
+  }
+  
+  .card img {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    object-fit: cover;
+    height: 25vh;
+  }
+
+  .btn-primary{
+    background-color: #198a8c;
+    color: azure;
+    border-color: #198a8c;
+  }
+  
+  .button-container {
+    text-align: center;
+  }
+  .fav-btn{
+    
+  }
+  

@@ -4,13 +4,11 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-
 import LoginForm from "./Components/LoginForm.tsx";
 import AdminLogin from "./Components/AdminLogin.tsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import EmployeeLogin from "./Components/EmployeeLogin.tsx";
 import ListaMenza from "./Components/ListaMenza.tsx";
-
 
 function App() {
   return (

@@ -1,0 +1,18 @@
+.logo-img{
+    height: 15vh;
+}
+
+.nav-item {
+    margin-right: 15px; /* Razmak između navigacijskih stavki */
+  }
+  
+  .nav-item .nav-button {
+    color: #333; /* Prilagođavanje boje */
+    font-weight: bold;
+  }
+  
+  .nav-item .nav-button:hover {
+    color: #0056b3; /* Stil za hover */
+    text-decoration: none; /* Ukloni podvučeno prilikom hovera */
+  }
+  
