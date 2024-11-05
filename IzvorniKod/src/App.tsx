@@ -5,9 +5,9 @@ import {
   Navigate,
 } from "react-router-dom";
 
+import "bootstrap/dist/css/bootstrap.min.css";
 import LoginForm from "./Components/LoginForm.tsx";
 import AdminLogin from "./Components/AdminLogin.tsx";
-import "bootstrap/dist/css/bootstrap.min.css";
 import EmployeeLogin from "./Components/EmployeeLogin.tsx";
 import ListaMenza from "./Components/ListaMenza.tsx";
 
@@ -21,7 +21,7 @@ function App() {
         <Route path="/login/student" element={<LoginForm />} />
         <Route path="/login/admin" element={<AdminLogin />} />
         <Route path="/login/employee" element={<EmployeeLogin />} />
-        <Route path="/menze" element={<ListaMenza />} />
+        <Route path="/home" element={<ListaMenza />} />
       </Routes>
     </Router>
   );
