@@ -1,5 +1,5 @@
 Za pokrenuti server Reactom u terminalu VSCode-a:
-  - ```cd menZg```
+  - ```cd izvorniKod```
   - ```npm install```
   - ```npm run dev```
 
