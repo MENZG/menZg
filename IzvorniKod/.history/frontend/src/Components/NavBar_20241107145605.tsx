@@ -6,11 +6,11 @@ const NavBar = () => {
   const navigate = useNavigate();
 
   const handleOnClickMenze = () => {
-    navigate("/menze");
+    navigate("/home");
   };
 
   const handleOnClickProfil = () => {
-    navigate("/profil");
+    navigate("/profile");
   };
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary navbar-bg">
