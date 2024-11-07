@@ -1,0 +1,44 @@
+.logo-img {
+    height: 14vh;
+    margin: 0;
+}
+
+.nav-item .nav-btn {
+    background: none; /* Ukloni pozadinu */
+    border: none; /* Ukloni okvir */
+    color: #333; /* Postavi osnovnu boju teksta */
+    font-weight: normal; /* Postavi običan tekst bez boldovanja */
+    cursor: pointer; /* Prikaz kursora kao pointer */
+    padding: 0; /* Ukloni padding */
+    text-decoration: none; /* Ukloni podvlačenje teksta */
+    margin: 0 20px; /* Dodaj horizontalni razmak između dugmadi */
+}
+
+.nav-item .nav-btn:hover {
+    color: #0098b3; /* Promeni boju teksta na hover */
+    background: none;
+}
+
+.nav-btn-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Razmak između dugmadi */
+    width: 50%; /* Proširi na celu širinu navigacije */
+    align-items: center; /* Vertikalno centriraj dugmad */
+}
+.navbar-bg {
+    background-color: white !important; /* Prisiljava belu pozadinu */
+}
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* Ensures the navbar stays on top of other elements */
+    background-color: white; /* Ensures the navbar background stays visible */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds shadow */
+    padding: 10px 10px;
+}
+.container-fluid{
+    margin: 0;
+}
