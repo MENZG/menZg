@@ -231,6 +231,8 @@ CREATE TABLE gleda
   FOREIGN KEY (idKorisnik) REFERENCES KORISNIK(idKorisnik)
 );
 
+-- hahaha
+
 CREATE TABLE sudjeluje1
 (
   idKorisnik INT NOT NULL,
