@@ -1,4 +1,4 @@
-package com.menzg.menzg_backend;
+package menzg;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
