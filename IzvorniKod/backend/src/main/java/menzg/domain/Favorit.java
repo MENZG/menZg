@@ -9,11 +9,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "bira")
+@Table(name = "favorit")
 @Data // Generira gettere, settere, equals, hashCode i toString metodu
 @NoArgsConstructor // Generira prazan konstruktor
 @AllArgsConstructor // Generira konstruktor sa svim parametrima
-public class Bira {
+public class Favorit {
 
 	@ManyToOne
 	@JoinColumn(name = "idKorisnik", nullable = false)

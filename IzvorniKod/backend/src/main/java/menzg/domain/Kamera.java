@@ -21,7 +21,7 @@ public class Kamera {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // Automatsko generiranje id-a, identičan s auto_increment u //
-														// SQL-u
+	// SQL-u
 	@Column(name = "idKamera") // Ovdje specificiramo naziv kolone
 	private Long idKamera; // Jedinstveni identifikator za Kameru
 
