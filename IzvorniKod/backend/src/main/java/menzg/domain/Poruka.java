@@ -33,15 +33,15 @@ public class Poruka {
 	private Timestamp timestamp; // Vrijeme kada je poruka poslana
 
 	@ManyToOne
-	@JoinColumn(name = "idChat")
+	@JoinColumn(name = "idChat", nullable = false)
 	private Chat chat; // Povezivanje s entitetom Chat (relacija ManyToOne)
 
 	@ManyToOne
-	@JoinColumn(name = "idStudent")
+	@JoinColumn(name = "idStudent", nullable = false)
 	private Student student;
 
 	@ManyToOne
-	@JoinColumn(name = "idAdmin")
+	@JoinColumn(name = "idAdmin", nullable = false)
 	private AppAdmin admin;
 
 }

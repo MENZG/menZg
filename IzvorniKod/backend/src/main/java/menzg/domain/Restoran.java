@@ -25,13 +25,9 @@ public class Restoran {
 	@Column(name = "idRestoran")
 	private long idRestaurant;
 
-	@Column(name = "imeRestorana", nullable = false, unique = true) // Ime restorana mora biti jedinstveno i ne može
+	@Column(name = "imeRestorana", nullable = false, unique = true) // Ime restorana mora biti jedinstveno i ne može //
 																	// biti NULL
 	private String imeRestorana;
-
-	@ManyToOne
-	@JoinColumn(name = "idCanteen", nullable = false)
-	private Menza canteen;
 
 	@ManyToOne
 	@JoinColumn(name = "idMenza", nullable = false) // Vanjski ključ prema tablici MENZA
