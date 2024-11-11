@@ -1,0 +1,28 @@
+{
+  "menze": [
+    {
+      "id": 1,
+      "name": "cvjetno naselje",
+      "ulica": "odranska ulica",
+      "broj": "8",
+      "startTime": "10:00",
+      "endTime": "22:00"
+    },
+    {
+      "id": 2,
+      "name": "stjepan radic",
+      "ulica": "jarunska ulica",
+      "broj": "2",
+      "startTime": "08:00",
+      "endTime": "21:00"
+    },
+    {
+      "id": 3,
+      "name": "sc menza",
+      "ulica": "savska cesta",
+      "broj": "25",
+      "startTime": "06:00",
+      "endTime": "18:00"
+    }
+  ]
+}
