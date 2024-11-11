@@ -15,7 +15,6 @@ VALUES (1, 'M', 20),
        (4, 'F', 23);
        
        
-       
        INSERT INTO korisnik (lozinka, username)
 VALUES 
     ('123', 'admin1'),
@@ -37,7 +36,7 @@ VALUES
     
   -- SQL za unos podataka o zagrebačkim menzama u tablicu `menza`
 
-INSERT INTO menza (imeMenze, lokacija) VALUES
+INSERT INTO menza (ime_Menze, lokacija) VALUES
 ('Menza SC', 'Savska 25'),
 ('Menza Cvjetno', 'Odranska 8'),
 ('Menza FSB', 'Ivana Lučića 5'),
