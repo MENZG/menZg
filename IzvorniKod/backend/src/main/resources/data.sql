@@ -32,3 +32,21 @@ VALUES
     (2, 'admin'),       -- 'admin2' je sada povezan sa 'admin' statusom
     (3, 'admin'),       -- 'admin3' je sada povezan sa 'admin' statusom
     (4, 'superadmin');  -- 'admin4' je sada povezan sa 'superadmin' statusom
+    
+    
+    
+  -- SQL za unos podataka o zagrebačkim menzama u tablicu `menza`
+
+INSERT INTO menza (imeMenze, lokacija) VALUES
+('Menza SC', 'Savska 25'),
+('Menza Cvjetno', 'Odranska 8'),
+('Menza FSB', 'Ivana Lučića 5'),
+('Menza Stjepan Radić', 'Jarunska 2'),
+('Menza Lašćina', 'Lašćinska cesta 32'),
+('Menza Ekonomija', 'Trg Johna F. Kennedyja 6'),
+('Menza Borongaj', 'Borongajska cesta 83d'),
+('Menza Veterina', 'Heinzelova 55'),
+('Menza Medicina', 'Šalata 3b');
+
+    
+   
