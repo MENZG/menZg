@@ -12,11 +12,16 @@ import menzg.repo.MenzaRepository;
 public class MenzaService {
 
 	@Autowired
-	MenzaRepository repo;
+	MenzaRepository menzaRepo;
 
 	public List<Menza> listAll() {
 
-		return repo.findAll();
+		return menzaRepo.findAll();
 
 	};
+
+	public Menza getMenzaData(Long id){
+		return menzaRepo.findById(id).orElse(null);
+
+	}
 }
