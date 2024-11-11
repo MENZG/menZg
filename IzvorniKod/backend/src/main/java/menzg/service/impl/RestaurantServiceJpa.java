@@ -1,6 +1,6 @@
 package menzg.service.impl;
 
-import menzg.dao.RestaurantRepository;
+import menzg.dao.RestoranRepository;
 import menzg.domain.Restoran;
 import menzg.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public class RestaurantServiceJpa implements RestaurantService {
     @Autowired
-    private RestaurantRepository restaurantRepo;
+    private RestoranRepository restaurantRepo;
 
     @Override
     public List<Restoran> listAll() {

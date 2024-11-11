@@ -1,22 +1,21 @@
 package menzg.service.impl;
 
-import menzg.dao.CanteenRepository;
-import menzg.dao.RestaurantRepository;
+import menzg.dao.MenzaRepository;
+import menzg.dao.RestoranRepository;
 import menzg.domain.Menza;
 import menzg.domain.Restoran;
-import menzg.service.CanteenService;
-import menzg.service.RestaurantService;
+import menzg.service.MenzaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class CanteenServiceJpa implements CanteenService {
+public class MenzaServiceJpa implements MenzaService {
     @Autowired
-    private CanteenRepository canteenRepo;
+    private MenzaRepository canteenRepo;
     @Autowired
-    private RestaurantRepository restaurantRepo;
+    private RestoranRepository restaurantRepo;
 
 
     public List<Restoran> restaurantList(Menza canteen){

@@ -10,8 +10,8 @@ import java.util.List;
 
 
 @Repository
-public interface RestaurantRepository extends JpaRepository<Restoran, Long> {
+public interface RestoranRepository extends JpaRepository<Restoran, Long> {
 
     @Query("select r from Restaurant r where r.canteen = ?1")
-    List<Restoran> findByCanteen(Menza canteen);
+    List<Restoran> findByCanteen(Menza menza);
 }

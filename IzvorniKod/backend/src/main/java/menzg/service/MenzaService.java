@@ -4,6 +4,6 @@ import menzg.domain.Menza;
 
 import java.util.List;
 
-public interface CanteenService {
+public interface MenzaService {
     List<Menza> listAll();
 }
