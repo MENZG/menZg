@@ -1,144 +1,47 @@
 package menzg.domain;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import menzgenums.Role;
 
+
 @Entity
-@Table(name =  "appuser")
-@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "appuser") // Ova anotacija mapira klasu na tabelu "appuser" u bazi podataka.
+@Inheritance(strategy = InheritanceType.JOINED) // Strategija za nasledstvo; omogućava da nasleđene klase budu smeštene u zasebnim tabelama, a da zadrže zajednička polja iz osnovne klase.
+@d // Lombok anotacija koja automatski generira gettere, settere, kao i toString, equals, i hashCode metode za sva polja klase.
+@NoArgsConstructor // Lombok anotacija koja generira prazan konstruktor (bez argumenata).
+@AllArgsConstructor // Lombok anotacija koja generira konstruktor sa svim poljima klase.
 public class AppUser {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idAppUser")
-    private Long idUser;
+    @Id // Ova anotacija označava primarni ključ tabele.
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Generira vrednost primarnog ključa automatski u bazi (koristi se AUTO_INCREMENT).
+    @Column(name = "idAppUser") // Mapira ovo polje na kolonu "idAppUser" u tabeli.
+    private Long idUser; // Identifikator korisnika (primarni ključ).
 
-    @Column(name = "passwordAppUser", nullable = false)
-    private String passwordUser;
+    @Column(name = "passwordAppUser", nullable = false) // Mapira polje na kolonu "passwordAppUser" koja mora biti popunjena (ne može biti null).
+    private String passwordUser; // Lozinka korisnika.
 
-    @Column(name = "usernameAppUser", nullable = false, unique = true)
-    private String usernameUser;
+    @Column(name = "usernameAppUser", nullable = false, unique = true) // Mapira polje na kolonu "usernameAppUser", koja mora biti jedinstvena i popunjena.
+    private String usernameUser; // Korisničko ime korisnika.
 
-    private Role userType;
+    private Role userType; // Tip korisnika (koristi enumeraciju "Role" za specificiranje tipova korisnika).
 
-    //za tip usera student
-    @Column(name = "jmbag" ,unique=true, nullable=true)
-    private String jmbag;
+    
+    
+    // Specifično za tip korisnika student
+    @Column(name = "jmbag", unique = true) // Mapira polje na kolonu "jmbag" koja mora biti jedinstvena (koristi se samo za studente).
+    private String jmbag; // JMBAG studenta (identifikacijski broj specifičan za studente).
 
-    @Column(name = "genderStudent", nullable = true)
-    private String genderStudent;
+    @Column(name = "genderStudent") // Mapira polje na kolonu "genderStudent" (opcionalno).
+    private String genderStudent; // Pol korisnika studenta.
 
-    @Column(name = "ageStudent", nullable= true)
-    private Integer ageStudent;
+    @Column(name = "ageStudent") // Mapira polje na kolonu "ageStudent" (opcionalno).
+    private Integer ageStudent; // Starost korisnika studenta.
 
-    //za tip usera employee
-    @ManyToOne
-    @JoinColumn(name = "canteen_id_canteen", nullable = true)
-    private  Canteen canteen;
-
-    public Canteen getCanteen() {
-        return canteen;
-    }
-
-    public void setCanteen(Canteen canteen) {
-        this.canteen = canteen;
-    }
-
-
-    public Long getIdUser() {
-        return idUser;
-    }
-
-    public void setIdUser(Long idUser) {
-        this.idUser = idUser;
-    }
-
-    public String getUsernameUser() {
-        return usernameUser;
-    }
-
-    public void setUsernameUser(String usernameUser) {
-        this.usernameUser = usernameUser;
-    }
-
-    public String getPasswordUser() {
-        return passwordUser;
-    }
-
-    public void setPasswordUser(String passwordUser) {
-        this.passwordUser = passwordUser;
-    }
-
-    public Role getUserType() {
-        return userType;
-    }
-
-    public void setUserType(Role userType) {
-        this.userType = userType;
-    }
-
-    public String getJmbag() {
-        return jmbag;
-    }
-
-    public void setJmbag(String jmbag) {
-        this.jmbag = jmbag;
-    }
-
-    public String getGenderStudent() {
-        return genderStudent;
-    }
-
-    public void setGenderStudent(String genderStudent) {
-        this.genderStudent = genderStudent;
-    }
-
-    public Integer getAgeStudent() {
-        return ageStudent;
-    }
-
-    public void setAgeStudent(Integer ageStudent) {
-        this.ageStudent = ageStudent;
-    }
-
-    public AppUser() {
-    }
-
-    public AppUser(long idUser, String passwordUser, String usernameUser, Role userType, String jmbag, String genderStudent, int ageStudent) {
-        this.idUser = idUser;
-        this.passwordUser = passwordUser;
-        this.usernameUser = usernameUser;
-        this.userType = userType;
-        this.jmbag = jmbag;
-        this.genderStudent = genderStudent;
-        this.ageStudent = ageStudent;
-    }
-
-    public AppUser(long idUser, String passwordUser, String usernameUser, Role userType) {
-        this.idUser = idUser;
-        this.passwordUser = passwordUser;
-        this.usernameUser = usernameUser;
-        this.userType = userType;
-    }
-
-    public AppUser(long idUser, String passwordUser, String usernameUser, Role userType, Canteen canteen) {
-        this.idUser = idUser;
-        this.passwordUser = passwordUser;
-        this.usernameUser = usernameUser;
-        this.userType = userType;
-        this.canteen = canteen;
-    }
-
-    @Override
-    public String toString() {
-        return "AppUser{" +
-                "idUser=" + idUser +
-                ", passwordUser='" + passwordUser + '\'' +
-                ", usernameUser='" + usernameUser + '\'' +
-                ", userType=" + userType +
-                ", jmbag='" + jmbag + '\'' +
-                ", genderStudent='" + genderStudent + '\'' +
-                ", ageStudent=" + ageStudent +
-                '}';
-    }
+    // Specifično za tip korisnika zaposlenik
+    @ManyToOne // Postavlja vezu "many-to-one" između korisnika i menze (canteen).
+    @JoinColumn(name = "canteen_id_canteen") // Određuje da će se ovo polje mapirati na kolonu "canteen_id_canteen" u tabeli.
+    private Canteen canteen; // Menza (canteen) u kojoj korisnik zaposlenik radi.
 }
