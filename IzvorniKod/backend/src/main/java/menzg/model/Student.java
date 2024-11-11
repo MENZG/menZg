@@ -1,5 +1,7 @@
 package menzg.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -25,6 +27,7 @@ public class Student {
 	// Relacija jedan na jedan između Student i Korisnik entiteta
 	@OneToOne
 	@JoinColumn(name = "idKorisnik")
+	@JsonIgnore
 	private Korisnik korisnik; // Povezujemo sa `Korisnik` entitetom
 
 	@Column(name = "spol") // Spol je tipično jedan znak (M/F ili sl.)

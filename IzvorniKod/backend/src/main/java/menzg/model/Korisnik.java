@@ -19,6 +19,7 @@ public class Korisnik {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "idKorisnik")
+
 	private Long idKorisnik;
 
 	@Column(name = "lozinka", nullable = false)
