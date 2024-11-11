@@ -1,0 +1,28 @@
+{
+  "menze": [
+    {
+      "id": 1,
+      "name": "cvjetno naselje",
+      "ulica": "odranska ulica",
+      "broj": "8",
+      "startTime": "12:00",
+      "endTime": "21:00"
+    },
+    {
+      "id": 2,
+      "name": "cvjetno naselje",
+      "ulica": "odranska ulica",
+      "broj": "8",
+      "startTime": "11:00",
+      "endTime": "18:00"
+    },
+    {
+      "id": 3,
+      "name": "greens",
+      "ulica": "radic",
+      "broj": "20",
+      "startTime": "17:00",
+      "endTime": "19:00"
+    }
+  ]
+}
