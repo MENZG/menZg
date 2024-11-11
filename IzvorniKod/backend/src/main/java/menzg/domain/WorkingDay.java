@@ -1,6 +1,7 @@
 package menzg.domain;
 
 import jakarta.persistence.*;
+import menzgenums.DaysOfTheWeek;
 
 import java.sql.Time;
 
@@ -15,7 +16,7 @@ public class WorkingDay {
     private long id;
 
     @Column(name = "day_of_the_week", nullable = false)
-    private String day_of_the_week;
+    private DaysOfTheWeek day_of_the_week;
 
     @Column(nullable = true)
     private Time breakfastOpeningTime;
@@ -45,7 +46,7 @@ public class WorkingDay {
     public WorkingDay() {
     }
 
-    public WorkingDay(long id, String day, Time openingTime, Time closingTime) {
+    public WorkingDay(long id, DaysOfTheWeek day, Time openingTime, Time closingTime) {
         this.id = id;
         this.day_of_the_week = day;
        // this.openingTime = openingTime;
