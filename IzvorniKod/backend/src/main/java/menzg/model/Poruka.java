@@ -1,4 +1,4 @@
-package menzg.domain;
+package menzg.model;
 
 import java.security.Timestamp;
 

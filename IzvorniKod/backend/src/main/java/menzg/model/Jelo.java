@@ -1,4 +1,4 @@
-package menzg.domain;
+package menzg.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

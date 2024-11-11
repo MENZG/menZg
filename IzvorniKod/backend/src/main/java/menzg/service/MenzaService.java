@@ -1,9 +1,22 @@
 package menzg.service;
 
-import menzg.domain.Menza;
-
 import java.util.List;
 
-public interface MenzaService {
-    List<Menza> listAll();
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import menzg.model.Menza;
+import menzg.repo.MenzaRepository;
+
+@Service
+public class MenzaService {
+
+	@Autowired
+	MenzaRepository repo;
+
+	List<Menza> listAll() {
+
+		return repo.findAll();
+
+	};
 }

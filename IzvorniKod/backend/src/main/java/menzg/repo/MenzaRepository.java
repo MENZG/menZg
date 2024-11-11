@@ -1,9 +1,10 @@
-package menzg.dao;
+package menzg.repo;
 
-import menzg.domain.Jelo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import menzg.model.Menza;
+
 @Repository
-public interface JeloRepository extends JpaRepository<Jelo, Long> {
+public interface MenzaRepository extends JpaRepository<Menza, Long> {
 }

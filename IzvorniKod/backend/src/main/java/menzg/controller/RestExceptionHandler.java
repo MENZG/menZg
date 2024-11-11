@@ -1,4 +1,4 @@
-package menzg.rest;
+package menzg.controller;
 
 
 import org.springframework.core.Ordered;

@@ -1,4 +1,4 @@
-package menzg.domain;
+package menzg.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,18 +17,14 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Kamera {
+public class Chat {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY) // Automatsko generiranje id-a, identičan s auto_increment u //
-	// SQL-u
-	@Column(name = "idKamera") // Ovdje specificiramo naziv kolone
-	private Long idKamera; // Jedinstveni identifikator za Kameru
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "idChat")
+	private Long idChat;
 
-	@Column(name = "URL", nullable = false) // Kolona za URL kamere, koja ne može biti NULL
-	private String URL; // URL kamere
-
-	@OneToOne
+	@OneToOne // jedan chat ej na jedan restoran!!!
 	@JoinColumn(name = "idRestoran", nullable = false) // Spoljni ključ koji referencira Restoran
 	private Restoran restoran; // Povezivanje s entitetom Restoran
 

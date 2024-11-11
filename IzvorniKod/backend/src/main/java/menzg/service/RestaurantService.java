@@ -1,11 +1,22 @@
 package menzg.service;
 
-import menzg.domain.Restoran;
-
 import java.util.List;
 
-public interface RestaurantService {
-    List<Restoran> listAll();
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-    Restoran createRestaurant(Restoran restaurant);
+import menzg.model.Restoran;
+import menzg.repo.RestoranRepository;
+
+@Service
+public class RestaurantService {
+
+	@Autowired
+	RestoranRepository repo;
+
+	public List<Restoran> listAll() {
+
+		return repo.findAll();
+
+	};
 }

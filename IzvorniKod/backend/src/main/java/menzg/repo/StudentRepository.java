@@ -1,9 +1,12 @@
-package menzg.dao;
+package menzg.repo;
 
-import menzg.domain.Menza;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import menzg.model.Student;
+
 @Repository
-public interface MenzaRepository extends JpaRepository<Menza, Long> {
+public interface StudentRepository  extends JpaRepository<Student, Long> {
+
+
 }
