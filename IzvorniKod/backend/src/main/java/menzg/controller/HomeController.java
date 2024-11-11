@@ -1,4 +1,4 @@
-package menzg.controller;
+/*package menzg.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,4 +14,4 @@ public class HomeController {
     public String secured(){
         return "Home, secured";
     }
-}
+}*/

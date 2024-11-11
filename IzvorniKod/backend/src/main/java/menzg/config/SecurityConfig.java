@@ -1,4 +1,4 @@
-package menzg.config;
+/*package menzg.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,3 +20,4 @@ public class SecurityConfig {
     }
     //kad se zatrazi ...../ ne trazi login, ali kad se zatraze bilo koe druge rute trazi se login
 }
+*/
