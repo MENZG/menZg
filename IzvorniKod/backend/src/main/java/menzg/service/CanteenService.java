@@ -1,9 +1,9 @@
 package menzg.service;
 
-import menzg.domain.Canteen;
+import menzg.domain.Menza;
 
 import java.util.List;
 
 public interface CanteenService {
-    List<Canteen> listAll();
+    List<Menza> listAll();
 }

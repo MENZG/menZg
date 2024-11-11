@@ -1,6 +1,6 @@
 package menzg.rest;
 
-import menzg.domain.Restaurant;
+import menzg.domain.Restoran;
 import menzg.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,12 +14,12 @@ public class RestaurantController {
     private RestaurantService restaurantService;
 
     @GetMapping("")
-    public List<Restaurant> listRestaurants(){
+    public List<Restoran> listRestaurants(){
         return  restaurantService.listAll();
     }
 
     @PostMapping("")
-    public Restaurant createRestaurant(@RequestBody Restaurant restaurant){
+    public Restoran createRestaurant(@RequestBody Restoran restaurant){
         return restaurantService.createRestaurant(restaurant);
     }
 }

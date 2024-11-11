@@ -1,7 +1,7 @@
 package menzg.service.impl;
 
 import menzg.dao.RestaurantRepository;
-import menzg.domain.Restaurant;
+import menzg.domain.Restoran;
 import menzg.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,12 +14,12 @@ public class RestaurantServiceJpa implements RestaurantService {
     private RestaurantRepository restaurantRepo;
 
     @Override
-    public List<Restaurant> listAll() {
+    public List<Restoran> listAll() {
         return restaurantRepo.findAll();
     }
 
     @Override
-    public Restaurant createRestaurant(Restaurant restaurant) {
+    public Restoran createRestaurant(Restoran restaurant) {
         //TODO
         return null;
 

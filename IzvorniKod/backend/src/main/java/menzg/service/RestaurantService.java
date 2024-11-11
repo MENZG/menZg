@@ -1,11 +1,11 @@
 package menzg.service;
 
-import menzg.domain.Restaurant;
+import menzg.domain.Restoran;
 
 import java.util.List;
 
 public interface RestaurantService {
-    List<Restaurant> listAll();
+    List<Restoran> listAll();
 
-    Restaurant createRestaurant(Restaurant restaurant);
+    Restoran createRestaurant(Restoran restaurant);
 }

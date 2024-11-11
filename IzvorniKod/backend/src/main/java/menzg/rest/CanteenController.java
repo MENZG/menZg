@@ -1,6 +1,6 @@
 package menzg.rest;
 
-import menzg.domain.Canteen;
+import menzg.domain.Menza;
 import menzg.service.CanteenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +16,7 @@ public class CanteenController {
     private CanteenService canteenService;
 
     @GetMapping("")
-    public List<Canteen> listCantens(){
+    public List<Menza> listCantens(){
         return canteenService.listAll();
     }
 }
