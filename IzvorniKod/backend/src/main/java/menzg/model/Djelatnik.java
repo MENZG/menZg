@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -26,6 +27,7 @@ public class Djelatnik {
 	// Relacija jedan na jedan između Student i Korisnik entiteta
 	@OneToOne
 	@JoinColumn(name = "idKorisnik", insertable = false, updatable = false)
+	@MapsId
 	private Korisnik korisnik; // Povezujemo sa `Korisnik` entitetom
 
 	@ManyToOne

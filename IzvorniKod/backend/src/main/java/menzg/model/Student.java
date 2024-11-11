@@ -1,11 +1,10 @@
 package menzg.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -27,12 +26,17 @@ public class Student {
 	// Relacija jedan na jedan između Student i Korisnik entiteta
 	@OneToOne
 	@JoinColumn(name = "idKorisnik")
-	@JsonIgnore
+	@MapsId // JAKO BITNA ANOTACIJA, GOVORI da se id korisnika oznacava kao id za oba
+			// entiteta
 	private Korisnik korisnik; // Povezujemo sa `Korisnik` entitetom
 
 	@Column(name = "spol") // Spol je tipično jedan znak (M/F ili sl.)
 	private String spol;
 
 	@Column(name = "dob")
-	private Integer dob; // Dob studenta
+	private int dob; // Dob studenta
+
+	// Korištenje @JsonProperty za vraćanje atributa korisnika u JSON bez
+	// ugnježđivanja
+
 }

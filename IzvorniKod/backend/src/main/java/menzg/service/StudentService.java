@@ -14,6 +14,10 @@ public class StudentService {
 
 	public Student getStudentData(Long id) {
 		return repo.findById(id).orElse(null);
-	};
+	}
+
+	public Student save(Student student) {
+		return repo.save(student);
+	}
 
 }

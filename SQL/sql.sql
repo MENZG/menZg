@@ -1,52 +1,54 @@
 CREATE TABLE KORISNIK
 (
-  lozinka VARCHAR NOT NULL,
   idKorisnik INT NOT NULL,
-  username VARCHAR NOT NULL,
+  username VARCHAR(30) NOT NULL,
+  lozinka VARCHAR(30) NOT NULL,
   PRIMARY KEY (idKorisnik),
-  UNIQUE (username)
+  UNIQUE (username),
+  CHECK (LENGTH(lozinka) >= 8)
 );
 
 CREATE TABLE MENZA
 (
   idMenza INT NOT NULL,
-  imeMenze VARCHAR NOT NULL,
-  lokacija VARCHAR NOT NULL,
+  imeMenze VARCHAR(30) NOT NULL,
+  lokacija VARCHAR(30) NOT NULL,
   PRIMARY KEY (idMenza),
   UNIQUE (imeMenze)
 );
 
-CREATE TABLE ADMIN
+CREATE TABLE APPADMIN
 (
-  idKorisnik INT NOT NULL,
-  PRIMARY KEY (idKorisnik),
-  FOREIGN KEY (idKorisnik) REFERENCES KORISNIK(idKorisnik)
+  idAdmin INT NOT NULL,
+  status VARCHAR(30),
+  PRIMARY KEY (idAdmin),
+  FOREIGN KEY (idAdmin) REFERENCES KORISNIK(idKorisnik) ON DELETE CASCADE
 );
 
 CREATE TABLE DJELATNIK
 (
-  idKorisnik INT NOT NULL,
+  idDjelatnik INT NOT NULL,
   idMenza INT NOT NULL,
-  PRIMARY KEY (idKorisnik),
-  FOREIGN KEY (idKorisnik) REFERENCES KORISNIK(idKorisnik),
+  PRIMARY KEY (idDjelatnik),
+  FOREIGN KEY (idDjelatnik) REFERENCES KORISNIK(idKorisnik) ON DELETE CASCADE,
   FOREIGN KEY (idMenza) REFERENCES MENZA(idMenza)
 );
 
 CREATE TABLE STUDENT
 (
-  spol VARCHAR(1),
-  dob INT NOT NULL,
-  idKorisnik INT NOT NULL,
-  PRIMARY KEY (idKorisnik),
-  FOREIGN KEY (idKorisnik) REFERENCES KORISNIK(idKorisnik)
+  idStudent INT NOT NULL,
+  spol VARCHAR(1) CHECK (spol IN ('M', 'Ž')),
+  dob INT CHECK (dob BETWEEN 0 AND 100),
+  PRIMARY KEY (idStudent),
+  FOREIGN KEY (idStudent) REFERENCES KORISNIK(idKorisnik)
 );
 
 CREATE TABLE JELO
 (
   idJela INT NOT NULL,
-  kategorija VARCHAR NOT NULL,
-  cijena INT NOT NULL,
-  nazivJela VARCHAR NOT NULL,
+  kategorija VARCHAR(20) NOT NULL,
+  cijena INT NOT NULL CHECK (cijena > 0),
+  nazivJela VARCHAR(20) NOT NULL,
   PRIMARY KEY (idJela),
   UNIQUE (nazivJela)
 );
@@ -54,7 +56,7 @@ CREATE TABLE JELO
 CREATE TABLE RESTORAN
 (
   idRestoran INT NOT NULL,
-  imeRestorana VARCHAR NOT NULL,
+  imeRestorana VARCHAR(30) NOT NULL,
   idMenza INT NOT NULL,
   PRIMARY KEY (idRestoran),
   FOREIGN KEY (idMenza) REFERENCES MENZA(idMenza),
@@ -63,138 +65,73 @@ CREATE TABLE RESTORAN
 
 CREATE TABLE RADNO_VRIJEME
 (
-  dan VARCHAR NOT NULL,
-  pocetak INT NOT NULL,
-  kraj INT NOT NULL,
   idRadnoVrijeme INT NOT NULL,
+  dan VARCHAR(15) NOT NULL CHECK (dan IN ('Ponedjeljak', 'Utorak', 'Srijeda', 'Četvrtak', 'Petak', 'Subota', 'Nedjelja')),
+  pocetak TIME NOT NULL,
+  kraj TIME NOT NULL,
   PRIMARY KEY (idRadnoVrijeme)
 );
 
-CREATE TABLE DORUCAK
+CREATE TABLE OBROK
 (
-  idDorucak INT NOT NULL,
-  PRIMARY KEY (idDorucak)
+  idObrok INT NOT NULL,
+  tipObroka VARCHAR(10) NOT NULL CHECK(tipObroka IN ('Doručak', 'Ručak', 'Večera')),
+  PRIMARY KEY(idObrok),
+  UNIQUE(tipObroka)
 );
 
-CREATE TABLE RUCAK
+CREATE TABLE favorit
 (
-  idRucak INT NOT NULL,
-  PRIMARY KEY (idRucak)
-);
-
-CREATE TABLE VECERA
-(
-  idVecera INT NOT NULL,
-  PRIMARY KEY (idVecera)
-);
-
-CREATE TABLE bira
-(
-  favorit VARCHAR(2) NOT NULL,
-  idKorisnik INT NOT NULL,
+  idStudent INT NOT NULL,
   idMenza INT NOT NULL,
-  PRIMARY KEY (idKorisnik, idMenza),
-  FOREIGN KEY (idKorisnik) REFERENCES STUDENT(idKorisnik),
+  PRIMARY KEY (idStudent, idMenza),
+  FOREIGN KEY (idStudent) REFERENCES STUDENT(idStudent),
   FOREIGN KEY (idMenza) REFERENCES MENZA(idMenza)
 );
 
-CREATE TABLE sadrzi1
-(
-  idDorucak INT NOT NULL,
-  idJela INT NOT NULL,
-  PRIMARY KEY (idDorucak, idJela),
-  FOREIGN KEY (idDorucak) REFERENCES DORUCAK(idDorucak),
-  FOREIGN KEY (idJela) REFERENCES JELO(idJela)
-);
-
-CREATE TABLE ima1
+CREATE TABLE ima
 (
   idRestoran INT NOT NULL,
-  idDorucak INT NOT NULL,
-  PRIMARY KEY (idRestoran, idDorucak),
-  FOREIGN KEY (idRestoran) REFERENCES RESTORAN(idRestoran),
-  FOREIGN KEY (idDorucak) REFERENCES DORUCAK(idDorucak)
+  idObrok INT NOT NULL,
+  PRIMARY KEY(idRestoran, idObrok),
+  FOREIGN KEY(idRestoran) REFERENCES RESTORAN(idRestoran),
+  FOREIGN KEY(idObrok) REFERENCES OBROK(idObrok)
 );
 
-CREATE TABLE radi1
+CREATE TABLE sadrzi
 (
-  idDorucak INT NOT NULL,
-  idRadnoVrijeme INT NOT NULL,
-  PRIMARY KEY (idDorucak, idRadnoVrijeme),
-  FOREIGN KEY (idDorucak) REFERENCES DORUCAK(idDorucak),
-  FOREIGN KEY (idRadnoVrijeme) REFERENCES RADNO_VRIJEME(idRadnoVrijeme)
-);
-
-CREATE TABLE radi2
-(
-  idRucak INT NOT NULL,
-  idRadnoVrijeme INT NOT NULL,
-  PRIMARY KEY (idRucak, idRadnoVrijeme),
-  FOREIGN KEY (idRucak) REFERENCES RUCAK(idRucak),
-  FOREIGN KEY (idRadnoVrijeme) REFERENCES RADNO_VRIJEME(idRadnoVrijeme)
-);
-
-CREATE TABLE radi3
-(
-  idVecera INT NOT NULL,
-  idRadnoVrijeme INT NOT NULL,
-  PRIMARY KEY (idVecera, idRadnoVrijeme),
-  FOREIGN KEY (idVecera) REFERENCES VECERA(idVecera),
-  FOREIGN KEY (idRadnoVrijeme) REFERENCES RADNO_VRIJEME(idRadnoVrijeme)
-);
-
-CREATE TABLE ima2
-(
-  idRestoran INT NOT NULL,
-  idRucak INT NOT NULL,
-  PRIMARY KEY (idRestoran, idRucak),
-  FOREIGN KEY (idRestoran) REFERENCES RESTORAN(idRestoran),
-  FOREIGN KEY (idRucak) REFERENCES RUCAK(idRucak)
-);
-
-CREATE TABLE ima3
-(
-  idRestoran INT NOT NULL,
-  idVecera INT NOT NULL,
-  PRIMARY KEY (idRestoran, idVecera),
-  FOREIGN KEY (idRestoran) REFERENCES RESTORAN(idRestoran),
-  FOREIGN KEY (idVecera) REFERENCES VECERA(idVecera)
-);
-
-CREATE TABLE sadrzi2
-(
-  idRucak INT NOT NULL,
+  idObrok INT NOT NULL,
   idJela INT NOT NULL,
-  PRIMARY KEY (idRucak, idJela),
-  FOREIGN KEY (idRucak) REFERENCES RUCAK(idRucak),
-  FOREIGN KEY (idJela) REFERENCES JELO(idJela)
+  PRIMARY KEY(idObrok, idJela),
+  FOREIGN KEY(idObrok) REFERENCES OBROK(idObrok),
+  FOREIGN KEY(idJela) REFERENCES JELO(idJela)
 );
 
-CREATE TABLE sadrzi3
+CREATE TABLE radi
 (
-  idVecera INT NOT NULL,
-  idJela INT NOT NULL,
-  PRIMARY KEY (idVecera, idJela),
-  FOREIGN KEY (idVecera) REFERENCES VECERA(idVecera),
-  FOREIGN KEY (idJela) REFERENCES JELO(idJela)
+  idObrok INT NOT NULL,
+  idRadnoVrijeme INT NOT NULL,
+  PRIMARY KEY(idObrok, idRadnoVrijeme),
+  FOREIGN KEY(idObrok) REFERENCES OBROK(idObrok),
+  FOREIGN KEY(idRadnoVrijeme) REFERENCES RADNO_VRIJEME(idRadnoVrijeme)
 );
 
 CREATE TABLE OCJENA
 (
   idOcjena INT NOT NULL,
-  rating INT NOT NULL,
-  kategorija VARCHAR NOT NULL,
-  idKorisnik INT,
+  rating INT NOT NULL CHECK (rating BETWEEN 1 AND 5),
+  kategorija VARCHAR(10) NOT NULL CHECK (kategorija IN ('Ambijent', 'Hrana', 'Lokacija', 'Ljubaznost')),
+  idStudent INT NOT NULL,
   idMenza INT NOT NULL,
   PRIMARY KEY (idOcjena),
-  FOREIGN KEY (idKorisnik) REFERENCES STUDENT(idKorisnik),
+  FOREIGN KEY (idStudent) REFERENCES STUDENT(idStudent),
   FOREIGN KEY (idMenza) REFERENCES MENZA(idMenza)
 );
 
 CREATE TABLE KAMERA
 (
   idKamera INT NOT NULL,
-  URL VARCHAR NOT NULL,
+  URL VARCHAR(255) NOT NULL,
   idRestoran INT NOT NULL,
   PRIMARY KEY (idKamera),
   FOREIGN KEY (idRestoran) REFERENCES RESTORAN(idRestoran)
@@ -211,15 +148,16 @@ CREATE TABLE CHAT
 CREATE TABLE PORUKA
 (
   idPoruka INT NOT NULL,
-  tekst VARCHAR NOT NULL,
+  tekst VARCHAR(500) NOT NULL,
   timestamp TIMESTAMP NOT NULL,
   idChat INT,
   idStudent INT,
   idAdmin INT,
   PRIMARY KEY (idPoruka),
   FOREIGN KEY (idChat) REFERENCES CHAT(idChat),
-  FOREIGN KEY (idKorisnik) REFERENCES STUDENT(idKorisnik),
-  FOREIGN KEY (idKorisnik) REFERENCES ADMIN(idKorisnik)
+  FOREIGN KEY (idStudent) REFERENCES STUDENT(idStudent),
+  FOREIGN KEY (idAdmin) REFERENCES APPADMIN(idAdmin),
+  CHECK ((idStudent IS NOT NULL AND idAdmin IS NULL) OR (idStudent IS NULL AND idAdmin IS NOT NULL))
 );
 
 CREATE TABLE gleda
@@ -231,22 +169,20 @@ CREATE TABLE gleda
   FOREIGN KEY (idKorisnik) REFERENCES KORISNIK(idKorisnik)
 );
 
--- hahaha
-
 CREATE TABLE sudjeluje1
 (
-  idKorisnik INT NOT NULL,
+  idStudent INT NOT NULL,
   idChat INT NOT NULL,
-  PRIMARY KEY (idKorisnik, idChat),
-  FOREIGN KEY (idKorisnik) REFERENCES STUDENT(idKorisnik),
+  PRIMARY KEY (idStudent, idChat),
+  FOREIGN KEY (idStudent) REFERENCES STUDENT(idStudent),
   FOREIGN KEY (idChat) REFERENCES CHAT(idChat)
 );
 
 CREATE TABLE sudjeluje2
 (
-  idKorisnik INT NOT NULL,
+  idAdmin INT NOT NULL,
   idChat INT NOT NULL,
-  PRIMARY KEY (idKorisnik, idChat),
-  FOREIGN KEY (idKorisnik) REFERENCES ADMIN(idKorisnik),
+  PRIMARY KEY (idAdmin, idChat),
+  FOREIGN KEY (idAdmin) REFERENCES APPADMIN(idAdmin),
   FOREIGN KEY (idChat) REFERENCES CHAT(idChat)
 );

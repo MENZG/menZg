@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import axios from "axios";
+import { useEffect, useState } from "react";
 import NavBar from "./NavBar";
 import "/src/styles/ListaMenza.css";
 
@@ -233,5 +233,7 @@ const ListaMenza = () => {
     </>
   );
 };
+
+
 
 export default ListaMenza;
