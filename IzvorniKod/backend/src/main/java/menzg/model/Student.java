@@ -24,10 +24,10 @@ public class Student {
 
 	// Relacija jedan na jedan između Student i Korisnik entiteta
 	@OneToOne
-	@JoinColumn(name = "idKorisnik", insertable = false, updatable = false)
+	@JoinColumn(name = "idKorisnik")
 	private Korisnik korisnik; // Povezujemo sa `Korisnik` entitetom
 
-	@Column(name = "spol", length = 1) // Spol je tipično jedan znak (M/F ili sl.)
+	@Column(name = "spol") // Spol je tipično jedan znak (M/F ili sl.)
 	private String spol;
 
 	@Column(name = "dob")
