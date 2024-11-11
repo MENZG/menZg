@@ -29,6 +29,8 @@ function LoginForm() {
       const response = await axios.post("http://localhost:8080/api/student", {
         username: email.value,
         lozinka: password.value,
+        spol: null,
+        dob: null,
       });
       console.log(response.data);
       // Handle successful login
