@@ -13,6 +13,10 @@ function LoginForm() {
     navigate("/login/employee");
   };
 
+  const handleGoogleLogin = () => {
+    navigate("/menze");
+  };
+
   return (
     <div className="login-page">
       <div className="login-form-container">
@@ -41,6 +45,8 @@ function LoginForm() {
           <Button type="submit" className="login-submit-btn w-100 mb-4">
             Prijava
           </Button>
+
+          <Button onClick={handleGoogleLogin}>GOOGLE</Button>
         </Form>
 
         <div className="login-btn-container">
