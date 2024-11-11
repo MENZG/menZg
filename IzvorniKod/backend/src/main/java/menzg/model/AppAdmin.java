@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -26,6 +27,7 @@ public class AppAdmin {
 	// Relacija jedan na jedan između Admin i Korisnik entiteta
 	@OneToOne
 	@JoinColumn(name = "idKorisnik", insertable = false, updatable = false)
+	@MapsId
 	// povezujem s drugom tablicom
 	private Korisnik korisnik; // Povezujemo sa `Korisnik` entitetom
 

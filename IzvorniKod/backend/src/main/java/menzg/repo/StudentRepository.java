@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 import menzg.model.Student;
 
 @Repository
-public interface StudentRepository  extends JpaRepository<Student, Long> {
-
+public interface StudentRepository extends JpaRepository<Student, Long> {
 
 }

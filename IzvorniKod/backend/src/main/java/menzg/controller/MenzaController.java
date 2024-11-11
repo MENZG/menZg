@@ -18,7 +18,7 @@ public class MenzaController {
 	private MenzaService menzaService;
 
 	@GetMapping("")
-	public List<Menza> listCantens() {
+	public List<Menza> listMenzas() {
 		return menzaService.listAll();
 	}
 }
