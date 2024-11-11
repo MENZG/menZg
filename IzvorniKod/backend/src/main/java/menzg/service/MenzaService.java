@@ -14,7 +14,7 @@ public class MenzaService {
 	@Autowired
 	MenzaRepository repo;
 
-	List<Menza> listAll() {
+	public List<Menza> listAll() {
 
 		return repo.findAll();
 
