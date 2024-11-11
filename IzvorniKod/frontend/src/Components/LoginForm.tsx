@@ -30,10 +30,11 @@ function LoginForm() {
         username: email.value,
         lozinka: password.value,
         spol: "M",
-        dob: 29,
+        dob: 28,
       });
       console.log(response.data);
       // Handle successful login
+      navigate("/menze");
     } catch (error) {
       console.error("Error logging in", error);
       // Handle login error
