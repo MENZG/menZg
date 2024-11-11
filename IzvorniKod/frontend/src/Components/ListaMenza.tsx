@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import axios from "axios";
+import { useEffect, useState } from "react";
 import NavBar from "./NavBar";
 import "/src/styles/ListaMenza.css";
 
@@ -17,12 +17,12 @@ const ListaMenza = () => {
 
   useEffect(() => {
     axios
-      .get("/api/menze")
+      .get("http://localhost:8080/api/student/1")
       .then((response) => {
         console.log("Full response:", response);
         console.log("response.data:", response.data);
         console.log("Dohvaćeni podaci:", response.data.menze);
-        setMenze(response.data || []);
+        setMenze(response.data.menze || []);
       })
       .catch((error) => {
         console.error("Greška prilikom dohvaćanja menzi:", error);
@@ -62,5 +62,7 @@ const ListaMenza = () => {
     </>
   );
 };
+
+
 
 export default ListaMenza;
