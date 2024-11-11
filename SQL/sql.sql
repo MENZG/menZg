@@ -116,33 +116,6 @@ CREATE TABLE radi
   FOREIGN KEY(idRadnoVrijeme) REFERENCES RADNO_VRIJEME(idRadnoVrijeme)
 );
 
-CREATE TABLE radi1
-(
-  idDorucak INT NOT NULL,
-  idRadnoVrijeme INT NOT NULL,
-  PRIMARY KEY (idDorucak, idRadnoVrijeme),
-  FOREIGN KEY (idDorucak) REFERENCES DORUCAK(idDorucak),
-  FOREIGN KEY (idRadnoVrijeme) REFERENCES RADNO_VRIJEME(idRadnoVrijeme)
-);
-
-CREATE TABLE radi2
-(
-  idRucak INT NOT NULL,
-  idRadnoVrijeme INT NOT NULL,
-  PRIMARY KEY (idRucak, idRadnoVrijeme),
-  FOREIGN KEY (idRucak) REFERENCES RUCAK(idRucak),
-  FOREIGN KEY (idRadnoVrijeme) REFERENCES RADNO_VRIJEME(idRadnoVrijeme)
-);
-
-CREATE TABLE radi3
-(
-  idVecera INT NOT NULL,
-  idRadnoVrijeme INT NOT NULL,
-  PRIMARY KEY (idVecera, idRadnoVrijeme),
-  FOREIGN KEY (idVecera) REFERENCES VECERA(idVecera),
-  FOREIGN KEY (idRadnoVrijeme) REFERENCES RADNO_VRIJEME(idRadnoVrijeme)
-);
-
 CREATE TABLE OCJENA
 (
   idOcjena INT NOT NULL,
