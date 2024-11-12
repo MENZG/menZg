@@ -1,0 +1,12 @@
+{
+  "menze": [
+    {
+      "id": 1,
+      "name": "cvjetno naselje",
+      "ulica": "odranska ulica",
+      "broj": "8",
+      "startTime": "08:00",
+      "endTime": "16:00"
+    }
+  ]
+}

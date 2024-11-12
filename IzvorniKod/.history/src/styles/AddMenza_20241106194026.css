@@ -1,0 +1,12 @@
+.dodaj-menzu-container{
+    padding-top: 20vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
+}
+
+.h2{
+    color: rgb(56, 56, 56);
+    display: inline;
+}

@@ -1,0 +1,13 @@
+{
+    "menze": [
+     {
+        "id": 1,
+        "name": "Primjer menze",
+        "ulica": "Primjer ulica",
+        "broj": "6",
+        "startTime": "06:00",
+        "endTime": "22:00"
+     }
+    ]
+  }
+  

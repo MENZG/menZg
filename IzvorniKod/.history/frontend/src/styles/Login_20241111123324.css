@@ -1,0 +1,63 @@
+/* Center the login container */
+.login-form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+  }
+  
+  .login-title {
+    font-size: 24px;
+    color: #0098b3; /* Matches the blue color in your sketch */
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .login-label {
+    font-size: 16px;
+    color: #555;
+  }
+  
+  .login-input {
+    font-size: 16px;
+  }
+  
+  .login-submit-btn {
+    background-color: #0cb300;
+    border: none;
+    font-size: 16px;
+    padding: 10px;
+  }
+  
+  .login-submit-btn:hover {
+    background-color: #00758a;
+  }
+  
+  .login-btn-container {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    flex-direction: column;
+  }
+  
+  .login-role-label {
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .role-btn {
+    background-color: #797979;
+    color: #ffffff;
+    padding: 5px 20px;
+    border: none;
+    font-size: 14px;
+    margin-top: 5px;
+  }
+  
+  .role-btn:hover {
+    background-color: #636363;
+  }
+  
