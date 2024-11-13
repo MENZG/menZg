@@ -21,7 +21,7 @@ import menzg.service.KorisnikService;
 import menzg.service.StudentService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("")
 @CrossOrigin(origins = "http://localhost:5173")
 public class KorisnikController {
 
