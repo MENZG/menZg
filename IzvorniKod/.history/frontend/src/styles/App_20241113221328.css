@@ -5,7 +5,7 @@
 }
 
 body {
-  background-image: url('../custom_pattern.svg');
-  background-size: 100px 100px;
+  background-image: url('/custom_pattern.svg');
+  background-size: 500px 500px; /* Adjust the pattern size as needed */
   background-repeat: repeat;
 }
