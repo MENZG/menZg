@@ -3,6 +3,7 @@ package menzg.controller;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,6 +21,7 @@ import menzg.service.AppAdminService;
 import menzg.service.KorisnikService;
 import menzg.service.StudentService;
 
+@Profile({"oauth-security"})
 @RestController
 @RequestMapping("")
 @CrossOrigin(origins = "http://localhost:5173")
