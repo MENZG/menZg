@@ -1,6 +1,7 @@
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "../styles/Login.css";
+import googleLogo from "../../public/google-logo.png"; // Make sure to have the Google logo image in the specified path
 
 function LoginForm() {
   const navigate = useNavigate();
@@ -12,8 +13,14 @@ function LoginForm() {
   return (
     <div className="login-page">
       <div className="login-form-container">
-        <Button className="login-submit-btn" onClick={handleGoogleLogin}>
-          SIGN IN WITH GOOGLE
+        <Button
+          variant="dark"
+          size="lg"
+          className="login-submit-btn"
+          onClick={handleGoogleLogin}
+        >
+          <img src={googleLogo} alt="Google logo" className="google-logo" />
+          Sign in with Google
         </Button>
       </div>
     </div>
