@@ -38,13 +38,12 @@ public class RadnoVrijeme {
 
 	@ManyToOne
 	@JoinColumn(name = "idMenza") // Ovdje je strani ključ prema Menza tablici
-	@JsonBackReference
+	@JsonBackReference // ne printa
 	private Menza menza; // Svako radno vrijeme je povezano s jednom menzom
 
 	@Override
 	public String toString() {
-		return "RadnoVrijeme [idRadnoVrijeme=" + idRadnoVrijeme + ", dan=" + dan + ", pocetak=" + pocetak + ", kraj="
-				+ kraj + "]";
+		return "RadnoVrijeme [daaan=" + dan + ", pocetak=" + pocetak + ", kraj=" + kraj + "]";
 	}
 
 }
