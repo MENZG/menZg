@@ -48,6 +48,7 @@ jobs:
           context: ./IzvorniKod/backend
           push: true
           tags: ghcr.io/menzg/menzg/backend:latest
+          visibility: public  # Ovdje postavljate image kao javan
 
       - name: Trigger release
         if: ${{ env.BACKEND_DEPLOY_HOOK }}

@@ -50,6 +50,7 @@ jobs:
           context: ./IzvorniKod/frontend
           push: true
           tags: ghcr.io/menzg/menzg/frontend:latest
+          visibility: public  # Ovdje postavljate image kao javan
 
       - name: Trigger release
         if: ${{ env.FRONTEND_DEPLOY_HOOK }}
