@@ -5,7 +5,7 @@ on:
     branches:
       - master
     paths:
-      - 'frontend/**'      # Trigger only on changes in the /frontend directory
+      - 'IzvorniKod/frontend/**'      # Trigger only on changes in the /frontend directory
   workflow_dispatch:
 
 jobs:
@@ -23,16 +23,16 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: 'yarn'
-          cache-dependency-path: 'frontend/yarn.lock'
+          cache: 'npm'
+          cache-dependency-path: 'IzvorniKod/frontend/package-lock.json'
 
-      - name: Yarn install
-        run: yarn install
-        working-directory: frontend
+      - name: npm install
+        run: npm install
+        working-directory: IzvorniKod/frontend
 
-      - name: Yarn build
-        run: yarn run build
-        working-directory: frontend
+      - name: npm build
+        run: npm run build
+        working-directory: IzvorniKod/frontend
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -47,9 +47,9 @@ jobs:
       - name: Build and push frontend image
         uses: docker/build-push-action@v6
         with:
-          context: ./frontend
+          context: ./IzvorniKod/frontend
           push: true
-          tags: ghcr.io/${{ github.repository }}/frontend:latest
+          tags: ghcr.io/menzg/menzg/frontend:latest
 
       - name: Trigger release
         if: ${{ env.FRONTEND_DEPLOY_HOOK }}
