@@ -3,7 +3,7 @@ import NavBarAdmin from "./NavBarAdmin";
 import { Button, Form } from "react-bootstrap";
 import "/src/styles/AddMenza.css";
 import axios from "axios";
-import ListaMenza from "./ListaMenza";
+//import ListaMenza from "./ListaMenza";
 import ListaMenzaAdd from "./ListaMenzaAdd";
 //import { v4 as uuidv4 } from "uuid";
 
@@ -25,7 +25,7 @@ const AddMenza: React.FC = () => {
     startTime: "",
     endTime: "",
   });
-  const [menze, setMenze] = useState<Product[]>([]);
+  const [, setMenze] = useState<Product[]>([]);
   const [currentId, setCurrentId] = useState(1); // State for managing ID increment
 
   useEffect(() => {

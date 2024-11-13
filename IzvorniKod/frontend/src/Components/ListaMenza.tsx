@@ -13,7 +13,7 @@ interface Menza {
 }
 
 const ListaMenza = () => {
-  const [menze, setMenze] = useState<Menza[]>([]);
+  const [, setMenze] = useState<Menza[]>([]);
 
   useEffect(() => {
     axios
