@@ -115,22 +115,20 @@ public class KorisnikController {
 			student.setSpol(spol);
 			student.setDob(dob);
 
-			System.out.println("student print je " + student);
-
 			// Spremanje studenta u bazu podataka
 			Student savedStudent = studentService.save(student); // Pretpostavljam da imate servis za studenta
 
 			System.out.println("treci print ");
 			System.out.println(savedStudent);
 			if (savedStudent != null) {
-				System.out.println("student je spremljen i povezan s korisnikom");
+				System.out.println("student je spremljen u bazu");
 			}
 
 		} catch (Exception e) {
-			System.out.println("ne mogu parsirati podatke s frontenda");
+			System.out.println("ne mogu parsirati podatke s frontenda o studentu");
 		}
 
-		return new ResponseEntity<>("Student je uspješno spremljen.", HttpStatus.CREATED);
+		return new ResponseEntity<>("Student je uspješno spremljen u bazu podataka", HttpStatus.CREATED);
 	}
 
 	// Putanja za dohvat admina
