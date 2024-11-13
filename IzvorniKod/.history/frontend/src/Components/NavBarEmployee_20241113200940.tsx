@@ -2,33 +2,24 @@ import "/src/styles/NavBar.css";
 import { useNavigate } from "react-router-dom";
 import { Button } from "react-bootstrap";
 
-const NavBarAdmin = () => {
+const NavBarEmployee = () => {
   const navigate = useNavigate();
 
   const handleOnClickMenze = () => {
-    navigate("/admin/menze");
+    navigate("/djelatnik/menze");
   };
 
-  const handleOnClickAddMenza = () => {
-    navigate("/admin/dodajMenzu");
+  const handleOnClickAddMeals = () => {
+    navigate("/djelatnik/dodajJelovnik");
   };
 
-  const handleOnClickAddEmployee = () => {
-    navigate("/admin/dodajDjelatnika");
-  };
-
-  const handleOnClickLogo = () => {
-    navigate("/menze");
+  const handleOnClickAddWorkingHours = () => {
+    navigate("/djelatnik/dodajRadnoVrijeme");
   };
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary navbar-bg">
       <div className="container-fluid">
-        <img
-          src="/MenZagreb.png"
-          alt="logo slika"
-          className="logo-img"
-          onClick={handleOnClickLogo}
-        ></img>
+        <img src="/MenZagreb.png" alt="logo slika" className="logo-img"></img>
         <div className="nav-btn-container">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
@@ -37,13 +28,16 @@ const NavBarAdmin = () => {
               </Button>
             </li>
             <li className="nav-item">
-              <Button className="nav-btn" onClick={handleOnClickAddMenza}>
-                dodavanje menzi
+              <Button className="nav-btn" onClick={handleOnClickAddMeals}>
+                dodavanje jelovnika
               </Button>
             </li>
             <li className="nav-item">
-              <Button className="nav-btn" onClick={handleOnClickAddEmployee}>
-                dodavanje djelatnika
+              <Button
+                className="nav-btn"
+                onClick={handleOnClickAddWorkingHours}
+              >
+                unos radnog vremena
               </Button>
             </li>
           </ul>
@@ -53,4 +47,4 @@ const NavBarAdmin = () => {
   );
 };
 
-export default NavBarAdmin;
+export default NavBarEmployee;

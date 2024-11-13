@@ -16,18 +16,13 @@ const NavBarAdmin = () => {
   const handleOnClickAddEmployee = () => {
     navigate("/admin/dodajDjelatnika");
   };
-
-  const handleOnClickLogo = () => {
-    navigate("/menze");
-  };
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary navbar-bg">
       <div className="container-fluid">
         <img
-          src="/MenZagreb.png"
+          src="/src/public/MenZagreb.png"
           alt="logo slika"
           className="logo-img"
-          onClick={handleOnClickLogo}
         ></img>
         <div className="nav-btn-container">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
