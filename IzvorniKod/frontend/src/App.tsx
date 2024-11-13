@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./styles/App.css"
 import LoginForm from "./Components/LoginForm.tsx";
 import AdminLogin from "./Components/AdminLogin.tsx";
 import EmployeeLogin from "./Components/EmployeeLogin.tsx";
