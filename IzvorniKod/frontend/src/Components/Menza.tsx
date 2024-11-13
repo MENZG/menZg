@@ -1,5 +1,6 @@
 import NavBar from "./NavBar";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import "../styles/Menza.css";
 
@@ -19,6 +20,7 @@ const initialRestaurantData = {
 };
 
 function Menza() {
+  const {id} = useParams();
   const [loading, setLoading] = useState(true);
   interface RestaurantData {
     idMenza: string;
@@ -34,7 +36,7 @@ function Menza() {
   useEffect(() => {
     const fetchRestaurantData = async () => {
       try {
-        const response = await axios.get("/api/menza/{id}");
+        const response = await axios.get(`/api/menze/${id}`);
         setRestaurantData(response.data);
         setLoading(false);
       } catch (error) {
