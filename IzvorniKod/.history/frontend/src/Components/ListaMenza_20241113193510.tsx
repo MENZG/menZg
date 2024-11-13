@@ -40,11 +40,6 @@ const ListaMenza = () => {
 
   if (loading) return <p>Učitavanje menzi...</p>;
 
-  menze.map((menza) => {
-    console.log(`/slika_menza_${menza.idMenza}.jpg`);
-    return null; // Povratna vrijednost može biti null jer nam treba samo log, a JSX se vraća u renderu
-  });
-
   const today = new Date().getDay();
   const todayName = daysOfWeek[today];
   return (
@@ -52,13 +47,15 @@ const ListaMenza = () => {
       <NavBar />
       <div className="card-container">
         {menze.map((menza) => (
+          console.log(`/slika_menza${menza.idMenza}.jpg`);
           <div
             key={menza.idMenza}
             className="card"
-            style={{ width: "18rem", height: "20rem" }}
+            style={{ width: "18rem", maxHeight: "23rem" }}
           >
+            
             <img
-              src={`/slika_menza_${menza.idMenza}.jpg`}
+              src={`/slika_menza${menza.idMenza}.jpg`}
               className="card-img-top"
               alt={`Slika menze ${menza.imeMenze}`}
             />

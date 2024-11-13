@@ -58,7 +58,7 @@ const ListaMenza = () => {
             style={{ width: "18rem", height: "20rem" }}
           >
             <img
-              src={`/slika_menza_${menza.idMenza}.jpg`}
+              src={`/slika_menza${menza.idMenza}.jpg`}
               className="card-img-top"
               alt={`Slika menze ${menza.imeMenze}`}
             />
