@@ -50,7 +50,7 @@ const ListaMenza = () => {
           <div
             key={menza.idMenza}
             className="card"
-            style={{ width: "18rem", maxHeight: "23rem" }}
+            style={{ width: "18rem", maxHeight: "22rem" }}
           >
             <img
               src="/src/public/cvjetno.jpg"
