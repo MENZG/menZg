@@ -313,11 +313,5 @@ const ListaMenza = () => {
           </div>
         </div>*/
 }
-{
-  /*</div>
-    </>
-  );
-};*/
-}
 
 export default ListaMenza;
