@@ -47,11 +47,7 @@ const ListaMenza = () => {
       <NavBar />
       <div className="card-container">
         {menze.map((menza) => (
-          <div
-            key={menza.idMenza}
-            className="card"
-            style={{ width: "15rem", maxHeight: "20rem" }}
-          >
+          <div key={menza.idMenza} className="card" style={{ width: "14rem" }}>
             <img
               src="/src/public/cvjetno.jpg"
               className="card-img-top"

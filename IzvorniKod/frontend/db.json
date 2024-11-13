@@ -10,19 +10,11 @@
     },
     {
       "id": 2,
-      "name": "stjepan radic",
+      "name": "lol",
       "ulica": "jarunska ulica",
-      "broj": "2",
-      "startTime": "08:00",
-      "endTime": "21:00"
-    },
-    {
-      "id": 3,
-      "name": "sc menza",
-      "ulica": "savska cesta",
       "broj": "25",
-      "startTime": "06:00",
-      "endTime": "18:00"
+      "startTime": "21:00",
+      "endTime": "23:00"
     }
   ]
 }

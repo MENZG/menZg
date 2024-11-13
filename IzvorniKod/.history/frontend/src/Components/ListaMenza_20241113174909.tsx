@@ -1,22 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import NavBar from "./NavBar";
+//import NavBar from "./NavBar";
 import "/src/styles/ListaMenza.css";
-import { Menza } from "../types.ts";
-
-const daysOfWeek = [
-  "Nedjelja",
-  "Ponedjeljak",
-  "Utorak",
-  "Srijeda",
-  "Ä�etvrtak",
-  "Petak",
-  "Subota",
-];
-
-const formatTime = (time: string | null) => {
-  return time ? time.split(":").slice(0, 2).join(":") : "Ne radi";
-};
+import { Menza, RadnoVrijeme } from "../types.ts";
 
 const ListaMenza = () => {
   const [menze, setMenze] = useState<Menza[]>([]);
@@ -26,7 +12,6 @@ const ListaMenza = () => {
     const fetchMenze = async () => {
       try {
         const response = await axios.get<Menza[]>("/api/menza");
-        console.log("response.data: ", response.data);
         setMenze(response.data);
       } catch (error) {
         console.error("Greška pri dohvaćanju menzi:", error);
@@ -40,44 +25,27 @@ const ListaMenza = () => {
 
   if (loading) return <p>Učitavanje menzi...</p>;
 
-  const today = new Date().getDay();
-  const todayName = daysOfWeek[today];
   return (
-    <>
-      <NavBar />
-      <div className="card-container">
+    <div>
+      <h1>Popis Menzi</h1>
+      <ul>
         {menze.map((menza) => (
-          <div
-            key={menza.idMenza}
-            className="card"
-            style={{ width: "15rem", maxHeight: "20rem" }}
-          >
-            <img
-              src="/src/public/cvjetno.jpg"
-              className="card-img-top"
-              alt={`Slika menze ${menza.imeMenze}`}
-            />
-            <div className="card-body">
-              <h5 className="card-title">{menza.imeMenze}</h5>
-              <p className="card-text">
-                {menza.radnaVremena
-                  .filter((rv) => rv.dan === todayName)
-                  .map((rv) => (
-                    <div key={rv.idRadnoVrijeme}>
-                      {rv.dan}: {formatTime(rv.pocetak)} - {formatTime(rv.kraj)}
-                    </div>
-                  ))}
-              </p>
-              <div className="button-container">
-                <a href="#" className="btn btn-primary">
-                  pogledaj
-                </a>
-              </div>
-            </div>
-          </div>
+          <li key={menza.id}>
+            <h2>{menza.ime}</h2>
+            <p>Lokacija: {menza.adresa}</p>
+            <h3>Radno Vrijeme:</h3>
+            <ul>
+              {menza.radnaVremena.map((rv) => (
+                <li key={rv.id}>
+                  {rv.dan}: {rv.pocetak ? rv.pocetak : "Ne radi"} -{" "}
+                  {rv.kraj ? rv.kraj : "Ne radi"}
+                </li>
+              ))}
+            </ul>
+          </li>
         ))}
-      </div>
-    </>
+      </ul>
+    </div>
   );
 };
 

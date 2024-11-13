@@ -1,22 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import NavBar from "./NavBar";
+//import NavBar from "./NavBar";
 import "/src/styles/ListaMenza.css";
 import { Menza } from "../types.ts";
-
-const daysOfWeek = [
-  "Nedjelja",
-  "Ponedjeljak",
-  "Utorak",
-  "Srijeda",
-  "Ä�etvrtak",
-  "Petak",
-  "Subota",
-];
-
-const formatTime = (time: string | null) => {
-  return time ? time.split(":").slice(0, 2).join(":") : "Ne radi";
-};
 
 const ListaMenza = () => {
   const [menze, setMenze] = useState<Menza[]>([]);
@@ -40,18 +26,12 @@ const ListaMenza = () => {
 
   if (loading) return <p>Učitavanje menzi...</p>;
 
-  const today = new Date().getDay();
-  const todayName = daysOfWeek[today];
   return (
-    <>
-      <NavBar />
-      <div className="card-container">
+    <div className="card-container">
+      <h1>Popis Menzi</h1>
+      <ul>
         {menze.map((menza) => (
-          <div
-            key={menza.idMenza}
-            className="card"
-            style={{ width: "15rem", maxHeight: "20rem" }}
-          >
+          <div key={menza.idMenza} className="card" style={{ width: "18rem" }}>
             <img
               src="/src/public/cvjetno.jpg"
               className="card-img-top"
@@ -60,13 +40,13 @@ const ListaMenza = () => {
             <div className="card-body">
               <h5 className="card-title">{menza.imeMenze}</h5>
               <p className="card-text">
-                {menza.radnaVremena
-                  .filter((rv) => rv.dan === todayName)
-                  .map((rv) => (
-                    <div key={rv.idRadnoVrijeme}>
-                      {rv.dan}: {formatTime(rv.pocetak)} - {formatTime(rv.kraj)}
-                    </div>
-                  ))}
+                {menza.radnaVremena.map((rv) => (
+                  <li key={rv.idRadnoVrijeme}>
+                    {rv.dan}: {rv.pocetak ? rv.pocetak : "Ne radi"} -{" "}
+                    {rv.kraj ? rv.kraj : "Ne radi"}
+                  </li>
+                ))}
+                {/*Radno vrijeme: {menza.startTime} - {menza.endTime}*/}
               </p>
               <div className="button-container">
                 <a href="#" className="btn btn-primary">
@@ -76,8 +56,8 @@ const ListaMenza = () => {
             </div>
           </div>
         ))}
-      </div>
-    </>
+      </ul>
+    </div>
   );
 };
 

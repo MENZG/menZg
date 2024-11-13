@@ -14,7 +14,7 @@ const daysOfWeek = [
   "Subota",
 ];
 
-const formatTime = (time: string | null) => {
+const formatTime = (time: string) => {
   return time ? time.split(":").slice(0, 2).join(":") : "Ne radi";
 };
 
@@ -47,11 +47,7 @@ const ListaMenza = () => {
       <NavBar />
       <div className="card-container">
         {menze.map((menza) => (
-          <div
-            key={menza.idMenza}
-            className="card"
-            style={{ width: "15rem", maxHeight: "20rem" }}
-          >
+          <div key={menza.idMenza} className="card">
             <img
               src="/src/public/cvjetno.jpg"
               className="card-img-top"
@@ -64,7 +60,8 @@ const ListaMenza = () => {
                   .filter((rv) => rv.dan === todayName)
                   .map((rv) => (
                     <div key={rv.idRadnoVrijeme}>
-                      {rv.dan}: {formatTime(rv.pocetak)} - {formatTime(rv.kraj)}
+                      {rv.dan}: {rv.pocetak ? rv.pocetak : "Ne radi"} -{" "}
+                      {rv.kraj ? rv.kraj : "Ne radi"}
                     </div>
                   ))}
               </p>

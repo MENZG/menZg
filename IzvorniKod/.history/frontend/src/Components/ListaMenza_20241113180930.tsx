@@ -14,10 +14,6 @@ const daysOfWeek = [
   "Subota",
 ];
 
-const formatTime = (time: string | null) => {
-  return time ? time.split(":").slice(0, 2).join(":") : "Ne radi";
-};
-
 const ListaMenza = () => {
   const [menze, setMenze] = useState<Menza[]>([]);
   const [loading, setLoading] = useState(true);
@@ -47,11 +43,7 @@ const ListaMenza = () => {
       <NavBar />
       <div className="card-container">
         {menze.map((menza) => (
-          <div
-            key={menza.idMenza}
-            className="card"
-            style={{ width: "15rem", maxHeight: "20rem" }}
-          >
+          <div key={menza.idMenza} className="card" style={{ width: "18rem" }}>
             <img
               src="/src/public/cvjetno.jpg"
               className="card-img-top"
@@ -63,9 +55,10 @@ const ListaMenza = () => {
                 {menza.radnaVremena
                   .filter((rv) => rv.dan === todayName)
                   .map((rv) => (
-                    <div key={rv.idRadnoVrijeme}>
-                      {rv.dan}: {formatTime(rv.pocetak)} - {formatTime(rv.kraj)}
-                    </div>
+                    <li key={rv.idRadnoVrijeme}>
+                      {rv.dan}: {rv.pocetak ? rv.pocetak : "Ne radi"} -{" "}
+                      {rv.kraj ? rv.kraj : "Ne radi"}
+                    </li>
                   ))}
               </p>
               <div className="button-container">

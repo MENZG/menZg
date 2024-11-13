@@ -2,94 +2,16 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import NavBar from "./NavBar";
 import "/src/styles/ListaMenza.css";
-import { Menza } from "../types.ts";
 
-const daysOfWeek = [
-  "Nedjelja",
-  "Ponedjeljak",
-  "Utorak",
-  "Srijeda",
-  "Ä�etvrtak",
-  "Petak",
-  "Subota",
-];
-
-const formatTime = (time: string | null) => {
-  return time ? time.split(":").slice(0, 2).join(":") : "Ne radi";
-};
-
-const ListaMenza = () => {
-  const [menze, setMenze] = useState<Menza[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchMenze = async () => {
-      try {
-        const response = await axios.get<Menza[]>("/api/menza");
-        console.log("response.data: ", response.data);
-        setMenze(response.data);
-      } catch (error) {
-        console.error("Greška pri dohvaćanju menzi:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchMenze();
-  }, []);
-
-  if (loading) return <p>Učitavanje menzi...</p>;
-
-  const today = new Date().getDay();
-  const todayName = daysOfWeek[today];
-  return (
-    <>
-      <NavBar />
-      <div className="card-container">
-        {menze.map((menza) => (
-          <div
-            key={menza.idMenza}
-            className="card"
-            style={{ width: "15rem", maxHeight: "20rem" }}
-          >
-            <img
-              src="/src/public/cvjetno.jpg"
-              className="card-img-top"
-              alt={`Slika menze ${menza.imeMenze}`}
-            />
-            <div className="card-body">
-              <h5 className="card-title">{menza.imeMenze}</h5>
-              <p className="card-text">
-                {menza.radnaVremena
-                  .filter((rv) => rv.dan === todayName)
-                  .map((rv) => (
-                    <div key={rv.idRadnoVrijeme}>
-                      {rv.dan}: {formatTime(rv.pocetak)} - {formatTime(rv.kraj)}
-                    </div>
-                  ))}
-              </p>
-              <div className="button-container">
-                <a href="#" className="btn btn-primary">
-                  pogledaj
-                </a>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </>
-  );
-};
-
-/*interface Menza {
+interface Menza {
   id: string;
   name: string;
   ulica: string;
   broj: string;
   startTime: string;
   endTime: string;
-}*/
-/*
+}
+
 const ListaMenza = () => {
   const [, setMenze] = useState<Menza[]>([]);
 
@@ -99,6 +21,7 @@ const ListaMenza = () => {
       .then((response) => {
         console.log("Full response:", response);
         console.log("response.data:", response.data);
+        console.log("Dohvaćeni podaci:", response.data.menze);
         setMenze(response.data.menze || []);
       })
       .catch((error) => {
@@ -134,10 +57,9 @@ const ListaMenza = () => {
           ))
         ) : (
           <p>Nema dostupnih menzi. Odi na /admin/dodajMenzu i dodaj menzu.</p>
-        )} */
+        )} */}
 
-{
-  /*<div className="card" style={{ width: "18rem" }}>
+        {/*<div className="card" style={{ width: "18rem" }}>
           <img
             src="/src/public/cvjetno.jpg"
             className="card-img-top"
@@ -159,10 +81,8 @@ const ListaMenza = () => {
             className="card-img-top"
             alt="Card top image"
           />
-          {/*<button className="fav-btn">*</button>*/
-}
-{
-  /*<div className="card-body">
+          {/*<button className="fav-btn">*</button>*/}
+        {/*<div className="card-body">
             <h5 className="card-title">Menza SC</h5>
             <p className="card-text">Radno vrijeme: 7:00 - 21:00</p>
 
@@ -246,10 +166,8 @@ const ListaMenza = () => {
             className="card-img-top"
             alt="Card top image"
           />
-          {/*<button className="fav-btn">*</button>*/
-}
-{
-  /*<div className="card-body">
+          {/*<button className="fav-btn">*</button>*/}
+        {/*<div className="card-body">
             <h5 className="card-title">Menza SC</h5>
             <p className="card-text">Radno vrijeme: 7:00 - 21:00</p>
 
@@ -310,13 +228,10 @@ const ListaMenza = () => {
               </a>
             </div>
           </div>
-        </div>*/
-}
-{
-  /*</div>
+        </div>*/}
+      </div>
     </>
   );
-};*/
-}
+};
 
 export default ListaMenza;
