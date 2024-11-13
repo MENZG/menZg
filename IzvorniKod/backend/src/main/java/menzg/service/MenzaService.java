@@ -20,8 +20,7 @@ public class MenzaService {
 
 	};
 
-	public Menza getMenzaData(Long id){
+	public Menza getMenzaData(Long id) {
 		return menzaRepo.findById(id).orElse(null);
-
 	}
 }

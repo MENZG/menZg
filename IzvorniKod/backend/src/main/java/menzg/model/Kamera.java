@@ -28,8 +28,9 @@ public class Kamera {
 	@Column(name = "URL", nullable = false) // Kolona za URL kamere, koja ne može biti NULL
 	private String URL; // URL kamere
 
+	// PRIKAZIVAT CE SE U SQLU
 	@OneToOne
-	@JoinColumn(name = "idRestoran", nullable = false) // Spoljni ključ koji referencira Restoran
-	private Restoran restoran; // Povezivanje s entitetom Restoran
+	@JoinColumn(name = "idMenza", nullable = false) // Spoljni ključ koji referencira Restoran
+	private Menza menza; // Povezivanje s entitetom Restoran
 
 }

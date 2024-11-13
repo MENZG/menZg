@@ -1,10 +1,13 @@
 package menzg.model;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,5 +31,15 @@ public class Menza {
 	@Column(name = "lokacija", nullable = false) // Lokacija menze, ne može biti NULL
 	private String lokacija;
 
-	// Getteri, setteri i ostale metode automatski generirani s Lombokom
+	// OVO NEMA U TABLICI U SQLU!!
+//	@OneToMany(mappedBy = "menza") // Ovdje "menza" označava polje u entitetu Djelatnik
+//	private List<Djelatnik> djelatnici; // Lista djelatnika koji rade u menzi
+
+	// OVO NEMA U TABLICI U SQLU!!
+	@OneToMany(mappedBy = "menza")
+	// menza je redak u RadnoVrijeme koji sadrzi foreign key kako bi se lista mogla
+	// popuniti
+
+	private List<RadnoVrijeme> radnaVremena;
+
 }
