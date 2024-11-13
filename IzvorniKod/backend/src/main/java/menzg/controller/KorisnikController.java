@@ -23,7 +23,7 @@ import menzg.service.StudentService;
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "http://localhost:5173")
-public class KorisnikConstroller {
+public class KorisnikController {
 
 	@Autowired
 	private StudentService studentService;
@@ -79,12 +79,12 @@ public class KorisnikConstroller {
 			String username;
 			String lozinka;
 			String spol;
-			int dob;
+			Integer dob;
 
 			username = (String) studentRequest.get("username");
 			lozinka = (String) studentRequest.get("lozinka");
 			spol = (String) studentRequest.get("spol");
-			dob = (int) studentRequest.get("dob");
+			dob = (Integer) studentRequest.get("dob");
 
 			// Ispisivanje svakog svojstva
 			System.out.println("Username: " + username);

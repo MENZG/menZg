@@ -15,7 +15,7 @@ import menzg.model.Menza;
 import menzg.service.MenzaService;
 
 @RestController
-@RequestMapping("/menza")
+@RequestMapping("/api/menza")
 @CrossOrigin(origins = "http://localhost:5173")
 public class MenzaController {
 
@@ -30,6 +30,8 @@ public class MenzaController {
 
 	@GetMapping("/{id}")
 	public ResponseEntity<Menza> getMenzaData(@PathVariable Long id) {
+
+		System.out.println("zatrazio si sve informacije o menzi ------ ");
 		Menza mz = menzaService.getMenzaData(id);
 
 		System.out.println("iz baze sam izvukao " + mz);
@@ -38,6 +40,7 @@ public class MenzaController {
 			System.out.println("nisam pronasao trazenu manzu");
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
+
 		return new ResponseEntity<>(mz, HttpStatus.OK);
 
 	}

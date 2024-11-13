@@ -34,7 +34,7 @@ public class Student {
 	private String spol;
 
 	@Column(name = "dob")
-	private int dob; // Dob studenta
+	private Integer dob; // Dob studenta
 
 	// Korištenje @JsonProperty za vraćanje atributa korisnika u JSON bez
 	// ugnježđivanja
