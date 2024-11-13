@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import NavBar from "./NavBar";
 import "/src/styles/ListaMenza.css";
 import { Menza } from "../types.ts";
@@ -70,9 +71,12 @@ const ListaMenza = () => {
                   ))}
               </p>
               <div className="button-container">
-                <a href="#" className="btn btn-primary">
+                <Link
+                  to={`/menza/${menza.idMenza}`}
+                  className="btn btn-primary"
+                >
                   pogledaj
-                </a>
+                </Link>
               </div>
             </div>
           </div>

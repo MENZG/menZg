@@ -36,7 +36,7 @@ function Menza() {
   useEffect(() => {
     const fetchRestaurantData = async () => {
       try {
-        const response = await axios.get(`/api/menze/${id}`);
+        const response = await axios.get(`/api/menza/${id}`);
         setRestaurantData(response.data);
         setLoading(false);
       } catch (error) {

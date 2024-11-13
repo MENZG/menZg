@@ -40,7 +40,7 @@ function App() {
           path="/djelatnik/dodajRadnoVrijeme"
           element={<AddWorkingHours />}
         />
-        <Route path="menze/:id" element={<Menza />} />
+        <Route path="menza/:id" element={<Menza />} />
       </Routes>
     </Router>
   );
