@@ -55,7 +55,8 @@ public class SecurityConfig {
                                     });
                 })
                 //.exceptionHandling(handling -> handling.authenticationEntryPoint(new Http403ForbiddenEntryPoint()))
-                .formLogin(Customizer.withDefaults()).build();
+                //.formLogin(Customizer.withDefaults()) /*ovo cemo kasnije koristit kad budemo imali vise profila */
+                .build();
     }
 
 

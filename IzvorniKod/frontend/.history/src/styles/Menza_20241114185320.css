@@ -1,0 +1,51 @@
+.mt-4 {
+  margin-top: 1.5rem !important;
+}
+
+.container{
+  margin-top: 20vh;
+  width: 75vw;
+}
+
+.card {
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.card-text {
+  font-size: 1rem;
+  color: #555;
+}
+
+.working-hours h5 {
+  margin-top: 1rem;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.list-group-item {
+  font-size: 1rem;
+  color: #555;
+}
+
+.header{
+  text-align: center;
+  background-color: white;
+}
+
+.location{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.location-pin-img {
+  width: 1em; /* Adjusts the pin size to be similar to the text size */
+  height: auto; /* Maintains the image’s aspect ratio */
+  margin-right: 0.5em; /* Adds space between the pin and the text */
+}
