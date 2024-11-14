@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import NavBar from "./NavBar";
 import "/src/styles/ListaMenza.css";
 import { Menza } from "../types.ts";
+import { Spinner } from "react-bootstrap";
 
 const daysOfWeek = [
   "Nedjelja",
@@ -28,18 +29,24 @@ const ListaMenza = () => {
       try {
         const response = await axios.get<Menza[]>("/api/menza");
         setMenze(response.data);
+        setLoading(false);
       } catch (error) {
         console.error("Greška pri dohvaćanju menzi:", error);
-      } finally {
-        setLoading(false);
       }
     };
 
     fetchMenze();
   }, []);
 
-  if (loading) return <p>Učitavanje menzi...</p>;
-
+  if (loading)
+    return (
+      <>
+        <NavBar />
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      </>
+    );
   const today = new Date().getDay();
   const todayName = daysOfWeek[today];
   return (
