@@ -12,9 +12,22 @@ Uz veliki broj studenata koji koriste menze u Zagrebu, dolazi i niz izazova veza
 ## Stečena znanja
 Radom na projektu MenZg članovi našeg tima steći će praktična znanja u korištenju modernih tehnologija i metoda razvoja softvera. Izrada korisničkog sučelja (frontenda) aplikacije preko React biblioteke omogućit će nam da naučimo napredne prakse u dizajnu interaktivnih aplikacija, dok ćemo backend razvijati u Javi koristeći Spring Boot, što će nas uvesti u svijet server-side programiranja i rada s bazama podataka. Također ćemo naučiti kako implementirati sigurnosne protokole za zaštitu podataka korisnika te kako učinkovito testirati i održavati aplikaciju. Najvažnije, kroz timski rad u srednje velikoj grupi učit ćemo vještine suradnje, upravljanja zadacima i komunikacije, ključne za uspješan završetak projekta.
 
-# Funkcijski zahtjevi DODATI FUNKCIJESKE I NEFUNKCIJSKE ZAHTJEVE
+# Funkcijski zahtjevi DODATI FUNKCIJESKE 
 > Navedite ključne zahtjeve Vašeg projekta.
 
+# Nefunkcijski zahtjevi
+
+## Zahtjevi za održavanje
+Sustav treba biti dizajniran za jednostavno održavanje, s naglaskom na buduće nadogradnje i prilagodbe, te mora imati potpunu dokumentaciju koja olakšava održavanje i razvoj. Uz to, treba biti popraćen priručnikom za rad i planom implementacije za pravilno postavljanje sustava.
+
+## Zahtjevi za sigurnost
+Svi korisnički podaci, uključujući vjerodajnice za prijavu, moraju biti šifrirani i sigurno pohranjeni, a administrativne funkcije trebaju biti dostupne samo korisnicima s administratorskim pristupom.
+
+## Zahtjevi za pouzdanost
+Aplikacija treba biti dostupna korisnicima 99.9% vremena mjesečno kako bi osigurala stalni pristup informacijama, a također treba omogućiti automatski oporavak od neočekivanih pogrešaka poput prekida veze ili prijenosa kamere.
+
+## Zahtjevi za skalabilnost
+Aplikacija treba omogućiti proširenje broja korisnika, menzi ili novih funkcionalnosti bez značajnog utjecaja na performanse, a baza podataka mora biti skalabilna i sposobna pohraniti velike količine podataka.
 
 # Tehnologije DODATI STA FALI
 * **Frontend: React TypeScript**
