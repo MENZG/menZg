@@ -13,7 +13,9 @@ CREATE TABLE MENZA
   idMenza INT NOT NULL,
   imeMenze VARCHAR(30) NOT NULL,
   lokacija VARCHAR(30) NOT NULL,
+  idAdmin INT NOT NULL,
   PRIMARY KEY (idMenza),
+  FOREIGN KEY (idAdmin) REFERENCES APPADMIN(idAdmin),
   UNIQUE (imeMenze)
 );
 
@@ -74,7 +76,9 @@ CREATE TABLE RADNO_VRIJEME
   dan VARCHAR(15) NOT NULL CHECK (dan IN ('Ponedjeljak', 'Utorak', 'Srijeda', 'Četvrtak', 'Petak', 'Subota', 'Nedjelja')),
   pocetak TIME NOT NULL,
   kraj TIME NOT NULL,
-  PRIMARY KEY (idRadnoVrijeme)
+  idMenza INT NOT NULL,
+  PRIMARY KEY (idRadnoVrijeme),
+  FOREIGN KEY (idMenza) REFERENCES MENZA(idMenza)
 );
 
 CREATE TABLE OBROK
@@ -146,15 +150,6 @@ CREATE TABLE ima
   PRIMARY KEY (idMenza, idObrok),
   FOREIGN KEY (idMenza) REFERENCES MENZA(idMenza),
   FOREIGN KEY (idObrok) REFERENCES OBROK(idObrok)
-);
-
-CREATE TABLE radi
-(
-  idMenza INT NOT NULL,
-  idRadnoVrijeme INT NOT NULL,
-  PRIMARY KEY (idMenza, idRadnoVrijeme),
-  FOREIGN KEY (idMenza) REFERENCES MENZA(idMenza),
-  FOREIGN KEY (idRadnoVrijeme) REFERENCES RADNO_VRIJEME(idRadnoVrijeme)
 );
 
 CREATE TABLE OCJENA
