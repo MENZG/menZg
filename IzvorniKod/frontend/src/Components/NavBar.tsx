@@ -6,30 +6,35 @@ const NavBar = () => {
   const navigate = useNavigate();
 
   const handleOnClickMenze = () => {
-    navigate("/home");
+    navigate("/menze");
   };
 
   const handleOnClickProfil = () => {
     navigate("/profil");
   };
+
+  const handleOnClickLogo = () => {
+    navigate("/menze");
+  };
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary navbar-bg">
       <div className="container-fluid">
         <img
-          src="/src/public/MenZagreb.png"
+          src="/MenZagreb.png"
           alt="logo slika"
           className="logo-img"
+          onClick={handleOnClickLogo}
         ></img>
         <div className="nav-btn-container">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
               <Button className="nav-btn" onClick={handleOnClickMenze}>
-                menze
+                Menze
               </Button>
             </li>
             <li className="nav-item">
               <Button className="nav-btn" onClick={handleOnClickProfil}>
-                profil
+                Profil
               </Button>
             </li>
           </ul>

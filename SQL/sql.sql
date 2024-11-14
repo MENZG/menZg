@@ -53,16 +53,6 @@ CREATE TABLE JELO
   UNIQUE (nazivJela)
 );
 
-CREATE TABLE RESTORAN
-(
-  idRestoran INT NOT NULL,
-  imeRestorana VARCHAR(30) NOT NULL,
-  idMenza INT NOT NULL,
-  PRIMARY KEY (idRestoran),
-  FOREIGN KEY (idMenza) REFERENCES MENZA(idMenza),
-  UNIQUE (imeRestorana)
-);
-
 CREATE TABLE RADNO_VRIJEME
 (
   idRadnoVrijeme INT NOT NULL,
@@ -91,10 +81,10 @@ CREATE TABLE favorit
 
 CREATE TABLE ima
 (
-  idRestoran INT NOT NULL,
+  idMenza INT NOT NULL,
   idObrok INT NOT NULL,
-  PRIMARY KEY(idRestoran, idObrok),
-  FOREIGN KEY(idRestoran) REFERENCES RESTORAN(idRestoran),
+  PRIMARY KEY(idMenza, idObrok),
+  FOREIGN KEY(idMenza) REFERENCES MENZA(idMenza),
   FOREIGN KEY(idObrok) REFERENCES OBROK(idObrok)
 );
 
@@ -132,17 +122,17 @@ CREATE TABLE KAMERA
 (
   idKamera INT NOT NULL,
   URL VARCHAR(255) NOT NULL,
-  idRestoran INT NOT NULL,
+  idMenza INT NOT NULL,
   PRIMARY KEY (idKamera),
-  FOREIGN KEY (idRestoran) REFERENCES RESTORAN(idRestoran)
+  FOREIGN KEY (idMenza) REFERENCES MENZA(idMenza)
 );
 
 CREATE TABLE CHAT
 (
   idChat INT NOT NULL,
-  idRestoran INT NOT NULL,
+  idMenza INT NOT NULL,
   PRIMARY KEY (idChat),
-  FOREIGN KEY (idRestoran) REFERENCES RESTORAN(idRestoran)
+  FOREIGN KEY (idMenza) REFERENCES MENZA(idMenza)
 );
 
 CREATE TABLE PORUKA

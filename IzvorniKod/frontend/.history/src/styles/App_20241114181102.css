@@ -1,0 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Dongle&family=Quicksand:wght@300..700&display=swap');
+
+* {
+  font-family: 'Quicksand', Arial, sans-serif;
+}
+
+body {
+  background-image: url('../../pattern2.png');
+  background-size:cover;
+  background-position: center;
+}

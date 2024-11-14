@@ -16,7 +16,7 @@ import menzg.model.RadnoVrijeme;
 import menzg.service.MenzaService;
 
 @RestController
-@RequestMapping("/api/menza")
+@RequestMapping("/menza")
 @CrossOrigin(origins = "http://localhost:5173")
 public class MenzaController {
 
