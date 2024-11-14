@@ -4,7 +4,7 @@
 
 .container{
   margin-top: 20vh;
-  width: 65vw;
+  width: 75vw;
 }
 
 .card {
@@ -26,6 +26,7 @@
   margin-top: 1rem;
   font-size: 1.25rem;
   font-weight: bold;
+  text-align: center;
 }
 
 .list-group-item {

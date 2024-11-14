@@ -75,7 +75,7 @@ function Menza() {
             variant="top"
             src={`/slika_menza_${restaurantData.idMenza}.jpg`}
             alt={`Slika menze ${restaurantData.imeMenze}`}
-            style={{ height: "35vh" }}
+            style={{ height: "40vh" }}
           />
           <Card.Body>
             <Card.Header className="header">

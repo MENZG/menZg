@@ -20,9 +20,9 @@ const initialRestaurantData = {
   ],
 };
 
-function formatTime(time: string | null) {
+const formatTime = (time: string | null) => {
   return time ? time.split(":").slice(0, 2).join(":") : "Ne radi";
-}
+};
 
 function Menza() {
   const { id } = useParams();
@@ -75,33 +75,19 @@ function Menza() {
             variant="top"
             src={`/slika_menza_${restaurantData.idMenza}.jpg`}
             alt={`Slika menze ${restaurantData.imeMenze}`}
-            style={{ height: "35vh" }}
           />
           <Card.Body>
-            <Card.Header className="header">
-              <Card.Title>{restaurantData.imeMenze}</Card.Title>
-              <div className="location">
-                <img
-                  src="/locationPin2.png"
-                  alt="location pin"
-                  className="location-pin-img"
-                />
-                <Card.Text>
-                  <strong>Adresa:</strong> {restaurantData.lokacija}
-                </Card.Text>
-              </div>
-            </Card.Header>
-
+            <Card.Title>{restaurantData.imeMenze}</Card.Title>
+            <Card.Text>
+              <strong>Adresa:</strong> {restaurantData.lokacija}
+            </Card.Text>
             <div className="working-hours">
-              <h4>Radno vrijeme</h4>
-
+              <h5>Radno vrijeme</h5>
               <ListGroup variant="flush">
                 {restaurantData.radnaVremena.map((time, index) => (
                   <ListGroup.Item key={index}>
-                    {time.dan}:{" "}
-                    {time.pocetak && time.kraj
-                      ? `${formatTime(time.pocetak)} - ${formatTime(time.kraj)}`
-                      : "Ne radi"}
+                    {time.dan}: {formatTime(time.pocetak)} -{" "}
+                    {formatTime(time.kraj)}
                   </ListGroup.Item>
                 ))}
               </ListGroup>

@@ -76,7 +76,7 @@ const ListaMenza = () => {
                   to={`/menza/${menza.idMenza}`}
                   className="btn btn-primary"
                 >
-                  pogledaj
+                  POGLEDAJ
                 </Link>
               </div>
             </div>

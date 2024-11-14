@@ -4,7 +4,7 @@
 
 .container{
   margin-top: 20vh;
-  width: 65vw;
+  width: 75vw;
 }
 
 .card {
@@ -36,9 +36,6 @@
 .header{
   text-align: center;
   background-color: white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .location{
@@ -48,8 +45,7 @@
 }
 
 .location-pin-img {
-    max-width: 1em; /* Limits the width to match the text size */
-    max-height: 1em; /* Limits the height to match the text size */
-    margin-right: 0.5em; /* Space between the pin and the text */
-    object-fit: contain; /* Maintains aspect ratio and avoids cropping */
+  width: 10px;
+  height: 10px;
+  margin-right: 0.5em; /* Adds space between the pin and the text */
 }

@@ -75,7 +75,6 @@ function Menza() {
             variant="top"
             src={`/slika_menza_${restaurantData.idMenza}.jpg`}
             alt={`Slika menze ${restaurantData.imeMenze}`}
-            style={{ height: "35vh" }}
           />
           <Card.Body>
             <Card.Header className="header">
@@ -93,7 +92,7 @@ function Menza() {
             </Card.Header>
 
             <div className="working-hours">
-              <h4>Radno vrijeme</h4>
+              <Card.Text>Radno vrijeme</Card.Text>
 
               <ListGroup variant="flush">
                 {restaurantData.radnaVremena.map((time, index) => (

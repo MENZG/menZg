@@ -18,7 +18,6 @@ function LoginForm() {
       <div className="login-form-container">
         <img src="/MenZagreb.png" alt="logo slika" className="logo-img"></img>
         <br />
-        <br />
         <h1>Neda ti se čekati u redu za menzu?</h1>
         <h2>Prijavi se!</h2>
         <br />

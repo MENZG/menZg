@@ -6,7 +6,7 @@
     justify-items: center;
     justify-content: center;
     align-items: start;
-    margin-top: 20vh;
+    /*margin-top: 20vh;*/
     max-width: 75vw; /* Održite ovu širinu za udaljenost od rubova */
     margin-left: auto; /* Centriranje pomoću automatskih margina */
     margin-right: auto;
@@ -30,7 +30,6 @@
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
     transition: transform 0.3s ease;
-    border-color: white;
   }
   
   .card:hover {
@@ -58,3 +57,8 @@
   .button-container {
     text-align: center;
   }
+
+  .btn-secondary{
+    background-color: #4CAF50;
+  }
+  

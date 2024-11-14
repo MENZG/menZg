@@ -6,8 +6,6 @@
 
 body {
   background-image: url('../../pattern.png');
-  background-size:cover;
+  background-size:auto;
   background-position: center;
-  background-attachment: fixed;
-  /*background-color: #0098b397;*/
 }
