@@ -32,7 +32,7 @@ public class CustomOAuth2UserService  extends DefaultOAuth2UserService {
         // Dohvat korisničkih podataka
         String email = (String) oAuth2User.getAttribute("email");
         String name = (String) oAuth2User.getAttribute("given_name");
-        System.out.println(attributes);
+        //System.out.println(attributes);
 
         Optional<Korisnik> existingUser = korisnikRepo.findByEmail(email);
         // Spremanje korisnika u bazu podataka ako ne postoji
@@ -44,12 +44,12 @@ public class CustomOAuth2UserService  extends DefaultOAuth2UserService {
             korisnik.setLozinka("");
             korisnikRepo.save(korisnik);
 
-            logger.info("korisnicki podaci " + attributes);
+            //logger.info("korisnicki podaci " + attributes);
             // Logiranje da se korisnik pohranio
-            System.out.println("Korisnik spremljen u bazu: " + korisnik.getEmail());
+           // System.out.println("Korisnik spremljen u bazu: " + korisnik.getEmail());
         } else {
             // Logiranje da korisnik već postoji
-            System.out.println("Korisnik već postoji u bazi: " + email);
+            //System.out.println("Korisnik već postoji u bazi: " + email);
         }
 
         return oAuth2User;
