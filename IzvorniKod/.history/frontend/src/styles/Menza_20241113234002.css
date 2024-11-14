@@ -1,5 +1,5 @@
 .main-content {
-  padding-top: 20vh; /* Adjust this value based on the height of your navbar */
+  padding-top: 14vh; /* Adjust this value based on the height of your navbar */
 }
 
 .restaurant-info {
@@ -7,7 +7,7 @@
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 70vw;
+  max-width: 600px;
   margin: 20px auto;
   text-align: left;
 }

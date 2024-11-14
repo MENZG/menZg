@@ -10,12 +10,12 @@ const initialRestaurantData = {
   imeMenze: "Default Restaurant",
   lokacija: "Default Location",
   radnaVremena: [
-    { dan: "Monday", pocetak: "08:00", kraj: "20:00" },
-    { dan: "Tuesday", pocetak: "08:00", kraj: "20:00" },
-    { dan: "Wednesday", pocetak: "08:00", kraj: "20:00" },
-    { dan: "Thursday", pocetak: "08:00", kraj: "20:00" },
-    { dan: "Friday", pocetak: "08:00", kraj: "20:00" },
-    { dan: "Saturday", pocetak: "08:00", kraj: "20:00" },
+    { dan: "Monday", pocekat: "08:00", kraj: "20:00" },
+    { dan: "Tuesday", pocekat: "08:00", kraj: "20:00" },
+    { dan: "Wednesday", pocekat: "08:00", kraj: "20:00" },
+    { dan: "Thursday", pocekat: "08:00", kraj: "20:00" },
+    { dan: "Friday", pocekat: "08:00", kraj: "20:00" },
+    { dan: "Saturday", pocekat: "08:00", kraj: "20:00" },
   ],
 };
 
@@ -30,7 +30,7 @@ function Menza() {
     idMenza: string;
     imeMenze: string;
     lokacija: string;
-    radnaVremena: { dan: string; pocetak: string; kraj: string }[];
+    radnaVremena: { dan: string; pocekat: string; kraj: string }[];
   }
 
   const [restaurantData, setRestaurantData] = useState<RestaurantData>(
@@ -70,7 +70,7 @@ function Menza() {
             <ul>
               {restaurantData.radnaVremena.map((time, index) => (
                 <li key={index}>
-                  {time.dan}: {formatTime(time.pocetak)} -{" "}
+                  {time.dan}: {formatTime(time.pocekat)} -{" "}
                   {formatTime(time.kraj)}
                 </li>
               ))}

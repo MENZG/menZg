@@ -17,7 +17,6 @@ function LoginForm() {
       <div className="login-form-container">
         <h1>Neda ti se čekati u redu za menzu?</h1>
         <h2>Prijavi se!</h2>
-        <br />
         <Button
           variant="dark"
           size="lg"

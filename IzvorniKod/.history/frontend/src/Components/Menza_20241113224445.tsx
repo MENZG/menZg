@@ -10,27 +10,23 @@ const initialRestaurantData = {
   imeMenze: "Default Restaurant",
   lokacija: "Default Location",
   radnaVremena: [
-    { dan: "Monday", pocetak: "08:00", kraj: "20:00" },
-    { dan: "Tuesday", pocetak: "08:00", kraj: "20:00" },
-    { dan: "Wednesday", pocetak: "08:00", kraj: "20:00" },
-    { dan: "Thursday", pocetak: "08:00", kraj: "20:00" },
-    { dan: "Friday", pocetak: "08:00", kraj: "20:00" },
-    { dan: "Saturday", pocetak: "08:00", kraj: "20:00" },
+    { dan: "Monday", pocekat: "08:00", kraj: "20:00" },
+    { dan: "Tuesday", pocekat: "08:00", kraj: "20:00" },
+    { dan: "Wednesday", pocekat: "08:00", kraj: "20:00" },
+    { dan: "Thursday", pocekat: "08:00", kraj: "20:00" },
+    { dan: "Friday", pocekat: "08:00", kraj: "20:00" },
+    { dan: "Saturday", pocekat: "08:00", kraj: "20:00" },
   ],
 };
 
-const formatTime = (time: string | null) => {
-  return time ? time.split(":").slice(0, 2).join(":") : "Ne radi";
-};
-
 function Menza() {
-  const { id } = useParams();
+  const {id} = useParams();
   const [loading, setLoading] = useState(true);
   interface RestaurantData {
     idMenza: string;
     imeMenze: string;
     lokacija: string;
-    radnaVremena: { dan: string; pocetak: string; kraj: string }[];
+    radnaVremena: { dan: string; pocekat: string; kraj: string }[];
   }
 
   const [restaurantData, setRestaurantData] = useState<RestaurantData>(
@@ -64,14 +60,13 @@ function Menza() {
             alt={`Slika menze ${restaurantData.imeMenze}`}
           />
           <h1>{restaurantData.imeMenze}</h1>
-          <p>Adresa: {restaurantData.lokacija}</p>
+          <p>Location: {restaurantData.lokacija}</p>
           <div className="working-hours">
-            <h2>Radno vrijeme</h2>
+            <h2>Working Hours</h2>
             <ul>
               {restaurantData.radnaVremena.map((time, index) => (
                 <li key={index}>
-                  {time.dan}: {formatTime(time.pocetak)} -{" "}
-                  {formatTime(time.kraj)}
+                  {time.dan}: {time.pocekat} - {time.kraj}
                 </li>
               ))}
             </ul>

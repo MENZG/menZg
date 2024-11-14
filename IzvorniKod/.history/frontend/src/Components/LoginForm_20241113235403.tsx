@@ -15,9 +15,7 @@ function LoginForm() {
     <div className="login-page">
       <Snowfall />
       <div className="login-form-container">
-        <h1>Neda ti se čekati u redu za menzu?</h1>
-        <h2>Prijavi se!</h2>
-        <br />
+        <h1>Login</h1>
         <Button
           variant="dark"
           size="lg"

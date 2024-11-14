@@ -10,12 +10,12 @@ const initialRestaurantData = {
   imeMenze: "Default Restaurant",
   lokacija: "Default Location",
   radnaVremena: [
-    { dan: "Monday", pocetak: "08:00", kraj: "20:00" },
-    { dan: "Tuesday", pocetak: "08:00", kraj: "20:00" },
-    { dan: "Wednesday", pocetak: "08:00", kraj: "20:00" },
-    { dan: "Thursday", pocetak: "08:00", kraj: "20:00" },
-    { dan: "Friday", pocetak: "08:00", kraj: "20:00" },
-    { dan: "Saturday", pocetak: "08:00", kraj: "20:00" },
+    { dan: "Monday", pocekat: "08:00", kraj: "20:00" },
+    { dan: "Tuesday", pocekat: "08:00", kraj: "20:00" },
+    { dan: "Wednesday", pocekat: "08:00", kraj: "20:00" },
+    { dan: "Thursday", pocekat: "08:00", kraj: "20:00" },
+    { dan: "Friday", pocekat: "08:00", kraj: "20:00" },
+    { dan: "Saturday", pocekat: "08:00", kraj: "20:00" },
   ],
 };
 
