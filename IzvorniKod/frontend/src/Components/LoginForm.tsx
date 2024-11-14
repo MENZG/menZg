@@ -8,7 +8,7 @@ function LoginForm() {
   //const navigate = useNavigate();
 
   const handleGoogleLogin = () => {
-    window.location.href = "http://localhost:8080/api/menza";
+    window.location.href = "/api/menze";
   };
 
   return (
