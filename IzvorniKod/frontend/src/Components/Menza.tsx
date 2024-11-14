@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import "../styles/Menza.css";
+import { Container, Row, Col, Card, ListGroup, Spinner } from "react-bootstrap";
 
 //test data
 const initialRestaurantData = {
@@ -10,23 +11,23 @@ const initialRestaurantData = {
   imeMenze: "Default Restaurant",
   lokacija: "Default Location",
   radnaVremena: [
-    { dan: "Monday", pocekat: "08:00", kraj: "20:00" },
-    { dan: "Tuesday", pocekat: "08:00", kraj: "20:00" },
-    { dan: "Wednesday", pocekat: "08:00", kraj: "20:00" },
-    { dan: "Thursday", pocekat: "08:00", kraj: "20:00" },
-    { dan: "Friday", pocekat: "08:00", kraj: "20:00" },
-    { dan: "Saturday", pocekat: "08:00", kraj: "20:00" },
+    { dan: "Monday", pocetak: "08:00", kraj: "20:00" },
+    { dan: "Tuesday", pocetak: "08:00", kraj: "20:00" },
+    { dan: "Wednesday", pocetak: "08:00", kraj: "20:00" },
+    { dan: "Thursday", pocetak: "08:00", kraj: "20:00" },
+    { dan: "Friday", pocetak: "08:00", kraj: "20:00" },
+    { dan: "Saturday", pocetak: "08:00", kraj: "20:00" },
   ],
 };
 
 function Menza() {
-  const {id} = useParams();
+  const { id } = useParams();
   const [loading, setLoading] = useState(true);
   interface RestaurantData {
     idMenza: string;
     imeMenze: string;
     lokacija: string;
-    radnaVremena: { dan: string; pocekat: string; kraj: string }[];
+    radnaVremena: { dan: string; pocetak: string; kraj: string }[];
   }
 
   const [restaurantData, setRestaurantData] = useState<RestaurantData>(
@@ -48,31 +49,52 @@ function Menza() {
     fetchRestaurantData();
   }, []);
 
-  if (loading) return <p>Loading...</p>;
+  const formatTime = (time: string | null) => {
+    if (!time) return "N/A";
+    const [hours, minutes] = time.split(":");
+    return `${hours}:${minutes}`;
+  };
+
+  if (loading)
+    return (
+      <Spinner animation="border" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </Spinner>
+    );
 
   return (
     <>
       <NavBar />
-      <div className="main-content">
-        <div className="restaurant-info">
-          <img
-            src={`../../public/slika_menza_${restaurantData.idMenza}.jpg`}
-            alt={`Slika menze ${restaurantData.imeMenze}`}
-          />
-          <h1>{restaurantData.imeMenze}</h1>
-          <p>Location: {restaurantData.lokacija}</p>
-          <div className="working-hours">
-            <h2>Working Hours</h2>
-            <ul>
-              {restaurantData.radnaVremena.map((time, index) => (
-                <li key={index}>
-                  {time.dan}: {time.pocekat} - {time.kraj}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </div>
+      <Container className="mt-4 card-container" style={{ marginTop: '20px' }}>
+        <Row>
+          <Col md={8}>
+            <Card>
+              <Card.Img
+                variant="top"
+                src={`/slika_menza_${restaurantData.idMenza}.jpg`}
+                alt={`Slika menze ${restaurantData.imeMenze}`}
+              />
+              <Card.Body>
+                <Card.Title>{restaurantData.imeMenze}</Card.Title>
+                <Card.Text>
+                  <strong>Location:</strong> {restaurantData.lokacija}
+                </Card.Text>
+                <div className="working-hours">
+                  <h5>Working Hours</h5>
+                  <ListGroup variant="flush">
+                    {restaurantData.radnaVremena.map((time, index) => (
+                      <ListGroup.Item key={index}>
+                        {time.dan}: {formatTime(time.pocetak)} -{" "}
+                        {formatTime(time.kraj)}
+                      </ListGroup.Item>
+                    ))}
+                  </ListGroup>
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
     </>
   );
 }

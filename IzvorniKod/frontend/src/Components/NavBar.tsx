@@ -6,7 +6,7 @@ const NavBar = () => {
   const navigate = useNavigate();
 
   const handleOnClickMenze = () => {
-    navigate("/home");
+    navigate("/menze");
   };
 
   const handleOnClickProfil = () => {
@@ -29,12 +29,12 @@ const NavBar = () => {
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
               <Button className="nav-btn" onClick={handleOnClickMenze}>
-                menze
+                Menze
               </Button>
             </li>
             <li className="nav-item">
               <Button className="nav-btn" onClick={handleOnClickProfil}>
-                profil
+                Profil
               </Button>
             </li>
           </ul>
