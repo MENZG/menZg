@@ -27,4 +27,13 @@ public class Korisnik {
 
 	@Column(name = "username", nullable = false, unique = true)
 	private String username;
+
+	@Column(name = "emailKorisnik", nullable = true, unique = true)
+	private  String email;
+
+	@Column(name = "role", nullable = false)
+	private String role = "ROLE_USER";  // možeš inicijalno dodijeliti ulogu "ROLE_USER"
+
+
+
 }

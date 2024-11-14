@@ -3,9 +3,3 @@
 * {
   font-family: 'Quicksand', Arial, sans-serif;
 }
-
-body {
-  background-image: url('../custom_pattern.svg');
-  background-size: 100px 100px;
-  background-repeat: repeat;
-}

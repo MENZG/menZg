@@ -1,0 +1,53 @@
+.main-content {
+  padding-top: 20vh; /* Adjust this value based on the height of your navbar */
+}
+
+.restaurant-info {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 70vw;
+  margin: 20px auto;
+  text-align: left;
+}
+
+.restaurant-info img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.restaurant-info h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.restaurant-info p {
+  font-size: 16px;
+  margin: 5px 0;
+  color: #555;
+}
+
+.working-hours {
+  margin-top: 20px;
+}
+
+.working-hours h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.working-hours ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.working-hours li {
+  font-size: 16px;
+  margin: 5px 0;
+  color: #555;
+}

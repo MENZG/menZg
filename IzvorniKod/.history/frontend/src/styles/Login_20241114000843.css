@@ -5,10 +5,8 @@
   height: 100vh;
   width: 100vw;
   /*background: linear-gradient(135deg, #f5f7fa, #c3cfe2);*/
-  background-color: #0098b397;
-  /*background-image: url('../../zagreb.jpeg');
-  background-size: cover;
-  background-position: center;*/
+  /*background-color: #0098b397;*/
+  background-image: url('../../zagreb.jpeg');
 }
 
 .login-form-container {

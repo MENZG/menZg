@@ -1,14 +1,14 @@
 import { Button } from "react-bootstrap";
-//import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "../styles/Login.css";
 import googleLogo from "../../public/google-logo.png"; // Make sure to have the Google logo image in the specified path
 import Snowfall from "react-snowfall";
 
 function LoginForm() {
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleGoogleLogin = () => {
-    window.location.href = "http://localhost:8080/api/menza";
+    navigate("/menze");
   };
 
   return (
@@ -17,7 +17,6 @@ function LoginForm() {
       <div className="login-form-container">
         <h1>Neda ti se čekati u redu za menzu?</h1>
         <h2>Prijavi se!</h2>
-        <br />
         <Button
           variant="dark"
           size="lg"

@@ -1,10 +1,10 @@
 
 -- Unos podataka u tablicu korisnik
-INSERT INTO korisnik (lozinka, username)
-VALUES ('password1', 'student1'),
-       ('password2', 'student2'),
-       ('password3', 'student3'),
-       ('password4', 'student4');
+INSERT INTO korisnik (lozinka, username, role)
+VALUES ('password1', 'student1', 'ROLE_USER'),
+       ('password2', 'student2', 'ROLE_USER'),
+       ('password3', 'student3', 'ROLE_USER'),
+       ('password4', 'student4', 'ROLE_USER');
 
 INSERT INTO student (id_korisnik, spol, dob)
 VALUES (1, 'M', 20), 
@@ -13,12 +13,12 @@ VALUES (1, 'M', 20),
        (4, 'F', 23);
        
        
-       INSERT INTO korisnik (lozinka, username)
+       INSERT INTO korisnik (lozinka, username, role)
 VALUES 
-    ('123', 'admin1'),
-    ('123', 'admin2'),
-    ('123', 'admin3'),
-    ('123', 'admin4');
+    ('123', 'admin1', 'ROLE_USER'),
+    ('123', 'admin2', 'ROLE_USER'),
+    ('123', 'admin3', 'ROLE_USER'),
+    ('123', 'admin4', 'ROLE_USER');
     
     
     
