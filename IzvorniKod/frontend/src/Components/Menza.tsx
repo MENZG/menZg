@@ -20,9 +20,9 @@ const initialRestaurantData = {
   ],
 };
 
-function formatTime(time: string | null) {
-  return time ? time.split(":").slice(0, 2).join(":") : "Ne radi";
-}
+//function formatTime(time: string | null) {
+//  return time ? time.split(":").slice(0, 2).join(":") : "Ne radi";
+//}
 
 function Menza() {
   const { id } = useParams();
