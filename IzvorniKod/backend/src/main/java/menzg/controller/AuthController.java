@@ -16,7 +16,7 @@ public class AuthController {
 
 	@GetMapping("")
 	public void googleAuth(HttpServletResponse response) throws IOException {
-		response.sendRedirect("/oauth2/authorization/google");
+		response.sendRedirect("/api/login/oauth2/code/google");
 	}
 
 	@GetMapping("/google/callback")
