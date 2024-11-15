@@ -44,4 +44,6 @@ public class Poruka {
 	@JoinColumn(name = "idAdmin", nullable = true)
 	private AppAdmin admin;
 
+	// NAPOMENA, U ZAVISNOSTI KO JE POSLA PORUKU JEDNO OD OVOGA DVOJE CE BITI NULL
+
 }

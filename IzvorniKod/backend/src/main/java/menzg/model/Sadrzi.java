@@ -10,20 +10,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "sudjeluje")
+@Table(name = "sadrzi")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Sudjeluje {
+public class Sadrzi {
 
 	@Id
 	@ManyToOne
-	@JoinColumn(name = "idKorisnik")
-	private Korisnik korisnik; // Veza s korisnikom (može biti Admin ili Student)
+	@JoinColumn(name = "idObrok")
+	Obrok obrok;
 
 	@Id
 	@ManyToOne
-	@JoinColumn(name = "idChat")
-	private Chat chat; // Veza s chatom
+	@JoinColumn(name = "idJela")
+	private Jelo jelo; // Veza s chatom
 
 }

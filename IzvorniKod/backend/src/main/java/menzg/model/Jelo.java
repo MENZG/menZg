@@ -26,7 +26,7 @@ public class Jelo {
 	private String kategorija;
 
 	@Column(name = "cijena", nullable = false) // Cijena jela, ne može biti NULL
-	private Integer cijena;
+	private Double cijena;
 
 	@Column(name = "nazivJela", nullable = false, unique = true) // Naziv jela, ne može biti NULL i mora biti
 																	// jedinstveno
