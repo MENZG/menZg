@@ -16,7 +16,7 @@ import menzg.service.CustomOAuth2UserService;
 public class SecurityConfig {
 
 	// ovdje ce nas vodit nakon autentifikacije
-	@Value("https://frontendmain.onrender.com/menze")
+	@Value("https://frontendmain-2wh3.onrender.com/menze")
 	private String frontendUrl;
 
 	private final CustomOAuth2UserService customOAuth2UserService;
