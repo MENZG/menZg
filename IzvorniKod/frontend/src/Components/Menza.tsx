@@ -1,9 +1,9 @@
-import NavBar from "./NavBar";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import axios from "axios";
-import "../styles/Menza.css";
+import { useEffect, useState } from "react";
 import { Card, ListGroup, Spinner } from "react-bootstrap";
+import { useParams } from "react-router-dom";
+import "../styles/Menza.css";
+import NavBar from "./NavBar";
 
 //test data
 const initialRestaurantData = {
@@ -42,7 +42,7 @@ function Menza() {
     const fetchRestaurantData = async () => {
       try {
         const response = await axios.get(
-          `https://backendmain-dyod.onrender.com/api/menza/${id}`
+          `https://backendmain-i5ve.onrender.com/api/menza/${id}`
         );
         setRestaurantData(response.data);
         setLoading(false);

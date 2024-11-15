@@ -1,14 +1,14 @@
 import { Button } from "react-bootstrap";
 //import { useNavigate } from "react-router-dom";
-import "../styles/Login.css";
-import googleLogo from "../../public/google-logo.png"; // Make sure to have the Google logo image in the specified path
 import Snowfall from "react-snowfall";
+import googleLogo from "../../public/google-logo.png"; // Make sure to have the Google logo image in the specified path
+import "../styles/Login.css";
 
 function LoginForm() {
   //const navigate = useNavigate();
 
   const handleGoogleLogin = () => {
-    window.location.href = "https://backendmain-dyod.onrender.com/api/auth";
+    window.location.href = "https://backendmain-i5ve.onrender.com/api/auth";
   };
 
   return (

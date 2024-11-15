@@ -1,10 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Spinner } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { Menza } from "../types.ts";
 import NavBar from "./NavBar";
 import "/src/styles/ListaMenza.css";
-import { Menza } from "../types.ts";
-import { Spinner } from "react-bootstrap";
 
 const daysOfWeek = [
   "Nedjelja",
@@ -28,7 +28,7 @@ const ListaMenza = () => {
     const fetchMenze = async () => {
       try {
         const response = await axios.get<Menza[]>(
-          "https://backendmain-dyod.onrender.com/api/menza"
+          "https://backendmain-i5ve.onrender.com/api/menza"
         );
         setMenze(response.data);
         setLoading(false);
