@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @RequestMapping("/auth")
 public class AuthController {
 
+<<<<<<< HEAD
 	@GetMapping("")
 	public void googleAuth(HttpServletResponse response) throws IOException {
 		response.sendRedirect("/api/login/oauth2/code/google");
@@ -26,3 +27,17 @@ public class AuthController {
 		return ResponseEntity.ok("Authenticated as: " + userEmail);
 	}
 }
+=======
+    @GetMapping("")
+    public void googleAuth(HttpServletResponse response) throws IOException {
+        response.sendRedirect("/api/login/oauth2/code/google");
+    }
+
+    @GetMapping("/google/callback")
+    public ResponseEntity<String> googleCallback(OAuth2AuthenticationToken authentication) {
+        // Ovdje možeš dohvatiti korisničke podatke
+        String userEmail = authentication.getPrincipal().getAttributes().get("email").toString();
+        return ResponseEntity.ok("Authenticated as: " + userEmail);
+    }
+}
+>>>>>>> main
