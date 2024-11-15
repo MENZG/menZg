@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.servlet.http.HttpServletResponse;
 
+//  https://backendmain-dyod.onrender.com/api/auth
 @RestController
 @RequestMapping("/auth")
 @CrossOrigin(origins = "*")
@@ -18,7 +19,9 @@ public class AuthController {
 
 	@GetMapping("")
 	public void googleAuth(HttpServletResponse response) throws IOException {
-		response.sendRedirect("/api/login/oauth2/code/google");
+		// response.sendRedirect("/api/login/oauth2/code/google");
+		response.sendRedirect("https://backendmain-dyod.onrender.com/api/login/oauth2/code/google"); // Pazi da koristiš
+																										// pravi URL
 	}
 
 	@GetMapping("/google/callback")
