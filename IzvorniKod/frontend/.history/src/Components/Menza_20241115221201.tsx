@@ -42,7 +42,7 @@ function Menza() {
     const fetchRestaurantData = async () => {
       try {
         const response = await axios.get(
-          `https://backendmain-dyod.onrender.com/api/menza/${id}`
+          `https://backendmain-dyod.onrender.com/api/api/menza/${id}`
         );
         setRestaurantData(response.data);
         setLoading(false);

@@ -27,7 +27,7 @@ function LoginForm() {
 
     try {
       const response = await axios.post(
-        "https://backendmain-dyod.onrender.com/api/student",
+        "https://backendmain-dyod.onrender.com//api/student",
         {
           username: email.value,
           lozinka: password.value,

@@ -26,15 +26,12 @@ function LoginForm() {
     const password = form.elements.namedItem("password") as HTMLInputElement;
 
     try {
-      const response = await axios.post(
-        "https://backendmain-dyod.onrender.com/api/student",
-        {
-          username: email.value,
-          lozinka: password.value,
-          spol: "M",
-          dob: 28,
-        }
-      );
+      const response = await axios.post("http://localhost:8080/api/student", {
+        username: email.value,
+        lozinka: password.value,
+        spol: "M",
+        dob: 28,
+      });
       console.log(response.data);
       // Handle successful login
       navigate("/menze");
