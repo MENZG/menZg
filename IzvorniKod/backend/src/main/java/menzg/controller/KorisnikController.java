@@ -25,7 +25,7 @@ import menzg.service.StudentService;
 @RestController
 @RequestMapping("")
 // @CrossOrigin(origins = "http://localhost:5173")
-@CrossOrigin(origins = "https://backendmain-dyod.onrender.com")
+@CrossOrigin(origins = "*")
 public class KorisnikController {
 
 	@Autowired

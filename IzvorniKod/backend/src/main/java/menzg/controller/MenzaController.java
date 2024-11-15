@@ -18,7 +18,7 @@ import menzg.service.MenzaService;
 @RestController
 @RequestMapping("/menza")
 // @CrossOrigin(origins = "http://localhost:5173")
-@CrossOrigin(origins = "https://backendmain-dyod.onrender.com")
+@CrossOrigin(origins = "*")
 public class MenzaController {
 
 	@Autowired

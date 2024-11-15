@@ -21,7 +21,7 @@ public class AuthController {
 	public void googleAuth(HttpServletResponse response) throws IOException {
 		// response.sendRedirect("/api/login/oauth2/code/google");
 		response.sendRedirect("https://backendmain-dyod.onrender.com/api/login/oauth2/code/google"); // Pazi da koristiš
-																										// pravi URL
+		// https://backendmain-dyod.onrender.com/login/oauth2/code/google // pravi URL
 	}
 
 	@GetMapping("/google/callback")
