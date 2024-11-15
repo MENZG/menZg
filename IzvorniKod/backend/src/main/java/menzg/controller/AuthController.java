@@ -17,10 +17,14 @@ import jakarta.servlet.http.HttpServletResponse;
 @CrossOrigin(origins = "*")
 public class AuthController {
 
+	// frontend https://frontendmain-2wh3.onrender.com
+	// backend https://backendmain-i5ve.onrender.com
+
 	@GetMapping("")
 	public void googleAuth(HttpServletResponse response) throws IOException {
-		// response.sendRedirect("/api/login/oauth2/code/google");
-		response.sendRedirect("https://backendmain-i5ve.onrender.com/api/login/oauth2/code/google"); // Pazi da koristiš
+		response.sendRedirect("/api/login/oauth2/code/google");
+		// response.sendRedirect("https://backendmain-i5ve.onrender.com/api/login/oauth2/code/google");
+		// // Pazi da koristiš
 		// https://backendmain-dyod.onrender.com/login/oauth2/code/google // pravi URL
 	}
 
