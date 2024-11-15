@@ -21,10 +21,11 @@ import menzg.service.AppAdminService;
 import menzg.service.KorisnikService;
 import menzg.service.StudentService;
 
-@Profile({"oauth-security"})
+@Profile({ "oauth-security" })
 @RestController
 @RequestMapping("")
-@CrossOrigin(origins = "http://localhost:5173")
+// @CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "https://backendmain-dyod.onrender.com")
 public class KorisnikController {
 
 	@Autowired
