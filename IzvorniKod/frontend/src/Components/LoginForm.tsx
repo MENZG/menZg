@@ -27,7 +27,7 @@ function LoginForm() {
         <img src="/MenZagreb.png" alt="logo slika" className="logo-img"></img>
         <br />
         <br />
-        <h1>Blaz ubaci adresu na whatsappu u google auth redirect api</h1>
+        <h1>Kad blaz api na google trebalo bi radit</h1>
         <h2>Prijavi se!</h2>
         <br />
         <Button
