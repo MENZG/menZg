@@ -17,45 +17,55 @@ import menzg.service.CustomOAuth2UserService;
 public class SecurityConfig {
 
 	// ovdje ce nas vodit nakon autentifikacije
-	@Value("${progi.fronted.url:/menze}")
-	private String frontendUrl;  // Dodana default vrijednost za frontendUrl ako varijabla nije postavljena
+	@Value("${progi.frontend.url}/menze")
+	private String frontendUrl;
 
 	private final CustomOAuth2UserService customOAuth2UserService;
 
-	private final CorsConfigurationSource corsConfigurationSource;
+	private CorsConfigurationSource corsConfigurationSource;
 
-	// Constructor Injection za CustomOAuth2UserService i CorsConfigurationSource
-	public SecurityConfig(CustomOAuth2UserService customOAuth2UserService, CorsConfigurationSource corsConfigurationSource) {
+	// Constructor Injection za CorsConfigurationSource
+	public SecurityConfig(CustomOAuth2UserService customOAuth2UserService,
+						  CorsConfigurationSource corsConfigurationSource) {
 		this.customOAuth2UserService = customOAuth2UserService;
 		this.corsConfigurationSource = corsConfigurationSource;
 	}
 
+	// @Profile({"oauth-security"})
 	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http.cors().configurationSource(corsConfigurationSource);  // Omogućava CORS
+	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		http.cors().configurationSource(corsConfigurationSource);
 
-		return http.csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"))  // Onemogućava CSRF za /h2-console
-				.authorizeHttpRequests(auth -> {
-					auth.requestMatchers("/home").permitAll();  // Dozvoljava pristup /home bez autentifikacije
-					auth.anyRequest().authenticated();  // Sve ostale rute zahtijevaju autentifikaciju
-				})
-				.headers(headers -> {
-					headers.frameOptions().sameOrigin();  // Omogućava iframe učitavanje s iste domene
-				})
+		return http.csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**")).authorizeHttpRequests(auth -> {
+					auth.requestMatchers("/home").permitAll();
+					/* auth.requestMatchers("/h2-console/**").permitAll(); */
+					auth.anyRequest().authenticated();
+				}).headers(headers -> {
+					headers.frameOptions().sameOrigin();
+				}) // Omogućuje učitavanje u iframeu s iste domene
+
+				// .headers(headers ->
+				// headers.frameOptions().sameOrigin())//.frameOptions().sameOrigin()
 				.oauth2Login(oauth2 -> {
 					oauth2.userInfoEndpoint(
-									userInfoEndpoint -> userInfoEndpoint.userAuthoritiesMapper(this.authorityMapper()))  // Mapira autoritete korisnika
+									userInfoEndpoint -> userInfoEndpoint.userAuthoritiesMapper(this.authorityMapper()))
 							.successHandler((request, response, authentication) -> {
-								response.sendRedirect("https://frontendmain-2wh3.onrender.com/menze");  // Preusmjerava na frontend nakon uspješne prijave
+								response.sendRedirect("https://frontendmain-2wh3.onrender.com/menze");
+
 							});
 				})
+				// .exceptionHandling(handling -> handling.authenticationEntryPoint(new
+				// Http403ForbiddenEntryPoint()))
+				// .formLogin(Customizer.withDefaults()) /*ovo cemo kasnije koristit kad budemo
+				// imali vise profila */
 				.build();
 	}
 
-	// Definiramo mapper za autoritete korisnika (ROLE_USER kao default)
 	private GrantedAuthoritiesMapper authorityMapper() {
 		final SimpleAuthorityMapper authorityMapper = new SimpleAuthorityMapper();
+
 		authorityMapper.setDefaultAuthority("ROLE_USER");
+
 		return authorityMapper;
 	}
 
@@ -71,13 +81,13 @@ public class SecurityConfig {
 	/*
 	 * Konfigurira OAuth2 autentifikaciju kada se korisnik prijavljuje putem OAuth2
 	 * protokola.
-	 * 
+	 *
 	 * userInfoEndpoint(userInfoEndpoint ->
 	 * userInfoEndpoint.userAuthoritiesMapper(this.authorityMapper())): Postavlja
 	 * mapiranje korisničkih prava (userAuthoritiesMapper). Metoda authorityMapper()
 	 * je metoda iz trenutne klase koja prilagođava prava korisnika prema
 	 * informacijama koje pruža OAuth2 provajder (npr. Google).
-	 * 
+	 *
 	 * successHandler((request, response, authentication) -> { ... }): Definira
 	 * ponašanje nakon uspješne autentifikacije. U ovom slučaju, nakon uspješne
 	 * prijave korisnik se preusmjerava na određeni frontendUrl.
