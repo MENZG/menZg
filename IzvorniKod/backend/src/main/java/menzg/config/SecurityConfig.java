@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 import menzg.service.CustomOAuth2UserService;
 
@@ -21,13 +22,20 @@ public class SecurityConfig {
 
 	private final CustomOAuth2UserService customOAuth2UserService;
 
-	public SecurityConfig(CustomOAuth2UserService customOAuth2UserService) {
+	private CorsConfigurationSource corsConfigurationSource;
+
+	// Constructor Injection za CorsConfigurationSource
+	public SecurityConfig(CustomOAuth2UserService customOAuth2UserService,
+			CorsConfigurationSource corsConfigurationSource) {
 		this.customOAuth2UserService = customOAuth2UserService;
+		this.corsConfigurationSource = corsConfigurationSource;
 	}
 
 	// @Profile({"oauth-security"})
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		http.cors().configurationSource(corsConfigurationSource);
+
 		return http.csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**")).authorizeHttpRequests(auth -> {
 			auth.requestMatchers("/home").permitAll();
 			/* auth.requestMatchers("/h2-console/**").permitAll(); */
@@ -42,7 +50,8 @@ public class SecurityConfig {
 					oauth2.userInfoEndpoint(
 							userInfoEndpoint -> userInfoEndpoint.userAuthoritiesMapper(this.authorityMapper()))
 							.successHandler((request, response, authentication) -> {
-								response.sendRedirect(frontendUrl);
+								response.sendRedirect("https://frontendmain-2wh3.onrender.com/menze");
+
 							});
 				})
 				// .exceptionHandling(handling -> handling.authenticationEntryPoint(new
