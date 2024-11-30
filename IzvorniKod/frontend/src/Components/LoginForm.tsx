@@ -14,7 +14,7 @@ function LoginForm() {
 
     const backendUrl = process.env.REACT_APP_BACKEND_URL; // uzima tu varijablu iz env datoteke
     console.log(backendUrl + ' nikolaaa')
-    window.location.href = `${backendUrl}/api/menza`;
+    window.location.href = "https://backendservice-xspx.onrender.com/api/menza";
   };
 
   return (
@@ -25,7 +25,7 @@ function LoginForm() {
         <img src="/MenZagreb.png" alt="logo slika" className="logo-img"></img>
         <br />
         <br />
-        <h1>Nedaaaaa ti se čekati u redu za menzu????- a</h1>
+        <h1>Nedaaaaati ti se čekati u redu za menzu????- a</h1>
         <h2>Prijavi se!</h2>
         <br />
         <Button
