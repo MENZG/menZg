@@ -11,7 +11,7 @@ public class GlobalCorsConfig implements WebMvcConfigurer {
 	public void addCorsMappings(CorsRegistry registry) {
 		// Omogućava CORS zahtjeve sa frontend domena
 		registry.addMapping("/**") // Primjenjuje pravila na sve rute
-				.allowedOrigins("https://frontendmain-2wh3.onrender.com") // Dopušta samo zahtjeve sa ove frontend
+				.allowedOrigins("https://frontendservice-l0s1.onrender.com") // Dopušta samo zahtjeve sa ove frontend
 																			// domene
 				.allowedMethods("GET", "POST", "PUT", "DELETE") // Dopuštene HTTP metode
 				.allowedHeaders("*") // Dopušta sva zaglavlja
