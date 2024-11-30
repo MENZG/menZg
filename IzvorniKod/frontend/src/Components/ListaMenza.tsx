@@ -27,7 +27,7 @@ const ListaMenza = () => {
   useEffect(() => {
     const fetchMenze = async () => {
       try {
-        const apiUrl = `${process.env.REACT_APP_API_URL}/api/menza`; // koristimo API URL iz env datoteke
+        const apiUrl = "https://backendservice-xspx.onrender.com/api/menza"; // koristimo API URL iz env datoteke
 
         console.log('API URL ' + apiUrl + ' nikola -----------------')
         const response = await axios.get<Menza[]>(apiUrl);

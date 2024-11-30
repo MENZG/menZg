@@ -41,7 +41,8 @@ function Menza() {
   useEffect(() => {
     const fetchRestaurantData = async () => {
       try {
-        const apiUrl = `${process.env.REACT_APP_API_URL}/api/menza/${id}`;
+        const apiUrl = `https://backendservice-xspx.onrender.com/api/menza/${id}`;
+        console.log("proradi ----- " + apiUrl);
         const response = await axios.get(apiUrl);
         setRestaurantData(response.data);
         setLoading(false);
