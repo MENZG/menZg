@@ -26,7 +26,7 @@ public class SecurityConfig {
 
 	// Constructor Injection za CorsConfigurationSource
 	public SecurityConfig(CustomOAuth2UserService customOAuth2UserService,
-						  CorsConfigurationSource corsConfigurationSource) {
+			CorsConfigurationSource corsConfigurationSource) {
 		this.customOAuth2UserService = customOAuth2UserService;
 		this.corsConfigurationSource = corsConfigurationSource;
 	}
@@ -37,20 +37,20 @@ public class SecurityConfig {
 		http.cors().configurationSource(corsConfigurationSource);
 
 		return http.csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**")).authorizeHttpRequests(auth -> {
-					auth.requestMatchers("/home").permitAll();
-					/* auth.requestMatchers("/h2-console/**").permitAll(); */
-					auth.anyRequest().authenticated();
-				}).headers(headers -> {
-					headers.frameOptions().sameOrigin();
-				}) // Omogućuje učitavanje u iframeu s iste domene
+			auth.requestMatchers("/home").permitAll();
+			/* auth.requestMatchers("/h2-console/**").permitAll(); */
+			auth.anyRequest().authenticated();
+		}).headers(headers -> {
+			headers.frameOptions().sameOrigin();
+		}) // Omogućuje učitavanje u iframeu s iste domene
 
 				// .headers(headers ->
 				// headers.frameOptions().sameOrigin())//.frameOptions().sameOrigin()
 				.oauth2Login(oauth2 -> {
 					oauth2.userInfoEndpoint(
-									userInfoEndpoint -> userInfoEndpoint.userAuthoritiesMapper(this.authorityMapper()))
+							userInfoEndpoint -> userInfoEndpoint.userAuthoritiesMapper(this.authorityMapper()))
 							.successHandler((request, response, authentication) -> {
-								response.sendRedirect("https://frontendmain-2wh3.onrender.com/menze");
+								response.sendRedirect("https://frontendservice-l0s1.onrender.com/menze");
 
 							});
 				})
