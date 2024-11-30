@@ -25,7 +25,7 @@ function LoginForm() {
         <img src="/MenZagreb.png" alt="logo slika" className="logo-img"></img>
         <br />
         <br />
-        <h1>Neda ti se čekati u redu za menzu????- a</h1>
+        <h1>Nedaaaaa ti se čekati u redu za menzu????- a</h1>
         <h2>Prijavi se!</h2>
         <br />
         <Button
