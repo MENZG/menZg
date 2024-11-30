@@ -27,7 +27,9 @@ const ListaMenza = () => {
   useEffect(() => {
     const fetchMenze = async () => {
       try {
-        const response = await axios.get<Menza[]>("/api/menza");
+        const apiUrl = `${process.env.REACT_APP_API_URL}/api/menza`; // koristimo API URL iz env datoteke
+
+        const response = await axios.get<Menza[]>(apiUrl);
         setMenze(response.data);
         setLoading(false);
       } catch (error) {
