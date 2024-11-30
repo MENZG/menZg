@@ -29,6 +29,7 @@ const ListaMenza = () => {
       try {
         const apiUrl = `${process.env.REACT_APP_API_URL}/api/menza`; // koristimo API URL iz env datoteke
 
+        console.log(apiUrl + ' nikola -----------------')
         const response = await axios.get<Menza[]>(apiUrl);
         setMenze(response.data);
         setLoading(false);
