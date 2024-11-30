@@ -16,7 +16,9 @@ function LoginForm() {
     console.log(backendUrl + ' nikolaaa')
     console.log("sve varijable okoline " + process.env);  // Ispisuje sve učitane varijable okruženja
 
-    window.location.href = "https://backendservice-xspx.onrender.com/api/menza";
+    // window.location.href = "https://backendservice-xspx.onrender.com/api/menza";
+    window.location.href = "https://backendservice-xspx.onrender.com/oauth2/authorization/google"; // Preusmjerava korisnika na backend za autentifikaciju
+
   };
 
   return (
