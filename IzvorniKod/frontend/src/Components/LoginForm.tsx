@@ -16,7 +16,7 @@ function LoginForm() {
     console.log(backendUrl + ' nikolaaa')
     console.log("sve varijable okoline " + process.env);  // Ispisuje sve učitane varijable okruženja
 
-    window.location.href = "https://backendservice-xspx.onrender.com/api/menza";
+    window.location.href = "https://backendservice-xspx.onrender.com/oauth2/authorization/google";
   };
 
   return (
@@ -27,7 +27,7 @@ function LoginForm() {
         <img src="/MenZagreb.png" alt="logo slika" className="logo-img"></img>
         <br />
         <br />
-        <h1>Kad blaz api na google trebalo bi radit</h1>
+        <h1>GLADAN SI?</h1>
         <h2>Prijavi se!</h2>
         <br />
         <Button
