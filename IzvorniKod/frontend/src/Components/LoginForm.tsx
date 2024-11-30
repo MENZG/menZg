@@ -29,7 +29,7 @@ function LoginForm() {
         <img src="/MenZagreb.png" alt="logo slika" className="logo-img"></img>
         <br />
         <br />
-        <h1>GLADAN SI?</h1>
+        <h1>GLADAN SIIIIIII?</h1>
         <h2>Prijavi se!</h2>
         <br />
         <Button
