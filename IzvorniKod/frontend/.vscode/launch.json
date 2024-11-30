@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/nikola/Documents/BIG_DATA_FER/progi_app_git/menZg/IzvorniKod/frontend/src/Components",
+      "program": "/Users/nikola/Documents/BIG_DATA_FER/progi_app_git/menZg/IzvorniKod/frontend/src/Components/build/Debug/outDebug"
+    }
+  ]
+}
