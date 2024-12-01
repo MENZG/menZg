@@ -1,4 +1,5 @@
-package menzg.config;
+//disablani CORS
+/*package menzg.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -36,3 +37,4 @@ public class GlobalCorsConfig implements WebMvcConfigurer {
 	}
 
 }
+*/

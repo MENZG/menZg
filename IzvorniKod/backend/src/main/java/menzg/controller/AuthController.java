@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 //  https://backendservice-xspx.onrender.com
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "*")
 public class AuthController {
 
 	// frontend https://frontendservice-l0s1.onrender.com
