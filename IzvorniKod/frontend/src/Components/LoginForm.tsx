@@ -11,7 +11,7 @@ function LoginForm() {
 
   const handleGoogleLogin = () => {
     window.location.href =
-    "https://backendservice-xspx.onrender.com/auth"
+    "https://backendservice-xspx.onrender.com/api/auth"
 
      // "https://backendservice-xspx.onrender.com/api/login/oauth2/code/google";
 
