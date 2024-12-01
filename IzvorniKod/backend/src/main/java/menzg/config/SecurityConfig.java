@@ -40,9 +40,8 @@ public class SecurityConfig {
 			// Definiramo da su svi zahtjevi zaštićeni, osim home rute
 			auth.requestMatchers("/home").permitAll();
 			auth.anyRequest().authenticated(); // Zaštita svih drugih ruta
-		}).headers(headers -> {
-			headers.frameOptions().sameOrigin(); // Omogućava iframe učitavanje sa iste domene
-		}).oauth2Login(oauth2 -> {
+		}).headers(headers -> headers.frameOptions(frameOptionsConfig -> frameOptionsConfig.sameOrigin()) // Omogućava iframe učitavanje sa iste domene
+		).oauth2Login(oauth2 -> {
 			// Konfiguriramo OAuth2 login putem Google-a
 			oauth2.userInfoEndpoint(userInfoEndpoint -> userInfoEndpoint.userAuthoritiesMapper(this.authorityMapper()))
 					.successHandler((request, response, authentication) -> {
