@@ -39,6 +39,8 @@ const ListaMenza = () => {
         setLoading(false);
       } catch (error) {
         console.error("Greška pri dohvaćanju menzi:", error);
+        console.error("Greška pri dohvaćanju menzi:", error.response ? error.response.data : error);
+
       }
     };
 
