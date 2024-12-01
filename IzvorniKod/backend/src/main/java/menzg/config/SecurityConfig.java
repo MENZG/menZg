@@ -34,7 +34,7 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		// Omogućavanje CORS-a
-		//http.cors().configurationSource(corsConfigurationSource);
+		http.cors().configurationSource(corsConfigurationSource);
 
 		return http.csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**")).authorizeRequests(auth -> {
 			// Definiramo da su svi zahtjevi zaštićeni, osim home rute

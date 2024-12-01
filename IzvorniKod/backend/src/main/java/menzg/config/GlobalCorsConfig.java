@@ -14,7 +14,7 @@ public class GlobalCorsConfig implements WebMvcConfigurer {
 				.allowedOrigins("https://frontendservice-l0s1.onrender.com") // Dopušta samo zahtjeve sa ove frontend
 																			// domene
 				.allowedMethods("GET", "POST", "PUT", "DELETE") // Dopuštene HTTP metode
-				.allowedHeaders("*") // Dopušta sva zaglavlja
+				//.allowedHeaders("*") // Dopušta sva zaglavlja
 				.allowCredentials(true); // Omogućava kolačiće (ako je potrebno za autentifikaciju)
 	}
 
