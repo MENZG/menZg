@@ -26,8 +26,16 @@ public class MenzaController {
 
 	// vraca sve menze
 	@GetMapping("")
-	public List<Menza> listMenzas() {
-		return menzaService.listAll();
+	public ResponseEntity<List<Menza>> listMenzas() {
+		List<Menza> menze = menzaService.listAll();
+
+		// Ako nije pronasaoo nijednu menzu, vraca 404 Not Found
+		if (menze.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		// Inače vraca listu menza s statusom 200 OK
+		return new ResponseEntity<>(menze, HttpStatus.OK);
 	}
 
 	@GetMapping("/{id}")
