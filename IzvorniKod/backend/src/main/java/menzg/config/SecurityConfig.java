@@ -26,26 +26,15 @@ public class SecurityConfig {
 
 	// Constructor Injection za CorsConfigurationSource i CustomOAuth2UserService
 	public SecurityConfig(CustomOAuth2UserService customOAuth2UserService,
-			CorsConfigurationSource corsConfigurationSource) {
+						  CorsConfigurationSource corsConfigurationSource) {
 		this.customOAuth2UserService = customOAuth2UserService;
 		this.corsConfigurationSource = corsConfigurationSource;
 	}
 
 	@Bean
-<<<<<<< HEAD
-	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		return http.csrf(csrf -> csrf.ignoringRequestMatchers("/login/oauth2/", "/callback", "/h2-console/")).authorizeHttpRequests(auth -> {
-			auth.requestMatchers("/home").permitAll();
-			/* auth.requestMatchers("/h2-console/**").permitAll(); */
-			auth.anyRequest().authenticated();
-		}).headers(headers -> {
-			headers.frameOptions().sameOrigin();
-		}) // Omogućuje učitavanje u iframeu s iste domene
-=======
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		// Omogućavanje CORS-a
 		http.cors().configurationSource(corsConfigurationSource);
->>>>>>> 2e9a278e8f540b543f08b47a027683e3532f8f23
 
 		return http.csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**")).authorizeRequests(auth -> {
 			// Definiramo da su svi zahtjevi zaštićeni, osim home rute
