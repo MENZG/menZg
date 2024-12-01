@@ -8,8 +8,7 @@ function LoginForm() {
   //const navigate = useNavigate();
 
   const handleGoogleLogin = () => {
-    window.location.href =
-      "https://backendservice-xspx.onrender.com/api/login/oauth2/code/google";
+    window.location.href = "https://wicked-squid-55.loca.lt/api/menza";
   };
 
   return (

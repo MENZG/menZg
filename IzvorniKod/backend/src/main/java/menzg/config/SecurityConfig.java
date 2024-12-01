@@ -28,7 +28,7 @@ public class SecurityConfig {
 	// @Profile({"oauth-security"})
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		return http.csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**")).authorizeHttpRequests(auth -> {
+		return http.csrf(csrf -> csrf.ignoringRequestMatchers("/login/oauth2/", "/callback", "/h2-console/")).authorizeHttpRequests(auth -> {
 			auth.requestMatchers("/home").permitAll();
 			/* auth.requestMatchers("/h2-console/**").permitAll(); */
 			auth.anyRequest().authenticated();

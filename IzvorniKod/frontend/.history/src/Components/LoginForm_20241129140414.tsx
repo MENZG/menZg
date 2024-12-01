@@ -9,7 +9,7 @@ function LoginForm() {
 
   const handleGoogleLogin = () => {
     window.location.href =
-      "https://backendservice-xspx.onrender.com/api/login/oauth2/code/google";
+      "https://backend.loca.lt/api/login/oauth2/code/google";
   };
 
   return (

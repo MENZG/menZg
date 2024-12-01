@@ -9,7 +9,7 @@ function LoginForm() {
 
   const handleGoogleLogin = () => {
     window.location.href =
-      "https://backendservice-xspx.onrender.com/api/login/oauth2/code/google";
+      "https://wicked-squid-55.loca.lt/api/login/aauth2/code/google";
   };
 
   return (

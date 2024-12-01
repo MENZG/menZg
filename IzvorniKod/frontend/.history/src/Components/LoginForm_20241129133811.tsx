@@ -8,8 +8,7 @@ function LoginForm() {
   //const navigate = useNavigate();
 
   const handleGoogleLogin = () => {
-    window.location.href =
-      "https://backendservice-xspx.onrender.com/api/login/oauth2/code/google";
+    window.location.href = "${process.env.REACT_APP_API_URL}/api/menza";
   };
 
   return (

@@ -42,7 +42,7 @@ function Menza() {
     const fetchRestaurantData = async () => {
       try {
         const response = await axios.get(
-          `https://backendservice-xspx.onrender.com/api/menza/${id}`
+          `https://wicked-squid-55.loca.lt/api/menza/${id}`
         );
         setRestaurantData(response.data);
         setLoading(false);

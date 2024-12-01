@@ -28,7 +28,7 @@ const ListaMenza = () => {
     const fetchMenze = async () => {
       try {
         const response = await axios.get<Menza[]>(
-          "https://backendservice-xspx.onrender.com/api/menza"
+          "https://wicked-squid-55.loca.lt/api/menza"
         );
         setMenze(response.data);
         setLoading(false);
