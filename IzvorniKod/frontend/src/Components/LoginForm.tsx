@@ -11,7 +11,9 @@ function LoginForm() {
 
   const handleGoogleLogin = () => {
     window.location.href =
-      "https://backendservice-xspx.onrender.com/api/login/oauth2/code/google";
+    "https://backendservice-xspx.onrender.com/auth"
+
+     // "https://backendservice-xspx.onrender.com/api/login/oauth2/code/google";
 
     /*const backendUrl = process.env.REACT_APP_BACKEND_URL; // uzima tu varijablu iz env datoteke
     console.log(backendUrl + ' nikolaaa')
