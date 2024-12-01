@@ -22,8 +22,8 @@ public class AuthController {
 
 	@GetMapping("")
 	public void googleAuth(HttpServletResponse response) throws IOException {
-		response.sendRedirect("/api/login/oauth2/code/google");
-		// response.sendRedirect("https://backendservice-xspx.onrender.com/api/login/oauth2/code/google");
+		//response.sendRedirect("/api/login/oauth2/code/google");
+		 response.sendRedirect("https://backendservice-xspx.onrender.com/api/login/oauth2/code/google");
 		// // Pazi da koristiš
 		// https://backendservice-xspx.onrender.com/login/oauth2/code/google // pravi URL
 	}

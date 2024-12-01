@@ -3,12 +3,17 @@ package menzg.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfigurationSource;
+
+
+
+import menzg.service.CustomOAuth2UserService;
 
 import menzg.service.CustomOAuth2UserService;
 
@@ -35,15 +40,20 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		// Omogućavanje CORS-a
 		//http.cors(cors -> cors.configurationSource(corsConfigurationSource));
-		http.cors(cors ->cors.disable());
+		//http.cors(cors ->cors.disable());
 
-		return http.csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**")).authorizeRequests(auth -> {
+		return http
+				.cors(cors -> cors.configurationSource(corsConfigurationSource))
+				.csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"))
+				.authorizeRequests(auth -> {
 			// Definiramo da su svi zahtjevi zaštićeni, osim home rute
+			auth.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll(); // Dopušta OPTIONS zahtjeve
 			auth.requestMatchers("/home").permitAll();
 			auth.anyRequest().authenticated(); // Zaštita svih drugih ruta
-		}).headers(header -> header.disable())
-				/*.headers(headers -> headers.frameOptions(frameOptionsConfig -> frameOptionsConfig.sameOrigin()) // Omogućava iframe učitavanje sa iste domene
-		)*/.oauth2Login(oauth2 -> {
+		})
+				//.headers(header -> header.disable())
+				.headers(headers -> headers.frameOptions(frameOptionsConfig -> frameOptionsConfig.sameOrigin())) // Omogućava iframe učitavanje sa iste domene
+				.oauth2Login(oauth2 -> {
 			// Konfiguriramo OAuth2 login putem Google-a
 			oauth2.userInfoEndpoint(userInfoEndpoint -> userInfoEndpoint.userAuthoritiesMapper(this.authorityMapper()))
 					.successHandler((request, response, authentication) -> {
