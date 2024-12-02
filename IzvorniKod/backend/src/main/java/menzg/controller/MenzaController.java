@@ -19,7 +19,8 @@ import menzg.service.MenzaService;
 @RequestMapping("/menza")
 // @CrossOrigin(origins = "http://localhost:5173")
 //@CrossOrigin(origins = "*")
-@CrossOrigin(origins = "https://frontendservice-l0s1.onrender.com")
+//@CrossOrigin(origins = "https://frontendservice-l0s1.onrender.com")
+@CrossOrigin(origins = "*")
 public class MenzaController {
 
 	@Autowired
@@ -30,7 +31,8 @@ public class MenzaController {
 	public ResponseEntity<List<Menza>> listMenzas() {
 		List<Menza> menze = menzaService.listAll();
 
-		// Ako nije pronasaoo nijednu menzu, vraca 404 Not Found, ne nego vraca praznu listu
+		// Ako nije pronasaoo nijednu menzu, vraca 404 Not Found, ne nego vraca praznu
+		// listu
 		if (menze.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
