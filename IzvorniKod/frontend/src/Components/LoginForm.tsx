@@ -4,7 +4,7 @@ import Snowfall from "react-snowfall";
 import googleLogo from "../../public/google-logo.png"; // Make sure to have the Google logo image in the specified path
 import "../styles/Login.css";
 
-function LoginForm() {
+/*function LoginForm() {
   //const navigate = useNavigate();
 
   // Uzimamo URL za backend iz environment varijable
@@ -20,9 +20,26 @@ function LoginForm() {
     console.log("sve varijable okoline " + process.env);  // Ispisuje sve učitane varijable okruženja
 
     // window.location.href = "https://backendservice-xspx.onrender.com/api/menza";
-    window.location.href = "https://backendservice-xspx.onrender.com/oauth2/authorization/google"; // Preusmjerava korisnika na backend za autentifikaciju
-*/
-  };
+    //window.location.href = "https://backendservice-xspx.onrender.com/oauth2/authorization/google"; // Preusmjerava korisnika na backend za autentifikaciju
+
+  };*/
+
+
+  function LoginForm() {
+    // Funkcija za login s Google-om
+    const handleGoogleLogin = async () => {
+      try {
+        // Dohvatite OAuth URL sa backend-a
+        const response = await fetch("https://backendservice-xspx.onrender.com/api/auth/google");
+        if (!response.ok) {
+          throw new Error("Failed to fetch Google login URL");
+        }
+        const url = await response.text(); // Ovo je URL koji backend generira
+        window.location.href = url; // Preusmjerite korisnika na URL
+      } catch (error) {
+        console.error("Error during Google login:", error);
+      }
+    };
 
   return (
     <div className="login-page">
