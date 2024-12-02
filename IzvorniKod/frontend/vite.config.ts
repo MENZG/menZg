@@ -23,7 +23,8 @@ import { defineConfig } from 'vite';
 export default defineConfig({
   plugins: [react()],
   server: {
-    host: 'localhost',  // Sluša samo na lokalnoj mreži
+    // Sluša na svim mrežnim interfejsima, možeš koristiti i "0.0.0.0"
+    host: '0.0.0.0',
     port: 5173,
     proxy: {
       '/api': {
