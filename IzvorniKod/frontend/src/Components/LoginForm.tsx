@@ -11,9 +11,9 @@ function LoginForm() {
 
   const handleGoogleLogin = () => {
     window.location.href =
-    "https://backendservice-xspx.onrender.com/api/auth/google"
+      "https://backendservice-xspx.onrender.com/api/auth/google"
 
-     // "https://backendservice-xspx.onrender.com/api/login/oauth2/code/google";
+    // "https://backendservice-xspx.onrender.com/api/login/oauth2/code/google";
 
     /*const backendUrl = process.env.REACT_APP_BACKEND_URL; // uzima tu varijablu iz env datoteke
     console.log(backendUrl + ' nikolaaa')
@@ -49,7 +49,7 @@ function LoginForm() {
         <img src="/MenZagreb.png" alt="logo slika" className="logo-img"></img>
         <br />
         <br />
-        <h1>GLADAN SIIIIIII?</h1>
+        <h1>IMA LI REDA U MENZI?</h1>
         <h2>Prijavi se!</h2>
         <br />
         <Button
