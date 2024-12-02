@@ -10,7 +10,6 @@ import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMap
 import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
 import org.springframework.security.web.SecurityFilterChain;
 
-
 import menzg.service.CustomOAuth2UserService;
 
 @Configuration
@@ -24,43 +23,43 @@ public class SecurityConfig {
 
 	private final CustomOAuth2UserService customOAuth2UserService;
 
-	private final GlobalCorsConfig globalCorsConfig;
+	private final SecurityConfig globalCorsConfig;
 
-	public SecurityConfig(CustomOAuth2UserService customOAuth2UserService, GlobalCorsConfig globalCorsConfig) {
+	public SecurityConfig(CustomOAuth2UserService customOAuth2UserService, SecurityConfig globalCorsConfig) {
 		this.customOAuth2UserService = customOAuth2UserService;
 		this.globalCorsConfig = globalCorsConfig;
 	}
 
 	// Constructor Injection za CorsConfigurationSource i CustomOAuth2UserService
 
-
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		// Omogućavanje CORS-a
-		//http.cors(cors -> cors.configurationSource(corsConfigurationSource));
-		//http.cors(cors ->cors.disable());
+		// http.cors(cors -> cors.configurationSource(corsConfigurationSource));
+		// http.cors(cors ->cors.disable());
 
-	 http
-				.cors(cors -> cors.configurationSource(globalCorsConfig.corsConfigurationSource()))
+		http.cors(cors -> cors.configurationSource(globalCorsConfig.corsConfigurationSource()))
 
-			.csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"))
-				.authorizeRequests(auth -> {
-			// Definiramo da su svi zahtjevi zaštićeni, osim home rute
-			auth.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll(); // Dopušta OPTIONS zahtjeve
-			auth.requestMatchers("/home").permitAll();
-			auth.anyRequest().authenticated(); // Zaštita svih drugih ruta
-		})
-				//.headers(header -> header.disable())
-				//.headers(headers -> headers.frameOptions(frameOptionsConfig -> frameOptionsConfig.sameOrigin())) // Omogućava iframe učitavanje sa iste domene
+				.csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**")).authorizeRequests(auth -> {
+					// Definiramo da su svi zahtjevi zaštićeni, osim home rute
+					auth.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll(); // Dopušta OPTIONS zahtjeve
+					auth.requestMatchers("/home").permitAll();
+					auth.anyRequest().authenticated(); // Zaštita svih drugih ruta
+				})
+				// .headers(header -> header.disable())
+				// .headers(headers -> headers.frameOptions(frameOptionsConfig ->
+				// frameOptionsConfig.sameOrigin())) // Omogućava iframe učitavanje sa iste
+				// domene
 				.oauth2Login(oauth2 -> {
-			// Konfiguriramo OAuth2 login putem Google-a
-			oauth2.userInfoEndpoint(userInfoEndpoint -> userInfoEndpoint.userAuthoritiesMapper(this.authorityMapper()))
-					.successHandler((request, response, authentication) -> {
-						// Nakon uspješne prijave korisnik se preusmjerava na frontend URL
-						response.sendRedirect(frontendUrl);
-					});
-		});
-			return http.build();
+					// Konfiguriramo OAuth2 login putem Google-a
+					oauth2.userInfoEndpoint(
+							userInfoEndpoint -> userInfoEndpoint.userAuthoritiesMapper(this.authorityMapper()))
+							.successHandler((request, response, authentication) -> {
+								// Nakon uspješne prijave korisnik se preusmjerava na frontend URL
+								response.sendRedirect(frontendUrl);
+							});
+				});
+		return http.build();
 	}
 
 	// Metoda koja postavlja mapiranje korisničkih prava nakon autentifikacije
