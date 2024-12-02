@@ -40,7 +40,7 @@ public class WebConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
-		registry.addMapping("/**").allowedOrigins("https://restore-films-frontend.onrender.com")
+		registry.addMapping("/**").allowedOrigins("https://frontendservice-l0s1.onrender.com")
 				.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS").allowedHeaders("*");
 	}
 }
