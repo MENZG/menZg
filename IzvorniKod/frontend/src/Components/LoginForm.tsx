@@ -4,14 +4,14 @@ import Snowfall from "react-snowfall";
 import googleLogo from "../../public/google-logo.png"; // Make sure to have the Google logo image in the specified path
 import "../styles/Login.css";
 
-/*function LoginForm() {
+function LoginForm() {
   //const navigate = useNavigate();
 
   // Uzimamo URL za backend iz environment varijable
 
   const handleGoogleLogin = () => {
     window.location.href =
-    "https://backendservice-xspx.onrender.com/api/auth"
+    "https://backendservice-xspx.onrender.com/api/auth/google"
 
      // "https://backendservice-xspx.onrender.com/api/login/oauth2/code/google";
 
@@ -20,12 +20,12 @@ import "../styles/Login.css";
     console.log("sve varijable okoline " + process.env);  // Ispisuje sve učitane varijable okruženja
 
     // window.location.href = "https://backendservice-xspx.onrender.com/api/menza";
-    //window.location.href = "https://backendservice-xspx.onrender.com/oauth2/authorization/google"; // Preusmjerava korisnika na backend za autentifikaciju
+    //window.location.href = "https://backendservice-xspx.onrender.com/oauth2/authorization/google"; // Preusmjerava korisnika na backend za autentifikaciju*/
 
-  };*/
+  };
 
 
-  function LoginForm() {
+  /*function LoginForm() {
     // Funkcija za login s Google-om
     const handleGoogleLogin = async () => {
       try {
@@ -39,7 +39,7 @@ import "../styles/Login.css";
       } catch (error) {
         console.error("Error during Google login:", error);
       }
-    };
+    };*/
 
   return (
     <div className="login-page">
