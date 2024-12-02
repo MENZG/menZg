@@ -50,7 +50,7 @@ function LoginForm() {
         <br />
         <br />
         <h1>IMA LI REDA U MENZIIIII?</h1>
-        <h2>Prijavi se!</h2>
+        <h2>Prijavi seee!</h2>
         <br />
         <Button
           variant="dark"
