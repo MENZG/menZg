@@ -32,7 +32,7 @@ const ListaMenza = () => {
       try {
         const response = await axios.get<Menza[]>(
           "https://backendservice-xspx.onrender.com/api/menza", {
-          withCredentials: false
+          withCredentials: true
 
 
         }
@@ -49,7 +49,7 @@ const ListaMenza = () => {
       } catch (error) {
         const response = await axios.get<Menza[]>(
           "https://backendservice-xspx.onrender.com/api/menza", {
-          withCredentials: false
+          withCredentials: true
 
 
         }
@@ -63,7 +63,9 @@ const ListaMenza = () => {
         const response = await axios.get<Menza[]>(apiUrl);*/
         setMenze(response.data);
         setLoading(false);
-        console.error("Greška pri dohvaćanju menzi:", error);
+
+        console.log("greska")
+        console.error("Greška pri dohvaćanju menzi: -----------", error);
       }
     };
 
