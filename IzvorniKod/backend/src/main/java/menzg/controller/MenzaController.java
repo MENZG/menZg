@@ -30,9 +30,9 @@ public class MenzaController {
 	public ResponseEntity<List<Menza>> listMenzas() {
 		List<Menza> menze = menzaService.listAll();
 
-		// Ako nije pronasaoo nijednu menzu, vraca 404 Not Found
+		// Ako nije pronasaoo nijednu menzu, vraca 404 Not Found, ne nego vraca praznu listu
 		if (menze.isEmpty()) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.OK);
 		}
 
 		// Inače vraca listu menza s statusom 200 OK

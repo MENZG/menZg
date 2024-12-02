@@ -29,12 +29,12 @@ public class GlobalCorsConfig implements WebMvcConfigurer {
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
-		//configuration.addAllowedOrigin("https://frontendservice-l0s1.onrender.com"); // Dozvoli zahtjeve sa frontenda
-		//configuration.addAllowedMethod("*"); // Dozvoli sve metode
-		//configuration.addAllowedHeader("*"); // Dozvoli sva zaglavlja
-        configuration.setAllowedOrigins(List.of("https://frontendservice-l0s1.onrender.com"));
-        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+		configuration.addAllowedOrigin("https://frontendservice-l0s1.onrender.com"); // Dozvoli zahtjeve sa frontenda
+		configuration.addAllowedMethod("*"); // Dozvoli sve metode
+		configuration.addAllowedHeader("*"); // Dozvoli sva zaglavlja
+        //configuration.setAllowedOrigins(List.of("https://frontendservice-l0s1.onrender.com"));
+        //configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        //configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
 
 		configuration.setAllowCredentials(true); // Omogući kolačiće
 
