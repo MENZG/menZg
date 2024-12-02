@@ -51,8 +51,8 @@ public class SecurityConfig {
 			auth.requestMatchers("/home").permitAll();
 			auth.anyRequest().authenticated(); // Zaštita svih drugih ruta
 		})
-				//.headers(header -> header.disable())
-				.headers(headers -> headers.frameOptions(frameOptionsConfig -> frameOptionsConfig.sameOrigin())) // Omogućava iframe učitavanje sa iste domene
+				.headers(header -> header.disable())
+				//.headers(headers -> headers.frameOptions(frameOptionsConfig -> frameOptionsConfig.sameOrigin())) // Omogućava iframe učitavanje sa iste domene
 				.oauth2Login(oauth2 -> {
 			// Konfiguriramo OAuth2 login putem Google-a
 			oauth2.userInfoEndpoint(userInfoEndpoint -> userInfoEndpoint.userAuthoritiesMapper(this.authorityMapper()))

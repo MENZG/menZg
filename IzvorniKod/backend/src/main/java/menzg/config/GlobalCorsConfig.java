@@ -24,7 +24,7 @@ public class GlobalCorsConfig implements WebMvcConfigurer {
 
 	}
 
-	/*@Bean
+	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
 		configuration.addAllowedOrigin("https://frontendservice-l0s1.onrender.com"); // Dozvoli zahtjeve sa frontenda
@@ -35,6 +35,6 @@ public class GlobalCorsConfig implements WebMvcConfigurer {
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
 		return source;
-	}*/
+	}
 
 }
