@@ -15,6 +15,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 
 import menzg.service.CustomOAuth2UserService;
 
+import menzg.service.CustomOAuth2UserService;
 
 @Configuration
 @EnableWebSecurity
@@ -43,16 +44,15 @@ public class SecurityConfig {
 
 		return http
 				.cors(cors -> cors.configurationSource(corsConfigurationSource))
-				//.csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"))
-				.csrf(csrf -> csrf.disable())
+				.csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"))
 				.authorizeRequests(auth -> {
 			// Definiramo da su svi zahtjevi zaštićeni, osim home rute
 			auth.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll(); // Dopušta OPTIONS zahtjeve
 			auth.requestMatchers("/home").permitAll();
 			auth.anyRequest().authenticated(); // Zaštita svih drugih ruta
 		})
-				//.headers(header -> header.disable())
-				.headers(headers -> headers.frameOptions(frameOptionsConfig -> frameOptionsConfig.sameOrigin())) // Omogućava iframe učitavanje sa iste domene
+				.headers(header -> header.disable())
+				//.headers(headers -> headers.frameOptions(frameOptionsConfig -> frameOptionsConfig.sameOrigin())) // Omogućava iframe učitavanje sa iste domene
 				.oauth2Login(oauth2 -> {
 			// Konfiguriramo OAuth2 login putem Google-a
 			oauth2.userInfoEndpoint(userInfoEndpoint -> userInfoEndpoint.userAuthoritiesMapper(this.authorityMapper()))
