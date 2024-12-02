@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @RestController
 @RequestMapping("/auth")
 //@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "https://frontendservice-l0s1.onrender.com")
 public class AuthController {
 
 	// frontend https://frontendservice-l0s1.onrender.com
