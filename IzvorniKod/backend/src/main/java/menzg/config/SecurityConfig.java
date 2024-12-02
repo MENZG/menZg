@@ -40,9 +40,10 @@ public class SecurityConfig {
 		//http.cors(cors -> cors.configurationSource(corsConfigurationSource));
 		//http.cors(cors ->cors.disable());
 
-		return http
+	 http
 				.cors(cors -> cors.configurationSource(globalCorsConfig.corsConfigurationSource()))
-				.csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"))
+
+			.csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"))
 				.authorizeRequests(auth -> {
 			// Definiramo da su svi zahtjevi zaštićeni, osim home rute
 			auth.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll(); // Dopušta OPTIONS zahtjeve
@@ -58,8 +59,8 @@ public class SecurityConfig {
 						// Nakon uspješne prijave korisnik se preusmjerava na frontend URL
 						response.sendRedirect(frontendUrl);
 					});
-		})
-				.build();
+		});
+			return http.build();
 	}
 
 	// Metoda koja postavlja mapiranje korisničkih prava nakon autentifikacije

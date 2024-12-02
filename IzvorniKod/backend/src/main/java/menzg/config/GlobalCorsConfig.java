@@ -10,7 +10,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 public class GlobalCorsConfig implements WebMvcConfigurer {
-
+/*
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
 		// Omogućava CORS zahtjeve sa frontend domena
@@ -22,7 +22,7 @@ public class GlobalCorsConfig implements WebMvcConfigurer {
 				.allowCredentials(true) // Omogućava kolačiće (ako je potrebno za autentifikaciju)
 				.maxAge(3600); // Caching preflight odgovora
 
-	}
+	}*/
 
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
