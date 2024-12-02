@@ -1,16 +1,35 @@
+// import react from '@vitejs/plugin-react';
+// import { defineConfig } from 'vite';
+
+// export default defineConfig({
+//   plugins: [react()],
+//   server: {
+//     host: 'localhost',  // Sluša samo na lokalnoj mreži
+//     port: 5173,
+//     proxy: {
+//       '/api': {
+//         target: 'http://localhost:8080',
+//         changeOrigin: true,
+//         // rewrite: (path) => path.replace(/^\/api/, '') // Ovo uklanja "/api" prefix
+//       }
+//     }
+//   }
+// });
+
+
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
   plugins: [react()],
   server: {
-    host: '0.0.0.0',  // Sluša na svim mrežnim sučeljima
+    host: 'localhost',  // Sluša samo na lokalnoj mreži
     port: 5173,
     proxy: {
       '/api': {
-        target: 'http://localhost:8080',
+        target: 'https://backendservice-xspx.onrender.com', // Produkcijski backend
         changeOrigin: true,
-        //        rewrite: (path) => path.replace(/^\/api/, '') // Ovo uklanja "/api" prefix
+        // rewrite: (path) => path.replace(/^\/api/, '') // Ako želite ukloniti "/api" prefix
       }
     }
   }
