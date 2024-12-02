@@ -32,8 +32,8 @@ const ListaMenza = () => {
       try {
         const response = await axios.get<Menza[]>(
           "https://backendservice-xspx.onrender.com/api/menza", {
-            withCredentials: true
-          }
+          withCredentials: false
+        }
         );
         /*
         const apiUrl = "https://backendservice-xspx.onrender.com/api/menza"; // koristimo API URL iz env datoteke
