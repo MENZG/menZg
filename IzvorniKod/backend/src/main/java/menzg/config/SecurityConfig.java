@@ -9,11 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.cors.CorsConfigurationSource;
 
-
-
-import menzg.service.CustomOAuth2UserService;
 
 import menzg.service.CustomOAuth2UserService;
 
@@ -27,14 +23,16 @@ public class SecurityConfig {
 	private String frontendUrl;
 
 	private final CustomOAuth2UserService customOAuth2UserService;
-	private final CorsConfigurationSource corsConfigurationSource;
+
+	private final GlobalCorsConfig globalCorsConfig;
+
+	public SecurityConfig(CustomOAuth2UserService customOAuth2UserService, GlobalCorsConfig globalCorsConfig) {
+		this.customOAuth2UserService = customOAuth2UserService;
+		this.globalCorsConfig = globalCorsConfig;
+	}
 
 	// Constructor Injection za CorsConfigurationSource i CustomOAuth2UserService
-	public SecurityConfig(CustomOAuth2UserService customOAuth2UserService,
-						  CorsConfigurationSource corsConfigurationSource) {
-		this.customOAuth2UserService = customOAuth2UserService;
-		this.corsConfigurationSource = corsConfigurationSource;
-	}
+
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -43,7 +41,7 @@ public class SecurityConfig {
 		//http.cors(cors ->cors.disable());
 
 		return http
-				.cors(cors -> cors.configurationSource(corsConfigurationSource))
+				.cors(cors -> cors.configurationSource(globalCorsConfig.corsConfigurationSource()))
 				.csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"))
 				.authorizeRequests(auth -> {
 			// Definiramo da su svi zahtjevi zaštićeni, osim home rute
