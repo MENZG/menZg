@@ -6,6 +6,9 @@ import { Menza } from "../types.ts";
 import NavBar from "./NavBar";
 import "/src/styles/ListaMenza.css";
 
+axios.defaults.withCredentials = true;
+
+
 const daysOfWeek = [
   "Nedjelja",
   "Ponedjeljak",
