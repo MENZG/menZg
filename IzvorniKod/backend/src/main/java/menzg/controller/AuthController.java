@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Base64;
 import java.util.UUID;
 
+import lombok.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -26,8 +27,15 @@ public class AuthController {
 	// frontend https://frontendservice-l0s1.onrender.com
 	// backend https://backendservice-xspx.onrender.com
 
-	private final String clientId = "${GOOGLE_CLIENT_ID}";
-	private  final String clientSecret = "${GOOGLE_CLIENT_SECRET}";
+	/*@Value("${google.client.id}")
+	private  String clientId;
+
+	@Value("${google.client.secret}")
+	private   String clientSecret;*/
+
+	String clientId = System.getenv("GOOGLE_CLIENT_ID");
+	String clientSecret = System.getenv("GOOGLE_CLIENT_SECRET");
+
 
 	private final String redirectUri = "https://backendservice-xspx.onrender.com/api/login/oauth2/code/google";
 	private final String authorizationEndpoint = "https://accounts.google.com/o/oauth2/v2/auth";

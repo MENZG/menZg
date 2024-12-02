@@ -55,11 +55,11 @@ public class SecurityConfig {
 				.headers(headers -> headers.frameOptions(frameOptionsConfig -> frameOptionsConfig.sameOrigin())) // Omogućava iframe učitavanje sa iste domene
 				.oauth2Login(oauth2 -> {
 			// Konfiguriramo OAuth2 login putem Google-a
-			oauth2.userInfoEndpoint(userInfoEndpoint -> userInfoEndpoint.userAuthoritiesMapper(this.authorityMapper()));
-					/*.successHandler((request, response, authentication) -> {
+			oauth2.userInfoEndpoint(userInfoEndpoint -> userInfoEndpoint.userAuthoritiesMapper(this.authorityMapper()))
+					.successHandler((request, response, authentication) -> {
 						// Nakon uspješne prijave korisnik se preusmjerava na frontend URL
 						response.sendRedirect(frontendUrl);
-					});*/
+					});
 		})
 				.build();
 	}
