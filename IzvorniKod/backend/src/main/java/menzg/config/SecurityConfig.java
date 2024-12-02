@@ -1,3 +1,7 @@
+
+package menzg.config;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -13,6 +17,9 @@ import menzg.service.CustomOAuth2UserService;
 @EnableWebSecurity
 public class SecurityConfig {
 
+	@Value("${progi.frontend.url}/menze")
+	private String frontendUrl;
+
 	private final CustomOAuth2UserService customOAuth2UserService;
 
 	public SecurityConfig(CustomOAuth2UserService customOAuth2UserService) {
@@ -22,12 +29,7 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.cors(cors -> cors.configurationSource(
-				request -> new org.springframework.web.cors.CorsConfiguration().applyPermitDefaultValues())) // You can
-																												// customize
-																												// the
-																												// CORS
-																												// configuration
-																												// here
+				request -> new org.springframework.web.cors.CorsConfiguration().applyPermitDefaultValues()))
 				.csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**")).authorizeRequests(auth -> {
 					auth.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
 					auth.requestMatchers("/home").permitAll();
@@ -36,8 +38,7 @@ public class SecurityConfig {
 				.oauth2Login(oauth2 -> oauth2
 						.userInfoEndpoint(
 								userInfoEndpoint -> userInfoEndpoint.userAuthoritiesMapper(this.authorityMapper()))
-						.successHandler((request, response, authentication) -> response
-								.sendRedirect("https://frontendservice-l0s1.onrender.com/menze")));
+						.successHandler((request, response, authentication) -> response.sendRedirect(frontendUrl)));
 		return http.build();
 	}
 
