@@ -49,7 +49,7 @@ function LoginForm() {
         <img src="/MenZagreb.png" alt="logo slika" className="logo-img"></img>
         <br />
         <br />
-        <h1>IMA LI REDA U MENZI?</h1>
+        <h1>IMA LI REDA U MENZIIIII?</h1>
         <h2>Prijavi se!</h2>
         <br />
         <Button
