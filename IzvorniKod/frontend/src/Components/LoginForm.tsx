@@ -9,61 +9,71 @@ function LoginForm() {
 
   // Uzimamo URL za backend iz environment varijable
 
-  const handleGoogleLogin = () => {
-    window.location.href =
-      "https://backendservice-xspx.onrender.com/api/auth/google"
+  const handleGoogleLogin = async () => {
 
-    // "https://backendservice-xspx.onrender.com/api/login/oauth2/code/google";
 
-    /*const backendUrl = process.env.REACT_APP_BACKEND_URL; // uzima tu varijablu iz env datoteke
-    console.log(backendUrl + ' nikolaaa')
-    console.log("sve varijable okoline " + process.env);  // Ispisuje sve učitane varijable okruženja
+    try {
+      // Backend URL je tvrdo kodiran
+      const backendUrl = "https://backendservice-xspx.onrender.com";
 
-    // window.location.href = "https://backendservice-xspx.onrender.com/api/menza";
-    //window.location.href = "https://backendservice-xspx.onrender.com/oauth2/authorization/google"; // Preusmjerava korisnika na backend za autentifikaciju*/
+      // Pozovi backend endpoint za generisanje Google Auth URL-a
+      const response = await fetch(`${backendUrl}/api/auth/google`);
+
+      if (response.ok) {
+        // Ako je odgovor uspešan, preuzmi URL za Google autentifikaciju
+        const googleAuthUrl = await response.text();
+
+        // Preusmeri korisnika na Google Auth URL
+        window.location.href = googleAuthUrl;
+      } else {
+        console.error("Greška: Neuspešan odgovor sa backend servisa.");
+      }
+    } catch (error) {
+      console.error("Došlo je do greške prilikom Google login-a:", error);
+    }
 
   };
 
 
-  /*function LoginForm() {
-    // Funkcija za login s Google-om
-    const handleGoogleLogin = async () => {
-      try {
-        // Dohvatite OAuth URL sa backend-a
-        const response = await fetch("https://backendservice-xspx.onrender.com/api/auth/google");
-        if (!response.ok) {
-          throw new Error("Failed to fetch Google login URL");
-        }
-        const url = await response.text(); // Ovo je URL koji backend generira
-        window.location.href = url; // Preusmjerite korisnika na URL
-      } catch (error) {
-        console.error("Error during Google login:", error);
+/*function LoginForm() {
+  // Funkcija za login s Google-om
+  const handleGoogleLogin = async () => {
+    try {
+      // Dohvatite OAuth URL sa backend-a
+      const response = await fetch("https://backendservice-xspx.onrender.com/api/auth/google");
+      if (!response.ok) {
+        throw new Error("Failed to fetch Google login URL");
       }
-    };*/
+      const url = await response.text(); // Ovo je URL koji backend generira
+      window.location.href = url; // Preusmjerite korisnika na URL
+    } catch (error) {
+      console.error("Error during Google login:", error);
+    }
+  };
 
-  return (
-    <div className="login-page">
-      <Snowfall />
+return (
+  <div className="login-page">
+    <Snowfall />
 
-      <div className="login-form-container">
-        <img src="/MenZagreb.png" alt="logo slika" className="logo-img"></img>
-        <br />
-        <br />
-        <h1>DOBAR DAN????</h1>
-        <h2>prijavi seee!</h2>
-        <br />
-        <Button
-          variant="dark"
-          size="lg"
-          className="login-submit-btn"
-          onClick={handleGoogleLogin}
-        >
-          <img src={googleLogo} alt="Google logo" className="google-logo" />
-          Sign in with Google
-        </Button>
-      </div>
+    <div className="login-form-container">
+      <img src="/MenZagreb.png" alt="logo slika" className="logo-img"></img>
+      <br />
+      <br />
+      <h1>DOBAR DAN????</h1>
+      <h2>prijavi seee!</h2>
+      <br />
+      <Button
+        variant="dark"
+        size="lg"
+        className="login-submit-btn"
+        onClick={handleGoogleLogin}
+      >
+        <img src={googleLogo} alt="Google logo" className="google-logo" />
+        Sign in with Google
+      </Button>
     </div>
-  );
+  </div>
+);
 }
 
 export default LoginForm;
