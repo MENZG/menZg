@@ -26,14 +26,17 @@ public class SecurityConfig {
 		this.customOAuth2UserService = customOAuth2UserService;
 	}
 
+	@SuppressWarnings("deprecation")
+
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.cors(cors -> cors.configurationSource(
 				request -> new org.springframework.web.cors.CorsConfiguration().applyPermitDefaultValues()))
-				.csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**")).authorizeRequests(auth -> {
-					auth.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
-					auth.requestMatchers("/home").permitAll();
-					auth.anyRequest().authenticated();
+				.csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**")) // Isključi CSRF za H2 konzolu
+				.authorizeRequests(auth -> {
+					auth.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll(); // Dozvoli OPTIONS zahteve za CORS
+					auth.requestMatchers("/api/auth/google", "/h2-console/**").permitAll(); // Javne rute
+					auth.requestMatchers("/api/**").authenticated(); // Sve rute pod /api zahtevaju autentifikaciju
 				})
 				.oauth2Login(oauth2 -> oauth2
 						.userInfoEndpoint(
