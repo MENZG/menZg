@@ -49,7 +49,7 @@ function LoginForm() {
     } catch (error) {
       console.error("Error during Google login:", error);
     }
-  };
+  };*/
 
 return (
   <div className="login-page">
