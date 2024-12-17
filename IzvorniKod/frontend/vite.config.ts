@@ -1,4 +1,4 @@
-import react from '@vitejs/plugin-react';
+/*import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
@@ -14,25 +14,25 @@ export default defineConfig({
       }
     }
   }
-});
+});*/
 
 
-// import react from '@vitejs/plugin-react';
-// import { defineConfig } from 'vite';
+ import react from '@vitejs/plugin-react';
+ import { defineConfig } from 'vite';
 
-// export default defineConfig({
-//   plugins: [react()],
-//   server: {
-//     // Sluša na svim mrežnim interfejsima, možeš koristiti i "0.0.0.0"
-//     host: '0.0.0.0',
-//     port: 5173,
-//     proxy: {
-//       '/api': {
-//         target: 'https://backendservice-xspx.onrender.com', // Produkcijski backend
-//         changeOrigin: true,
-//         // rewrite: (path) => path.replace(/^\/api/, '') // Ako želite ukloniti "/api" prefix
-//       }
-//     }
-//   }
-// });
+ export default defineConfig({
+   plugins: [react()],
+   server: {
+     // Sluša na svim mrežnim interfejsima, možeš koristiti i "0.0.0.0"
+     host: '0.0.0.0',
+     port: 5173,
+     proxy: {
+       '/api': {
+         target: 'https://backendservice-xspx.onrender.com', // Produkcijski backend
+         changeOrigin: true,
+         // rewrite: (path) => path.replace(/^\/api/, '') // Ako želite ukloniti "/api" prefix
+       }
+     }
+   }
+ });
 
