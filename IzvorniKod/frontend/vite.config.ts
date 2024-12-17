@@ -26,13 +26,13 @@ export default defineConfig({
      // Sluša na svim mrežnim interfejsima, možeš koristiti i "0.0.0.0"
      host: '0.0.0.0',
      port: 5173,
-     proxy: {
+     /*proxy: {
        '/api': {
          target: 'https://backendservice-xspx.onrender.com', // Produkcijski backend
          changeOrigin: true,
          // rewrite: (path) => path.replace(/^\/api/, '') // Ako želite ukloniti "/api" prefix
        }
-     }
+     }*/
    }
  });
 
