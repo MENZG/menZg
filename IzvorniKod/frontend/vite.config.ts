@@ -29,7 +29,7 @@ export default defineConfig({
      proxy: {
        '/api': {
          //target: 'https://backendservice-xspx.onrender.com', // Produkcijski backend
-         target: 'http://localhost:8080',
+         target: 'https://backendservice-xspx.onrender.com',
          changeOrigin: true,
          // rewrite: (path) => path.replace(/^\/api/, '') // Ako želite ukloniti "/api" prefix
        }
