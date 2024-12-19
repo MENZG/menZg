@@ -17,7 +17,7 @@ import menzg.service.CustomOAuth2UserService;
 @EnableWebSecurity
 public class SecurityConfig {
 
-	@Value("${progi.frontend.url}") // cisti frontend --> dalje slat
+	@Value("${progi.frontend.url}/menze") // cisti frontend --> dalje slat
 	private String frontendUrl;
 
 	private final CustomOAuth2UserService customOAuth2UserService;

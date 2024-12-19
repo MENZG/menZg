@@ -14,8 +14,6 @@ function LoginForm() {
 
     try {
       // Backend URL je tvrdo kodiran
-
-
       window.location.href = "https://backendservice-xspx.onrender.com/api/oauth2/authorization/google"
 
 
