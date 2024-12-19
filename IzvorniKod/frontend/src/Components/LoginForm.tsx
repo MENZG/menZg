@@ -14,66 +14,56 @@ function LoginForm() {
 
     try {
       // Backend URL je tvrdo kodiran
-      const backendUrl = "https://backendservice-xspx.onrender.com";
 
-      // Pozovi backend endpoint za generisanje Google Auth URL-a
-      const response = await fetch(`${backendUrl}/api/auth/google`);
 
-      if (response.ok) {
-        // Ako je odgovor uspešan, preuzmi URL za Google autentifikaciju
-        const googleAuthUrl = await response.text();
+      window.location.href = "https://backendservice-xspx.onrender.com/api/oauth2/authorization/google"
 
-        // Preusmeri korisnika na Google Auth URL
-        window.location.href = googleAuthUrl;
-      } else {
-        console.error("Greška: Neuspešan odgovor sa backend servisa.");
-      }
+
     } catch (error) {
       console.error("Došlo je do greške prilikom Google login-a:", error);
     }
 
   };
 
-
-/*function LoginForm() {
-  // Funkcija za login s Google-om
-  const handleGoogleLogin = async () => {
-    try {
-      // Dohvatite OAuth URL sa backend-a
-      const response = await fetch("https://backendservice-xspx.onrender.com/api/auth/google");
-      if (!response.ok) {
-        throw new Error("Failed to fetch Google login URL");
+  /*function LoginForm() {
+    // Funkcija za login s Google-om
+    const handleGoogleLogin = async () => {
+      try {
+        // Dohvatite OAuth URL sa backend-a
+        const response = await fetch("https://backendservice-xspx.onrender.com/api/auth/google");
+        if (!response.ok) {
+          throw new Error("Failed to fetch Google login URL");
+        }
+        const url = await response.text(); // Ovo je URL koji backend generira
+        window.location.href = url; // Preusmjerite korisnika na URL
+      } catch (error) {
+        console.error("Error during Google login:", error);
       }
-      const url = await response.text(); // Ovo je URL koji backend generira
-      window.location.href = url; // Preusmjerite korisnika na URL
-    } catch (error) {
-      console.error("Error during Google login:", error);
-    }
-  };*/
+    };*/
 
-return (
-  <div className="login-page">
-    <Snowfall />
+  return (
+    <div className="login-page">
+      <Snowfall />
 
-    <div className="login-form-container">
-      <img src="/MenZagreb.png" alt="logo slika" className="logo-img"></img>
-      <br />
-      <br />
-      <h1>DOBAR DAN????</h1>
-      <h2>prijavi seee!</h2>
-      <br />
-      <Button
-        variant="dark"
-        size="lg"
-        className="login-submit-btn"
-        onClick={handleGoogleLogin}
-      >
-        <img src={googleLogo} alt="Google logo" className="google-logo" />
-        Sign in with Google
-      </Button>
+      <div className="login-form-container">
+        <img src="/MenZagreb.png" alt="logo slika" className="logo-img"></img>
+        <br />
+        <br />
+        <h1>DOBAR DAN????</h1>
+        <h2>prijavi seee!</h2>
+        <br />
+        <Button
+          variant="dark"
+          size="lg"
+          className="login-submit-btn"
+          onClick={handleGoogleLogin}
+        >
+          <img src={googleLogo} alt="Google logo" className="google-logo" />
+          Sign in with Google
+        </Button>
+      </div>
     </div>
-  </div>
-);
+  );
 }
 
 export default LoginForm;
