@@ -17,7 +17,7 @@
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
-  color: #0098b3;
+  color: red;
 }
 
 .login-submit-btn {
@@ -39,7 +39,7 @@
 }
 
 .login-submit-btn:hover {
-  background-color: #0098b3;
+  background-color: red;
 }
 
 .google-logo {

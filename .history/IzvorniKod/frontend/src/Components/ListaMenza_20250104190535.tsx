@@ -116,7 +116,7 @@ const ListaMenza = () => {
 
             <div className="card-body">
               <h5 className="card-title">{menza.imeMenze}</h5>
-              <div className="card-text">
+              <p className="card-text">
                 {menza.radnaVremena
                   .filter((rv) => rv.dan === todayName)
                   .map((rv) => (
@@ -124,7 +124,7 @@ const ListaMenza = () => {
                       {rv.dan}: {formatTime(rv.pocetak)} - {formatTime(rv.kraj)}
                     </div>
                   ))}
-              </div>
+              </p>
             </div>
           </Link>
         ))}

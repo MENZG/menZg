@@ -38,6 +38,7 @@ const Profil = () => {
     <>
       <NavBar />
       <div>
+        <h1>Favoriti</h1>
         <div className="card-container">
           {favoriteMenze.map((menza) => (
             <div

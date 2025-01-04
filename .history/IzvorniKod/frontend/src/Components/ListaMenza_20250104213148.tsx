@@ -25,19 +25,19 @@ const formatTime = (time: string | null) => {
   return time ? time.split(":").slice(0, 2).join(":") : "Ne radi";
 };
 
+const toggleFavorite = (idMenza: number) => {
+  setFavorites(
+    (prevFavorites) =>
+      prevFavorites.includes(idMenza)
+        ? prevFavorites.filter((id) => id !== idMenza) // Ukloni iz favorita
+        : [...prevFavorites, idMenza] // Dodaj u favorite
+  );
+};
+
 const ListaMenza = () => {
   const [menze, setMenze] = useState<Menza[]>([]);
   const [loading, setLoading] = useState(true);
   const [favorites, setFavorites] = useState<number[]>([]);
-
-  const toggleFavorite = (idMenza: number) => {
-    setFavorites(
-      (prevFavorites) =>
-        prevFavorites.includes(idMenza)
-          ? prevFavorites.filter((id) => id !== idMenza) // Ukloni iz favorita
-          : [...prevFavorites, idMenza] // Dodaj u favorite
-    );
-  };
 
   useEffect(() => {
     const storedFavorites = localStorage.getItem("favorites");
@@ -116,7 +116,7 @@ const ListaMenza = () => {
 
             <div className="card-body">
               <h5 className="card-title">{menza.imeMenze}</h5>
-              <div className="card-text">
+              <p className="card-text">
                 {menza.radnaVremena
                   .filter((rv) => rv.dan === todayName)
                   .map((rv) => (
@@ -124,7 +124,7 @@ const ListaMenza = () => {
                       {rv.dan}: {formatTime(rv.pocetak)} - {formatTime(rv.kraj)}
                     </div>
                   ))}
-              </div>
+              </p>
             </div>
           </Link>
         ))}

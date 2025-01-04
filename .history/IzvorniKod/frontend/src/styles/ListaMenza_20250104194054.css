@@ -64,10 +64,9 @@
     color: gold;
     cursor: pointer;
     position: absolute;
-    top: -1px;
-    right: -1px;
+    top: 0px;
+    right: 0px;
     background-color: white;
-    padding: 4px 10px 4px 10px;
-    border-radius: 10px;
+    border-radius: 5px;
   }
   

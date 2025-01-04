@@ -8,6 +8,10 @@ const apiUrl = import.meta.env.VITE_API_URL;
 console.log("API URL je:", apiUrl);
 
 function LoginForm() {
+  //const navigate = useNavigate();
+
+  // Uzimamo URL za backend iz environment varijable
+
   const handleGoogleLogin = async () => {
     try {
       // Backend URL je tvrdo kodiran

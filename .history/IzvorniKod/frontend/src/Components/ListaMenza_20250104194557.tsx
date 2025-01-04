@@ -9,7 +9,6 @@ import "/src/styles/ListaMenza.css";
 axios.defaults.withCredentials = true;
 
 const apiUrl = import.meta.env.VITE_API_URL;
-console.log("API URL je:", apiUrl);
 
 const daysOfWeek = [
   "Nedjelja",
@@ -31,11 +30,10 @@ const ListaMenza = () => {
   const [favorites, setFavorites] = useState<number[]>([]);
 
   const toggleFavorite = (idMenza: number) => {
-    setFavorites(
-      (prevFavorites) =>
-        prevFavorites.includes(idMenza)
-          ? prevFavorites.filter((id) => id !== idMenza) // Ukloni iz favorita
-          : [...prevFavorites, idMenza] // Dodaj u favorite
+    setFavorites((prevFavorites) =>
+      prevFavorites.includes(idMenza)
+        ? prevFavorites.filter((id) => id !== idMenza)
+        : [...prevFavorites, idMenza]
     );
   };
 
@@ -53,24 +51,11 @@ const ListaMenza = () => {
   useEffect(() => {
     const fetchMenze = async () => {
       try {
-        const response = await axios.get<Menza[]>(
-          //         "https://backendservice-xspx.onrender.com/api/menza",
-          `${apiUrl}/api/menza`,
-          {
-            withCredentials: false,
-          }
-        );
-
-        console.log(response + " ----nikola");
-        /*
-        const apiUrl = "https://backendservice-xspx.onrender.com/api/menza"; // koristimo API URL iz env datoteke
-
-        console.log('API URL ' + apiUrl + ' nikola -----------------')
-        const response = await axios.get<Menza[]>(apiUrl);*/
+        const response = await axios.get<Menza[]>(`${apiUrl}/api/menza`);
         setMenze(response.data);
         setLoading(false);
       } catch (error) {
-        console.error("Greška pri dohvaćanju menzi: -----------", error);
+        console.error("Greška pri dohvaćanju menzi:", error);
       }
     };
 
@@ -86,47 +71,54 @@ const ListaMenza = () => {
         </Spinner>
       </>
     );
+
   const today = new Date().getDay();
   const todayName = daysOfWeek[today];
+
   return (
     <>
       <NavBar />
       <div className="card-container">
         {menze.map((menza) => (
-          <Link
+          <div
             key={menza.idMenza}
-            to={`/menza/${menza.idMenza}`}
             className="card"
-            style={{ width: "18rem", textDecoration: "none", color: "inherit" }}
+            style={{ width: "18rem", position: "relative" }}
           >
-            <img
-              src={`/slika_menza_${menza.idMenza}.jpg`}
-              className="card-img-top"
-              alt={`Slika menze ${menza.imeMenze}`}
-            />
             <div
               className="favorite-icon"
-              onClick={(e) => {
-                e.preventDefault(); // Spriječi navigaciju na link
-                toggleFavorite(menza.idMenza);
-              }}
+              onClick={() => toggleFavorite(menza.idMenza)}
             >
               {favorites.includes(menza.idMenza) ? "★" : "☆"}
             </div>
-
-            <div className="card-body">
-              <h5 className="card-title">{menza.imeMenze}</h5>
-              <div className="card-text">
-                {menza.radnaVremena
-                  .filter((rv) => rv.dan === todayName)
-                  .map((rv) => (
-                    <div key={rv.idRadnoVrijeme}>
-                      {rv.dan}: {formatTime(rv.pocetak)} - {formatTime(rv.kraj)}
-                    </div>
-                  ))}
+            <Link
+              to={`/menza/${menza.idMenza}`}
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              <img
+                src={`/slika_menza_${menza.idMenza}.jpg`}
+                className="card-img-top"
+                alt={`Slika menze ${menza.imeMenze}`}
+              />
+              <div className="card-body">
+                <h5 className="card-title">{menza.imeMenze}</h5>
+                <p className="card-text">
+                  {menza.radnaVremena.some((rv) => rv.dan === todayName) ? (
+                    menza.radnaVremena
+                      .filter((rv) => rv.dan === todayName)
+                      .map((rv) => (
+                        <div key={rv.idRadnoVrijeme}>
+                          {rv.dan}: {formatTime(rv.pocetak)} -{" "}
+                          {formatTime(rv.kraj)}
+                        </div>
+                      ))
+                  ) : (
+                    <div>Ne radi danas</div>
+                  )}
+                </p>
               </div>
-            </div>
-          </Link>
+            </Link>
+          </div>
         ))}
       </div>
     </>

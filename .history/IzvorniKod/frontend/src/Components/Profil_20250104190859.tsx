@@ -12,7 +12,6 @@ const Profil = () => {
 
   useEffect(() => {
     const storedFavorites = localStorage.getItem("favorites");
-    console.log(storedFavorites);
     if (storedFavorites) {
       setFavorites(JSON.parse(storedFavorites));
     }
@@ -21,15 +20,14 @@ const Profil = () => {
   useEffect(() => {
     // Fetchaj sve menze
     const fetchMenze = async () => {
-      const response = await axios.get<Menza[]>(`${apiUrl}/api/menza`, {
-        withCredentials: false,
-      });
+      const response = await axios.get<Menza[]>(`${apiUrl}/api/menza`);
       setMenze(response.data);
     };
 
     fetchMenze();
   }, []);
 
+  // Filtriraj menze koje su među favoritima
   const favoriteMenze = menze.filter((menza) =>
     favorites.includes(menza.idMenza)
   );
@@ -38,6 +36,7 @@ const Profil = () => {
     <>
       <NavBar />
       <div>
+        <h1>Favoriti</h1>
         <div className="card-container">
           {favoriteMenze.map((menza) => (
             <div

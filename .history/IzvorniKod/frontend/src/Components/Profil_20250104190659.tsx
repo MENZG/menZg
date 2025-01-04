@@ -12,7 +12,6 @@ const Profil = () => {
 
   useEffect(() => {
     const storedFavorites = localStorage.getItem("favorites");
-    console.log(storedFavorites);
     if (storedFavorites) {
       setFavorites(JSON.parse(storedFavorites));
     }
@@ -21,43 +20,31 @@ const Profil = () => {
   useEffect(() => {
     // Fetchaj sve menze
     const fetchMenze = async () => {
-      const response = await axios.get<Menza[]>(`${apiUrl}/api/menza`, {
-        withCredentials: false,
-      });
+      const response = await axios.get<Menza[]>(`${apiUrl}/api/menza`);
       setMenze(response.data);
     };
 
     fetchMenze();
   }, []);
 
+  // Filtriraj menze koje su među favoritima
   const favoriteMenze = menze.filter((menza) =>
     favorites.includes(menza.idMenza)
   );
 
   return (
-    <>
+    <div>
       <NavBar />
-      <div>
-        <div className="card-container">
-          {favoriteMenze.map((menza) => (
-            <div
-              key={menza.idMenza}
-              className="card"
-              style={{ width: "18rem" }}
-            >
-              <img
-                src={`/slika_menza_${menza.idMenza}.jpg`}
-                className="card-img-top"
-                alt={`Slika menze ${menza.imeMenze}`}
-              />
-              <div className="card-body">
-                <h5 className="card-title">{menza.imeMenze}</h5>
-              </div>
-            </div>
-          ))}
-        </div>
+      <h1>Favoriti</h1>
+      <div className="card-container">
+        {favoriteMenze.map((menza) => (
+          <div key={menza.idMenza}>
+            <h3>{menza.imeMenze}</h3>
+            {/* Ostale informacije o menzi */}
+          </div>
+        ))}
       </div>
-    </>
+    </div>
   );
 };
 

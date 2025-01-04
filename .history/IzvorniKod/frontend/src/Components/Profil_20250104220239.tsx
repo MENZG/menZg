@@ -21,9 +21,7 @@ const Profil = () => {
   useEffect(() => {
     // Fetchaj sve menze
     const fetchMenze = async () => {
-      const response = await axios.get<Menza[]>(`${apiUrl}/api/menza`, {
-        withCredentials: false,
-      });
+      const response = await axios.get<Menza[]>(`${apiUrl}/api/menza`);
       setMenze(response.data);
     };
 
@@ -38,6 +36,7 @@ const Profil = () => {
     <>
       <NavBar />
       <div>
+        <h1>Favoriti</h1>
         <div className="card-container">
           {favoriteMenze.map((menza) => (
             <div
