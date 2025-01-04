@@ -8,8 +8,7 @@ import "/src/styles/ListaMenza.css";
 
 axios.defaults.withCredentials = true;
 
-const apiUrl = import.meta.env.VITE_API_URL;
-console.log("API URL je:", apiUrl);
+const apiUrl = process.env.REACT_APP_API_URL;
 
 const daysOfWeek = [
   "Nedjelja",
@@ -33,8 +32,7 @@ const ListaMenza = () => {
     const fetchMenze = async () => {
       try {
         const response = await axios.get<Menza[]>(
-          //         "https://backendservice-xspx.onrender.com/api/menza",
-          `${apiUrl}/api/menza`,
+          "https://backendservice-xspx.onrender.com/api/menza",
           {
             withCredentials: false,
           }

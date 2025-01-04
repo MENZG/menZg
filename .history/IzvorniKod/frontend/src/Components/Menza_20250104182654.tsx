@@ -45,7 +45,6 @@ function Menza() {
           `${apiUrl}/api/menza/${id}`
         );
         console.log("ID iz parametara je:", id);
-        console.log("Podaci iz API-ja:", response.data);
 
         setRestaurantData(response.data);
         setLoading(false);

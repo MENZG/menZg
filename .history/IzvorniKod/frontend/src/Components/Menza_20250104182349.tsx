@@ -21,7 +21,7 @@ const initialRestaurantData = {
 };
 
 const apiUrl = import.meta.env.VITE_API_URL;
-console.log("API URL menze je:", apiUrl);
+console.log("API URL je:", apiUrl);
 
 function Menza() {
   const { id } = useParams();
@@ -44,9 +44,6 @@ function Menza() {
           // `https://backendservice-xspx.onrender.com/api/menza/${id}`
           `${apiUrl}/api/menza/${id}`
         );
-        console.log("ID iz parametara je:", id);
-        console.log("Podaci iz API-ja:", response.data);
-
         setRestaurantData(response.data);
         setLoading(false);
       } catch (error) {

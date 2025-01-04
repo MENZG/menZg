@@ -9,7 +9,6 @@ import "/src/styles/ListaMenza.css";
 axios.defaults.withCredentials = true;
 
 const apiUrl = import.meta.env.VITE_API_URL;
-console.log("API URL je:", apiUrl);
 
 const daysOfWeek = [
   "Nedjelja",

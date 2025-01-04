@@ -8,8 +8,6 @@ import "/src/styles/ListaMenza.css";
 
 axios.defaults.withCredentials = true;
 
-const apiUrl = import.meta.env.VITE_API_URL;
-console.log("API URL je:", apiUrl);
 
 const daysOfWeek = [
   "Nedjelja",
@@ -33,11 +31,11 @@ const ListaMenza = () => {
     const fetchMenze = async () => {
       try {
         const response = await axios.get<Menza[]>(
-          //         "https://backendservice-xspx.onrender.com/api/menza",
-          `${apiUrl}/api/menza`,
-          {
-            withCredentials: false,
-          }
+          "https://backendservice-xspx.onrender.com/api/menza", {
+          withCredentials: false
+
+
+        }
         );
 
         console.log(response + " ----nikola");
@@ -49,6 +47,7 @@ const ListaMenza = () => {
         setMenze(response.data);
         setLoading(false);
       } catch (error) {
+
         console.error("Greška pri dohvaćanju menzi: -----------", error);
       }
     };

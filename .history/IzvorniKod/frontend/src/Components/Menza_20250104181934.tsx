@@ -21,7 +21,11 @@ const initialRestaurantData = {
 };
 
 const apiUrl = import.meta.env.VITE_API_URL;
-console.log("API URL menze je:", apiUrl);
+console.log("API URL je:", apiUrl);
+
+//function formatTime(time: string | null) {
+//  return time ? time.split(":").slice(0, 2).join(":") : "Ne radi";
+//}
 
 function Menza() {
   const { id } = useParams();
@@ -41,12 +45,12 @@ function Menza() {
     const fetchRestaurantData = async () => {
       try {
         const response = await axios.get(
-          // `https://backendservice-xspx.onrender.com/api/menza/${id}`
-          `${apiUrl}/api/menza/${id}`
+          `https://backendservice-xspx.onrender.com/api/menza/${id}`
         );
-        console.log("ID iz parametara je:", id);
-        console.log("Podaci iz API-ja:", response.data);
-
+        /*
+        const apiUrl = `https://backendservice-xspx.onrender.com/api/menza/${id}`;
+        console.log("proradi ----- " + apiUrl);
+        const response = await axios.get(apiUrl);*/
         setRestaurantData(response.data);
         setLoading(false);
       } catch (error) {

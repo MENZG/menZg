@@ -4,9 +4,6 @@ import Snowfall from "react-snowfall";
 import googleLogo from "../../public/google-logo.png"; // Make sure to have the Google logo image in the specified path
 import "../styles/Login.css";
 
-const apiUrl = import.meta.env.VITE_API_URL;
-console.log("API URL je:", apiUrl);
-
 function LoginForm() {
   //const navigate = useNavigate();
 
@@ -16,8 +13,7 @@ function LoginForm() {
     try {
       // Backend URL je tvrdo kodiran
       window.location.href =
-        //"https://backendservice-xspx.onrender.com/api/oauth2/authorization/google";
-        `${apiUrl}/api/oauth2/authorization/google`;
+        "https://backendservice-xspx.onrender.com/api/oauth2/authorization/google";
     } catch (error) {
       console.error("Došlo je do greške prilikom Google login-a:", error);
     }

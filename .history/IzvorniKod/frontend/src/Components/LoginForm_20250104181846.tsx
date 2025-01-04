@@ -17,7 +17,7 @@ function LoginForm() {
       // Backend URL je tvrdo kodiran
       window.location.href =
         //"https://backendservice-xspx.onrender.com/api/oauth2/authorization/google";
-        `${apiUrl}/api/oauth2/authorization/google`;
+        `${apiUrl}/api/menza`;
     } catch (error) {
       console.error("Došlo je do greške prilikom Google login-a:", error);
     }
