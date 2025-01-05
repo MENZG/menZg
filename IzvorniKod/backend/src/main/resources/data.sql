@@ -1,23 +1,22 @@
-INSERT INTO korisnik (lozinka, username, role) VALUES
-('password123', 'nikolab2609@gmail.com', 3),
-('password123', 'blazstuzic2@gmail.com', 3),
-('password123', 'karla.sikavica@gmail.com', 1), -- IMAT CE 1 DA MOZE S NIKOM TESTIRAT
-('password123', 'eugenkozomara2904@gmail.com', 3),
-('password123', 'anteaknezovic155@gmail.com', 3),
-('password123', 'rimacniko0@gmail.com', 3),
-('password123', 'dakovicvalentin@gmail.com', 3),
+INSERT INTO korisnik (lozinka, username, role, godine, spol) VALUES
+('password123', 'nikolab2609@gmail.com', 3, 35, 'Muški'),
+('password123', 'blazstuzic2@gmail.com', 3, 28, 'Muški'),
+('password123', 'karla.sikavica@gmail.com', 1, 24, 'Ženski'), -- IMAT CE 1 DA MOZE S NIKOM TESTIRAT
+('password123', 'eugenkozomara2904@gmail.com', 3, 40, 'Muški'),
+('password123', 'anteaknezovic155@gmail.com', 3, 33, 'Ženski'),
+('password123', 'rimacniko0@gmail.com', 3, 29, 'Muški'),
+('password123', 'dakovicvalentin@gmail.com', 3, 38, 'Muški'),
 
+('password123', 'user2@gmail.com', 1, 22, 'Ženski'),
+('password123', 'user3@gmail.com', 1, 26, 'Ženski'),
+('password123', 'user4@gmail.com', 2, 32, 'Muški'),
+('password123', 'user5@gmail.com', 2, 31, 'Muški'),
+('password123', 'user6@gmail.com', 2, 29, 'Muški'),
+('password123', 'user7@gmail.com', 3, 35, 'Muški'),
+('password123', 'user8@gmail.com', 3, 28, 'Ženski'),
+('password123', 'user9@gmail.com', 1, 23, 'Ženski'),
+('password123', 'user10@gmail.com', 1, 27, 'Muški');
 
-
-('password123', 'user2@gmail.com', 1),
-('password123', 'user3@gmail.com', 1),
-('password123', 'user4@gmail.com', 2),
-('password123', 'user5@gmail.com', 2),
-('password123', 'user6@gmail.com', 2),
-('password123', 'user7@gmail.com', 3),
-('password123', 'user8@gmail.com', 3),
-('password123', 'user9@gmail.com', 1),
-('password123', 'user10@gmail.com', 1);
     
   -- SQL za unos podataka o zagrebačkim menzama u tablicu `menza`
 
