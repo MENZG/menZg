@@ -35,11 +35,11 @@ public class Korisnik {
 	public String getRoleName() {
 		switch (role) {
 		case 1:
-			return "STUDENT";
+			return "ROLE_STUDENT";
 		case 2:
-			return "DJELATNIK";
+			return "ROLE_DJELATNIK";
 		case 3:
-			return "ADMIN";
+			return "ROLE_ADMIN";
 		default:
 			return "UNKNOWN_ROLE";
 		}

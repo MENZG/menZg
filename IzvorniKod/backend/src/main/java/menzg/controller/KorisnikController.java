@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -36,11 +37,13 @@ public class KorisnikController {
 
 	// GET: Dohvaća sve korisnike
 	@GetMapping
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public List<Korisnik> getAllKorisnici() {
 		return korisnikService.findAll();
 	}
 
 	// najzajebanija metoda
+	@PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
 	@GetMapping("/user")
 	public Map<String, Object> user(@AuthenticationPrincipal OAuth2User principal) {
 
@@ -73,7 +76,6 @@ public class KorisnikController {
 		if (existingKorisnik.isPresent()) {
 			Korisnik korisnik = existingKorisnik.get();
 			korisnik.setUsername(updatedKorisnik.getUsername());
-			korisnik.setLozinka(updatedKorisnik.getLozinka());
 			korisnik.setRole(updatedKorisnik.getRole());
 			Korisnik savedKorisnik = korisnikService.save(korisnik);
 			return ResponseEntity.ok(savedKorisnik);

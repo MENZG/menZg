@@ -1,5 +1,14 @@
 INSERT INTO korisnik (lozinka, username, role) VALUES
 ('password123', 'nikolab2609@gmail.com', 3),
+('password123', 'blazstuzic2@gmail.com', 3),
+('password123', 'karla.sikavica@gmail.com', 1), -- IMAT CE 1 DA MOZE S NIKOM TESTIRAT
+('password123', 'eugenkozomara2904@gmail.com', 3),
+('password123', 'anteaknezovic155@gmail.com', 3),
+('password123', 'rimacniko0@gmail.com', 3),
+('password123', 'dakovicvalentin@gmail.com', 3),
+
+
+
 ('password123', 'user2@gmail.com', 1),
 ('password123', 'user3@gmail.com', 1),
 ('password123', 'user4@gmail.com', 2),
