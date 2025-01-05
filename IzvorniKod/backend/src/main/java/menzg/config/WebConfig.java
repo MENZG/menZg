@@ -1,5 +1,7 @@
 package menzg.config;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -36,11 +38,22 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 //	}
 
 @Configuration
-public class WebConfig implements WebMvcConfigurer {
+public class WebConfig {
 
-	@Override
-	public void addCorsMappings(CorsRegistry registry) {
-		registry.addMapping("/**").allowedOrigins("https://frontendservice-l0s1.onrender.com")
-				.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS").allowedHeaders("*");
+	@Value("${progi.frontend.url}")
+	private String frontendUrl; // Dinamički učitani frontend URL iz application.properties
+
+	@Bean
+	public WebMvcConfigurer corsConfigurer() {
+		return new WebMvcConfigurer() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				// Dodaj dinamički učitani frontend URL
+				registry.addMapping("/**").allowedOrigins(frontendUrl) // Dozvoljeni izvor iz application.properties
+						.allowedMethods("GET", "POST", "PUT", "DELETE") // Dozvoljene HTTP metode
+						.allowedHeaders("*") // Dozvoljeni svi zaglavlja
+						.allowCredentials(true); // Dozvoli kolačiće (ako je potrebno)
+			}
+		};
 	}
 }

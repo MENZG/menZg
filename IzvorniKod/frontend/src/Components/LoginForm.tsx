@@ -8,16 +8,12 @@ const apiUrl = import.meta.env.VITE_API_URL;
 console.log("API URL je:", apiUrl);
 
 function LoginForm() {
-  //const navigate = useNavigate();
-
-  // Uzimamo URL za backend iz environment varijable
-
   const handleGoogleLogin = async () => {
     try {
       // Backend URL je tvrdo kodiran
       window.location.href =
         //"https://backendservice-xspx.onrender.com/api/oauth2/authorization/google";
-        `${apiUrl}/api/oauth2/authorization/google`;
+        `${apiUrl}/oauth2/authorization/google`;
     } catch (error) {
       console.error("Došlo je do greške prilikom Google login-a:", error);
     }
@@ -47,8 +43,8 @@ function LoginForm() {
         <img src="/MenZagreb.png" alt="logo slika" className="logo-img"></img>
         <br />
         <br />
-        <h1>DOBAR DAN????</h1>
-        <h2>prijavi seee!</h2>
+        <h1>Ne da ti se čekati u redu za menzu?</h1>
+        <h2>Prijavi se!</h2>
         <br />
         <Button
           variant="dark"

@@ -28,15 +28,36 @@ const formatTime = (time: string | null) => {
 const ListaMenza = () => {
   const [menze, setMenze] = useState<Menza[]>([]);
   const [loading, setLoading] = useState(true);
+  const [favorites, setFavorites] = useState<number[]>([]);
+
+  const toggleFavorite = (idMenza: number) => {
+    setFavorites(
+      (prevFavorites) =>
+        prevFavorites.includes(idMenza)
+          ? prevFavorites.filter((id) => id !== idMenza) // Ukloni iz favorita
+          : [...prevFavorites, idMenza] // Dodaj u favorite
+    );
+  };
+
+  useEffect(() => {
+    const storedFavorites = localStorage.getItem("favorites");
+    if (storedFavorites) {
+      setFavorites(JSON.parse(storedFavorites));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+  }, [favorites]);
 
   useEffect(() => {
     const fetchMenze = async () => {
       try {
         const response = await axios.get<Menza[]>(
           //         "https://backendservice-xspx.onrender.com/api/menza",
-          `${apiUrl}/api/menza`,
+          `${apiUrl}/menza`,
           {
-            withCredentials: false,
+            withCredentials: true, // OVO MORA BIT TRUE KOJI KURAC
           }
         );
 
@@ -83,9 +104,19 @@ const ListaMenza = () => {
               className="card-img-top"
               alt={`Slika menze ${menza.imeMenze}`}
             />
+            <div
+              className="favorite-icon"
+              onClick={(e) => {
+                e.preventDefault(); // Spriječi navigaciju na link
+                toggleFavorite(menza.idMenza);
+              }}
+            >
+              {favorites.includes(menza.idMenza) ? "★" : "☆"}
+            </div>
+
             <div className="card-body">
               <h5 className="card-title">{menza.imeMenze}</h5>
-              <p className="card-text">
+              <div className="card-text">
                 {menza.radnaVremena
                   .filter((rv) => rv.dan === todayName)
                   .map((rv) => (
@@ -93,7 +124,7 @@ const ListaMenza = () => {
                       {rv.dan}: {formatTime(rv.pocetak)} - {formatTime(rv.kraj)}
                     </div>
                   ))}
-              </p>
+              </div>
             </div>
           </Link>
         ))}

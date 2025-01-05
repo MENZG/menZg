@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
 import axios from "axios";
-import "/src/styles/ListaMenza.css";
+import { useEffect, useState } from "react";
 import NavBarEmployee from "./NavBarEmployee";
+import "/src/styles/ListaMenza.css";
 
 interface Menza {
   id: string;
@@ -17,7 +17,7 @@ const ListaMenza = () => {
 
   useEffect(() => {
     axios
-      .get("/api/menze")
+      .get("/menze")
       .then((response) => {
         console.log("Full response:", response);
         console.log("response.data:", response.data);

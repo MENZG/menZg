@@ -37,8 +37,8 @@ public class Poruka {
 	private Chat chat; // Povezivanje s entitetom Chat (relacija ManyToOne)
 
 	@ManyToOne
-	@JoinColumn(name = "idStudent", nullable = true)
-	private Student student;
+	@JoinColumn(name = "idKorisnik", nullable = true)
+	private Korisnik korisnik;
 
 	@ManyToOne
 	@JoinColumn(name = "idAdmin", nullable = true)

@@ -1,36 +1,14 @@
-
--- Unos podataka u tablicu korisnik
-INSERT INTO korisnik (lozinka, username, role)
-VALUES ('password1', 'student1', 'ROLE_USER'),
-       ('password2', 'student2', 'ROLE_USER'),
-       ('password3', 'student3', 'ROLE_USER'),
-       ('password4', 'student4', 'ROLE_USER');
-
-INSERT INTO student (id_korisnik, spol, dob)
-VALUES (1, 'M', 20), 
-       (2, 'F', 22), 
-       (3, NULL, 21),  -- Ovde je spol NULL
-       (4, 'F', 23);
-       
-       
-       INSERT INTO korisnik (lozinka, username, role)
-VALUES 
-    ('123', 'admin1', 'ROLE_USER'),
-    ('123', 'admin2', 'ROLE_USER'),
-    ('123', 'admin3', 'ROLE_USER'),
-    ('123', 'admin4', 'ROLE_USER');
-    
-    
-    
-    -- Unos admina u tablicu appadmin
-INSERT INTO appadmin (id_Korisnik, admin_status)
-VALUES
-    (1, 'superadmin'),  -- 'admin1' je sada povezan sa 'superadmin' statusom
-    (2, 'admin'),       -- 'admin2' je sada povezan sa 'admin' statusom
-    (3, 'admin'),       -- 'admin3' je sada povezan sa 'admin' statusom
-    (4, 'superadmin');  -- 'admin4' je sada povezan sa 'superadmin' statusom
-    
-    
+INSERT INTO korisnik (lozinka, username, role) VALUES
+('password123', 'nikolab2609@gmail.com', 3),
+('password123', 'user2@gmail.com', 1),
+('password123', 'user3@gmail.com', 1),
+('password123', 'user4@gmail.com', 2),
+('password123', 'user5@gmail.com', 2),
+('password123', 'user6@gmail.com', 2),
+('password123', 'user7@gmail.com', 3),
+('password123', 'user8@gmail.com', 3),
+('password123', 'user9@gmail.com', 1),
+('password123', 'user10@gmail.com', 1);
     
   -- SQL za unos podataka o zagrebačkim menzama u tablicu `menza`
 

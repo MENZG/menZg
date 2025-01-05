@@ -42,7 +42,7 @@ function Menza() {
       try {
         const response = await axios.get(
           // `https://backendservice-xspx.onrender.com/api/menza/${id}`
-          `${apiUrl}/api/menza/${id}`
+          `${apiUrl}/menza/${id}`
         );
         console.log("ID iz parametara je:", id);
         console.log("Podaci iz API-ja:", response.data);

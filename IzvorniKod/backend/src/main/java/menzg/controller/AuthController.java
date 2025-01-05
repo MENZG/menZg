@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +23,6 @@ import jakarta.servlet.http.HttpServletResponse;
 //  https://backendservice-xspx.onrender.com
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = "*")
 //@CrossOrigin(origins = "https://frontendservice-l0s1.onrender.com")
 public class AuthController {
 

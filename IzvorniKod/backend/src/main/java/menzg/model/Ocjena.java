@@ -32,7 +32,7 @@ public class Ocjena {
 
 	@ManyToOne
 	@JoinColumn(name = "idKorisnik", nullable = false)
-	private Student student; // Veza s entitetom Student (strani ključ)
+	private Korisnik korisnik; // Veza s entitetom Student (strani ključ)
 
 	@ManyToOne
 	@JoinColumn(name = "idMenza", nullable = false)

@@ -19,7 +19,7 @@ public class Favorit {
 	@Id
 	@ManyToOne
 	@JoinColumn(name = "idKorisnik", nullable = false)
-	private Student korisnik;
+	private Korisnik korisnik;
 
 	@Id
 	@ManyToOne
