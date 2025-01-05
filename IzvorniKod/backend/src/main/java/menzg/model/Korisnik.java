@@ -21,6 +21,54 @@ public class Korisnik {
 	@Column(name = "idKorisnik")
 	private Long idKorisnik;
 
+	public Long getIdKorisnik() {
+		return idKorisnik;
+	}
+
+	public void setIdKorisnik(Long idKorisnik) {
+		this.idKorisnik = idKorisnik;
+	}
+
+	public String getLozinka() {
+		return lozinka;
+	}
+
+	public void setLozinka(String lozinka) {
+		this.lozinka = lozinka;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public Integer getRole() {
+		return role;
+	}
+
+	public void setRole(Integer role) {
+		this.role = role;
+	}
+
+	public Integer getGodine() {
+		return godine;
+	}
+
+	public void setGodine(Integer godine) {
+		this.godine = godine;
+	}
+
+	public String getSpol() {
+		return spol;
+	}
+
+	public void setSpol(String spol) {
+		this.spol = spol;
+	}
+
 	@Column(name = "lozinka", nullable = true)
 	private String lozinka;
 
