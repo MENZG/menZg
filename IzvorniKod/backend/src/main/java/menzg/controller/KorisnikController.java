@@ -52,6 +52,7 @@ public class KorisnikController {
 	}
 
 	@GetMapping("/{id}")
+	@PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
 	public ResponseEntity<Object> getKorisnikById(@PathVariable Long id) {
 		Optional<Korisnik> korisnik = korisnikService.findById(id);
 		if (korisnik.isPresent()) {
@@ -71,12 +72,19 @@ public class KorisnikController {
 
 	// PUT: Ažurira korisnika po ID-u
 	@PutMapping("/{id}")
+	@PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
 	public ResponseEntity<Korisnik> updateKorisnik(@PathVariable Long id, @RequestBody Korisnik updatedKorisnik) {
 		Optional<Korisnik> existingKorisnik = korisnikService.findById(id);
 		if (existingKorisnik.isPresent()) {
+
+			System.out.println("KORISNIK S TIM IDIJEM KOJEG ZELIS AZURIRAT POSTOJI :)");
 			Korisnik korisnik = existingKorisnik.get();
+
+			// Ažurirati podatke koji se mogu mijenjati
 			korisnik.setUsername(updatedKorisnik.getUsername());
-			korisnik.setRole(updatedKorisnik.getRole());
+			korisnik.setGodine(updatedKorisnik.getGodine()); // Ažuriramo godine
+			korisnik.setSpol(updatedKorisnik.getSpol()); // Ažuriramo spol
+
 			Korisnik savedKorisnik = korisnikService.save(korisnik);
 			return ResponseEntity.ok(savedKorisnik);
 		} else {
@@ -86,6 +94,7 @@ public class KorisnikController {
 
 	// DELETE: Briše korisnika po ID-u
 	@DeleteMapping("/{id}")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<Void> deleteKorisnik(@PathVariable Long id) {
 		if (korisnikService.findById(id).isPresent()) {
 			korisnikService.deleteById(id);

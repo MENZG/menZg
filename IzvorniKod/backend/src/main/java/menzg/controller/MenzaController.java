@@ -33,7 +33,7 @@ public class MenzaController {
 
 	// vraca sve menze
 	@GetMapping("")
-	@PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')") // Ova ruta će biti
+	@PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
 	public ResponseEntity<List<Menza>> listMenzas(@AuthenticationPrincipal OAuth2User principal) {
 		List<Menza> menze = menzaService.listAll();
 

@@ -31,6 +31,12 @@ public class Korisnik {
 	private Integer role = 1; // možeš inicijalno dodijeliti ulogu "ROLE_USER"
 	// 1 je user, 2 je teta u menzi, 3 je admin
 
+	@Column(name = "godine", nullable = true)
+	private Integer godine; // Spremanje godina korisnika
+
+	@Column(name = "spol", nullable = true)
+	private String spol; // Spremanje spola korisnika (M/F ili ne
+
 	// Utility method to get role name
 	public String getRoleName() {
 		switch (role) {
