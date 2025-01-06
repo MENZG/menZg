@@ -19,6 +19,7 @@ import ListaMenzaEmployee from "./Components/ListaMenzaEmployee.tsx";
 import AddMeals from "./Components/AddMeals.tsx";
 import AddWorkingHours from "./Components/AddWorkingHours.tsx";
 import Menza from "./Components/Menza.tsx";
+import Korisnici from "./Components/Korisnici.tsx";
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
           element={<AddWorkingHours />}
         />
         <Route path="menza/:id" element={<Menza />} />
+        <Route path="korisnici" element={<Korisnici />} />
       </Routes>
     </Router>
   );

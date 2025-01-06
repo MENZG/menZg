@@ -20,6 +20,10 @@ const NavBarAdmin = () => {
   const handleOnClickLogo = () => {
     navigate("/menze");
   };
+
+  const handleOnClickUsers = () => {
+    navigate("/korisnici")
+  }
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary navbar-bg">
       <div className="container-fluid">
@@ -44,6 +48,11 @@ const NavBarAdmin = () => {
             <li className="nav-item">
               <Button className="nav-btn" onClick={handleOnClickAddEmployee}>
                 dodavanje djelatnika
+              </Button>
+            </li>
+            <li className="nav-item">
+              <Button className="nav-btn" onClick={handleOnClickUsers}>
+                korisnici
               </Button>
             </li>
           </ul>
