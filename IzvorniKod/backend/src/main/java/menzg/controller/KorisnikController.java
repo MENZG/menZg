@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -95,12 +96,12 @@ public class KorisnikController {
 	// DELETE: Briše korisnika po ID-u
 	@DeleteMapping("/{id}")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public ResponseEntity<Void> deleteKorisnik(@PathVariable Long id) {
+	public ResponseEntity<String> deleteKorisnik(@PathVariable Long id) {
 		if (korisnikService.findById(id).isPresent()) {
 			korisnikService.deleteById(id);
-			return ResponseEntity.noContent().build();
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Korisnik uspješno obrisan.");
 		} else {
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Korisnik s ID-em " + id + " nije pronađen.");
 		}
 	}
 
