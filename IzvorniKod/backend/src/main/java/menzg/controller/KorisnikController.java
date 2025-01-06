@@ -38,7 +38,6 @@ public class KorisnikController {
 
 	// GET: Dohvaća sve korisnike
 	@GetMapping
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public List<Korisnik> getAllKorisnici() {
 		return korisnikService.findAll();
 	}
