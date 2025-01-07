@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -32,13 +33,15 @@ public class SecurityConfig {
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http.csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**") // Isključivanje CSRF zaštite za H2 konzolu
+		http.csrf(csrf -> csrf.disable()// Isključivanje CSRF zaštite za H2 konzolu
 		).authorizeHttpRequests(auth -> auth.requestMatchers("/h2-console/**").permitAll() // Dopuštanje pristupa H2
-																							// konzoli
+				.requestMatchers(HttpMethod.DELETE, "/korisnici/**").permitAll().requestMatchers("/korisnici")
+				.permitAll() // Dozvoliti DELETE za sve // konzoli
 				.anyRequest().authenticated() // Za sve ostale rute zahtijeva autentifikaciju
 		).headers(headers -> headers.frameOptions().sameOrigin() // Omogućavanje iframe za H2 konzolu
 		).oauth2Login(oauth -> oauth.successHandler((request, response, authentication) -> {
 			// Pozovite KorisnikService da spremi ili ažurira korisnika
+
 			OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
 			Korisnik korisnik = korisnikService.saveOrUpdateGoogleUser(oAuth2User);
 

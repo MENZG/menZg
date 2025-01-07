@@ -50,7 +50,7 @@ public class WebConfig {
 			public void addCorsMappings(CorsRegistry registry) {
 				// Dodaj dinamički učitani frontend URL
 				registry.addMapping("/**").allowedOrigins(frontendUrl) // Dozvoljeni izvor iz application.properties
-						.allowedMethods("GET", "POST", "PUT", "DELETE") // Dozvoljene HTTP metode
+						.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Dozvoljene HTTP metode
 						.allowedHeaders("*") // Dozvoljeni svi zaglavlja
 						.allowCredentials(true); // Dozvoli kolačiće (ako je potrebno)
 			}

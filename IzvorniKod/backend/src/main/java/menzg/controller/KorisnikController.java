@@ -94,8 +94,19 @@ public class KorisnikController {
 
 	// DELETE: Briše korisnika po ID-u
 	@DeleteMapping("/{id}")
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<String> deleteKorisnik(@PathVariable Long id) {
+
+		if (korisnikService.findById(id).isPresent()) {
+			korisnikService.deleteById(id);
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Korisnik uspješno obrisan.");
+		} else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Korisnik s ID-em " + id + " nije pronađen.");
+		}
+	}
+
+	@GetMapping("/{id}/a")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<String> deleteKorisnik2(@PathVariable Long id) {
 		if (korisnikService.findById(id).isPresent()) {
 			korisnikService.deleteById(id);
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Korisnik uspješno obrisan.");
