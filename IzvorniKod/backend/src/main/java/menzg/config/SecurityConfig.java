@@ -34,10 +34,16 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf(csrf -> csrf.disable()// Isključivanje CSRF zaštite za H2 konzolu
-		).authorizeHttpRequests(auth -> auth.requestMatchers("/h2-console/**").permitAll() // Dopuštanje pristupa H2
-				.requestMatchers(HttpMethod.DELETE, "/korisnici/**").permitAll().requestMatchers("/korisnici")
-				.permitAll() // Dozvoliti DELETE za sve // konzoli
-				.anyRequest().authenticated() // Za sve ostale rute zahtijeva autentifikaciju
+		).authorizeHttpRequests(
+
+				auth -> auth.requestMatchers("/h2-console/**").permitAll().requestMatchers(HttpMethod.OPTIONS, "/**")
+						.permitAll() // Dozvoli OPTIONS zahtjeve za sve rute// Dopuštanje pristupa H2 konzoli
+						.requestMatchers(HttpMethod.DELETE, "/korisnici/**").permitAll() // DELETE dopušten samo za
+																							// ADMIN
+
+						// autentifikaciju
+						.anyRequest().authenticated() // Sve ostale// sve
+		// autentifikaciju
 		).headers(headers -> headers.frameOptions().sameOrigin() // Omogućavanje iframe za H2 konzolu
 		).oauth2Login(oauth -> oauth.successHandler((request, response, authentication) -> {
 			// Pozovite KorisnikService da spremi ili ažurira korisnika
