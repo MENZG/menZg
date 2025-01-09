@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import NavBarEmployee from "./NavBarEmployee";
+import NavBar from "./NavBar";
 import "/src/styles/ListaMenza.css";
 
 interface Menza {
@@ -32,7 +32,7 @@ const ListaMenza = () => {
 
   return (
     <>
-      <NavBarEmployee />
+      <NavBar />
       <div className="card-container">
         {menze && menze.length > 0 ? (
           menze.map((menza) => (

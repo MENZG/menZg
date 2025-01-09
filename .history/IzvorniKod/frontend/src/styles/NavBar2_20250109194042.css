@@ -1,0 +1,36 @@
+.logo-img {
+    height: 14vh;
+    margin: 0;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    height: 16vh;
+}
+
+.log-btn{
+    color: white;
+    background-color: #0098b3;
+    border-radius: 50px;
+    font-size: small;
+}
+
+.role-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    font-size: small;
+}
+
+.role-p{
+    margin-bottom: 0;
+    margin-right: 10px;
+}
