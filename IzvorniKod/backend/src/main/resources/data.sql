@@ -61,6 +61,19 @@ VALUES
     ('Menza Agronomski fakultet', 'Svetošimunska 25, Zagreb'), --17
     ('Menza PMF', 'Bijenička cesta 30, Zagreb'), --18
     ('Menza Muzička akademija', 'Trg Republike Hrvatske 12, Zagreb'); --19
+    
+    
+  INSERT INTO korisnik_menza (id_Korisnik, id_Menza) VALUES
+(1, 1), -- Nikolina omiljena menza je Menza 1
+(1, 2), -- Nikolina omiljena menza je Menza 2
+(2, 3), -- Blaž omiljena menza je Menza 3
+(3, 1), -- Karla omiljena menza je Menza 1
+(3, 4), -- Karla omiljena menza je Menza 4
+(4, 2), -- Eugen omiljena menza je Menza 2
+(5, 3), -- Ante omiljena menza je Menza 3
+(6, 5), -- Rimac omiljena menza je Menza 5
+(7, 1), -- Valentin omiljena menza je Menza 1
+(7, 3); -- Valentin omiljena menza je Menza 3
 
     
     
