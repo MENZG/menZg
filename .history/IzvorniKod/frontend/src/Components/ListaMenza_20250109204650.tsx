@@ -61,6 +61,12 @@ const ListaMenza = () => {
             withCredentials: true, // OVO MORA BIT TRUE KOJI KURAC
           }
         );
+
+        /*
+        const apiUrl = "https://backendservice-xspx.onrender.com/api/menza"; // koristimo API URL iz env datoteke
+
+        console.log('API URL ' + apiUrl + ' nikola -----------------')
+        const response = await axios.get<Menza[]>(apiUrl);*/
         setMenze(response.data);
         setLoading(false);
       } catch (error) {
@@ -80,7 +86,6 @@ const ListaMenza = () => {
             withCredentials: true,
           }
         );
-        setKorisnik(response.data);
       } catch (error) {
         console.error("Greška pri dohvaćanju korisnika: ", error);
       }

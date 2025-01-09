@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Spinner } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { Menza, UlogiraniKorisnik } from "../types.ts";
+import { Menza } from "../types.ts";
 import NavBar from "./NavBar";
 import "/src/styles/ListaMenza.css";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
@@ -29,63 +29,69 @@ const ListaMenza = () => {
   const [menze, setMenze] = useState<Menza[]>([]);
   const [loading, setLoading] = useState(true);
   const [favorites, setFavorites] = useState<number[]>([]);
-  const [korisnik, setKorisnik] = useState<UlogiraniKorisnik | null>(null);
 
-  const toggleFavorite = (idMenza: number) => {
-    setFavorites(
-      (prevFavorites) =>
-        prevFavorites.includes(idMenza)
-          ? prevFavorites.filter((id) => id !== idMenza) // Ukloni iz favorita
-          : [...prevFavorites, idMenza] // Dodaj u favorite
-    );
+  // API funkcija za dodavanje u favorite
+  const addToFavorites = async (idMenza: number) => {
+    try {
+      await axios.post(`${apiUrl}/korisnici/1/omiljenaMenza/${idMenza}`);
+      setFavorites((prevFavorites) => [...prevFavorites, idMenza]);
+    } catch (error) {
+      console.error("Error adding menza to favorites:", error);
+    }
   };
 
-  useEffect(() => {
-    const storedFavorites = localStorage.getItem("favorites");
-    if (storedFavorites) {
-      setFavorites(JSON.parse(storedFavorites));
+  // API funkcija za uklanjanje iz favorita
+  const removeFromFavorites = async (idMenza: number) => {
+    try {
+      await axios.delete(`${apiUrl}/korisnici/1/omiljenaMenza/${idMenza}`);
+      setFavorites((prevFavorites) =>
+        prevFavorites.filter((id) => id !== idMenza)
+      );
+    } catch (error) {
+      console.error("Error removing menza from favorites:", error);
     }
+  };
+
+  // Toggle funkcija za favorite (poziva odgovarajući API)
+  const toggleFavorite = (idMenza: number) => {
+    if (favorites.includes(idMenza)) {
+      removeFromFavorites(idMenza);
+    } else {
+      addToFavorites(idMenza);
+    }
+  };
+
+  // Dohvaćanje omiljenih menzi prilikom inicijalizacije
+  useEffect(() => {
+    const fetchFavorites = async () => {
+      try {
+        const response = await axios.get<number[]>(
+          `${apiUrl}/korisnici/1/omiljenaMenza`
+        );
+        setFavorites(response.data);
+      } catch (error) {
+        console.error("Error fetching favorite menze:", error);
+      }
+    };
+
+    fetchFavorites();
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem("favorites", JSON.stringify(favorites));
-  }, [favorites]);
-
+  // Dohvaćanje svih menzi
   useEffect(() => {
     const fetchMenze = async () => {
       try {
-        const response = await axios.get<Menza[]>(
-          //         "https://backendservice-xspx.onrender.com/api/menza",
-          `${apiUrl}/menza`,
-          {
-            withCredentials: true, // OVO MORA BIT TRUE KOJI KURAC
-          }
-        );
+        const response = await axios.get<Menza[]>(`${apiUrl}/menza`, {
+          withCredentials: true,
+        });
         setMenze(response.data);
         setLoading(false);
       } catch (error) {
-        console.error("Greška pri dohvaćanju menzi: -----------", error);
+        console.error("Greška pri dohvaćanju menzi:", error);
       }
     };
 
     fetchMenze();
-  }, []);
-
-  useEffect(() => {
-    const fetchCurrentUser = async () => {
-      try {
-        const response = await axios.get<UlogiraniKorisnik>(
-          `${apiUrl}/korisnici/user`,
-          {
-            withCredentials: true,
-          }
-        );
-        setKorisnik(response.data);
-      } catch (error) {
-        console.error("Greška pri dohvaćanju korisnika: ", error);
-      }
-    };
-    fetchCurrentUser();
   }, []);
 
   if (loading)
@@ -97,8 +103,10 @@ const ListaMenza = () => {
         </Spinner>
       </>
     );
+
   const today = new Date().getDay();
   const todayName = daysOfWeek[today];
+
   return (
     <>
       <NavBar />

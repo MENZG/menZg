@@ -33,15 +33,6 @@ const Favoriti = () => {
     favorites.includes(menza.idMenza)
   );
 
-  const toggleFavorite = (idMenza: number) => {
-    setFavorites(
-      (prevFavorites) =>
-        prevFavorites.includes(idMenza)
-          ? prevFavorites.filter((id) => id !== idMenza) // Ukloni iz favorita
-          : [...prevFavorites, idMenza] // Dodaj u favorite
-    );
-  };
-
   const handleDelete = () => {
     axios
       .delete(`${apiUrl}/korisnici/{korisnikId}/omiljenaMenza/{menzaId}`, {

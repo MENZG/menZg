@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Menza } from "../types";
 import NavBar from "./NavBar";
 import axios from "axios";
-import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { Button } from "react-bootstrap";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -33,15 +33,6 @@ const Favoriti = () => {
     favorites.includes(menza.idMenza)
   );
 
-  const toggleFavorite = (idMenza: number) => {
-    setFavorites(
-      (prevFavorites) =>
-        prevFavorites.includes(idMenza)
-          ? prevFavorites.filter((id) => id !== idMenza) // Ukloni iz favorita
-          : [...prevFavorites, idMenza] // Dodaj u favorite
-    );
-  };
-
   const handleDelete = () => {
     axios
       .delete(`${apiUrl}/korisnici/{korisnikId}/omiljenaMenza/{menzaId}`, {
@@ -71,22 +62,10 @@ const Favoriti = () => {
                 className="card-img-top"
                 alt={`Slika menze ${menza.imeMenze}`}
               />
-              <div
-                className="favorite-icon"
-                onClick={(e) => {
-                  e.preventDefault(); // Spriječi navigaciju na link
-                  toggleFavorite(menza.idMenza);
-                }}
-              >
-                {favorites.includes(menza.idMenza) ? (
-                  <FaHeart size={17} />
-                ) : (
-                  <FaRegHeart size={17} />
-                )}
-              </div>
               <div className="card-body">
                 <h5 className="card-title">{menza.imeMenze}</h5>
               </div>
+              <Button onClick={handleDelete}>Delete</Button>
             </div>
           ))}
         </div>

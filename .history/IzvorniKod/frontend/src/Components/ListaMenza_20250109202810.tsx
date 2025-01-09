@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Spinner } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { Menza, UlogiraniKorisnik } from "../types.ts";
+import { Menza } from "../types.ts";
 import NavBar from "./NavBar";
 import "/src/styles/ListaMenza.css";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
@@ -29,7 +29,6 @@ const ListaMenza = () => {
   const [menze, setMenze] = useState<Menza[]>([]);
   const [loading, setLoading] = useState(true);
   const [favorites, setFavorites] = useState<number[]>([]);
-  const [korisnik, setKorisnik] = useState<UlogiraniKorisnik | null>(null);
 
   const toggleFavorite = (idMenza: number) => {
     setFavorites(
@@ -61,6 +60,12 @@ const ListaMenza = () => {
             withCredentials: true, // OVO MORA BIT TRUE KOJI KURAC
           }
         );
+
+        /*
+        const apiUrl = "https://backendservice-xspx.onrender.com/api/menza"; // koristimo API URL iz env datoteke
+
+        console.log('API URL ' + apiUrl + ' nikola -----------------')
+        const response = await axios.get<Menza[]>(apiUrl);*/
         setMenze(response.data);
         setLoading(false);
       } catch (error) {
@@ -69,23 +74,6 @@ const ListaMenza = () => {
     };
 
     fetchMenze();
-  }, []);
-
-  useEffect(() => {
-    const fetchCurrentUser = async () => {
-      try {
-        const response = await axios.get<UlogiraniKorisnik>(
-          `${apiUrl}/korisnici/user`,
-          {
-            withCredentials: true,
-          }
-        );
-        setKorisnik(response.data);
-      } catch (error) {
-        console.error("Greška pri dohvaćanju korisnika: ", error);
-      }
-    };
-    fetchCurrentUser();
   }, []);
 
   if (loading)

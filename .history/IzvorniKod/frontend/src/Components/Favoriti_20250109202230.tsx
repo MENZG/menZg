@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Menza } from "../types";
 import NavBar from "./NavBar";
 import axios from "axios";
-import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { Button } from "react-bootstrap";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -32,15 +32,6 @@ const Favoriti = () => {
   const favoriteMenze = menze.filter((menza) =>
     favorites.includes(menza.idMenza)
   );
-
-  const toggleFavorite = (idMenza: number) => {
-    setFavorites(
-      (prevFavorites) =>
-        prevFavorites.includes(idMenza)
-          ? prevFavorites.filter((id) => id !== idMenza) // Ukloni iz favorita
-          : [...prevFavorites, idMenza] // Dodaj u favorite
-    );
-  };
 
   const handleDelete = () => {
     axios

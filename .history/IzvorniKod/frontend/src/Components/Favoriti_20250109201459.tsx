@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Menza } from "../types";
 import NavBar from "./NavBar";
 import axios from "axios";
-import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { Button } from "react-bootstrap";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -33,25 +33,18 @@ const Favoriti = () => {
     favorites.includes(menza.idMenza)
   );
 
-  const toggleFavorite = (idMenza: number) => {
-    setFavorites(
-      (prevFavorites) =>
-        prevFavorites.includes(idMenza)
-          ? prevFavorites.filter((id) => id !== idMenza) // Ukloni iz favorita
-          : [...prevFavorites, idMenza] // Dodaj u favorite
-    );
-  };
-
-  const handleDelete = () => {
+  const handleDelete = (idKorisnik: string) => {
     axios
-      .delete(`${apiUrl}/korisnici/{korisnikId}/omiljenaMenza/{menzaId}`, {
-        withCredentials: true,
-      })
+      .delete(`${apiUrl}/korisnici/${idKorisnik}`, { withCredentials: true })
       .then(() => {
-        console.log(`Menza deleted successfully`);
+        // Remove the deleted user from the state
+        setData((prevData) =>
+          prevData.filter((korisnik) => korisnik.idKorisnik !== idKorisnik)
+        );
+        console.log(`User with ID: ${idKorisnik} deleted successfully`);
       })
       .catch((error) => {
-        console.error("There was an error deleting the menza!", error);
+        console.error("There was an error deleting the user!", error);
       });
   };
 
@@ -71,22 +64,10 @@ const Favoriti = () => {
                 className="card-img-top"
                 alt={`Slika menze ${menza.imeMenze}`}
               />
-              <div
-                className="favorite-icon"
-                onClick={(e) => {
-                  e.preventDefault(); // Spriječi navigaciju na link
-                  toggleFavorite(menza.idMenza);
-                }}
-              >
-                {favorites.includes(menza.idMenza) ? (
-                  <FaHeart size={17} />
-                ) : (
-                  <FaRegHeart size={17} />
-                )}
-              </div>
               <div className="card-body">
                 <h5 className="card-title">{menza.imeMenze}</h5>
               </div>
+              <Button>Delete</Button>
             </div>
           ))}
         </div>
