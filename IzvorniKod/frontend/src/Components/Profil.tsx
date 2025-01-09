@@ -4,7 +4,6 @@ import NavBar from "./NavBar";
 import axios from "axios";
 
 const apiUrl = import.meta.env.VITE_API_URL;
-console.log("API URL je:", apiUrl);
 
 const Profil = () => {
   const [favorites, setFavorites] = useState<number[]>([]);
@@ -19,15 +18,14 @@ const Profil = () => {
   }, []);
 
   useEffect(() => {
-    // Fetchaj sve menze
-    const fetchMenze = async () => {
-      const response = await axios.get<Menza[]>(`${apiUrl}/api/menza`, {
-        withCredentials: false,
+    axios
+      .get(`${apiUrl}/menza`)
+      .then((response) => {
+        setMenze(response.data);
+      })
+      .catch((error) => {
+        console.error("There was an error fetching the data!", error);
       });
-      setMenze(response.data);
-    };
-
-    fetchMenze();
   }, []);
 
   const favoriteMenze = menze.filter((menza) =>

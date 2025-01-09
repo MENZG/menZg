@@ -9,7 +9,6 @@ import "/src/styles/ListaMenza.css";
 axios.defaults.withCredentials = true;
 
 const apiUrl = import.meta.env.VITE_API_URL;
-console.log("API URL je:", apiUrl);
 
 const daysOfWeek = [
   "Nedjelja",
@@ -61,7 +60,6 @@ const ListaMenza = () => {
           }
         );
 
-        console.log(response + " ----nikola");
         /*
         const apiUrl = "https://backendservice-xspx.onrender.com/api/menza"; // koristimo API URL iz env datoteke
 

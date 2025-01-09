@@ -5,7 +5,6 @@ import googleLogo from "../../public/google-logo.png"; // Make sure to have the 
 import "../styles/Login.css";
 
 const apiUrl = import.meta.env.VITE_API_URL;
-console.log("API URL je:", apiUrl);
 
 function LoginForm() {
   const handleGoogleLogin = async () => {
