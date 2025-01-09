@@ -1,5 +1,7 @@
 package menzg.model;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -7,6 +9,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -98,5 +103,9 @@ public class Korisnik {
 			return "UNKNOWN_ROLE";
 		}
 	}
+
+	@ManyToMany
+	@JoinTable(name = "korisnik_menza", joinColumns = @JoinColumn(name = "idKorisnik"), inverseJoinColumns = @JoinColumn(name = "idMenza"))
+	private List<Menza> omiljeneMenza;
 
 }

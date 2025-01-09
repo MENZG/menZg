@@ -38,8 +38,8 @@ public class SecurityConfig {
 
 				auth -> auth.requestMatchers("/h2-console/**").permitAll().requestMatchers(HttpMethod.OPTIONS, "/**")
 						.permitAll() // Dozvoli OPTIONS zahtjeve za sve rute// Dopuštanje pristupa H2 konzoli
-						.requestMatchers(HttpMethod.DELETE, "/korisnici/**").permitAll() // DELETE dopušten samo za
-																							// ADMIN
+						//
+						.requestMatchers("/korisnici/**").permitAll() // OVO MAKNU U PRODUKCIJI!!!!
 
 						// autentifikaciju
 						.anyRequest().authenticated() // Sve ostale// sve
