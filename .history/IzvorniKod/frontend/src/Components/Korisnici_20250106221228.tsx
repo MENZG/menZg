@@ -45,7 +45,7 @@ const Korisnici = () => {
 
   return (
     <div className="korisnici-container">
-      <h1 className="naslov">Lista Korisnika</h1>
+      <h1>Lista Korisnika</h1>
       <table className="korisnici-table">
         <thead>
           <tr>

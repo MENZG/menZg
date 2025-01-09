@@ -31,7 +31,6 @@ const ListaMenza = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [korisnik, setKorisnik] = useState<UlogiraniKorisnik | null>(null);
-  const [korisnikFull, setKorisnikFull] = useState<KorisnikFull | null>(null);
 
   // Fetch all "menze"
   useEffect(() => {
@@ -52,7 +51,7 @@ const ListaMenza = () => {
     fetchMenze();
   }, []);
 
-  // Fetch the current user (basic info)
+  // Fetch the current user
   useEffect(() => {
     const fetchCurrentUser = async () => {
       try {
@@ -70,9 +69,9 @@ const ListaMenza = () => {
     fetchCurrentUser();
   }, []);
 
-  // Fetch full user info (korisnikFull) based on email from `korisnik`
+  // Fetch favorites based on the current user
   useEffect(() => {
-    const fetchFullUser = async () => {
+    const fetchFavorites = async () => {
       if (!korisnik?.email) return;
 
       try {
@@ -80,40 +79,33 @@ const ListaMenza = () => {
           `${apiUrl}/korisnici/username/${korisnik.email}`,
           { withCredentials: true }
         );
-        setKorisnikFull(response.data);
-        setFavorites(response.data.omiljeneMenza.map((m) => m.idMenza)); // Sync favorites
+        setFavorites(response.data.omiljeneMenza.map((m) => m.idMenza));
       } catch (error) {
-        console.error(
-          "Greška pri dohvaćanju dodatnih podataka o korisniku:",
-          error
-        );
-        setError("Neuspjelo dohvaćanje dodatnih podataka o korisniku.");
+        console.error("Greška pri dohvaćanju favorita:", error);
+        setError("Neuspjelo dohvaćanje favorita.");
       }
     };
 
-    fetchFullUser();
+    fetchFavorites();
   }, [korisnik]);
 
   // Toggle favorite status
   const toggleFavorite = async (idMenza: number) => {
-    const idKorisnik = korisnikFull?.idKorisnik;
-    if (!idKorisnik) {
+    if (!korisnik) {
       setError("Morate biti prijavljeni za spremanje favorita.");
       return;
     }
 
     try {
       if (favorites.includes(idMenza)) {
-        // Remove favorite
         await axios.delete(
-          `${apiUrl}/korisnici/${idKorisnik}/omiljenaMenza/${idMenza}`,
+          `${apiUrl}/korisnici/${korisnik.idKorisnik}/omiljenaMenza/${idMenza}`,
           { withCredentials: true }
         );
         setFavorites((prev) => prev.filter((id) => id !== idMenza));
       } else {
-        // Add favorite
         await axios.post(
-          `${apiUrl}/korisnici/${idKorisnik}/omiljenaMenza/${idMenza}`,
+          `${apiUrl}/korisnici/${korisnik.idKorisnik}/omiljenaMenza/${idMenza}`,
           null,
           { withCredentials: true }
         );

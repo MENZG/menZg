@@ -7,11 +7,10 @@ import { FaHeart } from "react-icons/fa";
 const apiUrl = import.meta.env.VITE_API_URL;
 
 const Favoriti = () => {
-  const [favorites, setFavorites] = useState<Menza[]>([]);
+  const [favorites, setFavorites] = useState<Menza[]>([]); // Sprema cijele menze, ne samo ID-jeve
   const [loading, setLoading] = useState(true);
   const [korisnik, setKorisnik] = useState<UlogiraniKorisnik | null>(null);
   const [korisnikFull, setKorisnikFull] = useState<KorisnikFull>();
-  const [menze, setMenze] = useState<Menza[]>([]);
 
   useEffect(() => {
     const fetchCurrentUser = async () => {
@@ -35,7 +34,7 @@ const Favoriti = () => {
   useEffect(() => {
     const fetchFavorites = async () => {
       try {
-        const response = await axios.get<KorisnikFull>(
+        const response = await axios.get<KorisnikFull[]>(
           `${apiUrl}/korisnici/username/${korisnikEmail}`,
           {
             withCredentials: true,
@@ -49,17 +48,8 @@ const Favoriti = () => {
       }
     };
 
-    if (korisnikEmail) {
-      fetchFavorites();
-    }
-  }, [korisnikEmail]);
-
-  // Update menze state when korisnikFull changes
-  useEffect(() => {
-    if (korisnikFull?.omiljeneMenza) {
-      setMenze(korisnikFull.omiljeneMenza);
-    }
-  }, [korisnikFull]);
+    fetchFavorites();
+  }, [korisnik]);
 
   const korisnikId = korisnikFull?.idKorisnik;
 
@@ -84,11 +74,12 @@ const Favoriti = () => {
     <>
       <NavBar />
       <div>
-        {menze.length === 0 ? (
+        <h1>Omiljene menze</h1>
+        {favorites.length === 0 ? (
           <p>Nemate omiljenih menzi.</p>
         ) : (
           <div className="card-container">
-            {menze.map((menza) => (
+            {favorites.map((menza) => (
               <div
                 key={menza.idMenza}
                 className="card"

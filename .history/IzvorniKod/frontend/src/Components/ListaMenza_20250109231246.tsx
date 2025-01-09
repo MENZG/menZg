@@ -27,105 +27,112 @@ const formatTime = (time: string | null) => {
 
 const ListaMenza = () => {
   const [menze, setMenze] = useState<Menza[]>([]);
-  const [favorites, setFavorites] = useState<number[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [favorites, setFavorites] = useState<number[]>([]);
   const [korisnik, setKorisnik] = useState<UlogiraniKorisnik | null>(null);
-  const [korisnikFull, setKorisnikFull] = useState<KorisnikFull | null>(null);
+  const [korisnikFull, setKorisnikFull] = useState<KorisnikFull>();
 
-  // Fetch all "menze"
+  useEffect(() => {
+    const storedFavorites = localStorage.getItem("favorites");
+    if (storedFavorites) {
+      setFavorites(JSON.parse(storedFavorites));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+  }, [favorites]);
+
   useEffect(() => {
     const fetchMenze = async () => {
       try {
-        const response = await axios.get<Menza[]>(`${apiUrl}/menza`, {
-          withCredentials: true,
-        });
+        const response = await axios.get<Menza[]>(
+          //         "https://backendservice-xspx.onrender.com/api/menza",
+          `${apiUrl}/menza`,
+          {
+            withCredentials: true, // OVO MORA BIT TRUE KOJI KURAC
+          }
+        );
         setMenze(response.data);
-      } catch (error) {
-        console.error("Greška pri dohvaćanju menzi:", error);
-        setError("Neuspjelo dohvaćanje menzi.");
-      } finally {
         setLoading(false);
+      } catch (error) {
+        console.error("Greška pri dohvaćanju menzi: -----------", error);
       }
     };
 
     fetchMenze();
   }, []);
 
-  // Fetch the current user (basic info)
   useEffect(() => {
     const fetchCurrentUser = async () => {
       try {
         const response = await axios.get<UlogiraniKorisnik>(
           `${apiUrl}/korisnici/user`,
-          { withCredentials: true }
+          {
+            withCredentials: true,
+          }
         );
         setKorisnik(response.data);
       } catch (error) {
-        console.error("Greška pri dohvaćanju korisnika:", error);
-        setError("Neuspjelo dohvaćanje korisnika.");
+        console.error("Greška pri dohvaćanju korisnika: ", error);
       }
     };
-
     fetchCurrentUser();
   }, []);
 
-  // Fetch full user info (korisnikFull) based on email from `korisnik`
   useEffect(() => {
-    const fetchFullUser = async () => {
-      if (!korisnik?.email) return;
-
+    const fetchFavorites = async () => {
       try {
         const response = await axios.get<KorisnikFull>(
-          `${apiUrl}/korisnici/username/${korisnik.email}`,
-          { withCredentials: true }
+          `${apiUrl}/korisnici/username/${korisnikEmail}`,
+          {
+            withCredentials: true,
+          }
         );
         setKorisnikFull(response.data);
-        setFavorites(response.data.omiljeneMenza.map((m) => m.idMenza)); // Sync favorites
+        setLoading(false);
       } catch (error) {
-        console.error(
-          "Greška pri dohvaćanju dodatnih podataka o korisniku:",
-          error
-        );
-        setError("Neuspjelo dohvaćanje dodatnih podataka o korisniku.");
+        console.error("Greška pri dohvaćanju favorita: ", error);
+        setLoading(false);
       }
     };
 
-    fetchFullUser();
-  }, [korisnik]);
-
-  // Toggle favorite status
-  const toggleFavorite = async (idMenza: number) => {
-    const idKorisnik = korisnikFull?.idKorisnik;
-    if (!idKorisnik) {
-      setError("Morate biti prijavljeni za spremanje favorita.");
-      return;
+    if (korisnikEmail) {
+      fetchFavorites();
     }
+  }, [korisnikEmail]);
 
+  const toggleFavorite = async (idMenza: number) => {
+    const idKorisnik = korisnik?.email;
     try {
       if (favorites.includes(idMenza)) {
-        // Remove favorite
+        // Ukloni menzu iz favorita (DELETE zahtjev)
         await axios.delete(
           `${apiUrl}/korisnici/${idKorisnik}/omiljenaMenza/${idMenza}`,
-          { withCredentials: true }
+          {
+            withCredentials: true,
+          }
         );
-        setFavorites((prev) => prev.filter((id) => id !== idMenza));
+        setFavorites((prevFavorites) =>
+          prevFavorites.filter((id) => id !== idMenza)
+        );
       } else {
-        // Add favorite
+        // Dodaj menzu u favorite (POST zahtjev)
         await axios.post(
           `${apiUrl}/korisnici/${idKorisnik}/omiljenaMenza/${idMenza}`,
           null,
-          { withCredentials: true }
+          {
+            withCredentials: true,
+          }
         );
-        setFavorites((prev) => [...prev, idMenza]);
+        setFavorites((prevFavorites) => [...prevFavorites, idMenza]);
       }
     } catch (error) {
-      console.error("Greška pri ažuriranju favorita:", error);
-      setError("Neuspjelo ažuriranje favorita.");
+      console.error("Greška pri ažuriranju favorita: ", error);
     }
   };
 
-  if (loading) {
+  if (loading)
     return (
       <>
         <NavBar />
@@ -134,50 +141,38 @@ const ListaMenza = () => {
         </Spinner>
       </>
     );
-  }
-
-  if (error) {
-    return (
-      <>
-        <NavBar />
-        <p className="error-message">{error}</p>
-      </>
-    );
-  }
-
   const today = new Date().getDay();
   const todayName = daysOfWeek[today];
-
   return (
     <>
       <NavBar />
       <div className="card-container">
         {menze.map((menza) => (
-          <div
+          <Link
             key={menza.idMenza}
+            to={`/menza/${menza.idMenza}`}
             className="card"
             style={{ width: "18rem", textDecoration: "none", color: "inherit" }}
           >
-            <Link to={`/menza/${menza.idMenza}`}>
-              <img
-                src={`/slika_menza_${menza.idMenza}.jpg`}
-                className="card-img-top"
-                alt={`Slika menze ${menza.imeMenze}`}
-              />
-            </Link>
+            <img
+              src={`/slika_menza_${menza.idMenza}.jpg`}
+              className="card-img-top"
+              alt={`Slika menze ${menza.imeMenze}`}
+            />
             <div
               className="favorite-icon"
               onClick={(e) => {
-                e.stopPropagation();
+                e.preventDefault(); // Spriječi navigaciju na link
                 toggleFavorite(menza.idMenza);
               }}
             >
               {favorites.includes(menza.idMenza) ? (
-                <FaHeart size={17} color="red" />
+                <FaHeart size={17} />
               ) : (
                 <FaRegHeart size={17} />
               )}
             </div>
+
             <div className="card-body">
               <h5 className="card-title">{menza.imeMenze}</h5>
               <div className="card-text">
@@ -190,7 +185,7 @@ const ListaMenza = () => {
                   ))}
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </>

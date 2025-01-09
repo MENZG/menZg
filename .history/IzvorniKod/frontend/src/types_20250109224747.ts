@@ -39,5 +39,5 @@ export interface RadnoVrijeme {
     role: number;
     godine: number;
     spol: string;
-    omiljeneMenza: Menza[];
+    roleName: string;
   }

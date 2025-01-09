@@ -84,6 +84,7 @@ const Favoriti = () => {
     <>
       <NavBar />
       <div>
+        <h1>Omiljene menze</h1>
         {menze.length === 0 ? (
           <p>Nemate omiljenih menzi.</p>
         ) : (

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { KorisnikFull, Menza, UlogiraniKorisnik } from "../types";
+import { Menza } from "../types";
 import NavBar from "./NavBar";
 import axios from "axios";
 import { FaHeart } from "react-icons/fa";
@@ -7,41 +7,21 @@ import { FaHeart } from "react-icons/fa";
 const apiUrl = import.meta.env.VITE_API_URL;
 
 const Favoriti = () => {
-  const [favorites, setFavorites] = useState<Menza[]>([]);
+  const [favorites, setFavorites] = useState<Menza[]>([]); // Sprema cijele menze, ne samo ID-jeve
   const [loading, setLoading] = useState(true);
-  const [korisnik, setKorisnik] = useState<UlogiraniKorisnik | null>(null);
-  const [korisnikFull, setKorisnikFull] = useState<KorisnikFull>();
-  const [menze, setMenze] = useState<Menza[]>([]);
+  const korisnik = JSON.parse(localStorage.getItem("korisnik") || "null"); // Pretpostavljam da korisnik postoji u localStorage
 
   useEffect(() => {
-    const fetchCurrentUser = async () => {
-      try {
-        const response = await axios.get<UlogiraniKorisnik>(
-          `${apiUrl}/korisnici/user`,
-          {
-            withCredentials: true,
-          }
-        );
-        setKorisnik(response.data);
-      } catch (error) {
-        console.error("Greška pri dohvaćanju korisnika: ", error);
-      }
-    };
-    fetchCurrentUser();
-  }, []);
-
-  const korisnikEmail = korisnik?.email;
-
-  useEffect(() => {
+    // Dohvati omiljene menze s backend-a
     const fetchFavorites = async () => {
       try {
-        const response = await axios.get<KorisnikFull>(
-          `${apiUrl}/korisnici/username/${korisnikEmail}`,
+        const response = await axios.get<Menza[]>(
+          `${apiUrl}/korisnici/${korisnik?.email}/omiljeneMenze`,
           {
             withCredentials: true,
           }
         );
-        setKorisnikFull(response.data);
+        setFavorites(response.data);
         setLoading(false);
       } catch (error) {
         console.error("Greška pri dohvaćanju favorita: ", error);
@@ -49,27 +29,18 @@ const Favoriti = () => {
       }
     };
 
-    if (korisnikEmail) {
-      fetchFavorites();
-    }
-  }, [korisnikEmail]);
-
-  // Update menze state when korisnikFull changes
-  useEffect(() => {
-    if (korisnikFull?.omiljeneMenza) {
-      setMenze(korisnikFull.omiljeneMenza);
-    }
-  }, [korisnikFull]);
-
-  const korisnikId = korisnikFull?.idKorisnik;
+    fetchFavorites();
+  }, [korisnik]);
 
   const deleteFavorite = async (idMenza: number) => {
     try {
+      // Pošalji DELETE zahtjev za uklanjanje menze iz favorita
       await axios.delete(
-        `${apiUrl}/korisnici/${korisnikId}/omiljenaMenza/${idMenza}`,
+        `${apiUrl}/korisnici/${korisnik?.email}/omiljenaMenza/${idMenza}`,
         { withCredentials: true }
       );
 
+      // Ukloni menzu lokalno
       setFavorites((prevFavorites) =>
         prevFavorites.filter((menza) => menza.idMenza !== idMenza)
       );
@@ -84,11 +55,12 @@ const Favoriti = () => {
     <>
       <NavBar />
       <div>
-        {menze.length === 0 ? (
+        <h1>Omiljene menze</h1>
+        {favorites.length === 0 ? (
           <p>Nemate omiljenih menzi.</p>
         ) : (
           <div className="card-container">
-            {menze.map((menza) => (
+            {favorites.map((menza) => (
               <div
                 key={menza.idMenza}
                 className="card"
