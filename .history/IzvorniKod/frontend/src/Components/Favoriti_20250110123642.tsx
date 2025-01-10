@@ -104,10 +104,7 @@ const Favoriti = () => {
                   <div className="card-body">
                     <h5 className="card-title">{menza.imeMenze}</h5>
                     <button
-                      onClick={(e) => {
-                        e.preventDefault();
-                        deleteFavorite(menza.idMenza);
-                      }}
+                      onClick={() => deleteFavorite(menza.idMenza)}
                       className="favorite-icon"
                     >
                       {isFavorite ? (
