@@ -106,4 +106,35 @@
   transform: translateY(0);
 }
 
+.card {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-img-top {
+  position: relative;
+  z-index: 1; /* Omogućava da slika bude ispod overlay-a */
+  transition: transform 0.3s ease; /* Za glatko povećanje slike */
+}
+
+.card:hover .card-img-top {
+  transform: scale(1.05); /* Lagano povećava sliku na hover */
+}
+
+.card-img-top::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0); /* Početno nema sjene */
+  z-index: 2; /* Overlay iznad slike */
+  transition: background 0.3s ease; /* Glatko pojavljivanje sjene */
+}
+
+.card:hover .card-img-top::before {
+  background: rgba(0, 0, 0, 0.4); /* Tamna sjena na hover */
+}
+
   

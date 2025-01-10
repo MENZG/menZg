@@ -106,4 +106,8 @@
   transform: translateY(0);
 }
 
+.card:hover .card-img-top {
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.4);
+  transform: scale(1.05) rotate(1deg); /* Dodaje rotaciju za dinamičniji efekt */
+}
   

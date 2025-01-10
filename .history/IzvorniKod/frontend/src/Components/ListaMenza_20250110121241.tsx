@@ -194,9 +194,7 @@ const ListaMenza = () => {
                       </div>
                     ))}
                 </div>
-                <div className="camera-icon">
-                  <KameraIkona></KameraIkona>
-                </div>
+                <KameraIkona></KameraIkona>
               </div>
             </div>
           </Link>
