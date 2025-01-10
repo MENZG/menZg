@@ -80,64 +80,31 @@
     margin-right: 10px;
 }
 
-.hamburger {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    background: none;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .hamburger span {
-    display: block;
-    width: 25px;
-    height: 3px;
-    background-color: #333;
-    border-radius: 3px;
-  }
-  
-  @media (max-width: 768px) {
-    .hamburger {
-      display: flex;
-    }
-  
-    .nav-menu {
-      display: none;
-      flex-direction: column;
-      gap: 10px;
-      position: absolute;
-      top: 60px;
-      right: 20px;
-      background-color: white;
-      padding: 20px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      border-radius: 8px;
+
+@media (max-width: 768px) {
+    .nav-btn-container {
+        display: flex; /* Ensure flexbox is applied */
+        flex-wrap: nowrap; /* Prevent items from wrapping */
+        flex-direction: row; /* Arrange items in a row */
+        justify-content: center; /* Center the buttons horizontally */
+        align-items: center; /* Align items vertically */
+        gap: 10px; /* Add spacing between buttons */
     }
 
-    .role-div{
-        display: flex;
-        flex-direction: column;
+    .nav-item {
+        flex: 0 1 auto; /* Allow items to shrink and maintain width */
+        text-align: center; /* Align text centrally */
     }
 
-    .role-p{
-        margin: 0;
-    }
-  
-    .nav-menu.show {
-      display: flex;
+    .nav-item .nav-btn {
+        font-size: 0.8rem; /* Smaller font size for buttons */
+        padding: 5px 10px; /* Adjust padding for smaller screens */
     }
 
-    .nav-item .nav-btn{
-        margin: 0;
+    .navbar {
+        padding: 5px; /* Adjust navbar padding for smaller screens */
+        height: auto; /* Let navbar height adjust dynamically */
     }
-
-    .log-btn{
-        border: none;
-        padding: 2px 8px 2px 8px;
-        margin-top: 10px;
-    }
-  }
-  
+}
 
 

@@ -79,7 +79,7 @@
     margin-bottom: 0;
     margin-right: 10px;
 }
-
+/*
 .hamburger {
     display: none;
     flex-direction: column;
@@ -95,7 +95,7 @@
     height: 3px;
     background-color: #333;
     border-radius: 3px;
-  }
+  }*/
   
   @media (max-width: 768px) {
     .hamburger {

@@ -80,64 +80,17 @@
     margin-right: 10px;
 }
 
-.hamburger {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    background: none;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .hamburger span {
-    display: block;
-    width: 25px;
-    height: 3px;
-    background-color: #333;
-    border-radius: 3px;
-  }
-  
-  @media (max-width: 768px) {
-    .hamburger {
-      display: flex;
-    }
-  
-    .nav-menu {
-      display: none;
-      flex-direction: column;
-      gap: 10px;
-      position: absolute;
-      top: 60px;
-      right: 20px;
-      background-color: white;
-      padding: 20px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      border-radius: 8px;
+
+@media (max-width: 768px) {
+    .nav-item .nav-btn {
+        font-size: 0.8rem; /* Postavite manju veličinu fonta po želji */
     }
 
-    .role-div{
-        display: flex;
-        flex-direction: column;
+    .logo-img {
+        height: 10vh; /* Možete prilagoditi veličinu logotipa za tablete */
     }
 
-    .role-p{
-        margin: 0;
+    .navbar {
+        height: 12vh; /* Prilagodite visinu navbara za bolje uklapanje na manjim uređajima */
     }
-  
-    .nav-menu.show {
-      display: flex;
-    }
-
-    .nav-item .nav-btn{
-        margin: 0;
-    }
-
-    .log-btn{
-        border: none;
-        padding: 2px 8px 2px 8px;
-        margin-top: 10px;
-    }
-  }
-  
-
-
+}

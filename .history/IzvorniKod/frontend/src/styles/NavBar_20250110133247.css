@@ -89,15 +89,17 @@
     cursor: pointer;
   }
   
-  .hamburger span {
-    display: block;
-    width: 25px;
-    height: 3px;
-    background-color: #333;
-    border-radius: 3px;
-  }
+  
   
   @media (max-width: 768px) {
+
+    .hamburger span {
+        display: block;
+        width: 25px;
+        height: 3px;
+        background-color: #333;
+        border-radius: 3px;
+      }
     .hamburger {
       display: flex;
     }
@@ -130,12 +132,6 @@
 
     .nav-item .nav-btn{
         margin: 0;
-    }
-
-    .log-btn{
-        border: none;
-        padding: 2px 8px 2px 8px;
-        margin-top: 10px;
     }
   }
   
