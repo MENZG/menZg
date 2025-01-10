@@ -11,14 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import menzg.DTO.KorisnikDTO;
 import menzg.model.Korisnik;
@@ -88,6 +81,9 @@ public class KorisnikController {
 	// POST: Kreira novog korisnika
 	@PostMapping
 	public ResponseEntity<Korisnik> createKorisnik(@RequestBody Korisnik korisnik) {
+		if (korisnik.getBlocked() == null) {
+			korisnik.setBlocked(false); // Postavljamo default vrijednost
+		}
 		Korisnik savedKorisnik = korisnikService.save(korisnik);
 		return ResponseEntity.ok(savedKorisnik);
 	}
@@ -221,6 +217,19 @@ public class KorisnikController {
 		korisnikService.save(korisnik); // Spremi korisnika s ažuriranom listom
 
 		return ResponseEntity.status(HttpStatus.OK).body("Menza uklonjena iz omiljenih menzi korisnika " + korisnikId);
+	}
+
+
+	// PUT endpoint za promjenu statusa 'blocked'
+	//PUT http://localhost:8080/api/korisnici/1/blocked?blocked=true
+	@PreAuthorize("hasRole('ROLE_ADMIN')") // Samo admin može pristupiti ovom endpointu
+	@PutMapping("/{idKorisnik}/blocked")
+	public ResponseEntity<Korisnik> promijeniBlockedStatus(
+			@PathVariable Long idKorisnik,
+			@RequestParam boolean blocked) {
+
+		Korisnik azuriraniKorisnik = korisnikService.promijeniBlockedStatus(idKorisnik, blocked);
+		return ResponseEntity.ok(azuriraniKorisnik);
 	}
 
 //	@PostMapping("")

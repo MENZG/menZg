@@ -72,6 +72,9 @@ public class KorisnikService {
 
 	// Metoda za čuvanje korisnika u bazi
 	public Korisnik save(Korisnik korisnik) {
+		if (korisnik.getBlocked() == null) {
+			korisnik.setBlocked(false);
+		}
 		return repo.save(korisnik);
 	}
 
@@ -93,5 +96,18 @@ public class KorisnikService {
 	// Metoda za pronalaženje korisnika po korisničkom imenu
 	public Optional<Korisnik> findByUsername(String username) {
 		return repo.findByUsername(username); // Pretpostavka: Ova metoda je definisana u KorisnikRepository
+	}
+
+	public Korisnik promijeniBlockedStatus(Long idKorisnik, boolean blocked) {
+
+		// Pronađi korisnika u bazi
+		Korisnik korisnik = repo.findById(idKorisnik)
+				.orElseThrow(() -> new RuntimeException("Korisnik s ID-em " + idKorisnik + " nije pronađen"));
+
+		// Postavi novi status
+		korisnik.setBlocked(blocked);
+
+		// Spremi promjenu u bazu
+		return repo.save(korisnik);
 	}
 }
