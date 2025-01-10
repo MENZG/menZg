@@ -100,22 +100,21 @@ const Favoriti = () => {
                     className="card-img-top"
                     alt={`Slika menze ${menza.imeMenze}`}
                   />
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      deleteFavorite(menza.idMenza);
-                    }}
-                    className="favorite-icon"
-                  >
-                    {isFavorite ? (
-                      <FaHeart size={17} />
-                    ) : (
-                      <FaRegHeart size={17} />
-                    )}
-                  </button>
                   <div className="card-body">
                     <h5 className="card-title">{menza.imeMenze}</h5>
-
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        deleteFavorite(menza.idMenza);
+                      }}
+                      className="favorite-icon"
+                    >
+                      {isFavorite ? (
+                        <FaHeart size={17} />
+                      ) : (
+                        <FaRegHeart size={17} />
+                      )}
+                    </button>
                     <div className="camera-icon">
                       <KameraIkona></KameraIkona>
                     </div>
