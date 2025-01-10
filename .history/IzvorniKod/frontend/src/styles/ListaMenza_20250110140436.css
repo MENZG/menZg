@@ -93,7 +93,7 @@
 .camera-icon{
   position: absolute;
   top: 10px;
-  right: 7px;
+  right: 10px;
   opacity: 0;
   transform: translateY(10px);
   transition: opacity 0.3s ease, transform 0.3s ease;
@@ -106,7 +106,9 @@
   transform: translateY(0);
 }
 
-.card-body{
-  position: relative;
+
+.card-img-top {
+  position: relative; /* Omogućuje apsolutno pozicioniranje unutar slike */
 }
+
   
