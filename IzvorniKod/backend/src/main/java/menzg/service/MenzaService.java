@@ -29,4 +29,7 @@ public class MenzaService {
 		// TODO Auto-generated method stub
 		return menzaRepo.findById(menzaId);
 	}
+	public void saveMenza(Menza menza) {
+		menzaRepo.save(menza);
+	}
 }
