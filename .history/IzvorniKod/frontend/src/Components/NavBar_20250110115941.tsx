@@ -52,7 +52,7 @@ const NavBar = () => {
       if (korisnik?.email) {
         try {
           const responseKorisnikFull = await axios.get<KorisnikFull>(
-            `${apiUrl}/korisnici/username/${korisnik.email}`,
+            `${apiUrl}/korisnici/${korisnik.email}`,
             { withCredentials: true }
           );
           setKorisnikFull(responseKorisnikFull.data);

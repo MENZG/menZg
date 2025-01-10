@@ -153,7 +153,7 @@ const ListaMenza = () => {
       <NavBar />
       <div className="card-container">
         {menze.map((menza) => (
-          <Link to={`/menza/${menza.idMenza}`} className="custom-link">
+          <Link to={`/menza/${menza.idMenza}`}>
             <div
               key={menza.idMenza}
               className="card"

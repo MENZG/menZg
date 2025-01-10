@@ -11,63 +11,58 @@ const NavBar = () => {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [role, setRole] = useState("");
-  const [korisnik, setKorisnik] = useState<UlogiraniKorisnik | undefined>();
-  const [korisnikFull, setKorisnikFull] = useState<KorisnikFull | undefined>();
-
-  const determineRole = (role: number): string => {
-    switch (role) {
-      case 1:
-        return "Student";
-      case 2:
-        return "Djelatnik menze";
-      case 3:
-        return "Administrator";
-      default:
-        return "Nepoznata uloga";
-    }
-  };
+  const [korisnik, setKorisnik] = useState<UlogiraniKorisnik>();
+  const [korisnikFull, setKorisnikFull] = useState<KorisnikFull>();
 
   useEffect(() => {
-    const fetchUserData = async () => {
+    const checkUserStatus = async () => {
       try {
         const responseUlogirani = await axios.get<UlogiraniKorisnik>(
           `${apiUrl}/korisnici/user`,
-          { withCredentials: true }
+          {
+            withCredentials: true,
+          }
         );
         setKorisnik(responseUlogirani.data);
-        setIsLoggedIn(true);
-      } catch (error) {
-        console.error("Greška pri dohvaćanju statusa Ulogiranog:", error);
-        setIsLoggedIn(false);
-        setRole("");
-        setKorisnik(undefined);
-        setKorisnikFull(undefined);
-      }
-    };
-    fetchUserData();
-  }, [apiUrl]);
+        const korisnikEmail = korisnik?.email;
+        const responseKorisnikFull = await axios.get<KorisnikFull>(
+          `${apiUrl}/korisnici/${korisnikEmail}`,
+          {
+            withCredentials: true,
+          }
+        );
+        setKorisnikFull(responseKorisnikFull.data);
 
-  useEffect(() => {
-    const fetchKorisnikFull = async () => {
-      if (korisnik?.email) {
-        try {
-          const responseKorisnikFull = await axios.get<KorisnikFull>(
-            `${apiUrl}/korisnici/username/${korisnik.email}`,
-            { withCredentials: true }
-          );
-          setKorisnikFull(responseKorisnikFull.data);
-          const roleString = determineRole(responseKorisnikFull.data.role);
-          setRole(roleString);
-        } catch (error) {
-          console.error("Greška pri dohvaćanju korisnika:", error);
+        if (responseUlogirani.status === 200) {
+          setIsLoggedIn(true);
+        }
+
+        if (korisnikFull?.role) {
+          switch (korisnikFull?.role) {
+            case 1:
+              setRole("Student");
+              break;
+            case 2:
+              setRole("Djelatnik menze");
+              break;
+            case 3:
+              setRole("Administrator");
+              break;
+            default:
+              setRole("Nepoznata uloga");
+          }
+        } else {
+          console.warn("Korisnik nije pronađen u listi korisnika.");
           setRole("");
         }
+      } catch (error) {
+        console.error("Greška pri dohvaćanju statusa korisnika:", error);
+        setIsLoggedIn(false);
+        setRole("");
       }
     };
-    fetchKorisnikFull();
-  }, [korisnik, apiUrl]);
-
-  console.log(role);
+    checkUserStatus();
+  }, [apiUrl]);
 
   const handleOnClickMenze = () => {
     navigate("/menze");
@@ -96,7 +91,6 @@ const NavBar = () => {
   const handleOnClickKorisnici = () => {
     navigate("/korisnici");
   };
-
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary navbar-bg">
       <div className="container-fluid">

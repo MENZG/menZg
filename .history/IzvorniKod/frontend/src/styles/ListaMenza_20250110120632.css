@@ -31,11 +31,7 @@
     border-radius: 8px;
     transition: transform 0.3s ease;
     border-color: white;
-  }
-
-  .custom-link {
     text-decoration: none;
-    color: inherit; /* Ensures it inherits the text color */
   }
   
   .card:hover {

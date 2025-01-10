@@ -3,7 +3,6 @@ import { KorisnikFull, Menza, UlogiraniKorisnik } from "../types";
 import NavBar from "./NavBar";
 import axios from "axios";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
-import { Link } from "react-router-dom";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -89,32 +88,32 @@ const Favoriti = () => {
         ) : (
           <div className="card-container">
             {menze.map((menza) => (
-              <Link to={`/menza/${menza.idMenza}`} className="custom-link">
-                <div
-                  key={menza.idMenza}
-                  className="card"
-                  style={{ width: "18rem" }}
-                >
+              <div
+                key={menza.idMenza}
+                className="card"
+                style={{ width: "18rem" }}
+              >
+                <Link to={`/menza/${menza.idMenza}`}>
                   <img
                     src={`/slika_menza_${menza.idMenza}.jpg`}
                     className="card-img-top"
                     alt={`Slika menze ${menza.imeMenze}`}
                   />
-                  <div className="card-body">
-                    <h5 className="card-title">{menza.imeMenze}</h5>
-                    <button
-                      onClick={() => deleteFavorite(menza.idMenza)}
-                      className="favorite-icon"
-                    >
-                      {isFavorite ? (
-                        <FaHeart size={17} />
-                      ) : (
-                        <FaRegHeart size={17} />
-                      )}
-                    </button>
-                  </div>
+                </Link>
+                <div className="card-body">
+                  <h5 className="card-title">{menza.imeMenze}</h5>
+                  <button
+                    onClick={() => deleteFavorite(menza.idMenza)}
+                    className="favorite-icon"
+                  >
+                    {isFavorite ? (
+                      <FaHeart size={17} />
+                    ) : (
+                      <FaRegHeart size={17} />
+                    )}
+                  </button>
                 </div>
-              </Link>
+              </div>
             ))}
           </div>
         )}

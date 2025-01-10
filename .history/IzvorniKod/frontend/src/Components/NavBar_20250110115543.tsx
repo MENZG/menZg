@@ -37,7 +37,7 @@ const NavBar = () => {
         setKorisnik(responseUlogirani.data);
         setIsLoggedIn(true);
       } catch (error) {
-        console.error("Greška pri dohvaćanju statusa Ulogiranog:", error);
+        console.error("Greška pri dohvaćanju statusa korisnika:", error);
         setIsLoggedIn(false);
         setRole("");
         setKorisnik(undefined);
@@ -52,12 +52,11 @@ const NavBar = () => {
       if (korisnik?.email) {
         try {
           const responseKorisnikFull = await axios.get<KorisnikFull>(
-            `${apiUrl}/korisnici/username/${korisnik.email}`,
+            `${apiUrl}/korisnici/${korisnik.email}`,
             { withCredentials: true }
           );
           setKorisnikFull(responseKorisnikFull.data);
-          const roleString = determineRole(responseKorisnikFull.data.role);
-          setRole(roleString);
+          setRole(determineRole(responseKorisnikFull.data.role));
         } catch (error) {
           console.error("Greška pri dohvaćanju korisnika:", error);
           setRole("");
