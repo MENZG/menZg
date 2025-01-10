@@ -96,7 +96,7 @@ const NavBar = () => {
   const handleOnClickLogout = async () => {
     try {
       document.cookie =
-        "session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        "JSESSIONID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=localhost";
 
       setIsLoggedIn(false);
       setKorisnik(undefined);

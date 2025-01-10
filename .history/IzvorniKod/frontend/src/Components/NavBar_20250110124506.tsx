@@ -28,10 +28,6 @@ const NavBar = () => {
   };
 
   useEffect(() => {
-    console.log("Novi status isLoggedIn:", isLoggedIn);
-  }, [isLoggedIn]);
-
-  useEffect(() => {
     const fetchUserData = async () => {
       try {
         const responseUlogirani = await axios.get<UlogiraniKorisnik>(
@@ -95,22 +91,18 @@ const NavBar = () => {
 
   const handleOnClickLogout = async () => {
     try {
-      document.cookie =
-        "session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      // Poziv za odjavu na backendu
+      await axios.post(`${apiUrl}/auth/logout`, {}, { withCredentials: true });
 
+      // Resetiraj stanje aplikacije
       setIsLoggedIn(false);
       setKorisnik(undefined);
       setKorisnikFull(undefined);
       setRole("");
 
-      // Ovdje će `isLoggedIn` još uvijek biti true
-      setTimeout(() => {
-        console.log("Provjera nakon odjave:", isLoggedIn);
-      }, 0);
-
-      // Preusmjeri na login stranicu
+      // Preusmjeri na početnu stranicu ili stranicu za prijavu
       navigate("/login/student");
-      console.log("Korisnik je uspješno odjavljen.");
+      console.log("Uspješno odjavljen korisnik.");
     } catch (error) {
       console.error("Greška pri odjavi:", error);
     }

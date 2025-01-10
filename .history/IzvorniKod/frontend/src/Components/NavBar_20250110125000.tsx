@@ -28,10 +28,6 @@ const NavBar = () => {
   };
 
   useEffect(() => {
-    console.log("Novi status isLoggedIn:", isLoggedIn);
-  }, [isLoggedIn]);
-
-  useEffect(() => {
     const fetchUserData = async () => {
       try {
         const responseUlogirani = await axios.get<UlogiraniKorisnik>(
@@ -95,18 +91,18 @@ const NavBar = () => {
 
   const handleOnClickLogout = async () => {
     try {
+      // Pošalji zahtjev za odjavu na backend
+      await axios.post(`${apiUrl}/auth/logout`, {}, { withCredentials: true });
+
+      // Opcionalno ručno obriši kolačiće ako backend to ne radi
       document.cookie =
         "session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
+      // Resetiraj stanje aplikacije
       setIsLoggedIn(false);
       setKorisnik(undefined);
       setKorisnikFull(undefined);
       setRole("");
-
-      // Ovdje će `isLoggedIn` još uvijek biti true
-      setTimeout(() => {
-        console.log("Provjera nakon odjave:", isLoggedIn);
-      }, 0);
 
       // Preusmjeri na login stranicu
       navigate("/login/student");

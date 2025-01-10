@@ -28,28 +28,21 @@ const NavBar = () => {
   };
 
   useEffect(() => {
-    console.log("Novi status isLoggedIn:", isLoggedIn);
-  }, [isLoggedIn]);
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const responseUlogirani = await axios.get<UlogiraniKorisnik>(
-          `${apiUrl}/korisnici/user`,
-          { withCredentials: true }
-        );
-        setKorisnik(responseUlogirani.data);
-        setIsLoggedIn(true);
-      } catch (error) {
-        console.error("Greška pri dohvaćanju statusa Ulogiranog:", error);
-        setIsLoggedIn(false);
-        setRole("");
-        setKorisnik(undefined);
-        setKorisnikFull(undefined);
-      }
-    };
-    fetchUserData();
-  }, [apiUrl]);
+    if (isLoggedIn) {
+      const fetchUserData = async () => {
+        try {
+          const responseUlogirani = await axios.get<UlogiraniKorisnik>(
+            `${apiUrl}/korisnici/user`,
+            { withCredentials: true }
+          );
+          setKorisnik(responseUlogirani.data);
+        } catch (error) {
+          console.error("Greška pri dohvaćanju statusa Ulogiranog:", error);
+        }
+      };
+      fetchUserData();
+    }
+  }, [isLoggedIn, apiUrl]);
 
   useEffect(() => {
     const fetchKorisnikFull = async () => {
@@ -99,14 +92,10 @@ const NavBar = () => {
         "session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
       setIsLoggedIn(false);
+      console.log(isLoggedIn);
       setKorisnik(undefined);
       setKorisnikFull(undefined);
       setRole("");
-
-      // Ovdje će `isLoggedIn` još uvijek biti true
-      setTimeout(() => {
-        console.log("Provjera nakon odjave:", isLoggedIn);
-      }, 0);
 
       // Preusmjeri na login stranicu
       navigate("/login/student");
