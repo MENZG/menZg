@@ -39,7 +39,9 @@ public class Menza {
 	@OneToMany(mappedBy = "menza")
 	// menza je redak u RadnoVrijeme koji sadrzi foreign key kako bi se lista mogla
 	// popuniti
-
 	private List<RadnoVrijeme> radnaVremena;
+
+	@OneToMany(mappedBy = "menza")
+	private List<Jelo> jelovnik;
 
 }

@@ -277,3 +277,49 @@ VALUES
     ('Petak', '08:00:00', '16:00:00', 18),          -- Jutarnja smjena
     ('Subota', NULL, NULL, 18),                     -- Zatvoreno
     ('Nedjelja', NULL, NULL, 18);            
+
+
+--jelovnici
+-- Tablica za menije
+INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
+-- Menza Lašćina - LINIJA 1
+( 'Glavno jelo', 2.5, 'Piletina s rižom', 1),
+( 'Glavno jelo', 2.8, 'Grah s kobasicom',  1),
+( 'Glavno jelo',1.8, 'Vegetarijanski rižoto',  1),
+('Desert', 1,'Palačinke s čokoladom',  1),
+('Juha', 0.8, 'Juha od povrća', 1),
+
+-- Menza Lašćina - LINIJA 2
+( 'Glavno jelo', 2.8,  'Bečki odrezak s pomfritom', 2),
+( 'Glavno jelo', 2.2, 'Špageti bolonjez', 2),
+( 'Glavno jelo', 2.5, 'Lasagne', 2),
+('Desert', 1.5, 'Tiramisu',  2),
+('Juha', 0.9,'Juha od gljiva', 2),
+
+-- Menza Borongaj - LINIJA 1
+( 'Glavno jelo',3, 'Čevapi s lepinjom', 3),
+( 'Glavno jelo',2.7 ,'Pečena piletina s krumpirom',  3),
+( 'Glavno jelo',2.4, 'Musaka',  3),
+('Desert', 1.2,'Voćna salata', 3),
+('Juha', 0.7, 'Paradajz juha', 3),
+
+-- Menza Borongaj - LINIJA 2
+( 'Glavno jelo',2.5, 'Pizza Margherita',  4),
+( 'Glavno jelo',2.9, 'Riblji filet s povrćem',  4),
+( 'Glavno jelo',2.8,  'Šunka u tijestu',  4),
+('Desert',1, 'Jogurt s voćem', 4),
+('Juha', 0.8, 'Pileća juha', 4),
+
+-- Menza Ekonomija
+('Glavno jelo', 2.2,'Punjene paprike',  5),
+('Glavno jelo', 3.8,'Svinjski kotlet s povrćem', 5),
+('Glavno jelo', 2.8,'Rižoto od plodova mora', 5),
+('Desert', 1.2, 'Čokoladni kolač', 5),
+('Juha', 0.9, 'Minestrone juha', 5),
+
+-- Menza Medicine
+( 'Glavno jelo',2.5, 'Lazanje', 6),
+( 'Glavno jelo',2.6, 'Pohana piletina s pireom', 6),
+( 'Glavno jelo',2.2, 'Zapečeni grah',  6),
+('Desert', 0.8 ,'Voćni jogurt', 6),
+('Juha', 0.7, 'Juha od leće', 6);
