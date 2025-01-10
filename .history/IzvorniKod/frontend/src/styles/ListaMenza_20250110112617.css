@@ -72,6 +72,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border: none;
+    all: unset;
+    cursor: pointer;
   }
   

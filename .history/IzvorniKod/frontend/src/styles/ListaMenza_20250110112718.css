@@ -72,6 +72,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border: none;
+  }
+
+  .favorite-icon svg {
+    width: 17px;
+    height: 17px;
   }
   

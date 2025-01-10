@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { KorisnikFull, Menza, UlogiraniKorisnik } from "../types";
 import NavBar from "./NavBar";
 import axios from "axios";
-import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -54,6 +54,7 @@ const Favoriti = () => {
     }
   }, [korisnikEmail]);
 
+  // Update menze state when korisnikFull changes
   useEffect(() => {
     if (korisnikFull?.omiljeneMenza) {
       setMenze(korisnikFull.omiljeneMenza);
@@ -68,10 +69,7 @@ const Favoriti = () => {
         `${apiUrl}/korisnici/${korisnikId}/omiljenaMenza/${idMenza}`,
         { withCredentials: true }
       );
-      // Remove the menza from the favorites list
-      setMenze((prevMenze) =>
-        prevMenze.filter((menza) => menza.idMenza !== idMenza)
-      );
+      setIsFavorite(false);
     } catch (error) {
       console.error("Greška pri brisanju favorita: ", error);
     }
@@ -104,11 +102,7 @@ const Favoriti = () => {
                     onClick={() => deleteFavorite(menza.idMenza)}
                     className="favorite-icon"
                   >
-                    {isFavorite ? (
-                      <FaHeart size={17} />
-                    ) : (
-                      <FaRegHeart size={17} />
-                    )}
+                    <FaHeart size={17} />
                   </button>
                 </div>
               </div>

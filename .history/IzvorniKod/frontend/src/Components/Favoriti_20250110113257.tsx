@@ -54,6 +54,7 @@ const Favoriti = () => {
     }
   }, [korisnikEmail]);
 
+  // Update menze state when korisnikFull changes
   useEffect(() => {
     if (korisnikFull?.omiljeneMenza) {
       setMenze(korisnikFull.omiljeneMenza);
@@ -68,10 +69,7 @@ const Favoriti = () => {
         `${apiUrl}/korisnici/${korisnikId}/omiljenaMenza/${idMenza}`,
         { withCredentials: true }
       );
-      // Remove the menza from the favorites list
-      setMenze((prevMenze) =>
-        prevMenze.filter((menza) => menza.idMenza !== idMenza)
-      );
+      setIsFavorite(false);
     } catch (error) {
       console.error("Greška pri brisanju favorita: ", error);
     }

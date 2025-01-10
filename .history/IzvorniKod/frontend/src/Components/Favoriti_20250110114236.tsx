@@ -104,11 +104,7 @@ const Favoriti = () => {
                     onClick={() => deleteFavorite(menza.idMenza)}
                     className="favorite-icon"
                   >
-                    {isFavorite ? (
-                      <FaHeart size={17} />
-                    ) : (
-                      <FaRegHeart size={17} />
-                    )}
+                    <FaHeart size={17} />
                   </button>
                 </div>
               </div>
@@ -118,6 +114,5 @@ const Favoriti = () => {
       </div>
     </>
   );
-};
 
 export default Favoriti;

@@ -68,10 +68,7 @@ const Favoriti = () => {
         `${apiUrl}/korisnici/${korisnikId}/omiljenaMenza/${idMenza}`,
         { withCredentials: true }
       );
-      // Remove the menza from the favorites list
-      setMenze((prevMenze) =>
-        prevMenze.filter((menza) => menza.idMenza !== idMenza)
-      );
+      setIsFavorite(false);
     } catch (error) {
       console.error("Greška pri brisanju favorita: ", error);
     }
@@ -101,7 +98,7 @@ const Favoriti = () => {
                 <div className="card-body">
                   <h5 className="card-title">{menza.imeMenze}</h5>
                   <button
-                    onClick={() => deleteFavorite(menza.idMenza)}
+                    onClick={(e) => deleteFavorite(menza.idMenza)}
                     className="favorite-icon"
                   >
                     {isFavorite ? (

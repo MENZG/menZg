@@ -165,7 +165,7 @@ const ListaMenza = () => {
                 alt={`Slika menze ${menza.imeMenze}`}
               />
             </Link>
-            <button
+            <div
               className="favorite-icon"
               onClick={(e) => {
                 e.stopPropagation();
@@ -177,7 +177,7 @@ const ListaMenza = () => {
               ) : (
                 <FaRegHeart size={17} />
               )}
-            </button>
+            </div>
             <div className="card-body">
               <h5 className="card-title">{menza.imeMenze}</h5>
               <div className="card-text">
