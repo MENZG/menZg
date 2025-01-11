@@ -5,6 +5,7 @@ import Image from "react-bootstrap/Image";
 import "../styles/Profile.css";
 
 const apiUrl = import.meta.env.VITE_API_URL;
+axios.defaults.withCredentials = true;
 
 interface User {
   name: string;
@@ -13,18 +14,18 @@ interface User {
 }
 
 interface Korisnik {
-  idKorisnik: string;
-  username: string;
-  lozinka: string;
-  role: number;
-  roleName: string;
-  godine: number;
-  spol: string;
+  idKorisnik: number,
+  username: string,
+  role: number,
+  godine: number,
+  spol: string,
+  blocked: boolean,
+  roleName: string
 }
 
 const Profil = () => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const [users, setUsers] = useState<Korisnik[]>([]);
+  const [korisnik, setKorisnik] = useState<Korisnik | null>(null);
   const [userToPrint, setUserToPrint] = useState({
     imageUrl: "",
     name: "",
@@ -37,10 +38,8 @@ const Profil = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response1 = await axios.get(`${apiUrl}/korisnici`);
-        setUsers(response1.data);
-        const response2 = await axios.get(`${apiUrl}/korisnici/user`);
-        setCurrentUser(response2.data);
+        const response = await axios.get(`${apiUrl}/korisnici/user`);
+        setCurrentUser(response.data);
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -50,47 +49,42 @@ const Profil = () => {
   }, []);
 
   useEffect(() => {
-    const updatedUser = { ...userToPrint };
-    if (currentUser) {
-      const filteredUser = users.find(
-        (user) => user.username === currentUser.email
-      );
+    if (currentUser?.email) {
+      const fetchKorisnik = async () => {
+        try {
+          const response1 = await axios.get(
+            `${apiUrl}/korisnici/username/${currentUser.email}`
+          );
+          setKorisnik(response1.data);
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+        }
+      };
 
+      fetchKorisnik();
+    }
+  }, [currentUser]);
+
+  useEffect(() => {
+    if (currentUser && korisnik) {
+      const updatedUser = { ...userToPrint };
       updatedUser.imageUrl = currentUser.picture;
       updatedUser.name = currentUser.name;
       updatedUser.email = currentUser.email;
-      updatedUser.age = filteredUser?.godine ?? 0;
-      updatedUser.sex = filteredUser?.spol ?? "";
-      if (filteredUser) {
-        switch (filteredUser.role) {
-          case 1:
-            updatedUser.roleName = "Student";
-            break;
-          case 2:
-            updatedUser.roleName = "Employee";
-            break;
-          case 3:
-            updatedUser.roleName = "Admin";
-            break;
-          default:
-            updatedUser.roleName = "";
-        }
-      }
+      updatedUser.roleName = korisnik.roleName;
+      updatedUser.age = korisnik.godine;
+      updatedUser.sex = korisnik.spol;
+      setUserToPrint(updatedUser);
+      console.log(updatedUser)
     }
-    setUserToPrint(updatedUser);
-  }, [currentUser, users]);
+  }, [korisnik]);
 
   return (
     <>
       <NavBar />
       {currentUser && (
         <div className="profile-container">
-          <Image
-            src={userToPrint.imageUrl}
-            alt="Profile"
-            onError={(e) => console.error("Error loading image:", e)}
-            roundedCircle
-          />
+          <Image src={userToPrint.imageUrl} alt="Profile" roundedCircle />
           <h1 className="profile-name">{userToPrint.name}</h1>
           <p className="profile-email">{userToPrint.email}</p>
           <p className="profile-role">Role: {userToPrint.roleName}</p>
