@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import NavBar from "./NavBar";
 import "/src/styles/Korisnici.css";
 
 const apiUrl = import.meta.env.VITE_API_URL;
@@ -44,40 +45,43 @@ const Korisnici = () => {
   };
 
   return (
-    <div className="korisnici-container">
-      <h1 className="naslov">Lista Korisnika</h1>
-      <table className="korisnici-table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Username</th>
-            <th>Role</th>
-            <th>Role Name</th>
-            <th>Godine</th>
-            <th>Spol</th>
-          </tr>
-        </thead>
-        <tbody>
-          {korisnici.map((korisnik) => (
-            <tr key={korisnik.idKorisnik}>
-              <td>{korisnik.idKorisnik}</td>
-              <td>{korisnik.username}</td>
-              <td>{korisnik.role}</td>
-              <td>{korisnik.roleName}</td>
-              <td>{korisnik.godine}</td>
-              <td>{korisnik.spol}</td>
-              <td>
-                {(korisnik.role === 1 || korisnik.role === 2) && (
-                  <button onClick={() => handleDelete(korisnik.idKorisnik)}>
-                    Delete User
-                  </button>
-                )}
-              </td>
+    <>
+      <NavBar />
+      <div className="korisnici-container">
+        <h1 className="naslov">Lista Korisnika</h1>
+        <table className="korisnici-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Username</th>
+              <th>Role</th>
+              <th>Role Name</th>
+              <th>Godine</th>
+              <th>Spol</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody>
+            {korisnici.map((korisnik) => (
+              <tr key={korisnik.idKorisnik}>
+                <td>{korisnik.idKorisnik}</td>
+                <td>{korisnik.username}</td>
+                <td>{korisnik.role}</td>
+                <td>{korisnik.roleName}</td>
+                <td>{korisnik.godine}</td>
+                <td>{korisnik.spol}</td>
+                <td>
+                  {(korisnik.role === 1 || korisnik.role === 2) && (
+                    <button onClick={() => handleDelete(korisnik.idKorisnik)}>
+                      Delete User
+                    </button>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
   );
 };
 export default Korisnici;
