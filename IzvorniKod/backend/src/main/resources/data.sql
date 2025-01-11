@@ -7,14 +7,14 @@ INSERT INTO korisnik (lozinka, username, role, godine, spol, blocked) VALUES
 ('password123', 'rimacniko0@gmail.com', 3, 29, 'Muški',false),
 ('password123', 'dakovicvalentin@gmail.com', 3, 38, 'Muški',false),
 
-('password123', 'user2@gmail.com', 1, 22, 'Ženski',false),
+('password123', 'user2@gmail.com', 1, 22, 'Ženski',true),
 ('password123', 'user3@gmail.com', 1, 26, 'Ženski',false),
 ('password123', 'user4@gmail.com', 2, 32, 'Muški',false),
 ('password123', 'user5@gmail.com', 2, 31, 'Muški',false),
-('password123', 'user6@gmail.com', 2, 29, 'Muški',false),
+('password123', 'user6@gmail.com', 2, 29, 'Muški',true),
 ('password123', 'user7@gmail.com', 3, 35, 'Muški',false),
 ('password123', 'user8@gmail.com', 3, 28, 'Ženski',false),
-('password123', 'user9@gmail.com', 1, 23, 'Ženski',false),
+('password123', 'user9@gmail.com', 1, 23, 'Ženski',true),
 ('password123', 'user10@gmail.com', 1, 27, 'Muški',false);
 
     
