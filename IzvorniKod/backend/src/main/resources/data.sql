@@ -434,7 +434,7 @@ INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
 ('Ručak', 3.0, 'Njoki u umaku od rajčice', 14),
 ('Večera', 2.6, 'Pizza Pepperoni', 14),
 ('Večera', 2.7, 'Taco s piletinom i salsom', 14),
-('Večera', 2.4, 'Salata od tune s tjesteninom', 14);
+('Večera', 2.4, 'Salata od tune s tjesteninom', 14),
 
 -- Menza Prirodoslovno-matematički fakultet (ID: 15)
 ('Doručak', 1.4, 'Zobena kaša s bademima', 15),
