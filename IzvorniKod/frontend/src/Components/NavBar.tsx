@@ -258,7 +258,6 @@ const DesktopNavBar = () => {
     fetchKorisnikFull();
   }, [korisnik, apiUrl]);
 
-  console.log(role);
 
   const handleOnClickMenze = () => {
     navigate("/menze");
