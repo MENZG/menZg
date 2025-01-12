@@ -110,12 +110,6 @@ function Menza() {
               </ListGroup>
             </div>
           </Card.Body>
-          <div className="live-stream">
-            <h4>Uživo red u menzi</h4>
-            <div className="video-container">
-              <YouTubeLiveStream videoId="wBVq_Qoegmo"></YouTubeLiveStream>
-            </div>
-          </div>
         </Card>
       </div>
     </>
