@@ -278,48 +278,220 @@ VALUES
     ('Subota', NULL, NULL, 18),                     -- Zatvoreno
     ('Nedjelja', NULL, NULL, 18);            
 
-
---jelovnici
--- Tablica za menije
+-- Tablica za jelovnike (kategorije: Doručak, Ručak, Večera)
 INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
--- Menza Lašćina - LINIJA 1
-( 'Glavno jelo', 2.5, 'Piletina s rižom', 1),
-( 'Glavno jelo', 2.8, 'Grah s kobasicom',  1),
-( 'Glavno jelo',1.8, 'Vegetarijanski rižoto',  1),
-('Desert', 1,'Palačinke s čokoladom',  1),
-('Juha', 0.8, 'Juha od povrća', 1),
+-- Menza Lašćina - LINIJA 1 (ID: 1)
+('Doručak', 1.5, 'Jaja s pancetom', 1),
+('Doručak', 1.2, 'Pecivo s maslacem i džemom', 1),
+('Doručak', 1.0, 'Čokolino', 1),
+('Ručak', 2.5, 'Pečena piletina s povrćem', 1),
+('Ručak', 2.2, 'Rižoto s gljivama', 1),
+('Ručak', 2.0, 'Pasta Primavera', 1),
+('Večera', 2.3, 'Sendvič s tunjevinom', 1),
+('Večera', 2.5, 'Pečena riba s blitvom', 1),
+('Večera', 1.8, 'Pizza Margherita', 1),
 
--- Menza Lašćina - LINIJA 2
-( 'Glavno jelo', 2.8,  'Bečki odrezak s pomfritom', 2),
-( 'Glavno jelo', 2.2, 'Špageti bolonjez', 2),
-( 'Glavno jelo', 2.5, 'Lasagne', 2),
-('Desert', 1.5, 'Tiramisu',  2),
-('Juha', 0.9,'Juha od gljiva', 2),
+-- Menza Lašćina - LINIJA 2 (ID: 2)
+('Doručak', 1.5, 'Kajgana s povrćem', 2),
+('Doručak', 1.0, 'Kroasan s čokoladom', 2),
+('Doručak', 1.2, 'Gris s kakaom', 2),
+('Ručak', 3.0, 'Pohana piletina s pomfritom', 2),
+('Ručak', 2.5, 'Punjene paprike', 2),
+('Ručak', 2.8, 'Lasagne', 2),
+('Večera', 2.3, 'Špageti Carbonara', 2),
+('Večera', 2.7, 'Burger s pomfritom', 2),
+('Večera', 2.0, 'Vegetarijanski rižoto', 2),
 
--- Menza Borongaj - LINIJA 1
-( 'Glavno jelo',3, 'Čevapi s lepinjom', 3),
-( 'Glavno jelo',2.7 ,'Pečena piletina s krumpirom',  3),
-( 'Glavno jelo',2.4, 'Musaka',  3),
-('Desert', 1.2,'Voćna salata', 3),
-('Juha', 0.7, 'Paradajz juha', 3),
+-- Menza Borongaj - LINIJA 1 (ID: 3)
+('Doručak', 1.3, 'Palačinke s medom', 3),
+('Doručak', 1.0, 'Sendvič sa sirom i šunkom', 3),
+('Doručak', 1.2, 'Žitarice s mlijekom', 3),
+('Ručak', 3.2, 'Grah s kobasicom', 3),
+('Ručak', 2.8, 'Zapečeni krumpir s mesom', 3),
+('Ručak', 2.5, 'Pileći medaljoni s rižom', 3),
+('Večera', 2.3, 'Salata s tunjevinom', 3),
+('Večera', 2.7, 'Pizza s povrćem', 3),
+('Večera', 2.2, 'Ćevapi s lepinjom', 3),
 
--- Menza Borongaj - LINIJA 2
-( 'Glavno jelo',2.5, 'Pizza Margherita',  4),
-( 'Glavno jelo',2.9, 'Riblji filet s povrćem',  4),
-( 'Glavno jelo',2.8,  'Šunka u tijestu',  4),
-('Desert',1, 'Jogurt s voćem', 4),
-('Juha', 0.8, 'Pileća juha', 4),
+-- Menza Borongaj - LINIJA 2 (ID: 4)
+('Doručak', 1.3, 'Omelette sa šunkom', 4),
+('Doručak', 1.2, 'Jogurt s muslijem', 4),
+('Doručak', 1.0, 'Kiflica s maslacem', 4),
+('Ručak', 2.9, 'Bečki odrezak s krumpirom', 4),
+('Ručak', 3.0, 'Punjena pileća prsa', 4),
+('Ručak', 2.8, 'Šunka u tijestu', 4),
+('Večera', 2.4, 'Tuna salata s jajima', 4),
+('Večera', 2.7, 'Hot dog s prilozima', 4),
+('Večera', 2.1, 'Pohane tikvice s krumpir salatom', 4),
 
--- Menza Ekonomija
-('Glavno jelo', 2.2,'Punjene paprike',  5),
-('Glavno jelo', 3.8,'Svinjski kotlet s povrćem', 5),
-('Glavno jelo', 2.8,'Rižoto od plodova mora', 5),
-('Desert', 1.2, 'Čokoladni kolač', 5),
-('Juha', 0.9, 'Minestrone juha', 5),
+-- Menza Ekonomija (ID: 5)
+('Doručak', 1.0, 'Muesli s jogurtom', 5),
+('Doručak', 1.2, 'Tost sa sirom', 5),
+('Doručak', 1.3, 'Kukuruzna kaša', 5),
+('Ručak', 3.5, 'Svinjski kotlet s prilogom', 5),
+('Ručak', 3.0, 'Punjeni lignji s povrćem', 5),
+('Ručak', 2.5, 'Gulaš s njokima', 5),
+('Večera', 2.2, 'Sendvič s piletinom', 5),
+('Večera', 2.7, 'Zapečeni grah s kobasicom', 5),
+('Večera', 2.0, 'Vegetarijanski wrap', 5),
 
--- Menza Medicine
-( 'Glavno jelo',2.5, 'Lazanje', 6),
-( 'Glavno jelo',2.6, 'Pohana piletina s pireom', 6),
-( 'Glavno jelo',2.2, 'Zapečeni grah',  6),
-('Desert', 0.8 ,'Voćni jogurt', 6),
-('Juha', 0.7, 'Juha od leće', 6);
+-- Menza Medicine (ID: 6)
+('Doručak', 1.2, 'Palačinke s marmeladom', 6),
+('Doručak', 1.0, 'Čokoladno pecivo', 6),
+('Doručak', 1.1, 'Kukuruzni kruh s maslacem', 6),
+('Ručak', 3.0, 'Lazanje s mljevenim mesom', 6),
+('Ručak', 2.8, 'Zapečena tjestenina s povrćem', 6),
+('Ručak', 2.6, 'Grah s kobasicom', 6),
+('Večera', 2.3, 'Pizza Capricciosa', 6),
+('Večera', 2.7, 'Riblji file s povrćem', 6),
+('Večera', 2.1, 'Pohana riba s tartarom', 6);
+
+-- Menza Veterina (ID: 7)
+INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
+('Doručak', 1.3, 'Jaja na oko s kobasicom', 7),
+('Doručak', 1.0, 'Sendvič s mortadelom', 7),
+('Doručak', 1.2, 'Zobene pahuljice s mlijekom', 7),
+('Ručak', 3.0, 'Svinjski paprikaš s noklicama', 7),
+('Ručak', 2.8, 'Pečena teletina s krumpirima', 7),
+('Ručak', 2.6, 'Vegetarijanski wok s povrćem', 7),
+('Večera', 2.4, 'Pileći burger', 7),
+('Večera', 2.5, 'Tuna salata s kukuruzom', 7),
+('Večera', 2.0, 'Pizza s kulenom', 7),
+
+-- Menza FER - LINIJA 1 (ID: 8)
+('Doručak', 1.5, 'Kajgana sa špekom', 8),
+('Doručak', 1.0, 'Jogurt s pahuljicama', 8),
+('Doručak', 1.2, 'Kruh s maslacem i medom', 8),
+('Ručak', 3.2, 'Bečki odrezak s pomfritom', 8),
+('Ručak', 3.0, 'Piletina u umaku od gljiva', 8),
+('Ručak', 2.8, 'Zapečene lazanje', 8),
+('Večera', 2.4, 'Salata s feta sirom', 8),
+('Večera', 2.5, 'Pizza Funghi', 8),
+('Večera', 2.2, 'Sendvič s povrćem', 8),
+
+-- Menza FER - BRZA (ID: 9)
+('Doručak', 1.3, 'Pecivo sa sirom', 9),
+('Doručak', 1.0, 'Sendvič s maslacem', 9),
+('Doručak', 1.2, 'Zobena kaša s voćem', 9),
+('Ručak', 3.0, 'Pečeni losos s povrćem', 9),
+('Ručak', 2.7, 'Rižoto od kozica', 9),
+('Ručak', 2.8, 'Pohana puretina s pireom', 9),
+('Večera', 2.5, 'Burger s BBQ umakom', 9),
+('Večera', 2.3, 'Špageti Bolonjez', 9),
+('Večera', 2.1, 'Vegetarijanski wrap', 9),
+
+-- Menza Stjepan Radić BRZA (ID: 10)
+('Doručak', 1.5, 'Omlet s gljivama', 10),
+('Doručak', 1.2, 'Kiflica sa šunkom i sirom', 10),
+('Doručak', 1.0, 'Jogurt s medom', 10),
+('Ručak', 3.5, 'Punjeni odrezak u umaku od vrganja', 10),
+('Ručak', 3.0, 'Pileći file s povrćem na žaru', 10),
+('Ručak', 2.9, 'Njoki u pestu', 10),
+('Večera', 2.5, 'Pizza s mozzarellom', 10),
+('Večera', 2.7, 'Pileći wok s rezancima', 10),
+('Večera', 2.3, 'Salata s jajima', 10),
+
+-- Menza Stjepan Radić RESTORAN 1 (ID: 11)
+('Doručak', 1.5, 'Palačinke s nutellom', 11),
+('Doručak', 1.3, 'Sendvič s puretinom', 11),
+('Doručak', 1.0, 'Kiflica s margarinom', 11),
+('Ručak', 3.2, 'Pohana teletina s krumpir salatom', 11),
+('Ručak', 2.8, 'Rižoto s piletinom', 11),
+('Ručak', 3.0, 'Zapečeni grah s mesom', 11),
+('Večera', 2.4, 'Burger s povrćem', 11),
+('Večera', 2.5, 'Špageti s umakom od rajčice', 11),
+('Večera', 2.3, 'Pizza Vegetariana', 11);
+
+-- Menza Stjepan Radić RESTORAN 2 (ID: 12)
+INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
+('Doručak', 1.5, 'Pecivo s čokoladnim namazom', 12),
+('Doručak', 1.3, 'Kajgana s povrćem', 12),
+('Doručak', 1.0, 'Jogurt s voćem', 12),
+('Ručak', 3.3, 'Gulaš s knedlama', 12),
+('Ručak', 3.0, 'Roštilj plate s prilozima', 12),
+('Ručak', 2.9, 'Tjestenina sa sirom i vrhnjem', 12),
+('Večera', 2.5, 'Burger s prženim krumpirićima', 12),
+('Večera', 2.7, 'Pizza Quattro Formaggi', 12),
+('Večera', 2.4, 'Tuna salata s maslinama', 12),
+
+-- Menza Građevinski fakultet (ID: 13)
+('Doručak', 1.4, 'Sendvič s tunjevinom', 13),
+('Doručak', 1.2, 'Kroasan s marmeladom', 13),
+('Doručak', 1.0, 'Žitarice s mlijekom', 13),
+('Ručak', 3.0, 'Ćevapi s ajvarom i lepinjom', 13),
+('Ručak', 2.7, 'Pohana piletina s blitvom', 13),
+('Ručak', 2.8, 'Pečena puretina s pireom', 13),
+('Večera', 2.3, 'Salata od tune', 13),
+('Večera', 2.7, 'Pasta Carbonara', 13),
+('Večera', 2.0, 'Sendvič s avokadom', 13),
+
+-- Menza Fakultet elektrotehnike i računarstva (ID: 14)
+('Doručak', 1.4, 'Sendvič s pršutom i sirom', 14),
+('Doručak', 1.3, 'Kiflica s maslacem', 14),
+('Doručak', 1.1, 'Zobena kaša s grožđicama', 14),
+('Ručak', 3.5, 'Beef Stroganoff s rižom', 14),
+('Ručak', 3.2, 'Grilana piletina s povrćem', 14),
+('Ručak', 3.0, 'Njoki u umaku od rajčice', 14),
+('Večera', 2.6, 'Pizza Pepperoni', 14),
+('Večera', 2.7, 'Taco s piletinom i salsom', 14),
+('Večera', 2.4, 'Salata od tune s tjesteninom', 14);
+
+
+-- Menza Prirodoslovno-matematički fakultet (ID: 15)
+INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
+('Doručak', 1.4, 'Zobena kaša s bademima', 15),
+('Doručak', 1.2, 'Sendvič s pečenicom', 15),
+('Doručak', 1.0, 'Kruh s medom', 15),
+('Ručak', 3.2, 'Punjena paprika s pireom', 15),
+('Ručak', 2.8, 'Oslić na žaru s blitvom', 15),
+('Ručak', 2.9, 'Tjestenina Alfredo', 15),
+('Večera', 2.5, 'Pileći nuggetsi s BBQ umakom', 15),
+('Večera', 2.6, 'Pasta Primavera', 15),
+('Večera', 2.3, 'Salata od krumpira s jajima', 15),
+
+-- Menza Kineziološki fakultet (ID: 16)
+('Doručak', 1.3, 'Pecivo s maslacem i džemom', 16),
+('Doručak', 1.2, 'Jogurt s granolom', 16),
+('Doručak', 1.0, 'Kruh s maslinovim uljem', 16),
+('Ručak', 3.4, 'Pileći batak s rižom', 16),
+('Ručak', 3.0, 'Bečki odrezak s krumpirima', 16),
+('Ručak', 2.7, 'Povrtni curry s rižom', 16),
+('Večera', 2.5, 'Pizza Capricciosa', 16),
+('Večera', 2.6, 'Burger s cheddar sirom', 16),
+('Večera', 2.4, 'Zapečena tjestenina', 16);
+
+
+
+-- Menza Agronomski fakultet (ID: 17)
+INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
+('Doručak', 1.5, 'Omlet sa sirom i šunkom', 17),
+('Doručak', 1.2, 'Kroasan s maslacem', 17),
+('Doručak', 1.0, 'Kiflica s marmeladom', 17),
+('Ručak', 3.0, 'Pečena piletina s pečenim povrćem', 17),
+('Ručak', 2.9, 'Riblji file s blitvom', 17),
+('Ručak', 2.8, 'Rižoto s gljivama', 17),
+('Večera', 2.6, 'Salata od tune i povrća', 17),
+('Večera', 2.5, 'Pohana mozzarella', 17),
+('Večera', 2.3, 'Pizza s povrćem', 17),
+
+-- Menza PMF (ID: 18)
+('Doručak', 1.4, 'Zobena kaša s borovnicama', 18),
+('Doručak', 1.3, 'Pecivo s jogurtom', 18),
+('Doručak', 1.0, 'Kruh s namazom od lješnjaka', 18),
+('Ručak', 3.2, 'Osso buco s povrćem', 18),
+('Ručak', 3.0, 'Pileći file s umakom od gljiva', 18),
+('Ručak', 2.9, 'Vegetarijanske tortilje', 18),
+('Večera', 2.5, 'Burger s umakom od avokada', 18),
+('Večera', 2.6, 'Pizza Prosciutto', 18),
+('Večera', 2.4, 'Tuna salata s tjesteninom', 18),
+
+-- Menza Muzička akademija (ID: 19)
+('Doručak', 1.3, 'Kiflica sa sirom', 19),
+('Doručak', 1.2, 'Sendvič s povrćem i feta sirom', 19),
+('Doručak', 1.0, 'Jogurt s medom', 19),
+('Ručak', 3.0, 'Lasagne Bolognese', 19),
+('Ručak', 2.8, 'Zapečena piletina s povrćem', 19),
+('Ručak', 2.7, 'Rižoto od povrća', 19),
+('Večera', 2.5, 'Pizza Margherita', 19),
+('Večera', 2.6, 'Pileći kebab', 19),
+('Večera', 2.4, 'Tjestenina Carbonara', 19);

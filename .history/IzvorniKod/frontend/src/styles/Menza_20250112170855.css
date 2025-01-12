@@ -67,3 +67,8 @@
   font-size: 1.2rem;
 }
 
+.youtube-iframe {
+  width: 80%;
+  height: 315px; /* Adjust based on design */
+  border: none;
+}

@@ -59,7 +59,6 @@
 .live-stream {
   margin-top: 20px;
   text-align: center;
-  border-radius: 30%;
 }
 
 .live-stream h4 {
@@ -67,3 +66,8 @@
   font-size: 1.2rem;
 }
 
+.youtube-iframe {
+  width: 80%;
+  height: 315px; /* Adjust based on design */
+  border: none;
+}
