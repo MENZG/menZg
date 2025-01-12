@@ -42,9 +42,11 @@ const Profil = () => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [selectedSex, setSelectedSex] = useState(userToPrint.sex);
   const [age, setAge] = useState(userToPrint.age);
+  const [isSexSelected, setIsSexSelected] = useState(false);
 
   const handleSexChange = (eventKey: string | null) => {
     setSelectedSex(eventKey ?? "");
+    setIsSexSelected(true);
   };
 
   interface AgeChangeEvent extends React.ChangeEvent<HTMLInputElement> {}
@@ -54,6 +56,10 @@ const Profil = () => {
   };
 
   const toggleEditMode = () => {
+    if (isEditMode && !isSexSelected) {
+      alert("Potrebno je upisati valjane vrijednosti!");
+      return;
+    }
     if (isEditMode) {
       const updateUser = async () => {
         if (korisnik) {
@@ -156,7 +162,7 @@ const Profil = () => {
                   userToPrint.age || "nedefinirano"
                 )}
               </p>
-              <p className="profile-sex">
+              <div className="profile-sex">
                 Spol:{" "}
                 {isEditMode ? (
                   <DropdownButton
@@ -173,7 +179,7 @@ const Profil = () => {
                 ) : (
                   userToPrint.sex || "nedefinirano"
                 )}
-              </p>
+              </div>
             </div>
             <div className="profile-dropdown">
               <button onClick={toggleEditMode}>
