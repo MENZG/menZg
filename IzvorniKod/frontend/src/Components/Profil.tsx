@@ -2,7 +2,12 @@ import { useEffect, useState } from "react";
 import NavBar from "./NavBar";
 import axios from "axios";
 import Image from "react-bootstrap/Image";
+import { Form } from "react-bootstrap";
 import "../styles/Profile.css";
+
+import ButtonGroup from "react-bootstrap/ButtonGroup";
+import Dropdown from "react-bootstrap/Dropdown";
+import DropdownButton from "react-bootstrap/DropdownButton";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 axios.defaults.withCredentials = true;
@@ -14,13 +19,13 @@ interface User {
 }
 
 interface Korisnik {
-  idKorisnik: number,
-  username: string,
-  role: number,
-  godine: number,
-  spol: string,
-  blocked: boolean,
-  roleName: string
+  idKorisnik: number;
+  username: string;
+  role: number;
+  godine: number;
+  spol: string;
+  blocked: boolean;
+  roleName: string;
 }
 
 const Profil = () => {
@@ -34,6 +39,44 @@ const Profil = () => {
     age: 0,
     sex: "",
   });
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [selectedSex, setSelectedSex] = useState(userToPrint.sex);
+  const [age, setAge] = useState(userToPrint.age);
+
+  const handleSexChange = (eventKey: string | null) => {
+    setSelectedSex(eventKey ?? "");
+  };
+
+  interface AgeChangeEvent extends React.ChangeEvent<HTMLInputElement> {}
+
+  const handleAgeChange = (e: AgeChangeEvent) => {
+    setAge(Number(e.target.value));
+  };
+
+  const toggleEditMode = () => {
+    if (isEditMode) {
+      const updateUser = async () => {
+        if (korisnik) {
+          try {
+            await axios.put(`${apiUrl}/korisnici/${korisnik.idKorisnik}`, {
+              username: korisnik.username,
+              lozinka: "",
+              spol: selectedSex,
+              godine: age,
+            });
+          } catch (error) {
+            console.error("Error updating user data:", error);
+          }
+        }
+      };
+
+      updateUser();
+
+      userToPrint.sex = selectedSex;
+      userToPrint.age = age;
+    }
+    setIsEditMode(!isEditMode);
+  };
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -75,7 +118,6 @@ const Profil = () => {
       updatedUser.age = korisnik.godine;
       updatedUser.sex = korisnik.spol;
       setUserToPrint(updatedUser);
-      console.log(updatedUser)
     }
   }, [korisnik]);
 
@@ -83,13 +125,62 @@ const Profil = () => {
     <>
       <NavBar />
       {currentUser && (
-        <div className="profile-container">
-          <Image src={userToPrint.imageUrl} alt="Profile" roundedCircle />
-          <h1 className="profile-name">{userToPrint.name}</h1>
-          <p className="profile-email">{userToPrint.email}</p>
-          <p className="profile-role">Role: {userToPrint.roleName}</p>
-          <p className="profile-age">Age: {userToPrint.age}</p>
-          <p className="profile-sex">Sex: {userToPrint.sex}</p>
+        <div className="profile-page">
+          <div className="profile-container">
+            <div className="profile-header">
+              <Image
+                src={userToPrint.imageUrl}
+                alt="Profile Picture"
+                roundedCircle
+                className="profile-picture"
+                onError={(e) => {
+                  (e.currentTarget as HTMLImageElement).src = "./avatar.png";
+                }}
+              />
+              <h1 className="profile-name">{userToPrint.name}</h1>
+            </div>
+            <div className="profile-details">
+              <p className="profile-email">{userToPrint.email}</p>
+              <p className="profile-role">Role: {userToPrint.roleName}</p>
+              <p className="profile-age">
+                Godine:{" "}
+                {isEditMode ? (
+                  <Form.Control
+                    type="number"
+                    value={age}
+                    onChange={handleAgeChange}
+                    className="age-input"
+                    size="sm"
+                  />
+                ) : (
+                  userToPrint.age || "nedefinirano"
+                )}
+              </p>
+              <p className="profile-sex">
+                Spol:{" "}
+                {isEditMode ? (
+                  <DropdownButton
+                    as={ButtonGroup}
+                    id="dropdown-button-drop-sex"
+                    size="sm"
+                    title={selectedSex}
+                    onSelect={handleSexChange}
+                  >
+                    <Dropdown.Item eventKey="Muški">Muški</Dropdown.Item>
+                    <Dropdown.Item eventKey="Ženski">Ženski</Dropdown.Item>
+                    <Dropdown.Item eventKey="Ostalo">Ostalo</Dropdown.Item>
+                  </DropdownButton>
+                ) : (
+                  userToPrint.sex || "nedefinirano"
+                )}
+              </p>
+            </div>
+            <div className="profile-dropdown">
+              <button onClick={toggleEditMode}>
+                {isEditMode ? "Save" : "Edit"}
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </>
