@@ -28,6 +28,9 @@ public class SecurityConfig {
 	@Value("${progi.frontend.url}/menze") // cisti frontend --> dalje slat
 	private String frontendUrl;
 
+	@Value("${progi.frontend.url}") // cisti frontend --> dalje slat
+	private String loginPage;
+
 	@Autowired
 	private KorisnikService korisnikService;
 
@@ -39,7 +42,7 @@ public class SecurityConfig {
 				auth -> auth.requestMatchers("/h2-console/**").permitAll().requestMatchers(HttpMethod.OPTIONS, "/**")
 						.permitAll() // Dozvoli OPTIONS zahtjeve za sve rute// Dopuštanje pristupa H2 konzoli
 						//
-						.requestMatchers("/korisnici/**").permitAll() // OVO MAKNU U PRODUKCIJI!!!!
+						.requestMatchers("/korisnici/**").permitAll() // OVO MAKNUT U PRODUKCIJI!!!!
 
 						// autentifikaciju
 						.anyRequest().authenticated() // Sve ostale// sve
@@ -63,6 +66,7 @@ public class SecurityConfig {
 			// Nastavite s default redirectom
 			response.sendRedirect(frontendUrl);
 		}));
+
 		return http.build();
 	}
 
