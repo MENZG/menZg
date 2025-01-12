@@ -86,9 +86,9 @@ public class KorisnikController {
 		case 1:
 			return "ROLE_STUDENT";
 		case 2:
-			return "ROLE_ADMIN";
-		case 3:
 			return "ROLE_DJELATNIK";
+		case 3:
+			return "ROLE_ADMIN";
 		default:
 			return "ROLE_UNKNOWN"; // Nevažeći broj role
 		}
