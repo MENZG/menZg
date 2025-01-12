@@ -344,7 +344,7 @@ INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
 ('Ručak', 2.6, 'Grah s kobasicom', 6),
 ('Večera', 2.3, 'Pizza Capricciosa', 6),
 ('Večera', 2.7, 'Riblji file s povrćem', 6),
-('Večera', 2.1, 'Pohana riba s tartarom', 6),
+('Večera', 2.1, 'Pohana riba s tartarom', 6);
 
 -- Menza Veterina (ID: 7)
 INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
@@ -400,7 +400,7 @@ INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
 ('Ručak', 3.0, 'Zapečeni grah s mesom', 11),
 ('Večera', 2.4, 'Burger s povrćem', 11),
 ('Večera', 2.5, 'Špageti s umakom od rajčice', 11),
-('Večera', 2.3, 'Pizza Vegetariana', 11),
+('Večera', 2.3, 'Pizza Vegetariana', 11);
 
 -- Menza Stjepan Radić RESTORAN 2 (ID: 12)
 INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
@@ -434,9 +434,11 @@ INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
 ('Ručak', 3.0, 'Njoki u umaku od rajčice', 14),
 ('Večera', 2.6, 'Pizza Pepperoni', 14),
 ('Večera', 2.7, 'Taco s piletinom i salsom', 14),
-('Večera', 2.4, 'Salata od tune s tjesteninom', 14),
+('Večera', 2.4, 'Salata od tune s tjesteninom', 14);
+
 
 -- Menza Prirodoslovno-matematički fakultet (ID: 15)
+INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
 ('Doručak', 1.4, 'Zobena kaša s bademima', 15),
 ('Doručak', 1.2, 'Sendvič s pečenicom', 15),
 ('Doručak', 1.0, 'Kruh s medom', 15),
@@ -456,9 +458,12 @@ INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
 ('Ručak', 2.7, 'Povrtni curry s rižom', 16),
 ('Večera', 2.5, 'Pizza Capricciosa', 16),
 ('Večera', 2.6, 'Burger s cheddar sirom', 16),
-('Večera', 2.4, 'Zapečena tjestenina', 16),
+('Večera', 2.4, 'Zapečena tjestenina', 16);
+
+
 
 -- Menza Agronomski fakultet (ID: 17)
+INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
 ('Doručak', 1.5, 'Omlet sa sirom i šunkom', 17),
 ('Doručak', 1.2, 'Kroasan s maslacem', 17),
 ('Doručak', 1.0, 'Kiflica s marmeladom', 17),
