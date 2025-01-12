@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.servlet.http.HttpServletRequest;
 import menzg.DTO.KorisnikDTO;
 import menzg.model.Korisnik;
 import menzg.model.Menza;
@@ -166,6 +168,7 @@ public class KorisnikController {
 
 	// GET: Dohvaća korisnika po mailu
 	@GetMapping("/username/{username}")
+	@PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
 	public ResponseEntity<Korisnik> getKorisnikByUsername(@PathVariable String username) {
 		Optional<Korisnik> korisnik = korisnikService.findByUsername(username);
 		if (korisnik.isPresent()) {
@@ -177,6 +180,7 @@ public class KorisnikController {
 
 	// GET: Dohvaća naziv uloge korisnika po ID-u
 	@GetMapping("/{id}/role")
+	@PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
 	public ResponseEntity<String> getRoleNameById(@PathVariable Long id) {
 		Optional<Korisnik> korisnik = korisnikService.findById(id);
 		if (korisnik.isPresent()) {
@@ -188,6 +192,7 @@ public class KorisnikController {
 	}
 
 	@GetMapping("/{id}/najdraze")
+	@PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
 	public ResponseEntity<List<Menza>> getOmiljeneMenza(@PathVariable Long id) {
 		Optional<Korisnik> korisnik = korisnikService.findById(id);
 
@@ -202,6 +207,7 @@ public class KorisnikController {
 	// KorisnikController.java
 
 	@PostMapping("/{korisnikId}/omiljenaMenza/{menzaId}")
+	@PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
 	public ResponseEntity<String> addOmiljenaMenza(@PathVariable Long korisnikId, @PathVariable Long menzaId) {
 		// Provjera postoji li korisnik
 		Optional<Korisnik> korisnikOpt = korisnikService.findById(korisnikId);
@@ -231,6 +237,7 @@ public class KorisnikController {
 	}
 
 	@DeleteMapping("/{korisnikId}/omiljenaMenza/{menzaId}")
+	@PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
 	public ResponseEntity<String> removeOmiljenaMenza(@PathVariable Long korisnikId, @PathVariable Long menzaId) {
 		// Provjera postoji li korisnik
 		Optional<Korisnik> korisnikOpt = korisnikService.findById(korisnikId);
@@ -273,6 +280,12 @@ public class KorisnikController {
 		return ResponseEntity.ok(azuriraniKorisnik);
 	}
 
+	@PostMapping("/odjavi")
+	public ResponseEntity<String> logout(HttpServletRequest request) {
+		SecurityContextHolder.getContext().setAuthentication(null);
+		request.getSession().invalidate();
+		return ResponseEntity.ok("Logged out successfully");
+	}
 //	@PostMapping("")
 //	public Korisnik createKorisnik(Korisnik korisnik) {
 //		return korisnikService.createKorisnik(korisnik);
