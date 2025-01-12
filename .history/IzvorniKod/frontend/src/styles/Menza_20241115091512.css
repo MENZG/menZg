@@ -54,16 +54,3 @@
     margin-right: 0.5em; /* Space between the pin and the text */
     object-fit: contain; /* Maintains aspect ratio and avoids cropping */
 }
-
-
-.live-stream {
-  margin-top: 20px;
-  text-align: center;
-  border-radius: 30%;
-}
-
-.live-stream h4 {
-  margin-bottom: 15px;
-  font-size: 1.2rem;
-}
-
