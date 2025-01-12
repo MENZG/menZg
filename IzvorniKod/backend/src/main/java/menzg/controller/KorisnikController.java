@@ -11,7 +11,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import menzg.DTO.KorisnikDTO;
 import menzg.model.Korisnik;
@@ -38,7 +46,7 @@ public class KorisnikController {
 
 	// GET: Dohvaća sve korisnike
 	@GetMapping
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	// @PreAuthorize("hasRole('ROLE_ADMIN')") NEKA U RAZVOJU OVO BUDE DOSTUPNO SVIMA
 	public ResponseEntity<List<KorisnikDTO>> getAllKorisnici() {
 		List<Korisnik> korisnici = korisnikService.findAll();
 
@@ -49,6 +57,41 @@ public class KorisnikController {
 				.collect(Collectors.toList());
 
 		return ResponseEntity.ok(korisniciBasicInfo);
+	}
+
+	@PutMapping("/{id}/newRole/{brojNoveRole}")
+	public ResponseEntity<String> promijeniRoluKorisniku(@PathVariable Long id, @PathVariable int brojNoveRole) {
+		Optional<Korisnik> korisnikOpt = korisnikService.findById(id);
+
+		if (!korisnikOpt.isPresent()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Korisnik s ID-em " + id + " nije pronađen.");
+		}
+
+		Korisnik korisnik = korisnikOpt.get();
+
+		String novaRola = mapirajBrojNaRolu(brojNoveRole);
+
+		korisnik.setRole(brojNoveRole);
+
+		System.out.println("mijenjam rolu korisniku " + korisnik.getUsername() + " na " + novaRola);
+
+		korisnikService.save(korisnik);
+
+		return ResponseEntity.ok("Rola korisnika s ID-em " + id + " uspješno promijenjena u: " + novaRola);
+
+	}
+
+	private String mapirajBrojNaRolu(int broj) {
+		switch (broj) {
+		case 1:
+			return "ROLE_STUDENT";
+		case 2:
+			return "ROLE_ADMIN";
+		case 3:
+			return "ROLE_DJELATNIK";
+		default:
+			return "ROLE_UNKNOWN"; // Nevažeći broj role
+		}
 	}
 
 	// najzajebanija metoda
@@ -219,13 +262,11 @@ public class KorisnikController {
 		return ResponseEntity.status(HttpStatus.OK).body("Menza uklonjena iz omiljenih menzi korisnika " + korisnikId);
 	}
 
-
 	// PUT endpoint za promjenu statusa 'blocked'
-	//PUT http://localhost:8080/api/korisnici/1/blocked?blocked=true
+	// PUT http://localhost:8080/api/korisnici/1/blocked?blocked=true
 	@PreAuthorize("hasRole('ROLE_ADMIN')") // Samo admin može pristupiti ovom endpointu
 	@PutMapping("/{idKorisnik}/blocked")
-	public ResponseEntity<Korisnik> promijeniBlockedStatus(
-			@PathVariable Long idKorisnik,
+	public ResponseEntity<Korisnik> promijeniBlockedStatus(@PathVariable Long idKorisnik,
 			@RequestParam boolean blocked) {
 
 		Korisnik azuriraniKorisnik = korisnikService.promijeniBlockedStatus(idKorisnik, blocked);
