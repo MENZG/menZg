@@ -5,7 +5,7 @@
 .korisnici-container {
   padding: 20px;
   margin-top: 18vh;
-  margin-bottom: 4vh;
+  margin-bottom: 6vh;
 }
 
 .korisnici-table {
@@ -22,17 +22,4 @@
 .korisnici-table th {
   background-color: #f2f2f2;
   text-align: left;
-}
-
-.admin-btn{
-  color: white;
-    background-color: #0098b3;
-    border-radius: 50px;
-    font-size:small;
-    border: none;
-    padding: 6px 10px;
-}
-
-.admin-btn:hover{
-  background-color: #007a8a;
 }

@@ -201,7 +201,10 @@ const MobileNavBar = () => {
           </div>
         ) : (
           <div className="role-div">
-            <button className="log-btn" onClick={handleOnClickLogout}>
+            <button
+              className="log-btn"
+              onClick={() => handleNavigation("/login/student")}
+            >
               Ulogiraj se
             </button>
           </div>

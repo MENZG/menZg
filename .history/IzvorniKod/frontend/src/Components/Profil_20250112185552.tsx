@@ -81,14 +81,14 @@ const Profil = () => {
 
   const updateUserRole = async (id: number, newRole: number) => {
     try {
-      const response = await axios.put(
-        `${apiUrl}/korisnici/${id}/newRole/${newRole}`
-      );
+      const response = await axios.put(`/korisnici/${id}/newRole/${newRole}`);
       console.log("User role updated:", response.data);
     } catch (error) {
       console.error("Error updating user role:", error);
     }
   };
+
+  updateUserRole(3, 3);
 
   return (
     <>

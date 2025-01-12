@@ -28,11 +28,6 @@
   color: white;
     background-color: #0098b3;
     border-radius: 50px;
-    font-size:small;
+    font-size: small;
     border: none;
-    padding: 6px 10px;
-}
-
-.admin-btn:hover{
-  background-color: #007a8a;
 }
