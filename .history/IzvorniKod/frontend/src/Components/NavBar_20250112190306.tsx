@@ -98,26 +98,6 @@ const MobileNavBar = () => {
     navigate(path);
     setMenuOpen(false); // Zatvara meni nakon navigacije
   };
-
-  const handleOnClickLogout = async () => {
-    try {
-      await axios.post(`${apiUrl}/korisnici/odjavi`, null, {
-        withCredentials: true,
-      });
-
-      document.cookie =
-        "session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-      setIsLoggedIn(false);
-      setKorisnik(undefined);
-      setKorisnikFull(undefined);
-      setRole("");
-
-      navigate("/login/student");
-      console.log("Korisnik je uspješno odjavljen.");
-    } catch (error) {
-      console.error("Greška pri odjavi:", error);
-    }
-  };
   return (
     <div className="container-fluid">
       {/* Logo */}
@@ -201,7 +181,10 @@ const MobileNavBar = () => {
           </div>
         ) : (
           <div className="role-div">
-            <button className="log-btn" onClick={handleOnClickLogout}>
+            <button
+              className="log-btn"
+              onClick={() => handleNavigation("/login/student")}
+            >
               Ulogiraj se
             </button>
           </div>
@@ -230,6 +213,10 @@ const DesktopNavBar = () => {
         return "Nepoznata uloga";
     }
   };
+
+  useEffect(() => {
+    console.log("Novi status isLoggedIn:", isLoggedIn);
+  }, [isLoggedIn]);
 
   useEffect(() => {
     const fetchUserData = async () => {

@@ -201,7 +201,7 @@ const MobileNavBar = () => {
           </div>
         ) : (
           <div className="role-div">
-            <button className="log-btn" onClick={handleOnClickLogout}>
+            <button className="log-btn" onClick={handleOnClickLogout()}>
               Ulogiraj se
             </button>
           </div>
@@ -230,6 +230,10 @@ const DesktopNavBar = () => {
         return "Nepoznata uloga";
     }
   };
+
+  useEffect(() => {
+    console.log("Novi status isLoggedIn:", isLoggedIn);
+  }, [isLoggedIn]);
 
   useEffect(() => {
     const fetchUserData = async () => {

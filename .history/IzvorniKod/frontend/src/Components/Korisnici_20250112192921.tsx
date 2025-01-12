@@ -10,27 +10,20 @@ interface Korisnik {
   username: string;
   lozinka: string;
   role: number;
-  roleName: string; // Keep roleName for display purposes
+  roleName: string;
   godine: number;
   spol: string;
+  blocked: boolean;
 }
 
 const Korisnici = () => {
   const [korisnici, setData] = useState<Korisnik[]>([]);
-  const [blockedUsers, setBlockedUsers] = useState<Set<string>>(new Set()); // New state for tracking blocked users
 
   useEffect(() => {
     axios
       .get(`${apiUrl}/korisnici`)
       .then((response) => {
         setData(response.data);
-
-        const initialBlocked: Set<string> = new Set(
-          response.data
-            .filter((korisnik: Korisnik) => korisnik.roleName === "Blocked")
-            .map((korisnik: Korisnik) => korisnik.idKorisnik)
-        );
-        setBlockedUsers(initialBlocked);
       })
       .catch((error) => {
         console.error("There was an error fetching the data!", error);
@@ -41,14 +34,10 @@ const Korisnici = () => {
     axios
       .delete(`${apiUrl}/korisnici/${idKorisnik}`, { withCredentials: true })
       .then(() => {
+        // Remove the deleted user from the state
         setData((prevData) =>
           prevData.filter((korisnik) => korisnik.idKorisnik !== idKorisnik)
         );
-        setBlockedUsers((prev) => {
-          const updated = new Set(prev);
-          updated.delete(idKorisnik);
-          return updated;
-        });
         console.log(`User with ID: ${idKorisnik} deleted successfully`);
       })
       .catch((error) => {
@@ -62,7 +51,14 @@ const Korisnici = () => {
         withCredentials: true,
       })
       .then(() => {
-        setBlockedUsers((prev) => new Set(prev).add(idKorisnik));
+        // Update the local state to reflect the block status
+        setData((prevData) =>
+          prevData.map((korisnik) =>
+            korisnik.idKorisnik === idKorisnik
+              ? { ...korisnik, blocked: true } // Add 'blocked' property if necessary
+              : korisnik
+          )
+        );
         console.log(`User with ID: ${idKorisnik} blocked successfully`);
       })
       .catch((error) => {
@@ -76,11 +72,14 @@ const Korisnici = () => {
         withCredentials: true,
       })
       .then(() => {
-        setBlockedUsers((prev) => {
-          const updated = new Set(prev);
-          updated.delete(idKorisnik);
-          return updated;
-        });
+        // Update the local state to reflect the unblock status
+        setData((prevData) =>
+          prevData.map((korisnik) =>
+            korisnik.idKorisnik === idKorisnik
+              ? { ...korisnik, blocked: false } // Add 'blocked' property if necessary
+              : korisnik
+          )
+        );
         console.log(`User with ID: ${idKorisnik} unblocked successfully`);
       })
       .catch((error) => {
@@ -112,15 +111,7 @@ const Korisnici = () => {
                 <td>{korisnik.idKorisnik}</td>
                 <td>{korisnik.username}</td>
                 <td>{korisnik.role}</td>
-                <td>
-                  {korisnik.role === 1
-                    ? "student"
-                    : korisnik.role === 2
-                    ? "zaposlenik"
-                    : korisnik.role === 3
-                    ? "admin"
-                    : "unknown"}
-                </td>
+                <td>{korisnik.roleName}</td>
                 <td>{korisnik.godine}</td>
                 <td>{korisnik.spol}</td>
                 <td>
@@ -134,7 +125,7 @@ const Korisnici = () => {
                   )}
                 </td>
                 <td>
-                  {blockedUsers.has(korisnik.idKorisnik) ? (
+                  {korisnik.roleName === "Blocked" ? (
                     <button
                       onClick={() => handleUnblock(korisnik.idKorisnik)}
                       className="admin-btn"
@@ -158,5 +149,4 @@ const Korisnici = () => {
     </>
   );
 };
-
 export default Korisnici;

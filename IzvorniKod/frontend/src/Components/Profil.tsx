@@ -124,8 +124,20 @@ const Profil = () => {
       updatedUser.age = korisnik.godine;
       updatedUser.sex = korisnik.spol;
       setUserToPrint(updatedUser);
+      console.log(updatedUser);
     }
   }, [korisnik]);
+
+  const updateUserRole = async (id: number, newRole: number) => {
+    try {
+      const response = await axios.put(
+        `${apiUrl}/korisnici/${id}/newRole/${newRole}`
+      );
+      console.log("User role updated:", response.data);
+    } catch (error) {
+      console.error("Error updating user role:", error);
+    }
+  };
 
   return (
     <>

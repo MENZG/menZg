@@ -10,27 +10,19 @@ interface Korisnik {
   username: string;
   lozinka: string;
   role: number;
-  roleName: string; // Keep roleName for display purposes
   godine: number;
   spol: string;
 }
 
 const Korisnici = () => {
   const [korisnici, setData] = useState<Korisnik[]>([]);
-  const [blockedUsers, setBlockedUsers] = useState<Set<string>>(new Set()); // New state for tracking blocked users
+  const [blockedUsers, setBlockedUsers] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     axios
       .get(`${apiUrl}/korisnici`)
       .then((response) => {
         setData(response.data);
-
-        const initialBlocked: Set<string> = new Set(
-          response.data
-            .filter((korisnik: Korisnik) => korisnik.roleName === "Blocked")
-            .map((korisnik: Korisnik) => korisnik.idKorisnik)
-        );
-        setBlockedUsers(initialBlocked);
       })
       .catch((error) => {
         console.error("There was an error fetching the data!", error);
@@ -99,7 +91,6 @@ const Korisnici = () => {
               <th>ID</th>
               <th>Username</th>
               <th>Role</th>
-              <th>Role Name</th>
               <th>Godine</th>
               <th>Spol</th>
               <th>Delete</th>
@@ -112,15 +103,6 @@ const Korisnici = () => {
                 <td>{korisnik.idKorisnik}</td>
                 <td>{korisnik.username}</td>
                 <td>{korisnik.role}</td>
-                <td>
-                  {korisnik.role === 1
-                    ? "student"
-                    : korisnik.role === 2
-                    ? "zaposlenik"
-                    : korisnik.role === 3
-                    ? "admin"
-                    : "unknown"}
-                </td>
                 <td>{korisnik.godine}</td>
                 <td>{korisnik.spol}</td>
                 <td>

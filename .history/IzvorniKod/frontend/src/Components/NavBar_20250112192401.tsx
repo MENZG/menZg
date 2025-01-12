@@ -232,6 +232,10 @@ const DesktopNavBar = () => {
   };
 
   useEffect(() => {
+    console.log("Novi status isLoggedIn:", isLoggedIn);
+  }, [isLoggedIn]);
+
+  useEffect(() => {
     const fetchUserData = async () => {
       try {
         const responseUlogirani = await axios.get<UlogiraniKorisnik>(

@@ -25,7 +25,8 @@ const Korisnici = () => {
       .then((response) => {
         setData(response.data);
 
-        const initialBlocked: Set<string> = new Set(
+        // Initialize blocked users based on a "blocked" condition in roleName (optional logic)
+        const initialBlocked = new Set(
           response.data
             .filter((korisnik: Korisnik) => korisnik.roleName === "Blocked")
             .map((korisnik: Korisnik) => korisnik.idKorisnik)
@@ -112,15 +113,7 @@ const Korisnici = () => {
                 <td>{korisnik.idKorisnik}</td>
                 <td>{korisnik.username}</td>
                 <td>{korisnik.role}</td>
-                <td>
-                  {korisnik.role === 1
-                    ? "student"
-                    : korisnik.role === 2
-                    ? "zaposlenik"
-                    : korisnik.role === 3
-                    ? "admin"
-                    : "unknown"}
-                </td>
+                <td>{korisnik.roleName}</td> {/* Display roleName */}
                 <td>{korisnik.godine}</td>
                 <td>{korisnik.spol}</td>
                 <td>

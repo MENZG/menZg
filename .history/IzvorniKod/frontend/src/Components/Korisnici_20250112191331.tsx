@@ -10,27 +10,19 @@ interface Korisnik {
   username: string;
   lozinka: string;
   role: number;
-  roleName: string; // Keep roleName for display purposes
+  roleName: string;
   godine: number;
   spol: string;
 }
 
 const Korisnici = () => {
   const [korisnici, setData] = useState<Korisnik[]>([]);
-  const [blockedUsers, setBlockedUsers] = useState<Set<string>>(new Set()); // New state for tracking blocked users
 
   useEffect(() => {
     axios
       .get(`${apiUrl}/korisnici`)
       .then((response) => {
         setData(response.data);
-
-        const initialBlocked: Set<string> = new Set(
-          response.data
-            .filter((korisnik: Korisnik) => korisnik.roleName === "Blocked")
-            .map((korisnik: Korisnik) => korisnik.idKorisnik)
-        );
-        setBlockedUsers(initialBlocked);
       })
       .catch((error) => {
         console.error("There was an error fetching the data!", error);
@@ -41,14 +33,10 @@ const Korisnici = () => {
     axios
       .delete(`${apiUrl}/korisnici/${idKorisnik}`, { withCredentials: true })
       .then(() => {
+        // Remove the deleted user from the state
         setData((prevData) =>
           prevData.filter((korisnik) => korisnik.idKorisnik !== idKorisnik)
         );
-        setBlockedUsers((prev) => {
-          const updated = new Set(prev);
-          updated.delete(idKorisnik);
-          return updated;
-        });
         console.log(`User with ID: ${idKorisnik} deleted successfully`);
       })
       .catch((error) => {
@@ -58,33 +46,22 @@ const Korisnici = () => {
 
   const handleBlock = (idKorisnik: string) => {
     axios
-      .put(`${apiUrl}/korisnici/${idKorisnik}/blocked?blocked=true`, null, {
+      .put(`${apiUrl}/korisnici/${idKorisnik}/blocked?blocked=true`, {
         withCredentials: true,
       })
       .then(() => {
-        setBlockedUsers((prev) => new Set(prev).add(idKorisnik));
+        // Optionally update the UI to reflect the blocked status
+        setData((prevData) =>
+          prevData.map((korisnik) =>
+            korisnik.idKorisnik === idKorisnik
+              ? { ...korisnik, roleName: "Blocked" } // Update roleName locally for feedback
+              : korisnik
+          )
+        );
         console.log(`User with ID: ${idKorisnik} blocked successfully`);
       })
       .catch((error) => {
         console.error("There was an error blocking the user!", error);
-      });
-  };
-
-  const handleUnblock = (idKorisnik: string) => {
-    axios
-      .put(`${apiUrl}/korisnici/${idKorisnik}/blocked?blocked=false`, null, {
-        withCredentials: true,
-      })
-      .then(() => {
-        setBlockedUsers((prev) => {
-          const updated = new Set(prev);
-          updated.delete(idKorisnik);
-          return updated;
-        });
-        console.log(`User with ID: ${idKorisnik} unblocked successfully`);
-      })
-      .catch((error) => {
-        console.error("There was an error unblocking the user!", error);
       });
   };
 
@@ -112,43 +89,20 @@ const Korisnici = () => {
                 <td>{korisnik.idKorisnik}</td>
                 <td>{korisnik.username}</td>
                 <td>{korisnik.role}</td>
-                <td>
-                  {korisnik.role === 1
-                    ? "student"
-                    : korisnik.role === 2
-                    ? "zaposlenik"
-                    : korisnik.role === 3
-                    ? "admin"
-                    : "unknown"}
-                </td>
+                <td>{korisnik.roleName}</td>
                 <td>{korisnik.godine}</td>
                 <td>{korisnik.spol}</td>
                 <td>
                   {(korisnik.role === 1 || korisnik.role === 2) && (
-                    <button
-                      onClick={() => handleDelete(korisnik.idKorisnik)}
-                      className="admin-btn"
-                    >
+                    <button onClick={() => handleDelete(korisnik.idKorisnik)}>
                       Delete User
                     </button>
                   )}
                 </td>
                 <td>
-                  {blockedUsers.has(korisnik.idKorisnik) ? (
-                    <button
-                      onClick={() => handleUnblock(korisnik.idKorisnik)}
-                      className="admin-btn"
-                    >
-                      Unblock User
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => handleBlock(korisnik.idKorisnik)}
-                      className="admin-btn"
-                    >
-                      Block User
-                    </button>
-                  )}
+                  <button onClick={() => handleBlock(korisnik.idKorisnik)}>
+                    Block User
+                  </button>
                 </td>
               </tr>
             ))}
@@ -158,5 +112,4 @@ const Korisnici = () => {
     </>
   );
 };
-
 export default Korisnici;
