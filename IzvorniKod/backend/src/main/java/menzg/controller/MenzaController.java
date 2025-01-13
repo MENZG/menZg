@@ -2,6 +2,7 @@ package menzg.controller;
 
 import java.util.List;
 
+import menzg.model.Jelo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,4 +109,22 @@ public class MenzaController {
 
 		return new ResponseEntity<>(existingMenza, HttpStatus.OK);
 	}
+	@GetMapping("/{id}/jelovnik")
+	@PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
+	public ResponseEntity<List<Jelo>> getJelovnik(@PathVariable Long id) {
+		// Dohvaćanje menze prema ID-u
+		Menza menza = menzaService.getMenzaData(id);
+
+		if (menza == null) {
+			// Ako menza nije pronađena, vraća se status 404
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		// Dohvat jelovnika za pronađenu menzu
+		List<Jelo> jelovnik = menza.getJelovnik();
+
+		// Ako jelovnik postoji, vraća se kao odgovor
+		return new ResponseEntity<>(jelovnik, HttpStatus.OK);
+	}
+
 }
