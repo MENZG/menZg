@@ -30,8 +30,13 @@
 }
 
 .list-group-item {
-  font-size: 1rem;
-  color: #555;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.float-right {
+  margin-left: auto;
 }
 
 .header{
