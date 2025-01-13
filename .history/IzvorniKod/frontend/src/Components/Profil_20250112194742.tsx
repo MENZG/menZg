@@ -133,7 +133,7 @@ const Profil = () => {
     }
   };
 
-  updateUserRole(3, 3);
+  updateUserRole(3, 1);
 
   return (
     <>

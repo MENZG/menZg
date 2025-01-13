@@ -133,8 +133,6 @@ const Profil = () => {
     }
   };
 
-  updateUserRole(3, 3);
-
   return (
     <>
       <NavBar />
