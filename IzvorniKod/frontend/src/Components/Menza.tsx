@@ -48,6 +48,7 @@ interface Korisnik {
 }
 
 const apiUrl = import.meta.env.VITE_API_URL;
+axios.defaults.withCredentials = true;
 
 function Menza() {
   const { id } = useParams();
@@ -106,7 +107,6 @@ function Menza() {
 
         setRestaurantData(response.data);
         setLoading(false);
-        console.log(restaurantData);
       } catch (error) {
         console.error("Error fetching restaurant data", error);
         setLoading(false);
@@ -115,6 +115,22 @@ function Menza() {
 
     fetchRestaurantData();
   }, []);
+
+  useEffect(() => {
+    const formatTimeWithoutSeconds = (time: string | null) => {
+      if (!time) return null;
+      const [hours, minutes] = time.split(":");
+      return `${hours}:${minutes}`;
+    };
+
+    const formattedRadnaVremena = restaurantData.radnaVremena.map((time) => ({
+      ...time,
+      pocetak: formatTimeWithoutSeconds(time.pocetak),
+      kraj: formatTimeWithoutSeconds(time.kraj),
+    }));
+
+    setEditableTimes(formattedRadnaVremena);
+  }, [restaurantData]);
 
   const formatTime = (time: string | null) => {
     if (!time) return "N/A";
@@ -137,6 +153,51 @@ function Menza() {
 
   const toggleEditMode = (index) => {
     setEditModeIndex(editModeIndex === index ? null : index);
+  };
+
+  const validateTimeFormat = (time: string) => {
+    const timeFormat = /^([01]\d|2[0-3]):([0-5]\d)$/;
+    return timeFormat.test(time);
+  };
+
+  const handleSaveTime = (index: number) => {
+    const time = editableTimes[index];
+    if (time.pocetak === "" && time.kraj === "") {
+      toggleEditMode(index);
+
+      axios
+        .put(`${apiUrl}/menza/${id}/radno-vrijeme`, {
+          dan: time.dan,
+          pocetak: null,
+          kraj: null,
+        })
+        .then((response) => {
+          console.log("Time updated successfully", response.data);
+        })
+        .catch((error) => {
+          console.error("Error updating time", error);
+        });
+    } else if (
+      validateTimeFormat(time.pocetak) &&
+      validateTimeFormat(time.kraj)
+    ) {
+      toggleEditMode(index);
+
+      axios
+        .put(`${apiUrl}/menza/${id}/radno-vrijeme`, {
+          dan: time.dan,
+          pocetak: time.pocetak,
+          kraj: time.kraj,
+        })
+        .then((response) => {
+          console.log("Time updated successfully", response.data);
+        })
+        .catch((error) => {
+          console.error("Error updating time", error);
+        });
+    } else {
+      alert("Format unosa hh:mm ili ostavite oba inputa prazna za neradni dan");
+    }
   };
 
   return (
@@ -193,7 +254,7 @@ function Menza() {
                         />
                         <Button
                           variant="primary"
-                          onClick={() => toggleEditMode(index)}
+                          onClick={() => handleSaveTime(index)}
                           className="float-right"
                         >
                           Save
@@ -204,7 +265,7 @@ function Menza() {
                         {time.pocetak && time.kraj
                           ? `${time.pocetak} - ${time.kraj}`
                           : "Ne radi"}
-                        {role === 1 && (
+                        {role === 2 && (
                           <Button
                             variant="primary"
                             onClick={() => toggleEditMode(index)}
