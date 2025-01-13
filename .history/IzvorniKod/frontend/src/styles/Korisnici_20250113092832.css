@@ -38,11 +38,10 @@
 }
 
 .select-role{
-  border-radius: 50px;
-  padding: 5px;
+  border-radius: 50%;
 
 }
 
 .option-role{
-  border-radius: 50px;
+  border-radius: 50%;
 }

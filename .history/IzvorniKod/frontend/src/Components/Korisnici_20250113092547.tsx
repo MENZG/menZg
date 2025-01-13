@@ -131,7 +131,6 @@ const Korisnici = () => {
                 <td>
                   <select
                     value={korisnik.role}
-                    className="select-role"
                     onChange={(e) => {
                       const newRole = parseInt(e.target.value, 10);
                       updateUserRole(
@@ -140,9 +139,7 @@ const Korisnici = () => {
                       );
                     }}
                   >
-                    <option value={1} className="option-role">
-                      Student
-                    </option>
+                    <option value={1}>Student</option>
                     <option value={2}>Zaposlenik</option>
                     <option value={3}>Admin</option>
                   </select>
