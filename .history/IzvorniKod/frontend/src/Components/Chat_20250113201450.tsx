@@ -1,7 +1,7 @@
 // Chat.tsx
 import React, { useState, useEffect } from "react";
 import io from "socket.io-client";
-import "../styles/Chat.css";
+import "..Chat.css";
 
 const socket = io("http://localhost:5000"); // Replace with your server URL
 
@@ -47,41 +47,40 @@ const Chat: React.FC = () => {
   };
 
   return (
-    <div className="chatContainer">
+    <div className={styles.chatContainer}>
       {!isUsernameSet ? (
-        <div className="usernamePrompt">
+        <div className={styles.usernamePrompt}>
           <h2>Enter a Username</h2>
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder="Your username"
-            className="input"
           />
-          <button onClick={handleSetUsername} className="button">
+          <button onClick={handleSetUsername} className={styles.button}>
             Set Username
           </button>
         </div>
       ) : (
-        <div className="chatBox">
+        <div className={styles.chatBox}>
           <h2>Live Chat</h2>
-          <div className="messagesContainer">
+          <div className={styles.messagesContainer}>
             {messages.map((msg, index) => (
-              <div key={index} className="messageItem">
+              <div key={index} className={styles.messageItem}>
                 <strong>{msg.username}:</strong> {msg.text}
-                <span className="timestamp">{msg.timestamp}</span>
+                <span className={styles.timestamp}>{msg.timestamp}</span>
               </div>
             ))}
           </div>
-          <div className="inputContainer">
+          <div className={styles.inputContainer}>
             <input
               type="text"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               placeholder="Type your message"
-              className="input"
+              className={styles.input}
             />
-            <button onClick={sendMessage} className="button">
+            <button onClick={sendMessage} className={styles.button}>
               Send
             </button>
           </div>

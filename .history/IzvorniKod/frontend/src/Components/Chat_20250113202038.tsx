@@ -56,7 +56,6 @@ const Chat: React.FC = () => {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder="Your username"
-            className="input"
           />
           <button onClick={handleSetUsername} className="button">
             Set Username

@@ -109,10 +109,13 @@
 .card-body{
   position: relative;
 }
-/* Existing styles retained */
 
-/* Blur effect for the card container */
-.card-container.blurred {
+.card-container-wrapper {
+  position: relative;
+  transition: filter 0.3s ease;
+}
+
+.card-container-wrapper .blurred {
   filter: blur(5px);
   pointer-events: none;
 }
@@ -128,8 +131,7 @@
   border: 1px solid #ccc;
   border-radius: 8px;
   padding: 20px;
-  max-width: 400px;
-  width: 80vw;
+  width: 400px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
@@ -155,7 +157,7 @@
 .close-chat-btn {
   margin-top: 10px;
   padding: 5px 10px;
-  background-color: #f50f8e;
+  background-color: #ff2572;
   color: #fff;
   border: none;
   border-radius: 50px;
@@ -163,5 +165,5 @@
 }
 
 .close-chat-btn:hover {
-  background-color: #e70e86;
+  background-color: #ea2469;
 }

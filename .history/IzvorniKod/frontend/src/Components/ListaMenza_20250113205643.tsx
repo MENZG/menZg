@@ -154,71 +154,73 @@ const ListaMenza = () => {
   return (
     <>
       <NavBar />
-      <div className={`card-container ${isChatOpen ? "blurred" : ""}`}>
-        {menze.map((menza) => (
-          <Link to={`/menza/${menza.idMenza}`} className="custom-link">
-            <div
-              key={menza.idMenza}
-              className="card"
-              style={{
-                width: "18rem",
-                textDecoration: "none",
-                color: "inherit",
-              }}
-            >
-              <img
-                src={`/slika_menza_${menza.idMenza}.jpg`}
-                className="card-img-top"
-                alt={`Slika menze ${menza.imeMenze}`}
-              />
-              <button
-                className="favorite-icon"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  e.preventDefault();
-                  toggleFavorite(menza.idMenza);
+      <div className={`card-container-wrapper ${isChatOpen ? "blurred" : ""}`}>
+        <div className="card-container">
+          {menze.map((menza) => (
+            <Link to={`/menza/${menza.idMenza}`} className="custom-link">
+              <div
+                key={menza.idMenza}
+                className="card"
+                style={{
+                  width: "18rem",
+                  textDecoration: "none",
+                  color: "inherit",
                 }}
               >
-                {favorites.includes(menza.idMenza) ? (
-                  <FaHeart size={17} />
-                ) : (
-                  <FaRegHeart size={17} />
-                )}
-              </button>
-              <div className="card-body">
-                <h5 className="card-title">{menza.imeMenze}</h5>
-                <div className="card-text">
-                  {menza.radnaVremena
-                    .filter((rv) => rv.dan === todayName)
-                    .map((rv) => (
-                      <div key={rv.idRadnoVrijeme}>
-                        {rv.dan}: {formatTime(rv.pocetak)} -{" "}
-                        {formatTime(rv.kraj)}
-                      </div>
-                    ))}
-                </div>
-                <div className="camera-icon">
-                  <KameraIkona></KameraIkona>
+                <img
+                  src={`/slika_menza_${menza.idMenza}.jpg`}
+                  className="card-img-top"
+                  alt={`Slika menze ${menza.imeMenze}`}
+                />
+                <button
+                  className="favorite-icon"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    toggleFavorite(menza.idMenza);
+                  }}
+                >
+                  {favorites.includes(menza.idMenza) ? (
+                    <FaHeart size={17} />
+                  ) : (
+                    <FaRegHeart size={17} />
+                  )}
+                </button>
+                <div className="card-body">
+                  <h5 className="card-title">{menza.imeMenze}</h5>
+                  <div className="card-text">
+                    {menza.radnaVremena
+                      .filter((rv) => rv.dan === todayName)
+                      .map((rv) => (
+                        <div key={rv.idRadnoVrijeme}>
+                          {rv.dan}: {formatTime(rv.pocetak)} -{" "}
+                          {formatTime(rv.kraj)}
+                        </div>
+                      ))}
+                  </div>
+                  <div className="camera-icon">
+                    <KameraIkona></KameraIkona>
+                  </div>
                 </div>
               </div>
-            </div>
-          </Link>
-        ))}
-      </div>
-      <button className="open-chat-btn" onClick={() => setIsChatOpen(true)}>
-        Open Chat
-      </button>
-      {isChatOpen && (
-        <div className="chat-popup">
-          <Chat />
-          <button
-            className="close-chat-btn"
-            onClick={() => setIsChatOpen(false)}
-          >
-            Close
-          </button>
+            </Link>
+          ))}
         </div>
-      )}{" "}
+        <button className="open-chat-btn" onClick={() => setIsChatOpen(true)}>
+          Open Chat
+        </button>
+        {isChatOpen && (
+          <div className="chat-popup">
+            <Chat />
+            <button
+              className="close-chat-btn"
+              onClick={() => setIsChatOpen(false)}
+            >
+              Close
+            </button>
+          </div>
+        )}{" "}
+      </div>
     </>
   );
 };

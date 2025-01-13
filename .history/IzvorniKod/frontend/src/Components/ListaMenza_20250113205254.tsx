@@ -154,7 +154,7 @@ const ListaMenza = () => {
   return (
     <>
       <NavBar />
-      <div className={`card-container ${isChatOpen ? "blurred" : ""}`}>
+      <div className="card-container">
         {menze.map((menza) => (
           <Link to={`/menza/${menza.idMenza}`} className="custom-link">
             <div
