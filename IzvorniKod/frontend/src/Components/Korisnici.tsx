@@ -112,7 +112,15 @@ const Korisnici = () => {
                 <td>{korisnik.idKorisnik}</td>
                 <td>{korisnik.username}</td>
                 <td>{korisnik.role}</td>
-                <td>{korisnik.roleName}</td> {/* Display roleName */}
+                <td>
+                  {korisnik.role === 1
+                    ? "student"
+                    : korisnik.role === 2
+                    ? "zaposlenik"
+                    : korisnik.role === 3
+                    ? "admin"
+                    : "unknown"}
+                </td>
                 <td>{korisnik.godine}</td>
                 <td>{korisnik.spol}</td>
                 <td>
