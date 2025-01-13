@@ -42,8 +42,9 @@ public class SecurityConfig {
 				auth -> auth.requestMatchers("/h2-console/**").permitAll().requestMatchers(HttpMethod.OPTIONS, "/**")
 						.permitAll() // Dozvoli OPTIONS zahtjeve za sve rute// Dopuštanje pristupa H2 konzoli
 						//
-						.requestMatchers("/korisnici/**").permitAll() // OVO MAKNUT U PRODUKCIJI!!!!
 						.requestMatchers("/menza/**").permitAll() // OVO MAKNUT U PRODUKCIJI
+						.requestMatchers("/korisnici/**").permitAll() // OVO MAKNUT U PRODUKCIJI!!!!
+
 						.anyRequest().authenticated() // Sve ostale// sve
 		// autentifikaciju
 		).headers(headers -> headers.frameOptions().sameOrigin() // Omogućavanje iframe za H2 konzolu

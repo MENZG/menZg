@@ -2,17 +2,21 @@ package menzg.controller;
 
 import java.util.List;
 
-import menzg.model.Jelo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import menzg.model.Jelo;
 import menzg.model.Menza;
 import menzg.model.RadnoVrijeme;
 import menzg.service.MenzaService;
@@ -31,7 +35,8 @@ public class MenzaController {
 
 	// vraca sve menze
 	@GetMapping("")
-	@PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
+	// @PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or
+	// hasRole('ROLE_DJELATNIK')")
 	public ResponseEntity<List<Menza>> listMenzas(@AuthenticationPrincipal OAuth2User principal) {
 		List<Menza> menze = menzaService.listAll();
 
@@ -53,7 +58,8 @@ public class MenzaController {
 	}
 
 	@GetMapping("/{id}")
-	@PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')") // Ova ruta će biti
+	// @PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or
+	// hasRole('ROLE_DJELATNIK')") // Ova ruta će biti
 	public ResponseEntity<Menza> getMenzaData(@PathVariable Long id) {
 
 		System.out.println("zatrazio si SVE INFORMACIJE o MENZAMA ------ ");
@@ -70,7 +76,8 @@ public class MenzaController {
 
 	}
 
-	@PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')") // Ova ruta će biti
+	// @PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or
+	// hasRole('ROLE_DJELATNIK')") // Ova ruta će biti
 	@GetMapping("/radnovrime/{id}")
 	public ResponseEntity<List<RadnoVrijeme>> getRadnoVrijeme(@PathVariable Long id) {
 		// Fetch the working hours for the given Menza id
@@ -81,9 +88,8 @@ public class MenzaController {
 		return ResponseEntity.ok(radnoVrijemeList);
 	}
 
-
 	@PutMapping("/{id}")
-	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
+//	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
 	public ResponseEntity<Menza> updateMenza(@PathVariable Long id, @RequestBody Menza menzaDetails) {
 		// Pronađi postojeću menzu po ID-u
 		Menza existingMenza = menzaService.getMenzaData(id);
@@ -109,8 +115,10 @@ public class MenzaController {
 
 		return new ResponseEntity<>(existingMenza, HttpStatus.OK);
 	}
+
 	@GetMapping("/{id}/jelovnik")
-	@PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
+	// @PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or
+	// hasRole('ROLE_DJELATNIK')")
 	public ResponseEntity<List<Jelo>> getJelovnik(@PathVariable Long id) {
 		// Dohvaćanje menze prema ID-u
 		Menza menza = menzaService.getMenzaData(id);
@@ -125,6 +133,21 @@ public class MenzaController {
 
 		// Ako jelovnik postoji, vraća se kao odgovor
 		return new ResponseEntity<>(jelovnik, HttpStatus.OK);
+	}
+
+	@PutMapping("/{idMenze}/radno-vrijeme")
+	public ResponseEntity<String> azurirajRadnoVrijeme(@PathVariable Long idMenze, // ID menze dolazi iz putanje
+			@RequestBody RadnoVrijeme radnoVrijeme) { // Radno vrijeme dolazi iz tijela zahtjeva
+
+		System.out.println("objekt radnog vremena je " + radnoVrijeme);
+
+		boolean uspjeh = menzaService.azurirajRadnoVrijeme(idMenze, radnoVrijeme);
+
+		if (uspjeh) {
+			return ResponseEntity.ok("Radno vrijeme uspješno ažurirano. za menzu " + idMenze);
+		} else {
+			return ResponseEntity.badRequest().body("Ažuriranje nije uspjelo. Provjerite ID menze. -- " + idMenze);
+		}
 	}
 
 }
