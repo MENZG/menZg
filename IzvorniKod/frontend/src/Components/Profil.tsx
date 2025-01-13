@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import NavBar from "./NavBar";
 import axios from "axios";
-import Image from "react-bootstrap/Image";
+import { useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
+import Image from "react-bootstrap/Image";
 import "../styles/Profile.css";
+import NavBar from "./NavBar";
 
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -49,7 +49,7 @@ const Profil = () => {
     setIsSexSelected(true);
   };
 
-  interface AgeChangeEvent extends React.ChangeEvent<HTMLInputElement> {}
+  interface AgeChangeEvent extends React.ChangeEvent<HTMLInputElement> { }
 
   const handleAgeChange = (e: AgeChangeEvent) => {
     setAge(Number(e.target.value));
@@ -188,7 +188,7 @@ const Profil = () => {
                   >
                     <Dropdown.Item eventKey="Muški">Muški</Dropdown.Item>
                     <Dropdown.Item eventKey="Ženski">Ženski</Dropdown.Item>
-                    <Dropdown.Item eventKey="Ostalo">Ostalo</Dropdown.Item>
+
                   </DropdownButton>
                 ) : (
                   userToPrint.sex || "nedefinirano"
