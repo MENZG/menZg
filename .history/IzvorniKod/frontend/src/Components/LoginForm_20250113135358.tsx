@@ -9,8 +9,9 @@ const apiUrl = import.meta.env.VITE_API_URL;
 function LoginForm() {
   const handleGoogleLogin = async () => {
     try {
-      // Redirect the user to the Google OAuth2 URL with the prompt=select_account parameter
-      window.location.href = `${apiUrl}/oauth2/authorization/google?prompt=select_account`;
+      window.location.href =
+        //"https://backendservice-xspx.onrender.com/api/oauth2/authorization/google";
+        `${apiUrl}/oauth2/authorization/google`;
     } catch (error) {
       console.error("Došlo je do greške prilikom Google login-a:", error);
     }
