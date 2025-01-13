@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -136,6 +137,7 @@ public class MenzaController {
 	}
 
 	@PutMapping("/{idMenze}/radno-vrijeme")
+	//@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
 	public ResponseEntity<String> azurirajRadnoVrijeme(@PathVariable Long idMenze, // ID menze dolazi iz putanje
 			@RequestBody RadnoVrijeme radnoVrijeme) { // Radno vrijeme dolazi iz tijela zahtjeva
 
@@ -149,5 +151,21 @@ public class MenzaController {
 			return ResponseEntity.badRequest().body("Ažuriranje nije uspjelo. Provjerite ID menze. -- " + idMenze);
 		}
 	}
+
+	@PutMapping("/{idMenze}/jelovnik")
+	//@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
+	public ResponseEntity<String> azurirajJelovnik(@PathVariable Long idMenze, // ID menze dolazi iz putanje
+												   @RequestBody Jelo novoJelo) { // Novi jelovnik dolazi iz tijela zahtjeva
+		System.out.println("Stigao novi jelovnik za menzu " + idMenze + ": " + novoJelo);
+
+		boolean uspjeh = menzaService.azurirajJelovnik(idMenze, novoJelo);
+
+		if (uspjeh) {
+			return ResponseEntity.ok("Jelovnik uspješno ažuriran za menzu " + idMenze);
+		} else {
+			return ResponseEntity.badRequest().body("Ažuriranje jelovnika nije uspjelo. Provjerite ID menze: " + idMenze);
+		}
+	}
+
 
 }
