@@ -45,8 +45,7 @@ const ListaMenza = () => {
         setMenze(response.data);
       } catch (error) {
         console.error("Greška pri dohvaćanju menzi:", error);
-        //setError("Neuspjelo dohvaćanje menzi.");
-        setError("Ulogirajte se kako biste vidjeli menze.");
+        setError("Neuspjelo dohvaćanje menzi.");
       } finally {
         setLoading(false);
       }

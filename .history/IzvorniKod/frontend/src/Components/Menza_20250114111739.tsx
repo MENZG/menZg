@@ -7,7 +7,6 @@ import NavBar from "./NavBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaintBrush } from "@fortawesome/free-solid-svg-icons";
 import YouTubeLiveStream from "./YouTubeLiveStream";
-import Chat from "./Chat";
 
 //test data
 const initialRestaurantData = {
@@ -204,7 +203,7 @@ function Menza() {
   return (
     <>
       <NavBar />
-      <div className={`container ${isChatOpen ? "blurred" : ""}`}>
+      <div className="container">
         <Card>
           <Card.Img
             variant="top"

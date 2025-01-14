@@ -1,13 +1,5 @@
 .naslov{
   background-color: #ddd;
-  width: 100%;
-
-}
-
-.naslov-div{
-  display: flex;
-  justify-content: center;
-  width: 100%;
 }
 
 .korisnici-container {

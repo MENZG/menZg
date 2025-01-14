@@ -45,8 +45,7 @@ const ListaMenza = () => {
         setMenze(response.data);
       } catch (error) {
         console.error("Greška pri dohvaćanju menzi:", error);
-        //setError("Neuspjelo dohvaćanje menzi.");
-        setError("Ulogirajte se kako biste vidjeli menze.");
+        setError("Neuspjelo dohvaćanje menzi.");
       } finally {
         setLoading(false);
       }
@@ -154,7 +153,7 @@ const ListaMenza = () => {
   return (
     <>
       <NavBar />
-      <div className="card-container">
+      <div className=`card-container`>
         {menze.map((menza) => (
           <Link to={`/menza/${menza.idMenza}`} className="custom-link">
             <div
@@ -205,6 +204,7 @@ const ListaMenza = () => {
           </Link>
         ))}
       </div>
+      
     </>
   );
 };

@@ -7,7 +7,6 @@ import NavBar from "./NavBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaintBrush } from "@fortawesome/free-solid-svg-icons";
 import YouTubeLiveStream from "./YouTubeLiveStream";
-import Chat from "./Chat";
 
 //test data
 const initialRestaurantData = {
@@ -63,7 +62,6 @@ function Menza() {
     restaurantData.radnaVremena
   );
   const [editModeIndex, setEditModeIndex] = useState(null);
-  const [isChatOpen, setIsChatOpen] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -204,7 +202,7 @@ function Menza() {
   return (
     <>
       <NavBar />
-      <div className={`container ${isChatOpen ? "blurred" : ""}`}>
+      <div className="container">
         <Card>
           <Card.Img
             variant="top"
@@ -291,20 +289,6 @@ function Menza() {
           </div>
         </div>
       </div>
-      <button className="open-chat-btn" onClick={() => setIsChatOpen(true)}>
-        Open Chat
-      </button>
-      {isChatOpen && (
-        <div className="chat-popup">
-          <Chat />
-          <button
-            className="close-chat-btn"
-            onClick={() => setIsChatOpen(false)}
-          >
-            Close
-          </button>
-        </div>
-      )}{" "}
     </>
   );
 }

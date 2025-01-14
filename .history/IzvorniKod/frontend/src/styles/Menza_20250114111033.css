@@ -79,59 +79,6 @@ body {
 
 .paint-brush{
   border-radius: 50px;
-}
-
-.container.blurred {
-  filter: blur(5px);
-  pointer-events: none;
-}
-
-/* Chat popup styles */
-.chat-popup {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1000;
-  background: #fff;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 20px;
-  max-width: 400px;
-  width: 80vw;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-}
-
-/* Open chat button */
-.open-chat-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  padding: 10px 20px;
-  background-color: #0098b3;
-  color: #fff;
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.open-chat-btn:hover {
-  background-color: #00758a;
-}
-
-/* Close chat button */
-.close-chat-btn {
-  margin-top: 10px;
-  padding: 5px 10px;
-  background-color: #f50f8e;
-  color: #fff;
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-}
-
-.close-chat-btn:hover {
-  background-color: #e70e86;
+  padding: 3px, 5px;
 }
 

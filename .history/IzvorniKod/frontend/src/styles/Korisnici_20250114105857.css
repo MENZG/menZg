@@ -1,13 +1,6 @@
 .naslov{
   background-color: #ddd;
-  width: 100%;
-
-}
-
-.naslov-div{
-  display: flex;
-  justify-content: center;
-  width: 100%;
+  border-radius: 50px;
 }
 
 .korisnici-container {
@@ -20,6 +13,8 @@
   width: 100%;
   border-collapse: collapse;
   background-color: white;
+  border-radius: 10px;
+  border: none;
 }
 
 .korisnici-table th, .korisnici-table td {
