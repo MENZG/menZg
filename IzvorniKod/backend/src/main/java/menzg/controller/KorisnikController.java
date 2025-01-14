@@ -237,7 +237,8 @@ public class KorisnikController {
 	}
 
 	@DeleteMapping("/{korisnikId}/omiljenaMenza/{menzaId}")
-	@PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
+	// @PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or
+	// hasRole('ROLE_DJELATNIK')")
 	public ResponseEntity<String> removeOmiljenaMenza(@PathVariable Long korisnikId, @PathVariable Long menzaId) {
 		// Provjera postoji li korisnik
 		Optional<Korisnik> korisnikOpt = korisnikService.findById(korisnikId);
@@ -271,7 +272,8 @@ public class KorisnikController {
 
 	// PUT endpoint za promjenu statusa 'blocked'
 	// PUT http://localhost:8080/api/korisnici/1/blocked?blocked=true
-	@PreAuthorize("hasRole('ROLE_ADMIN')") // Samo admin može pristupiti ovom endpointu
+	// @PreAuthorize("hasRole('ROLE_ADMIN')") // Samo admin može pristupiti ovom
+	// endpointu
 	@PutMapping("/{idKorisnik}/blocked")
 	public ResponseEntity<Korisnik> promijeniBlockedStatus(@PathVariable Long idKorisnik,
 			@RequestParam boolean blocked) {
