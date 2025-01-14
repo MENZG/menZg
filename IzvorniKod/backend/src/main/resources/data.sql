@@ -1,7 +1,7 @@
 INSERT INTO korisnik (lozinka, username, role, godine, spol, blocked) VALUES
-('password123', 'nikolab2609@gmail.com', 3, 35, 'Muški', false),
+('password123', 'nikolab2609@gmail.com', 2, 35, 'Muški', false),
 ('password123', 'blazstuzic2@gmail.com', 2, 28, 'Muški',false),
-('password123', 'karla.sikavica@gmail.com', 1, 24, 'Ženski',false), -- IMAT CE 1 DA MOZE S NIKOM TESTIRAT
+('password123', 'karla.sikavica@gmail.com', 2, 24, 'Ženski',false), -- IMAT CE 1 DA MOZE S NIKOM TESTIRAT
 ('password123', 'eugenkozomara2904@gmail.com', 3, 40, 'Muški',false),
 ('password123', 'anteaknezovic155@gmail.com', 3, 33, 'Ženski',false),
 ('password123', 'rimacniko0@gmail.com', 3, 29, 'Muški',false),

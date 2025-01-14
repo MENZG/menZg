@@ -1,13 +1,13 @@
+import { faPaintBrush } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Card, ListGroup, Spinner, Form, Button } from "react-bootstrap";
+import { Button, Card, Form, ListGroup, Spinner } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import "../styles/Menza.css";
-import NavBar from "./NavBar";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaintBrush } from "@fortawesome/free-solid-svg-icons";
-import YouTubeLiveStream from "./YouTubeLiveStream";
 import Chat from "./Chat";
+import NavBar from "./NavBar";
+import YouTubeLiveStream from "./YouTubeLiveStream";
 
 //test data
 const initialRestaurantData = {
