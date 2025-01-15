@@ -66,7 +66,8 @@ function Menza() {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [muxError, setMuxError] = useState(false);
 
-  const handleMuxError = () => {
+  const handleMuxError = (error) => {
+    console.error("MuxPlayer error:", error);
     setMuxError(true);
   };
 
@@ -109,16 +110,17 @@ function Menza() {
   useEffect(() => {
     const fetchRestaurantData = async () => {
       try {
-        const streamStartResponse = axios.post(`${apiUrl}/stream/start`);
-        console.log("Stream started successfully", streamStartResponse);
-      } catch (error) {
-        console.error("Error starting stream:", error);
-      }
-      try {
         const response = await axios.get(`${apiUrl}/menza/${id}`);
 
         setRestaurantData(response.data);
         setLoading(false);
+
+        try {
+          const streamStartResponse = axios.post(`${apiUrl}/start/stream`);
+          console.log("Stream started successfully", streamStartResponse);
+        } catch (error) {
+          console.error("Error starting stream:", error);
+        }
       } catch (error) {
         console.error("Error fetching restaurant data", error);
         setLoading(false);
@@ -305,6 +307,7 @@ function Menza() {
                 primary-color="#ffffff"
                 secondary-color="#000000"
                 accent-color="#fa50b5"
+                onError={handleMuxError}
               />
             ) : (
               <YouTubeLiveStream videoId="wBVq_Qoegmo" />

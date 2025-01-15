@@ -109,7 +109,7 @@ function Menza() {
   useEffect(() => {
     const fetchRestaurantData = async () => {
       try {
-        const streamStartResponse = axios.post(`${apiUrl}/stream/start`);
+        const streamStartResponse = axios.post(`${apiUrl}/start/stream`);
         console.log("Stream started successfully", streamStartResponse);
       } catch (error) {
         console.error("Error starting stream:", error);
