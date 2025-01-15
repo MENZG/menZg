@@ -25,10 +25,10 @@ public class StreamController {
 		System.out.println("zahtijevano je pocinjanje streama ------------- ");
 		try {
 			ffmpegService.startStreaming(inputUrl, outputUrl);
-			return "Streaming started successfully!";
+			return "Streaming started successfully!!!!!!! \n\n";
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "Error starting streaming: " + e.getMessage();
+			return "Error starting streaming!!!!!: " + e.getMessage();
 		}
 	}
 }
