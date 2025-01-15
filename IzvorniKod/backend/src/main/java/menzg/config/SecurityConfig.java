@@ -44,6 +44,7 @@ public class SecurityConfig {
 						//
 						.requestMatchers("/menza/**").permitAll() // OVO MAKNUT U PRODUKCIJI
 						.requestMatchers("/korisnici/**").permitAll() // OVO MAKNUT U PRODUKCIJI!!!!
+						.requestMatchers("/stream/**").permitAll() // OVO STOJI OK U PRODUKCIJI
 
 						.anyRequest().authenticated() // Sve ostale// sve
 		// autentifikaciju
