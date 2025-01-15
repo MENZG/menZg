@@ -17,28 +17,47 @@ public class FFmpegService {
 
 	public void startStreaming(String inputUrl, String outputUrl) throws IOException {
 
-		String ffmpegExecutable;
+		String ffmpegExecutable = "AAAAA";
 
 		String os = System.getProperty("os.name").toLowerCase();
 
+		boolean osOk = false;
+
 		if (os.contains("win")) {
 			ffmpegExecutable = "src/main/resources/ffmpeg/" + WINDOWS_FFMPEG;
+
+			osOk = true;
+
 		} else if (os.contains("mac")) {
 			ffmpegExecutable = "src/main/resources/ffmpeg/" + MACOS_FFMPEG;
+			osOk = true;
 		} else {
-			throw new UnsupportedOperationException("Unsupported OS: " + os);
+
+			System.out.println("NIJE MAC NIJE WINDOWS LAPTOP");
+			osOk = false;
 		}
 
-		File ffmpegFile = new File(ffmpegExecutable);
-		if (os.contains("mac") && !ffmpegFile.canExecute()) {
-			ffmpegFile.setExecutable(true);
+		String command;
+
+		if (osOk) {
+			File ffmpegFile = new File(ffmpegExecutable);
+			if (os.contains("mac") && !ffmpegFile.canExecute()) {
+				ffmpegFile.setExecutable(true);
+			}
+
+			command = String.format("%s -i %s -f flv %s", ffmpegFile.getAbsolutePath(), inputUrl, outputUrl);
+
+		} else {
+
+			System.out.println("mozda pronadjem ffmpeg naredbu u sustavu??? \n\n");
+
+			command = String.format("ffmpeg -i %s -f flv %s", inputUrl, outputUrl);
+
 		}
 
 		System.out.println("koristis os ----------->   " + os);
 
 		System.out.println("puna naredba je ");
-
-		String command = String.format("%s -i %s -f flv %s", ffmpegFile.getAbsolutePath(), inputUrl, outputUrl);
 
 		System.out.println(command);
 
