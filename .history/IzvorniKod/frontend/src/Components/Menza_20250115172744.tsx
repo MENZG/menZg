@@ -110,7 +110,7 @@ function Menza() {
         setRestaurantData(response.data);
         setLoading(false);
 
-        //post za pocetak streama
+        // POST request to start the stream every time the Menza page is opened
         try {
           const streamStartResponse = await axios.post(
             `${apiUrl}/start/stream`

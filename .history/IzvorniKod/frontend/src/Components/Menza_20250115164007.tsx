@@ -67,6 +67,16 @@ function Menza() {
   const [isChatOpen, setIsChatOpen] = useState(false);
 
   useEffect(() => {
+    const streamStart = () => {
+      try {
+        const response = axios.post(`${apiUrl}/stream/start`);
+      } catch (error) {}
+    };
+
+    streamStart();
+  }, []);
+
+  useEffect(() => {
     const fetchUser = async () => {
       try {
         const response = await axios.get(`${apiUrl}/korisnici/user`);
@@ -109,16 +119,6 @@ function Menza() {
 
         setRestaurantData(response.data);
         setLoading(false);
-
-        //post za pocetak streama
-        try {
-          const streamStartResponse = await axios.post(
-            `${apiUrl}/start/stream`
-          );
-          console.log("Stream started successfully", streamStartResponse.data);
-        } catch (error) {
-          console.error("Error starting stream:", error);
-        }
       } catch (error) {
         console.error("Error fetching restaurant data", error);
         setLoading(false);
