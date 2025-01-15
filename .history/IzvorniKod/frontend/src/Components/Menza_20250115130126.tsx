@@ -288,16 +288,7 @@ function Menza() {
         <div className="live-stream">
           <h4>Uživo red u menzi</h4>
           <div className="video-container">
-            {/*<YouTubeLiveStream videoId="wBVq_Qoegmo"></YouTubeLiveStream>*/}
-            <MuxPlayer
-              streamType="live"
-              playbackId="RBm68dXx7KP9dIw1DYVipDX9zz8QmUqt01YtDoYP4kcU"
-              metadataVideoTitle="Placeholder (optional)"
-              metadata-viewer-user-id="Placeholder (optional)"
-              primary-color="#ffffff"
-              secondary-color="#000000"
-              accent-color="#fa50b5"
-            />
+            <YouTubeLiveStream videoId="wBVq_Qoegmo"></YouTubeLiveStream>
           </div>
         </div>
       </div>
@@ -315,6 +306,15 @@ function Menza() {
           </button>
         </div>
       )}{" "}
+      <MuxPlayer
+        streamType="live"
+        playbackId="RBm68dXx7KP9dIw1DYVipDX9zz8QmUqt01YtDoYP4kcU"
+        metadataVideoTitle="Placeholder (optional)"
+        metadata-viewer-user-id="Placeholder (optional)"
+        primary-color="#ffffff"
+        secondary-color="#000000"
+        accent-color="#fa50b5"
+      />
     </>
   );
 }
