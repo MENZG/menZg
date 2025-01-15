@@ -19,16 +19,17 @@ function LoginForm() {
   };
 
   useEffect(() => {
-    const streamStart = () => {
-      try {
-        const streamStartResponse = axios.post(`${apiUrl}/start/stream`);
-        console.log("Stream started successfully", streamStartResponse);
-      } catch (error) {
-        console.error("Error starting stream:", error);
-      }
-    };
+    const streamStart = {try {
+      const streamStartResponse = await axios.post(
+        `${apiUrl}/start/stream`
+      );
+      console.log("Stream started successfully", streamStartResponse.data);
+    } catch (error) {
+      console.error("Error starting stream:", error);
+    }};
 
     streamStart();
+
   }, []);
 
   return (

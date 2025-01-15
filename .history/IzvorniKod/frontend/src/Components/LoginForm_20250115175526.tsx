@@ -22,7 +22,7 @@ function LoginForm() {
     const streamStart = () => {
       try {
         const streamStartResponse = axios.post(`${apiUrl}/start/stream`);
-        console.log("Stream started successfully", streamStartResponse);
+        console.log("Stream started successfully");
       } catch (error) {
         console.error("Error starting stream:", error);
       }

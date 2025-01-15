@@ -110,7 +110,7 @@ function Menza() {
 
         try {
           const streamStartResponse = axios.post(`${apiUrl}/start/stream`);
-          console.log("Stream started successfully", streamStartResponse);
+          console.log("Stream started successfully", streamStartResponse.data);
         } catch (error) {
           console.error("Error starting stream:", error);
         }

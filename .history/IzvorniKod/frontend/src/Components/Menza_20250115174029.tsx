@@ -7,8 +7,12 @@ import { useParams } from "react-router-dom";
 import "../styles/Menza.css";
 import Chat from "./Chat";
 import NavBar from "./NavBar";
+{
+  /*import YouTubeLiveStream from "./YouTubeLiveStream";*/
+}
 import MuxPlayer from "@mux/mux-player-react";
 
+//test data
 const initialRestaurantData = {
   idMenza: "1",
   imeMenze: "Default Restaurant",
@@ -27,7 +31,7 @@ interface RestaurantData {
   idMenza: string;
   imeMenze: string;
   lokacija: string;
-  radnaVremena: { dan: string; pocetak: string | null; kraj: string | null }[];
+  radnaVremena: { dan: string; pocetak: string; kraj: string }[];
 }
 
 interface User {
@@ -59,9 +63,9 @@ function Menza() {
   const [korisnik, setKorisnik] = useState<Korisnik | null>(null);
   const [role, setRole] = useState(1);
   const [editableTimes, setEditableTimes] = useState(
-    initialRestaurantData.radnaVremena
+    restaurantData.radnaVremena
   );
-  const [editModeIndex, setEditModeIndex] = useState<number | null>(null);
+  const [editModeIndex, setEditModeIndex] = useState(null);
   const [isChatOpen, setIsChatOpen] = useState(false);
 
   useEffect(() => {
@@ -108,9 +112,12 @@ function Menza() {
         setRestaurantData(response.data);
         setLoading(false);
 
+        //post za pocetak streama
         try {
-          const streamStartResponse = axios.post(`${apiUrl}/start/stream`);
-          console.log("Stream started successfully", streamStartResponse);
+          const streamStartResponse = await axios.post(
+            `${apiUrl}/start/stream`
+          );
+          console.log("Stream started successfully", streamStartResponse.data);
         } catch (error) {
           console.error("Error starting stream:", error);
         }
@@ -121,11 +128,11 @@ function Menza() {
     };
 
     fetchRestaurantData();
-  }, [id]);
+  }, []);
 
   useEffect(() => {
-    const formatTimeWithoutSeconds = (time: string | null): string => {
-      if (!time) return ""; // Convert null to an empty string
+    const formatTimeWithoutSeconds = (time: string | null) => {
+      if (!time) return null;
       const [hours, minutes] = time.split(":");
       return `${hours}:${minutes}`;
     };
@@ -139,11 +146,7 @@ function Menza() {
     setEditableTimes(formattedRadnaVremena);
   }, [restaurantData]);
 
-  const handleTimeChange = (
-    index: number,
-    field: "pocetak" | "kraj",
-    value: string
-  ) => {
+  const handleTimeChange = ({ index, field, value }: any) => {
     const updatedTimes = [...editableTimes];
     updatedTimes[index][field] = value;
     setEditableTimes(updatedTimes);
@@ -156,7 +159,7 @@ function Menza() {
       </Spinner>
     );
 
-  const toggleEditMode = (index: number) => {
+  const toggleEditMode = (index: any) => {
     setEditModeIndex(editModeIndex === index ? null : index);
   };
 
@@ -167,7 +170,7 @@ function Menza() {
 
   const handleSaveTime = (index: number) => {
     const time = editableTimes[index];
-    if (time.pocetak === null && time.kraj === null) {
+    if (time.pocetak === "" && time.kraj === "") {
       toggleEditMode(index);
 
       axios
@@ -183,8 +186,8 @@ function Menza() {
           console.error("Error updating time", error);
         });
     } else if (
-      validateTimeFormat(time.pocetak || "") &&
-      validateTimeFormat(time.kraj || "")
+      validateTimeFormat(time.pocetak) &&
+      validateTimeFormat(time.kraj)
     ) {
       toggleEditMode(index);
 
@@ -242,7 +245,7 @@ function Menza() {
                       <>
                         <Form.Control
                           type="text"
-                          value={time.pocetak || ""}
+                          value={time.pocetak}
                           onChange={(e) =>
                             handleTimeChange(index, "pocetak", e.target.value)
                           }
@@ -251,7 +254,7 @@ function Menza() {
                         {" - "}
                         <Form.Control
                           type="text"
-                          value={time.kraj || ""}
+                          value={time.kraj}
                           onChange={(e) =>
                             handleTimeChange(index, "kraj", e.target.value)
                           }
@@ -291,6 +294,7 @@ function Menza() {
         <div className="live-stream">
           <h4>Uživo red u menzi</h4>
           <div className="video-container">
+            {/*<YouTubeLiveStream videoId="wBVq_Qoegmo"></YouTubeLiveStream>*/}
             <MuxPlayer
               streamType="live"
               playbackId="RBm68dXx7KP9dIw1DYVipDX9zz8QmUqt01YtDoYP4kcU"
@@ -316,7 +320,7 @@ function Menza() {
             Close
           </button>
         </div>
-      )}
+      )}{" "}
     </>
   );
 }
