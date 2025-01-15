@@ -64,11 +64,6 @@ function Menza() {
   );
   const [editModeIndex, setEditModeIndex] = useState<number | null>(null);
   const [isChatOpen, setIsChatOpen] = useState(false);
-  const [muxError, setMuxError] = useState(false);
-
-  const handleMuxError = () => {
-    setMuxError(true);
-  };
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -306,10 +301,13 @@ function Menza() {
                 primary-color="#ffffff"
                 secondary-color="#000000"
                 accent-color="#fa50b5"
-                onError={handleMuxError}
+                onError={handleMuxError} // Handler za greške
               />
             ) : (
-              <YouTubeLiveStream videoId="wBVq_Qoegmo" />
+              <YouTube
+                videoId="wBVq_Qoegmo" // YouTube video ID
+                opts={youTubeOpts} // Opcije za YouTube player
+              />
             )}
           </div>
         </div>

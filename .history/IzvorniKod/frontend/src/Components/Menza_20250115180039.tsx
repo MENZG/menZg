@@ -64,11 +64,6 @@ function Menza() {
   );
   const [editModeIndex, setEditModeIndex] = useState<number | null>(null);
   const [isChatOpen, setIsChatOpen] = useState(false);
-  const [muxError, setMuxError] = useState(false);
-
-  const handleMuxError = () => {
-    setMuxError(true);
-  };
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -296,21 +291,18 @@ function Menza() {
 
         <div className="live-stream">
           <h4>Uživo red u menzi</h4>
+
           <div className="video-container">
-            {!muxError ? (
-              <MuxPlayer
-                streamType="live"
-                playbackId="RBm68dXx7KP9dIw1DYVipDX9zz8QmUqt01YtDoYP4kcU"
-                metadataVideoTitle="Placeholder (optional)"
-                metadata-viewer-user-id="Placeholder (optional)"
-                primary-color="#ffffff"
-                secondary-color="#000000"
-                accent-color="#fa50b5"
-                onError={handleMuxError}
-              />
-            ) : (
-              <YouTubeLiveStream videoId="wBVq_Qoegmo" />
-            )}
+            {/*<YouTubeLiveStream videoId="wBVq_Qoegmo"/>*/}
+            <MuxPlayer
+              streamType="live"
+              playbackId="RBm68dXx7KP9dIw1DYVipDX9zz8QmUqt01YtDoYP4kcU"
+              metadataVideoTitle="Placeholder (optional)"
+              metadata-viewer-user-id="Placeholder (optional)"
+              primary-color="#ffffff"
+              secondary-color="#000000"
+              accent-color="#fa50b5"
+            />
           </div>
         </div>
       </div>
