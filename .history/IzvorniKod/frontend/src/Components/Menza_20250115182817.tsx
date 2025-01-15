@@ -305,7 +305,7 @@ function Menza() {
                 primary-color="#ffffff"
                 secondary-color="#000000"
                 accent-color="#fa50b5"
-                autoPlay={true}
+                autoPlay="true"
               />
             ) : (
               <YouTubeLiveStream videoId="wBVq_Qoegmo" />
