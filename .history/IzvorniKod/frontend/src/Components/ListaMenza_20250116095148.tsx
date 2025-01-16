@@ -152,8 +152,6 @@ const ListaMenza = () => {
   const today = new Date().getDay();
   const todayName = daysOfWeek[today];
 
-  const canShowFavorites = korisnikFull?.role !== 3;
-
   return (
     <>
       <NavBar />
@@ -174,7 +172,9 @@ const ListaMenza = () => {
                 className="card-img-top"
                 alt={`Slika menze ${menza.imeMenze}`}
               />
-              {canShowFavorites && (
+              {korisnikFull?.role === 3 ? (
+                "nista"
+              ) : (
                 <button
                   className="favorite-icon"
                   onClick={(e) => {
@@ -190,7 +190,6 @@ const ListaMenza = () => {
                   )}
                 </button>
               )}
-
               <div className="card-body">
                 <h5 className="card-title">{menza.imeMenze}</h5>
                 <div className="card-text">

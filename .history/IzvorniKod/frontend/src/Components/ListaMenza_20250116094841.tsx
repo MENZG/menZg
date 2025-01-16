@@ -84,7 +84,7 @@ const ListaMenza = () => {
           { withCredentials: true }
         );
         setKorisnikFull(response.data);
-        console.log("korisnik full", korisnikFull);
+        console.log(korisnikFull);
         setFavorites(response.data.omiljeneMenza.map((m) => m.idMenza)); // Sync favorites
       } catch (error) {
         console.error(
@@ -152,8 +152,6 @@ const ListaMenza = () => {
   const today = new Date().getDay();
   const todayName = daysOfWeek[today];
 
-  const canShowFavorites = korisnikFull?.role !== 3;
-
   return (
     <>
       <NavBar />
@@ -174,23 +172,20 @@ const ListaMenza = () => {
                 className="card-img-top"
                 alt={`Slika menze ${menza.imeMenze}`}
               />
-              {canShowFavorites && (
-                <button
-                  className="favorite-icon"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    e.preventDefault();
-                    toggleFavorite(menza.idMenza);
-                  }}
-                >
-                  {favorites.includes(menza.idMenza) ? (
-                    <FaHeart size={17} />
-                  ) : (
-                    <FaRegHeart size={17} />
-                  )}
-                </button>
-              )}
-
+              <button
+                className="favorite-icon"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  e.preventDefault();
+                  toggleFavorite(menza.idMenza);
+                }}
+              >
+                {favorites.includes(menza.idMenza) ? (
+                  <FaHeart size={17} />
+                ) : (
+                  <FaRegHeart size={17} />
+                )}
+              </button>
               <div className="card-body">
                 <h5 className="card-title">{menza.imeMenze}</h5>
                 <div className="card-text">

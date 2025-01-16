@@ -9,7 +9,6 @@ import Chat from "./Chat";
 import NavBar from "./NavBar";
 import MuxPlayer from "@mux/mux-player-react";
 import YouTubeLiveStream from "./YouTubeLiveStream";
-import KameraIkona from "./KameraIkona";
 
 const initialRestaurantData = {
   idMenza: "1",
@@ -290,9 +289,6 @@ function Menza() {
                   </ListGroup.Item>
                 ))}
               </ListGroup>
-            </div>
-            <div className="camera-icon">
-              <KameraIkona></KameraIkona>
             </div>
           </Card.Body>
         </Card>
