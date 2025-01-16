@@ -221,7 +221,6 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-size: 20px;
 }
 
 .stars {
@@ -236,8 +235,4 @@ body {
   font-size: 24px;
   color: #ddd;
   cursor: pointer;
-}
-
-.star{
-  color: rgb(255, 204, 0);
 }
