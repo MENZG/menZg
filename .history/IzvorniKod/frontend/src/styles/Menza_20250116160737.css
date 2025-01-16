@@ -102,31 +102,22 @@ body {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-.rate{
-  box-shadow: none;
-}
-
-.chat-icon-btn {
-  background-color: #0098b3; /* Teal color */
+/* Open chat button */
+.open-chat-btn {
+  position: fixed;
   bottom: 20px;
   right: 20px;
-  position: fixed;
+  padding: 10px 20px;
+  background-color: #0098b3;
+  color: #fff;
   border: none;
-  border-radius: 50%; /* Makes the button circular */
-  width: 60px; /* Adjust size as needed */
-  height: 60px; /* Adjust size as needed */
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  border-radius: 50px;
   cursor: pointer;
-  color: white;
-  font-size: 28px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Optional shadow for emphasis */
+  transition: background-color 0.3s;
 }
 
-.chat-icon-btn:hover {
-  transform: scale(1.1); /* Slight zoom effect on hover */
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+.open-chat-btn:hover {
+  background-color: #00758a;
 }
 
 /* Close chat button */
@@ -212,7 +203,6 @@ body {
 
 .rating-category {
   margin-bottom: 20px;
-  display: flex;
 }
 
 .stars {

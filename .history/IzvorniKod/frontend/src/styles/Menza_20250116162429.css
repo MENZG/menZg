@@ -102,15 +102,10 @@ body {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-.rate{
-  box-shadow: none;
-}
-
 .chat-icon-btn {
   background-color: #0098b3; /* Teal color */
   bottom: 20px;
   right: 20px;
-  position: fixed;
   border: none;
   border-radius: 50%; /* Makes the button circular */
   width: 60px; /* Adjust size as needed */
@@ -119,8 +114,6 @@ body {
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  color: white;
-  font-size: 28px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Optional shadow for emphasis */
 }
 
