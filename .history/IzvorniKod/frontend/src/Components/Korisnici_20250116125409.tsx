@@ -140,6 +140,8 @@ const Korisnici = () => {
       <div className="korisnici-container">
         <div className="naslov-div">
           <h1 className="naslov">Lista Korisnika</h1>
+
+          <h3>filteri</h3>
           <div className="filters">
             <select
               value={selectedRole}

@@ -139,7 +139,9 @@ const Korisnici = () => {
       <NavBar />
       <div className="korisnici-container">
         <div className="naslov-div">
-          <h1 className="naslov">Lista Korisnika</h1>
+          <h3 className="naslov">Lista Korisnika</h3>
+
+          <h1>filteri</h1>
           <div className="filters">
             <select
               value={selectedRole}
