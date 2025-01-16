@@ -21,7 +21,7 @@ INSERT INTO korisnik (lozinka, username, role, godine, spol, blocked) VALUES
   -- SQL za unos podataka o zagrebačkim menzama u tablicu `menza`
 
 INSERT INTO radno_vrijeme (dan, pocetak, kraj) VALUES 
--- Jutarnje smene
+-- Jutarnje smjene
 ('ponedjeljak', '08:00:00', '16:00:00'),
 ('utorak', '08:00:00', '16:00:00'),
 ('srijeda', '08:00:00', '16:00:00'),
@@ -30,7 +30,7 @@ INSERT INTO radno_vrijeme (dan, pocetak, kraj) VALUES
 ('subota', '10:00:00', '14:00:00'),
 ('nedjelja', NULL, NULL), -- Nedjelja zatvoreno
 
--- Popodnevne smene
+-- Popodnevne smjene
 ('ponedjeljak', '17:00:00', '21:00:00'),
 ('utorak', '17:00:00', '21:00:00'),
 ('srijeda', '17:00:00', '21:00:00'),
@@ -42,27 +42,33 @@ INSERT INTO radno_vrijeme (dan, pocetak, kraj) VALUES
 
 INSERT INTO menza (ime_Menze, lokacija)
 VALUES
-    ('Menza Lašćina - LINIJA 1', 'Laščinska cesta 32, Zagreb'), --1
-    ('Menza Lašćina - LINIJA 2', 'Laščinska cesta 35, Zagreb'), --2
-    ('Menza Borongaj - LINIJA 1', 'Borongajska cesta 83f, Zagreb'), --3
-    ('Menza Borongaj - LINIJA 2', 'Borongajska cesta 85, Zagreb'), --4
-    ('Menza Ekonomija', 'Trg Johna Kennedyja 6, Zagreb'), --5
-    ('Menza Medicine', 'Šalata 3b, Zagreb'), --6
-    ('Menza Veterina', 'Heinzelova 55, Zagreb'), --7
-    ('Menza FER - LINIJA 1', 'Unska 16, Zagreb'), --8
-    ('Menza FER - BRZA', 'Kačićeva 26, Zagreb'), --9
-    ('Menza Stjepan Radić BRZA', 'Trg Stjepana Radića 2, Zagreb'), --10
-    ('Menza Stjepan Radić RESTORAN 1', 'Trg Stjepana Radića 2, Zagreb'), --11
-    ('Menza Stjepan Radić RESTORAN 2', 'Trg Stjepana Radića 2, Zagreb'), --12
-    ('Menza Građevinski fakultet', 'Kačićeva 26, Zagreb'), --13
-    ('Menza Fakultet elektrotehnike i računarstva', 'Unska 3, Zagreb'), --14
-    ('Menza Prirodoslovno-matematički fakultet', 'Horvatovac 102a, Zagreb'), --15
-    ('Menza Kineziološki fakultet', 'Horvaćanska 14, Zagreb'), --16
-    ('Menza Agronomski fakultet', 'Svetošimunska 25, Zagreb'), --17
-    ('Menza PMF', 'Bijenička cesta 30, Zagreb'), --18
-    ('Menza Muzička akademija', 'Trg Republike Hrvatske 12, Zagreb'); --19
-    
-    
+    ('Menza Lašćina', 'Laščinska cesta 32, Zagreb'), --1
+    ('Menza Stjepan Radić PIZZERIA', 'Jarunska ulica 2, Zagreb'), --2
+    ('Menza Stjepan Radić RESTORAN 1', 'Jarunska ulica 2, Zagreb'), --3
+    ('Menza Stjepan Radić RESTORAN 2', 'Jarunska ulica 2, Zagreb'), --4
+    ('Menza Cvjetno naselje LINIJA 1', 'Odranska ulica 8, Zagreb'), --5
+    ('Menza Cvjetno naselje LINIJA 2', 'Odranska ulica 8, Zagreb'), --6
+    ('Menza Ekonomija', 'Trg Johna F. Kennedyja 6, Zagreb'), --7
+    ('Menza Kefa', 'Trg Johna F.Kennedyja 6, Zagreb'), --8
+    ('Menza na Medicinskom fakultetu', 'Šalata 3b, Zagreb'), --9
+    ('Menza Veterinarski fakultet', 'Heinzelova 55, Zagreb'), --10
+    ('Menza ALU', 'Ilica 85c, Zagreb'), --11
+    ('Menza Agronomija i Šumarstvo', 'Ulica Tvrtka Miloša 1, Zagreb'), --12
+    ('Menza Gaudeamus', 'Ulica Radoslava Cimermana 88, Zagreb'), --13
+    ('Menza Savska LINIJA LIJEVO', 'Savska cesta 25, Zagreb'), --14
+    ('Menza Savska LINIJA DESNO', 'Savska cesta 25, Zagreb'), --15
+    ('Menza Express', 'Savska cesta 25, Zagreb'), --16
+    ('Menza TTF', 'Prilaz baruna Filipovića 28, Zagreb'), --17
+    ('Menza RGNF-PBF', 'Pierottijeva ulica 6, Zagreb'), --18
+    ('Menza SC-a NSK', 'Ulica Hrvatske bratske zajednicke 4, Zagreb'), --19
+    ('Restoran Filozofski fakultet', 'Ulica Ivana Lučića 3, Zagreb'), --20
+    ('Menza ZUK Borongaj', 'Borongajska bb, Zagreb'), --21
+    ('Menza Cassandra', 'Ulica grada Vukovara 39, Zagreb'), --22
+    ('Menza Cassandra BRZA', 'Ulica grada Vukovara 39, Zagreb'), --23
+    ('Menza Odeon', 'Ulica Andrije Kačića Miošića 26, Zagreb'), --24
+    ('Menza VEMAG', 'Horvatovac 102a, Zagreb'), --25
+
+
   INSERT INTO korisnik_menza (id_Korisnik, id_Menza) VALUES
 (1, 1), -- Nikolina omiljena menza je Menza 1
 (1, 2), -- Nikolina omiljena menza je Menza 2
@@ -81,13 +87,13 @@ VALUES
   -- Menza Lašćina - LINIJA 1
 INSERT INTO radno_vrijeme (dan, pocetak, kraj, id_Menza)
 VALUES
-    ('Ponedjeljak', '08:00:00', '16:00:00', 1),  -- Jutarnja smjena
-    ('Utorak', '10:00:00', '18:00:00', 1),        -- Kasnija smjena
-    ('Srijeda', '07:00:00', '15:00:00', 1),        -- Rano jutro
-    ('Četvrtak', NULL, NULL, 1),                    -- Nema rada
-    ('Petak', '09:00:00', '17:00:00', 1),          -- Standardno radno vrijeme
-    ('Subota', NULL, NULL, 1),                      -- Zatvoreno
-    ('Nedjelja', '08:00:00', '16:00:00', 1);       -- Jutarnja smjena
+    ('Ponedjeljak', '08:00:00', '20:30:00', 1),  -- Jutarnja smjena
+    ('Utorak', '08:00:00', '20:30:00', 1),        -- Kasnija smjena
+    ('Srijeda', '08:00:00', '20:30:00', 1),        -- Rano jutro
+    ('Četvrtak', '08:00:00', '20:30:00', 1),                    -- Nema rada
+    ('Petak', '08:00:00', '20:30:00', 1),          -- Standardno radno vrijeme
+    ('Subota', '08:00:00', '15:30:00', 1),                      -- Zatvoreno
+    ('Nedjelja', NULL,  NULL, 1);       -- Jutarnja smjena
 
 -- Menza Lašćina - LINIJA 2
 INSERT INTO radno_vrijeme (dan, pocetak, kraj, id_Menza)
