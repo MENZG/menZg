@@ -140,36 +140,36 @@ const Korisnici = () => {
       <div className="korisnici-container">
         <div className="naslov-div">
           <h1 className="naslov">Lista Korisnika</h1>
-          <div className="filters">
-            <select
-              value={selectedRole}
-              onChange={(e) => setSelectedRole(e.target.value)}
-              className="filter-select"
-            >
-              <option value="">Svi role</option>
-              <option value="1">Student</option>
-              <option value="2">Zaposlenik</option>
-              <option value="3">Admin</option>
-            </select>
-            <select
-              value={selectedGender}
-              onChange={(e) => setSelectedGender(e.target.value)}
-              className="filter-select"
-            >
-              <option value="">Svi spolovi</option>
-              <option value="Muški">Muški</option>
-              <option value="Ženski">Ženski</option>
-            </select>
-            <select
-              value={blockedFilter}
-              onChange={(e) => setBlockedFilter(e.target.value)}
-              className="filter-select"
-            >
-              <option value="">Svi korisnici</option>
-              <option value="Blokirani">Blokirani</option>
-              <option value="Neblokirani">Neblokirani</option>
-            </select>
-          </div>
+        </div>
+        <div className="filters">
+          <select
+            value={selectedRole}
+            onChange={(e) => setSelectedRole(e.target.value)}
+            className="filter-select"
+          >
+            <option value="">Svi role</option>
+            <option value="1">Student</option>
+            <option value="2">Zaposlenik</option>
+            <option value="3">Admin</option>
+          </select>
+          <select
+            value={selectedGender}
+            onChange={(e) => setSelectedGender(e.target.value)}
+            className="filter-select"
+          >
+            <option value="">Svi spolovi</option>
+            <option value="Muški">Muški</option>
+            <option value="Ženski">Ženski</option>
+          </select>
+          <select
+            value={blockedFilter}
+            onChange={(e) => setBlockedFilter(e.target.value)}
+            className="filter-select"
+          >
+            <option value="">Svi korisnici</option>
+            <option value="Blokirani">Blokirani</option>
+            <option value="Neblokirani">Neblokirani</option>
+          </select>
         </div>
         <div className="table-responsive">
           <table className="korisnici-table">

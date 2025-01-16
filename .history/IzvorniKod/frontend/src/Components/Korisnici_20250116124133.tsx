@@ -24,7 +24,7 @@ const Korisnici = () => {
   const [blockedUsers, setBlockedUsers] = useState<Set<string>>(new Set());
   const [selectedRole, setSelectedRole] = useState<string>(""); // Role filter
   const [selectedGender, setSelectedGender] = useState<string>(""); // Gender filter
-  const [blockedFilter, setBlockedFilter] = useState<string>(""); // Blocked filter
+  const [showBlockedOnly, setShowBlockedOnly] = useState<boolean>(false); // Blocked filter
 
   useEffect(() => {
     axios
@@ -53,11 +53,7 @@ const Korisnici = () => {
         const genderMatch =
           selectedGender === "" || korisnik.spol === selectedGender;
         const blockedMatch =
-          blockedFilter === "" ||
-          (blockedFilter === "Blokirani" &&
-            blockedUsers.has(korisnik.idKorisnik)) ||
-          (blockedFilter === "Neblokirani" &&
-            !blockedUsers.has(korisnik.idKorisnik));
+          !showBlockedOnly || blockedUsers.has(korisnik.idKorisnik);
         return roleMatch && genderMatch && blockedMatch;
       })
     );
@@ -65,7 +61,7 @@ const Korisnici = () => {
 
   useEffect(() => {
     applyFilters();
-  }, [selectedRole, selectedGender, blockedFilter]);
+  }, [selectedRole, selectedGender, showBlockedOnly]);
 
   const handleDelete = (idKorisnik: string) => {
     axios
@@ -160,17 +156,17 @@ const Korisnici = () => {
               <option value="Muški">Muški</option>
               <option value="Ženski">Ženski</option>
             </select>
-            <select
-              value={blockedFilter}
-              onChange={(e) => setBlockedFilter(e.target.value)}
-              className="filter-select"
-            >
-              <option value="">Svi korisnici</option>
-              <option value="Blokirani">Blokirani</option>
-              <option value="Neblokirani">Neblokirani</option>
-            </select>
+            <label className="filter-checkbox">
+              <input
+                type="checkbox"
+                checked={showBlockedOnly}
+                onChange={(e) => setShowBlockedOnly(e.target.checked)}
+              />
+              Prikaži samo blokirane korisnike
+            </label>
           </div>
         </div>
+
         <div className="table-responsive">
           <table className="korisnici-table">
             <thead>

@@ -13,25 +13,23 @@ interface Korisnik {
   username: string;
   lozinka: string;
   role: number;
-  roleName: string;
+  roleName: string; // Keep roleName for display purposes
   godine: number;
   spol: string;
 }
 
 const Korisnici = () => {
   const [korisnici, setKorisnici] = useState<Korisnik[]>([]);
-  const [filteredKorisnici, setFilteredKorisnici] = useState<Korisnik[]>([]);
-  const [blockedUsers, setBlockedUsers] = useState<Set<string>>(new Set());
-  const [selectedRole, setSelectedRole] = useState<string>(""); // Role filter
-  const [selectedGender, setSelectedGender] = useState<string>(""); // Gender filter
-  const [blockedFilter, setBlockedFilter] = useState<string>(""); // Blocked filter
+  const [blockedUsers, setBlockedUsers] = useState<Set<string>>(new Set()); // New state for tracking blocked users
+  const [roleFilter, setRoleFilter] = useState<number | null>(null); // Null = sve role
+  const [genderFilter, setGenderFilter] = useState<string | null>(null); // Null = svi spolovi
+  const [showBlocked, setShowBlocked] = useState(false); // False = prikaz svih korisnika
 
   useEffect(() => {
     axios
       .get(`${apiUrl}/korisnici`)
       .then((response) => {
         setKorisnici(response.data);
-        setFilteredKorisnici(response.data);
 
         const initialBlocked: Set<string> = new Set(
           response.data
@@ -45,27 +43,31 @@ const Korisnici = () => {
       });
   }, []);
 
-  const applyFilters = () => {
-    setFilteredKorisnici(
-      korisnici.filter((korisnik) => {
-        const roleMatch =
-          selectedRole === "" || korisnik.role.toString() === selectedRole;
-        const genderMatch =
-          selectedGender === "" || korisnik.spol === selectedGender;
-        const blockedMatch =
-          blockedFilter === "" ||
-          (blockedFilter === "Blokirani" &&
-            blockedUsers.has(korisnik.idKorisnik)) ||
-          (blockedFilter === "Neblokirani" &&
-            !blockedUsers.has(korisnik.idKorisnik));
-        return roleMatch && genderMatch && blockedMatch;
-      })
-    );
-  };
+  // Filtriranje korisnika prema filterima
+  const filteredKorisnici = korisnici.filter((korisnik) => {
+    if (roleFilter !== null && korisnik.role !== roleFilter) return false;
+    if (genderFilter && korisnik.spol !== genderFilter) return false;
+    if (showBlocked && !blockedUsers.has(korisnik.idKorisnik)) return false;
+    return true;
+  });
 
   useEffect(() => {
-    applyFilters();
-  }, [selectedRole, selectedGender, blockedFilter]);
+    axios
+      .get(`${apiUrl}/korisnici`)
+      .then((response) => {
+        setKorisnici(response.data);
+
+        const initialBlocked: Set<string> = new Set(
+          response.data
+            .filter((korisnik: Korisnik) => korisnik.roleName === "Blocked")
+            .map((korisnik: Korisnik) => korisnik.idKorisnik)
+        );
+        setBlockedUsers(initialBlocked);
+      })
+      .catch((error) => {
+        console.error("There was an error fetching the data!", error);
+      });
+  }, []);
 
   const handleDelete = (idKorisnik: string) => {
     axios
@@ -140,36 +142,6 @@ const Korisnici = () => {
       <div className="korisnici-container">
         <div className="naslov-div">
           <h1 className="naslov">Lista Korisnika</h1>
-          <div className="filters">
-            <select
-              value={selectedRole}
-              onChange={(e) => setSelectedRole(e.target.value)}
-              className="filter-select"
-            >
-              <option value="">Svi role</option>
-              <option value="1">Student</option>
-              <option value="2">Zaposlenik</option>
-              <option value="3">Admin</option>
-            </select>
-            <select
-              value={selectedGender}
-              onChange={(e) => setSelectedGender(e.target.value)}
-              className="filter-select"
-            >
-              <option value="">Svi spolovi</option>
-              <option value="Muški">Muški</option>
-              <option value="Ženski">Ženski</option>
-            </select>
-            <select
-              value={blockedFilter}
-              onChange={(e) => setBlockedFilter(e.target.value)}
-              className="filter-select"
-            >
-              <option value="">Svi korisnici</option>
-              <option value="Blokirani">Blokirani</option>
-              <option value="Neblokirani">Neblokirani</option>
-            </select>
-          </div>
         </div>
         <div className="table-responsive">
           <table className="korisnici-table">
@@ -186,7 +158,7 @@ const Korisnici = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredKorisnici.map((korisnik) => (
+              {korisnici.map((korisnik) => (
                 <tr
                   key={korisnik.idKorisnik}
                   className={
@@ -216,9 +188,12 @@ const Korisnici = () => {
                           parseInt(korisnik.idKorisnik, 10),
                           newRole
                         );
+                        window.location.reload();
                       }}
                     >
-                      <option value={1}>Student</option>
+                      <option value={1} className="option-role">
+                        Student
+                      </option>
                       <option value={2}>Zaposlenik</option>
                       <option value={3}>Admin</option>
                     </select>

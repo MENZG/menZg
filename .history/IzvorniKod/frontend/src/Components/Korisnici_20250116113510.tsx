@@ -13,25 +13,23 @@ interface Korisnik {
   username: string;
   lozinka: string;
   role: number;
-  roleName: string;
+  roleName: string; // Keep roleName for display purposes
   godine: number;
   spol: string;
 }
 
 const Korisnici = () => {
   const [korisnici, setKorisnici] = useState<Korisnik[]>([]);
-  const [filteredKorisnici, setFilteredKorisnici] = useState<Korisnik[]>([]);
-  const [blockedUsers, setBlockedUsers] = useState<Set<string>>(new Set());
-  const [selectedRole, setSelectedRole] = useState<string>(""); // Role filter
-  const [selectedGender, setSelectedGender] = useState<string>(""); // Gender filter
-  const [blockedFilter, setBlockedFilter] = useState<string>(""); // Blocked filter
+  const [blockedUsers, setBlockedUsers] = useState<Set<string>>(new Set()); // New state for tracking blocked users
+  const [roleFilter, setRoleFilter] = useState<number | null>(null); // Null = sve role
+  const [genderFilter, setGenderFilter] = useState<string | null>(null); // Null = svi spolovi
+  const [showBlocked, setShowBlocked] = useState(false); // False = prikaz svih korisnika
 
   useEffect(() => {
     axios
       .get(`${apiUrl}/korisnici`)
       .then((response) => {
         setKorisnici(response.data);
-        setFilteredKorisnici(response.data);
 
         const initialBlocked: Set<string> = new Set(
           response.data
@@ -45,27 +43,30 @@ const Korisnici = () => {
       });
   }, []);
 
-  const applyFilters = () => {
-    setFilteredKorisnici(
-      korisnici.filter((korisnik) => {
-        const roleMatch =
-          selectedRole === "" || korisnik.role.toString() === selectedRole;
-        const genderMatch =
-          selectedGender === "" || korisnik.spol === selectedGender;
-        const blockedMatch =
-          blockedFilter === "" ||
-          (blockedFilter === "Blokirani" &&
-            blockedUsers.has(korisnik.idKorisnik)) ||
-          (blockedFilter === "Neblokirani" &&
-            !blockedUsers.has(korisnik.idKorisnik));
-        return roleMatch && genderMatch && blockedMatch;
-      })
-    );
-  };
+  const filteredKorisnici = korisnici.filter((korisnik) => {
+    if (roleFilter !== null && korisnik.role !== roleFilter) return false;
+    if (genderFilter && korisnik.spol !== genderFilter) return false;
+    if (showBlocked && !blockedUsers.has(korisnik.idKorisnik)) return false;
+    return true;
+  });
 
   useEffect(() => {
-    applyFilters();
-  }, [selectedRole, selectedGender, blockedFilter]);
+    axios
+      .get(`${apiUrl}/korisnici`)
+      .then((response) => {
+        setKorisnici(response.data);
+
+        const initialBlocked: Set<string> = new Set(
+          response.data
+            .filter((korisnik: Korisnik) => korisnik.roleName === "Blocked")
+            .map((korisnik: Korisnik) => korisnik.idKorisnik)
+        );
+        setBlockedUsers(initialBlocked);
+      })
+      .catch((error) => {
+        console.error("There was an error fetching the data!", error);
+      });
+  }, []);
 
   const handleDelete = (idKorisnik: string) => {
     axios
@@ -138,37 +139,42 @@ const Korisnici = () => {
     <>
       <NavBar />
       <div className="korisnici-container">
-        <div className="naslov-div">
-          <h1 className="naslov">Lista Korisnika</h1>
-          <div className="filters">
+        <div className="filter-section">
+          <h2>Filteri</h2>
+          <div className="filter-row">
+            <label>Uloga:</label>
             <select
-              value={selectedRole}
-              onChange={(e) => setSelectedRole(e.target.value)}
-              className="filter-select"
+              value={roleFilter ?? ""}
+              onChange={(e) =>
+                setRoleFilter(e.target.value ? parseInt(e.target.value) : null)
+              }
             >
-              <option value="">Svi role</option>
-              <option value="1">Student</option>
-              <option value="2">Zaposlenik</option>
-              <option value="3">Admin</option>
+              <option value="">Sve role</option>
+              <option value={1}>Student</option>
+              <option value={2}>Zaposlenik</option>
+              <option value={3}>Admin</option>
             </select>
+          </div>
+          <div className="filter-row">
+            <label>Spol:</label>
             <select
-              value={selectedGender}
-              onChange={(e) => setSelectedGender(e.target.value)}
-              className="filter-select"
+              value={genderFilter ?? ""}
+              onChange={(e) => setGenderFilter(e.target.value || null)}
             >
               <option value="">Svi spolovi</option>
-              <option value="Muški">Muški</option>
-              <option value="Ženski">Ženski</option>
+              <option value="M">Muški</option>
+              <option value="Ž">Ženski</option>
             </select>
-            <select
-              value={blockedFilter}
-              onChange={(e) => setBlockedFilter(e.target.value)}
-              className="filter-select"
-            >
-              <option value="">Svi korisnici</option>
-              <option value="Blokirani">Blokirani</option>
-              <option value="Neblokirani">Neblokirani</option>
-            </select>
+          </div>
+          <div className="filter-row">
+            <label>
+              <input
+                type="checkbox"
+                checked={showBlocked}
+                onChange={(e) => setShowBlocked(e.target.checked)}
+              />
+              Prikaz blokiranih korisnika
+            </label>
           </div>
         </div>
         <div className="table-responsive">
@@ -193,23 +199,20 @@ const Korisnici = () => {
                     blockedUsers.has(korisnik.idKorisnik) ? "blocked-row" : ""
                   }
                 >
-                  <td className="ikona-cell" data-label="Ikona">
-                    <div className="ikona">
-                      {korisnik.role === 1 ? (
-                        <PiStudent />
-                      ) : korisnik.role === 2 ? (
-                        <LuChefHat />
-                      ) : (
-                        <GrUserAdmin />
-                      )}
-                    </div>
+                  <td className="ikona-cell">
+                    {korisnik.role === 1 ? (
+                      <PiStudent />
+                    ) : korisnik.role === 2 ? (
+                      <LuChefHat />
+                    ) : (
+                      <GrUserAdmin />
+                    )}
                   </td>
-                  <td data-label="ID">{korisnik.idKorisnik}</td>
-                  <td data-label="Username">{korisnik.username}</td>
-                  <td data-label="Role">
+                  <td>{korisnik.idKorisnik}</td>
+                  <td>{korisnik.username}</td>
+                  <td>
                     <select
                       value={korisnik.role}
-                      className="select-role"
                       onChange={(e) => {
                         const newRole = parseInt(e.target.value, 10);
                         updateUserRole(
@@ -223,32 +226,30 @@ const Korisnici = () => {
                       <option value={3}>Admin</option>
                     </select>
                   </td>
-                  <td data-label="Godine">{korisnik.godine}</td>
-                  <td data-label="Spol">{korisnik.spol}</td>
-                  <td data-label="Delete">
-                    {(korisnik.role === 1 || korisnik.role === 2) && (
-                      <button
-                        onClick={() => handleDelete(korisnik.idKorisnik)}
-                        className="admin-btn"
-                      >
-                        Delete User
-                      </button>
-                    )}
+                  <td>{korisnik.godine}</td>
+                  <td>{korisnik.spol}</td>
+                  <td>
+                    <button
+                      onClick={() => handleDelete(korisnik.idKorisnik)}
+                      className="admin-btn"
+                    >
+                      Delete
+                    </button>
                   </td>
-                  <td data-label="Block">
+                  <td>
                     {blockedUsers.has(korisnik.idKorisnik) ? (
                       <button
                         onClick={() => handleUnblock(korisnik.idKorisnik)}
                         className="admin-btn"
                       >
-                        Unblock User
+                        Unblock
                       </button>
                     ) : (
                       <button
                         onClick={() => handleBlock(korisnik.idKorisnik)}
                         className="admin-btn"
                       >
-                        Block User
+                        Block
                       </button>
                     )}
                   </td>
