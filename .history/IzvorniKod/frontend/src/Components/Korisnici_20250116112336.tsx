@@ -136,7 +136,7 @@ const Korisnici = () => {
                     blockedUsers.has(korisnik.idKorisnik) ? "blocked-row" : ""
                   }
                 >
-                  <td className="ikona-cell" data-label="Ikona">
+                  <td className="ikona-cell">
                     <div className="ikona">
                       {korisnik.role === 1 ? (
                         <PiStudent />
@@ -147,9 +147,9 @@ const Korisnici = () => {
                       )}
                     </div>
                   </td>
-                  <td data-label="ID">{korisnik.idKorisnik}</td>
-                  <td data-label="Username">{korisnik.username}</td>
-                  <td data-label="Role">
+                  <td>{korisnik.idKorisnik}</td>
+                  <td>{korisnik.username}</td>
+                  <td>
                     <select
                       value={korisnik.role}
                       className="select-role"
@@ -169,9 +169,9 @@ const Korisnici = () => {
                       <option value={3}>Admin</option>
                     </select>
                   </td>
-                  <td data-label="Godine">{korisnik.godine}</td>
-                  <td data-label="Spol">{korisnik.spol}</td>
-                  <td data-label="Delete">
+                  <td>{korisnik.godine}</td>
+                  <td>{korisnik.spol}</td>
+                  <td>
                     {(korisnik.role === 1 || korisnik.role === 2) && (
                       <button
                         onClick={() => handleDelete(korisnik.idKorisnik)}
@@ -181,7 +181,7 @@ const Korisnici = () => {
                       </button>
                     )}
                   </td>
-                  <td data-label="Block">
+                  <td>
                     {blockedUsers.has(korisnik.idKorisnik) ? (
                       <button
                         onClick={() => handleUnblock(korisnik.idKorisnik)}

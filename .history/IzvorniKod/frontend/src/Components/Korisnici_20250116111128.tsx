@@ -114,95 +114,94 @@ const Korisnici = () => {
         <div className="naslov-div">
           <h1 className="naslov">Lista Korisnika</h1>
         </div>
-        <div className="table-responsive">
-          <table className="korisnici-table">
-            <thead>
-              <tr>
-                <th>Ikona</th>
-                <th>ID</th>
-                <th>Username</th>
-                <th>Role</th>
-                <th>Godine</th>
-                <th>Spol</th>
-                <th>Delete</th>
-                <th>Block</th>
-              </tr>
-            </thead>
-            <tbody>
-              {korisnici.map((korisnik) => (
-                <tr
-                  key={korisnik.idKorisnik}
-                  className={
-                    blockedUsers.has(korisnik.idKorisnik) ? "blocked-row" : ""
-                  }
-                >
-                  <td className="ikona-cell" data-label="Ikona">
-                    <div className="ikona">
-                      {korisnik.role === 1 ? (
-                        <PiStudent />
-                      ) : korisnik.role === 2 ? (
-                        <LuChefHat />
-                      ) : (
-                        <GrUserAdmin />
-                      )}
-                    </div>
-                  </td>
-                  <td data-label="ID">{korisnik.idKorisnik}</td>
-                  <td data-label="Username">{korisnik.username}</td>
-                  <td data-label="Role">
-                    <select
-                      value={korisnik.role}
-                      className="select-role"
-                      onChange={(e) => {
-                        const newRole = parseInt(e.target.value, 10);
-                        updateUserRole(
-                          parseInt(korisnik.idKorisnik, 10),
-                          newRole
-                        );
-                        window.location.reload();
-                      }}
-                    >
-                      <option value={1} className="option-role">
-                        Student
-                      </option>
-                      <option value={2}>Zaposlenik</option>
-                      <option value={3}>Admin</option>
-                    </select>
-                  </td>
-                  <td data-label="Godine">{korisnik.godine}</td>
-                  <td data-label="Spol">{korisnik.spol}</td>
-                  <td data-label="Delete">
-                    {(korisnik.role === 1 || korisnik.role === 2) && (
-                      <button
-                        onClick={() => handleDelete(korisnik.idKorisnik)}
-                        className="admin-btn"
-                      >
-                        Delete User
-                      </button>
-                    )}
-                  </td>
-                  <td data-label="Block">
-                    {blockedUsers.has(korisnik.idKorisnik) ? (
-                      <button
-                        onClick={() => handleUnblock(korisnik.idKorisnik)}
-                        className="admin-btn"
-                      >
-                        Unblock User
-                      </button>
+        <table className="korisnici-table">
+          <thead>
+            <tr>
+              <th>Ikona</th>
+              <th>ID</th>
+              <th>Username</th>
+              <th>Role</th>
+              <th>Godine</th>
+              <th>Spol</th>
+              <th>Delete</th>
+              <th>Block</th>
+            </tr>
+          </thead>
+          <tbody>
+            {korisnici.map((korisnik) => (
+              <tr
+                key={korisnik.idKorisnik}
+                className={
+                  blockedUsers.has(korisnik.idKorisnik) ? "blocked-row" : ""
+                }
+              >
+                <td className="ikona-cell">
+                  <div className="ikona">
+                    {korisnik.role === 1 ? (
+                      <PiStudent />
+                    ) : korisnik.role === 2 ? (
+                      <LuChefHat />
                     ) : (
-                      <button
-                        onClick={() => handleBlock(korisnik.idKorisnik)}
-                        className="admin-btn"
-                      >
-                        Block User
-                      </button>
+                      <GrUserAdmin />
                     )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                  </div>
+                </td>
+
+                <td>{korisnik.idKorisnik}</td>
+                <td>{korisnik.username}</td>
+                <td>
+                  <select
+                    value={korisnik.role}
+                    className="select-role"
+                    onChange={(e) => {
+                      const newRole = parseInt(e.target.value, 10);
+                      updateUserRole(
+                        parseInt(korisnik.idKorisnik, 10),
+                        newRole
+                      );
+                      window.location.reload();
+                    }}
+                  >
+                    <option value={1} className="option-role">
+                      Student
+                    </option>
+                    <option value={2}>Zaposlenik</option>
+                    <option value={3}>Admin</option>
+                  </select>
+                </td>
+                <td>{korisnik.godine}</td>
+                <td>{korisnik.spol}</td>
+                <td>
+                  {(korisnik.role === 1 || korisnik.role === 2) && (
+                    <button
+                      onClick={() => handleDelete(korisnik.idKorisnik)}
+                      className="admin-btn"
+                    >
+                      Delete User
+                    </button>
+                  )}
+                </td>
+                <td>
+                  {blockedUsers.has(korisnik.idKorisnik) ? (
+                    <button
+                      onClick={() => handleUnblock(korisnik.idKorisnik)}
+                      className="admin-btn"
+                    >
+                      Unblock User
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => handleBlock(korisnik.idKorisnik)}
+                      className="admin-btn"
+                    >
+                      Block User
+                    </button>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </>
   );
