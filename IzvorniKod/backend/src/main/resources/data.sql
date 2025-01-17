@@ -17,9 +17,7 @@ INSERT INTO korisnik (lozinka, username, role, godine, spol, blocked) VALUES
 ('password123', 'user9@gmail.com', 1, 23, 'Ženski',true),
 ('password123', 'user10@gmail.com', 1, 27, 'Muški',false);
 
-    
-  -- SQL za unos podataka o zagrebačkim menzama u tablicu `menza`
-
+-- SQL za unos podataka o zagrebačkim menzama u tablicu `menza`
 INSERT INTO radno_vrijeme (dan, pocetak, kraj) VALUES 
 -- Jutarnje smjene
 ('ponedjeljak', '08:00:00', '16:00:00'),
@@ -63,13 +61,13 @@ VALUES
     ('Menza SC-a NSK', 'Ulica Hrvatske bratske zajednicke 4, Zagreb'), --19
     ('Restoran Filozofski fakultet', 'Ulica Ivana Lučića 3, Zagreb'), --20
     ('Menza ZUK Borongaj', 'Borongajska bb, Zagreb'), --21
-    ('Menza Cassandra', 'Ulica grada Vukovara 39, Zagreb'), --22
-    ('Menza Cassandra BRZA', 'Ulica grada Vukovara 39, Zagreb'), --23
-    ('Menza Odeon', 'Ulica Andrije Kačića Miošića 26, Zagreb'), --24
-    ('Menza VEMAG', 'Horvatovac 102a, Zagreb'), --25
+    ('Menza TVZ', 'Konavolska ulica 2, Zagreb'), --22
+    ('Menza Cassandra', 'Ulica grada Vukovara 39, Zagreb'), --23
+    ('Menza Cassandra BRZA', 'Ulica grada Vukovara 39, Zagreb'), --24
+    ('Menza Odeon', 'Ulica Andrije Kačića Miošića 26, Zagreb'), --25
+    ('Menza VEMAG', 'Horvatovac 102a, Zagreb'), --26
 
-
-  INSERT INTO korisnik_menza (id_Korisnik, id_Menza) VALUES
+INSERT INTO korisnik_menza (id_Korisnik, id_Menza) VALUES
 (1, 1), -- Nikolina omiljena menza je Menza 1
 (1, 2), -- Nikolina omiljena menza je Menza 2
 (2, 3), -- Blaž omiljena menza je Menza 3
@@ -81,212 +79,296 @@ VALUES
 (7, 1), -- Valentin omiljena menza je Menza 1
 (7, 3); -- Valentin omiljena menza je Menza 3
 
+--- RADNA VREMENA
+-- Menza Lašćina
+INSERT INTO radno_vrijeme (dan, pocetak, kraj, id_Menza)
+VALUES
+    ('Ponedjeljak', '08:00:00', '20:30:00', 1),
+    ('Utorak', '08:00:00', '20:30:00', 1),
+    ('Srijeda', '08:00:00', '20:30:00', 1),
+    ('Četvrtak', '08:00:00', '20:30:00', 1),
+    ('Petak', '08:00:00', '20:30:00', 1),
+    ('Subota', '08:00:00', '15:30:00', 1),
+    ('Nedjelja', NULL,  NULL, 1);
+
+-- Menza Stjepan Radić PIZZERIA
+INSERT INTO radno_vrijeme (dan, pocetak, kraj, id_Menza)
+VALUES
+    ('Ponedjeljak', '14:00:00', '20:30:00', 2),
+    ('Utorak', '14:00:00', '20:30:00', 2),
+    ('Srijeda', '14:00:00', '20:30:00', 2),
+    ('Četvrtak', '14:00:00', '20:30:00', 2),
+    ('Petak', '14:00:00', '20:30:00', 2),
+    ('Subota', '14:00:00', '20:30:00', 2),
+    ('Nedjelja', '14:00:00', '20:30:00', 2);
+
+-- Menza Stjepan Radić RESTORAN 1
+INSERT INTO radno_vrijeme (dan, pocetak, kraj, id_Menza)
+VALUES
+    ('Ponedjeljak', '11:30:00', '21:30:00', 3),
+    ('Utorak', '11:30:00', '21:30:00', 3),
+    ('Srijeda', '11:30:00', '21:30:00', 3),
+    ('Četvrtak', '11:30:00', '21:30:00', 3),
+    ('Petak', '11:30:00', '21:30:00', 3),
+    ('Subota', '11:30:00', '21:30:00', 3),
+    ('Nedjelja', '11:30:00', '21:30:00', 3);
+
+-- Menza Stjepan Radić RESTORAN 2
+INSERT INTO radno_vrijeme (dan, pocetak, kraj, id_Menza)
+VALUES
+    ('Ponedjeljak', '12:00:00', '15:00:00', 4),
+    ('Utorak', '12:00:00', '15:00:00', 4),
+    ('Srijeda', '12:00:00', '15:00:00', 4),
+    ('Četvrtak', '12:00:00', '15:00:00', 4),
+    ('Petak', '12:00:00', '15:00:00', 4),
+    ('Subota', '12:00:00', '15:00:00', 4),
+    ('Nedjelja', '12:00:00', '15:00:00', 4);
+
+-- Menza Cvjetno naselje LINIJA 1
+INSERT INTO radno_vrijeme (dan, pocetak, kraj, id_Menza)
+VALUES
+    ('Ponedjeljak', '17:30:00', '21:00:00', 5),
+    ('Utorak', '11:00:00', '16:00:00', 5),
+    ('Srijeda', '11:00:00', '16:00:00', 5),
+    ('Četvrtak', '11:00:00', '16:00:00', 5),
+    ('Petak', '11:00:00', '16:00:00', 5),
+    ('Subota', NULL, NULL, 5),
+    ('Nedjelja', NULL, NULL, 5);
+
+-- Menza Cvjetno naselje LINIJA 2
+INSERT INTO radno_vrijeme (dan, pocetak, kraj, id_Menza)
+VALUES
+    ('Ponedjeljak', '16:00:00', '20:00:00', 6),
+    ('Utorak', '12:00:00', '15:00:00', 6),
+    ('Srijeda', '12:00:00', '15:00:00', 6),
+    ('Četvrtak', '12:00:00', '15:00:00', 6),
+    ('Petak', '12:00:00', '15:00:00', 6),
+    ('Subota', NULL, NULL, 6),
+    ('Nedjelja', NULL, NULL, 6);
     
-    
-    --- RADNA VREMENA
-  -- Menza Lašćina - LINIJA 1
-INSERT INTO radno_vrijeme (dan, pocetak, kraj, id_Menza)
-VALUES
-    ('Ponedjeljak', '08:00:00', '20:30:00', 1),  -- Jutarnja smjena
-    ('Utorak', '08:00:00', '20:30:00', 1),        -- Kasnija smjena
-    ('Srijeda', '08:00:00', '20:30:00', 1),        -- Rano jutro
-    ('Četvrtak', '08:00:00', '20:30:00', 1),                    -- Nema rada
-    ('Petak', '08:00:00', '20:30:00', 1),          -- Standardno radno vrijeme
-    ('Subota', '08:00:00', '15:30:00', 1),                      -- Zatvoreno
-    ('Nedjelja', NULL,  NULL, 1);       -- Jutarnja smjena
-
--- Menza Lašćina - LINIJA 2
-INSERT INTO radno_vrijeme (dan, pocetak, kraj, id_Menza)
-VALUES
-    ('Ponedjeljak', '08:30:00', '16:30:00', 2),    -- Jutarnja smjena s pomaknutim početkom
-    ('Utorak', '12:00:00', '20:00:00', 2),          -- Kasnija smjena
-    ('Srijeda', '07:00:00', '15:00:00', 2),         -- Rano jutro
-    ('Četvrtak', NULL, NULL, 2),                    -- Nema rada
-    ('Petak', '09:00:00', '17:00:00', 2),           -- Standardno radno vrijeme
-    ('Subota', NULL, NULL, 2),                      -- Zatvoreno
-    ('Nedjelja', '08:00:00', '16:00:00', 2);        -- Jutarnja smjena
-
--- Menza Borongaj - LINIJA 1
-INSERT INTO radno_vrijeme (dan, pocetak, kraj, id_Menza)
-VALUES
-    ('Ponedjeljak', '08:00:00', '16:00:00', 3),    -- Standardna smjena
-    ('Utorak', '09:30:00', '17:30:00', 3),          -- Pomaknuta smjena
-    ('Srijeda', '07:00:00', '15:00:00', 3),         -- Rano jutro
-    ('Četvrtak', '10:00:00', '18:00:00', 3),        -- Kasnija smjena
-    ('Petak', NULL, NULL, 3),                       -- Nema rada
-    ('Subota', NULL, NULL, 3),                      -- Zatvoreno
-    ('Nedjelja', '08:00:00', '16:00:00', 3);        -- Jutarnja smjena
-
--- Menza Borongaj - LINIJA 2
-INSERT INTO radno_vrijeme (dan, pocetak, kraj, id_Menza)
-VALUES
-    ('Ponedjeljak', '09:00:00', '17:00:00', 4),    -- Standardna smjena
-    ('Utorak', '12:00:00', '20:00:00', 4),          -- Kasna smjena
-    ('Srijeda', NULL, NULL, 4),                     -- Nema rada
-    ('Četvrtak', '08:00:00', '16:00:00', 4),        -- Jutarnja smjena
-    ('Petak', NULL, NULL, 4),                       -- Zatvoreno
-    ('Subota', '08:00:00', '16:00:00', 4),          -- Jutarnja smjena
-    ('Nedjelja', NULL, NULL, 4);                    -- Zatvoreno
-
 -- Menza Ekonomija
 INSERT INTO radno_vrijeme (dan, pocetak, kraj, id_Menza)
 VALUES
-    ('Ponedjeljak', '08:00:00', '16:00:00', 5),    -- Standardna smjena
-    ('Utorak', '11:00:00', '19:00:00', 5),          -- Kasna smjena
-    ('Srijeda', NULL, NULL, 5),                     -- Zatvoreno
-    ('Četvrtak', '09:00:00', '17:00:00', 5),        -- Standardna smjena
-    ('Petak', NULL, NULL, 5),                       -- Zatvoreno
-    ('Subota', NULL, NULL, 5),                      -- Nema rada
-    ('Nedjelja', '10:00:00', '18:00:00', 5);        -- Kasnija smjena
+    ('Ponedjeljak', '08:00:00', '16:00:00', 7),
+    ('Utorak', '08:00:00', '16:00:00', 7),
+    ('Srijeda', '08:00:00', '16:00:00', 7),
+    ('Četvrtak', '08:00:00', '16:00:00', 7),
+    ('Petak', '08:00:00', '16:00:00', 7),
+    ('Subota', NULL, NULL, 7),
+    ('Nedjelja', NULL, NULL, 7);
 
--- Menza Medicine
+-- Menza Kefa
 INSERT INTO radno_vrijeme (dan, pocetak, kraj, id_Menza)
 VALUES
-    ('Ponedjeljak', '07:00:00', '15:00:00', 6),    -- Rano jutro
-    ('Utorak', '08:00:00', '16:00:00', 6),          -- Jutarnja smjena
-    ('Srijeda', '10:00:00', '18:00:00', 6),         -- Kasnija smjena
-    ('Četvrtak', NULL, NULL, 6),                    -- Zatvoreno
-    ('Petak', '08:00:00', '16:00:00', 6),           -- Jutarnja smjena
-    ('Subota', NULL, NULL, 6),                      -- Zatvoreno
-    ('Nedjelja', NULL, NULL, 6);                    -- Zatvoreno
-    
--- Menza Medicine
-INSERT INTO radno_vrijeme (dan, pocetak, kraj, id_Menza)
-VALUES
-    ('Ponedjeljak', '07:00:00', '15:00:00', 7),    -- Rano jutro
-    ('Utorak', '08:00:00', '16:00:00', 7),          -- Jutarnja smjena
-    ('Srijeda', '10:00:00', '18:00:00', 7),         -- Kasnija smjena
-    ('Četvrtak', NULL, NULL, 7),                    -- Zatvoreno
-    ('Petak', '08:00:00', '16:00:00', 7),           -- Jutarnja smjena
-    ('Subota', NULL, NULL, 7),                      -- Zatvoreno
-    ('Nedjelja', NULL, NULL, 7);                    -- Zatvoreno
+    ('Ponedjeljak', NULL, NULL, 8),
+    ('Utorak', NULL, NULL, 8),
+    ('Srijeda', NULL, NULL, 8),
+    ('Četvrtak', NULL, NULL, 8),
+    ('Petak', NULL, NULL, 8),
+    ('Subota', NULL, NULL, 8),
+    ('Nedjelja', NULL, NULL, 8);
 
--- Menza FER - LINIJA 1
+-- Menza na Medicinskom fakultetu
 INSERT INTO radno_vrijeme (dan, pocetak, kraj, id_Menza)
 VALUES
-    ('Ponedjeljak', '08:00:00', '16:00:00', 8),    -- Jutarnja smjena
-    ('Utorak', '09:00:00', '17:00:00', 8),         -- Jutarnja smjena
-    ('Srijeda', '08:00:00', '16:00:00', 8),        -- Jutarnja smjena
-    ('Četvrtak', '08:00:00', '16:00:00', 8),       -- Jutarnja smjena
-    ('Petak', '09:00:00', '17:00:00', 8),          -- Jutarnja smjena
-    ('Subota', NULL, NULL, 8),                     -- Zatvoreno
-    ('Nedjelja', NULL, NULL, 8);                   -- Zatvoreno
+    ('Ponedjeljak', '11:00:00', '15:00:00', 9),
+    ('Utorak', '11:00:00', '15:00:00', 9),
+    ('Srijeda', '11:00:00', '15:00:00', 9),
+    ('Četvrtak', '11:00:00', '15:00:00', 9),
+    ('Petak', '11:00:00', '15:00:00', 9),
+    ('Subota', NULL, NULL, 9),
+    ('Nedjelja', NULL, NULL, 9);
 
--- Menza FER - BRZA
+-- Menza Veterinarski fakultet
 INSERT INTO radno_vrijeme (dan, pocetak, kraj, id_Menza)
 VALUES
-    ('Ponedjeljak', '07:30:00', '15:30:00', 9),    -- Jutarnja smjena
-    ('Utorak', '08:30:00', '16:30:00', 9),          -- Jutarnja smjena
-    ('Srijeda', '07:30:00', '15:30:00', 9),         -- Jutarnja smjena
-    ('Četvrtak', '08:00:00', '16:00:00', 9),        -- Jutarnja smjena
-    ('Petak', '07:30:00', '15:30:00', 9),           -- Jutarnja smjena
-    ('Subota', NULL, NULL, 9),                      -- Zatvoreno
-    ('Nedjelja', NULL, NULL, 9);                    -- Zatvoreno
+    ('Ponedjeljak', '08:00:00', '15:00:00', 10),
+    ('Utorak', '08:00:00', '15:00:00', 10),
+    ('Srijeda', '08:00:00', '15:00:00', 10),
+    ('Četvrtak', '08:00:00', '15:00:00', 10),
+    ('Petak', '08:00:00', '15:00:00', 10),
+    ('Subota', NULL, NULL, 10),
+    ('Nedjelja', NULL, NULL, 10);
 
--- Menza Stjepan Radić BRZA
--- Menza 10 - LINIJA 1
+-- Menza ALU
 INSERT INTO radno_vrijeme (dan, pocetak, kraj, id_Menza)
 VALUES
-    ('Ponedjeljak', '08:00:00', '16:00:00', 10),    -- Jutarnja smjena
-    ('Utorak', '09:00:00', '17:00:00', 10),         -- Jutarnja smjena
-    ('Srijeda', '08:00:00', '16:00:00', 10),        -- Jutarnja smjena
-    ('Četvrtak', '08:00:00', '16:00:00', 10),       -- Jutarnja smjena
-    ('Petak', '09:00:00', '17:00:00', 10),          -- Jutarnja smjena
-    ('Subota', NULL, NULL, 10),                     -- Zatvoreno
-    ('Nedjelja', NULL, NULL, 10);                   -- Zatvoreno
+    ('Ponedjeljak', '09:00:00', '15:00:00', 11),
+    ('Utorak', '09:00:00', '15:00:00', 11),
+    ('Srijeda', '09:00:00', '15:00:00', 11),
+    ('Četvrtak', '09:00:00', '15:00:00', 11),
+    ('Petak', '09:00:00', '15:00:00', 11),
+    ('Subota', NULL, NULL, 11),
+    ('Nedjelja', NULL, NULL, 11);
 
--- Menza 11 - LINIJA 1
+-- Menza Agronomija i Šumarstvo
 INSERT INTO radno_vrijeme (dan, pocetak, kraj, id_Menza)
 VALUES
-    ('Ponedjeljak', '07:00:00', '15:00:00', 11),    -- Rano jutro
-    ('Utorak', '08:30:00', '16:30:00', 11),          -- Jutarnja smjena
-    ('Srijeda', '09:00:00', '17:00:00', 11),         -- Standardna smjena
-    ('Četvrtak', '08:00:00', '16:00:00', 11),        -- Jutarnja smjena
-    ('Petak', '07:30:00', '15:30:00', 11),           -- Jutarnja smjena
-    ('Subota', NULL, NULL, 11),                      -- Zatvoreno
-    ('Nedjelja', NULL, NULL, 11);                    -- Zatvoreno
+    ('Ponedjeljak', '08:00:00', '15:00:00', 12),
+    ('Utorak', '08:00:00', '15:00:00', 12),
+    ('Srijeda', '08:00:00', '15:00:00', 12),
+    ('Četvrtak', '08:00:00', '15:00:00', 12),
+    ('Petak', '08:00:00', '15:00:00', 12),
+    ('Subota', NULL, NULL, 12),
+    ('Nedjelja', NULL, NULL, 12);
 
--- Menza 12 - LINIJA 1
+ -- Menza Gaudeamus
 INSERT INTO radno_vrijeme (dan, pocetak, kraj, id_Menza)
 VALUES
-    ('Ponedjeljak', '08:00:00', '16:00:00', 12),    -- Jutarnja smjena
-    ('Utorak', '09:00:00', '17:00:00', 12),         -- Jutarnja smjena
-    ('Srijeda', '08:00:00', '16:00:00', 12),        -- Jutarnja smjena
-    ('Četvrtak', '08:00:00', '16:00:00', 12),       -- Jutarnja smjena
-    ('Petak', '09:00:00', '17:00:00', 12),          -- Jutarnja smjena
-    ('Subota', NULL, NULL, 12),                     -- Zatvoreno
-    ('Nedjelja', NULL, NULL, 12);                   -- Zatvoreno
+    ('Ponedjeljak', '08:00:00', '14:00:00', 13),
+    ('Utorak', '08:00:00', '14:00:00', 13),
+    ('Srijeda', '08:00:00', '14:00:00', 13),
+    ('Četvrtak', '08:00:00', '14:00:00', 13),
+    ('Petak', '08:00:00', '14:00:00', 13),
+    ('Subota', '08:00:00', '14:00:00', 13),
+    ('Nedjelja', '08:00:00', '14:00:00', 13);
 
-    
-   -- Menza Građevinski fakultet
+-- Menza Savska LINIJA LIJEVO
 INSERT INTO radno_vrijeme (dan, pocetak, kraj, id_Menza)
 VALUES
-    ('Ponedjeljak', '08:00:00', '16:00:00', 13),   -- Jutarnja smjena
-    ('Utorak', '08:00:00', '16:00:00', 13),         -- Jutarnja smjena
-    ('Srijeda', '08:30:00', '16:30:00', 13),        -- Jutarnja smjena
-    ('Četvrtak', NULL, NULL, 13),                   -- Zatvoreno
-    ('Petak', '08:00:00', '16:00:00', 13),          -- Jutarnja smjena
-    ('Subota', NULL, NULL, 13),                     -- Zatvoreno
-    ('Nedjelja', NULL, NULL, 13);                   -- Zatvoreno
+    ('Ponedjeljak', '11:00:00', '15:00:00', 14),
+    ('Utorak', '11:00:00', '15:00:00', 14),
+    ('Srijeda', '11:00:00', '15:00:00', 14),
+    ('Četvrtak', '11:00:00', '15:00:00', 14),
+    ('Petak', '11:00:00', '15:00:00', 14),
+    ('Subota', '11:00:00', '15:00:00', 14),
+    ('Nedjelja', '11:00:00', '15:00:00', 14);
 
--- Menza Fakultet elektrotehnike i računarstva
+-- Menza Savska LINIJA DESNO
 INSERT INTO radno_vrijeme (dan, pocetak, kraj, id_Menza)
 VALUES
-    ('Ponedjeljak', '08:00:00', '16:00:00', 14),   -- Jutarnja smjena
-    ('Utorak', '08:30:00', '16:30:00', 14),         -- Jutarnja smjena
-    ('Srijeda', '09:00:00', '17:00:00', 14),        -- Jutarnja smjena
-    ('Četvrtak', '08:30:00', '16:30:00', 14),       -- Jutarnja smjena
-    ('Petak', '09:00:00', '17:00:00', 14),          -- Jutarnja smjena
-    ('Subota', NULL, NULL, 14),                     -- Zatvoreno
-    ('Nedjelja', NULL, NULL, 14);                   -- Zatvoreno
+    ('Ponedjeljak', NULL, NULL, 15),
+    ('Utorak', NULL, NULL, 15),
+    ('Srijeda', NULL, NULL, 15),
+    ('Četvrtak', NULL, NULL, 15),
+    ('Petak', NULL, NULL, 15),
+    ('Subota', NULL, NULL, 15),
+    ('Nedjelja', NULL, NULL, 15);
 
--- Menza Prirodoslovno-matematički fakultet
+-- Menza Express
 INSERT INTO radno_vrijeme (dan, pocetak, kraj, id_Menza)
 VALUES
-    ('Ponedjeljak', '08:00:00', '16:00:00', 15),   -- Jutarnja smjena
-    ('Utorak', '08:00:00', '16:00:00', 15),         -- Jutarnja smjena
-    ('Srijeda', '08:30:00', '16:30:00', 15),        -- Jutarnja smjena
-    ('Četvrtak', '08:00:00', '16:00:00', 15),       -- Jutarnja smjena
-    ('Petak', '08:30:00', '16:30:00', 15),          -- Jutarnja smjena
-    ('Subota', NULL, NULL, 15),                     -- Zatvoreno
-    ('Nedjelja', NULL, NULL, 15);                   -- Zatvoreno
+    ('Ponedjeljak', '09:00:00', '15:00:00', 16),
+    ('Utorak', '09:00:00', '15:00:00', 16),
+    ('Srijeda', '09:00:00', '15:00:00', 16),
+    ('Četvrtak', '09:00:00', '15:00:00', 16),
+    ('Petak', '09:00:00', '15:00:00', 16),
+    ('Subota', NULL, NULL, 16),
+    ('Nedjelja', NULL, NULL, 16);
 
--- Menza Kineziološki fakultet
+-- Menza TTF
 INSERT INTO radno_vrijeme (dan, pocetak, kraj, id_Menza)
 VALUES
-    ('Ponedjeljak', '08:00:00', '16:00:00', 16),   -- Jutarnja smjena
-    ('Utorak', '08:00:00', '16:00:00', 16),         -- Jutarnja smjena
-    ('Srijeda', '08:30:00', '16:30:00', 16),        -- Jutarnja smjena
-    ('Četvrtak', '08:00:00', '16:00:00', 16),       -- Jutarnja smjena
-    ('Petak', '08:00:00', '16:00:00', 16),          -- Jutarnja smjena
-    ('Subota', NULL, NULL, 16),                     -- Zatvoreno
-    ('Nedjelja', NULL, NULL, 16);                   -- Zatvoreno
+    ('Ponedjeljak', '08:00:00', '14:30:00', 17),
+    ('Utorak', '08:00:00', '14:30:00', 17),
+    ('Srijeda', '08:00:00', '14:30:00', 17),
+    ('Četvrtak', '08:00:00', '14:30:00', 17),
+    ('Petak', '08:00:00', '14:30:00', 17),
+    ('Subota', NULL, NULL, 17),
+    ('Nedjelja', NULL, NULL, 17);
 
--- Menza Agronomski fakultet
+-- Menza RGNF-PBF
 INSERT INTO radno_vrijeme (dan, pocetak, kraj, id_Menza)
 VALUES
-    ('Ponedjeljak', '08:00:00', '16:00:00', 17),   -- Jutarnja smjena
-    ('Utorak', '08:30:00', '16:30:00', 17),         -- Jutarnja smjena
-    ('Srijeda', '09:00:00', '17:00:00', 17),        -- Jutarnja smjena
-    ('Četvrtak', '08:00:00', '16:00:00', 17),       -- Jutarnja smjena
-    ('Petak', '08:00:00', '16:00:00', 17),          -- Jutarnja smjena
-    ('Subota', NULL, NULL, 17),                     -- Zatvoreno
-    ('Nedjelja', NULL, NULL, 17);                   -- Zatvoreno
+    ('Ponedjeljak', '11:00:00', '15:00:00', 18),
+    ('Utorak', '11:00:00', '15:00:00', 18),
+    ('Srijeda', '11:30:00', '15:00:00', 18),
+    ('Četvrtak', '11:00:00', '15:00:00', 18),
+    ('Petak', '11:00:00', '15:00:00', 18),
+    ('Subota', NULL, NULL, 18),
+    ('Nedjelja', NULL, NULL, 18);
 
--- Menza PMF
+-- Menza SC-a NSK
 INSERT INTO radno_vrijeme (dan, pocetak, kraj, id_Menza)
 VALUES
-    ('Ponedjeljak', '08:00:00', '16:00:00', 18),   -- Jutarnja smjena
-    ('Utorak', '08:00:00', '16:00:00', 18),         -- Jutarnja smjena
-    ('Srijeda', '08:30:00', '16:30:00', 18),        -- Jutarnja smjena
-    ('Četvrtak', '08:00:00', '16:00:00', 18),       -- Jutarnja smjena
-    ('Petak', '08:00:00', '16:00:00', 18),          -- Jutarnja smjena
-    ('Subota', NULL, NULL, 18),                     -- Zatvoreno
-    ('Nedjelja', NULL, NULL, 18);            
+    ('Ponedjeljak', '08:00:00', '15:00:00', 19),
+    ('Utorak', '08:00:00', '15:00:00', 19),
+    ('Srijeda', '08:00:00', '15:00:00', 19),
+    ('Četvrtak', '08:00:00', '15:00:00', 19),
+    ('Petak', '08:00:00', '15:00:00', 19),
+    ('Subota', NULL, NULL, 19),
+    ('Nedjelja', NULL, NULL, 19);
+
+-- Restoran Filozofski fakultet
+INSERT INTO radno_vrijeme (dan, pocetak, kraj, id_Menza)
+VALUES
+    ('Ponedjeljak', '11:00:00', '15:00:00', 20),
+    ('Utorak', '11:00:00', '15:00:00', 20),
+    ('Srijeda', '11:00:00', '15:00:00', 20),
+    ('Četvrtak', '11:00:00', '15:00:00', 20),
+    ('Petak', '11:00:00', '15:00:00', 20),
+    ('Subota', NULL, NULL, 20),
+    ('Nedjelja', NULL, NULL, 20);
+
+-- Menza ZUK Borongaj
+INSERT INTO radno_vrijeme (dan, pocetak, kraj, id_Menza)
+VALUES
+    ('Ponedjeljak', '10:30:00', '16:00:00', 21),
+    ('Utorak', '10:30:00', '16:00:00', 21),
+    ('Srijeda', '1O:30:00', '16:00:00', 21),
+    ('Četvrtak', '10:30:00', '16:00:00', 21),
+    ('Petak', '1O:30:00', '15:00:00', 21),
+    ('Subota', NULL, NULL, 21),
+    ('Nedjelja', NULL, NULL, 21);
+
+-- Menza TVZ
+INSERT INTO radno_vrijeme (dan, pocetak, kraj, id_Menza)
+VALUES
+    ('Ponedjeljak', '08:00:00', '15:00:00', 22),
+    ('Utorak', '08:00:00', '15:00:00', 22),
+    ('Srijeda', '08:00:00', '15:00:00', 22),
+    ('Četvrtak', '08:00:00', '15:00:00', 22),
+    ('Petak', '08:00:00', '15:00:00', 22),
+    ('Subota', NULL, NULL, 22),
+    ('Nedjelja', NULL, NULL, 22);
+
+-- Menza Cassandra
+INSERT INTO radno_vrijeme (dan, pocetak, kraj, id_Menza)
+VALUES
+    ('Ponedjeljak', '10:00:00', '16:00:00', 23),
+    ('Utorak', '10:00:00', '16:00:00', 23),
+    ('Srijeda', '10:00:00', '16:00:00', 23),
+    ('Četvrtak', '10:00:00', '16:00:00', 23),
+    ('Petak', '10:00:00', '16:00:00', 23),
+    ('Subota', NULL, NULL, 23),
+    ('Nedjelja', NULL, NULL, 23);
+
+ -- Menza Cassandra BRZA
+INSERT INTO radno_vrijeme (dan, pocetak, kraj, id_Menza)
+VALUES
+    ('Ponedjeljak', '10:00:00', '17:00:00', 24),
+    ('Utorak', '10:00:00', '17:00:00', 24),
+    ('Srijeda', '10:00:00', '17:00:00', 24),
+    ('Četvrtak', '10:00:00', '17:00:00', 24),
+    ('Petak', '10:00:00', '17:00:00', 24),
+    ('Subota', NULL, NULL, 24),
+    ('Nedjelja', NULL, NULL, 24);
+
+-- Menza Odeon
+INSERT INTO radno_vrijeme (dan, pocetak, kraj, id_Menza)
+VALUES
+    ('Ponedjeljak', '09:30:00', '17:00:00', 25),
+    ('Utorak', '09:30:00', '17:00:00', 25),
+    ('Srijeda', '09:30:00', '17:00:00', 25),
+    ('Četvrtak', '09:30:00', '17:00:00', 25),
+    ('Petak', '09:30:00', '17:00:00', 25),
+    ('Subota', NULL, NULL, 25),
+    ('Nedjelja', NULL, NULL, 25);
+
+-- Menza VEMAG
+INSERT INTO radno_vrijeme (dan, pocetak, kraj, id_Menza)
+VALUES
+    ('Ponedjeljak', '08:00:00', '17:00:00', 26),
+    ('Utorak', '08:00:00', '17:00:00', 26),
+    ('Srijeda', '08:00:00', '17:00:00', 26),
+    ('Četvrtak', '08:00:00', '17:00:00', 26),
+    ('Petak', '08:00:00', '17:00:00', 26),
+    ('Subota', NULL, NULL, 26),
+    ('Nedjelja', NULL, NULL, 26);
 
 -- Tablica za jelovnike (kategorije: Doručak, Ručak, Večera)
 INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
--- Menza Lašćina - LINIJA 1 (ID: 1)
+-- Menza Lašćina (ID: 1)
 ('Doručak', 1.5, 'Jaja s pancetom', 1),
 ('Doručak', 1.2, 'Pecivo s maslacem i džemom', 1),
 ('Doručak', 1.0, 'Čokolino', 1),
@@ -297,7 +379,7 @@ INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
 ('Večera', 2.5, 'Pečena riba s blitvom', 1),
 ('Večera', 1.8, 'Pizza Margherita', 1),
 
--- Menza Lašćina - LINIJA 2 (ID: 2)
+-- Menza Stjepan Radić PIZZERIA (ID: 2)
 ('Doručak', 1.5, 'Kajgana s povrćem', 2),
 ('Doručak', 1.0, 'Kroasan s čokoladom', 2),
 ('Doručak', 1.2, 'Gris s kakaom', 2),
@@ -308,7 +390,7 @@ INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
 ('Večera', 2.7, 'Burger s pomfritom', 2),
 ('Večera', 2.0, 'Vegetarijanski rižoto', 2),
 
--- Menza Borongaj - LINIJA 1 (ID: 3)
+-- Menza Stjepan Radić RESTORAN 1 (ID: 3)
 ('Doručak', 1.3, 'Palačinke s medom', 3),
 ('Doručak', 1.0, 'Sendvič sa sirom i šunkom', 3),
 ('Doručak', 1.2, 'Žitarice s mlijekom', 3),
@@ -319,7 +401,7 @@ INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
 ('Večera', 2.7, 'Pizza s povrćem', 3),
 ('Večera', 2.2, 'Ćevapi s lepinjom', 3),
 
--- Menza Borongaj - LINIJA 2 (ID: 4)
+-- Menza Stjepan Radić RESTORAN 2 (ID: 4)
 ('Doručak', 1.3, 'Omelette sa šunkom', 4),
 ('Doručak', 1.2, 'Jogurt s muslijem', 4),
 ('Doručak', 1.0, 'Kiflica s maslacem', 4),
@@ -330,7 +412,7 @@ INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
 ('Večera', 2.7, 'Hot dog s prilozima', 4),
 ('Večera', 2.1, 'Pohane tikvice s krumpir salatom', 4),
 
--- Menza Ekonomija (ID: 5)
+-- Menza Cvjetno naselje LINIJA 1 (ID: 5)
 ('Doručak', 1.0, 'Muesli s jogurtom', 5),
 ('Doručak', 1.2, 'Tost sa sirom', 5),
 ('Doručak', 1.3, 'Kukuruzna kaša', 5),
@@ -341,7 +423,7 @@ INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
 ('Večera', 2.7, 'Zapečeni grah s kobasicom', 5),
 ('Večera', 2.0, 'Vegetarijanski wrap', 5),
 
--- Menza Medicine (ID: 6)
+-- Menza Cvjetno naselje LINIJA 2 (ID: 6)
 ('Doručak', 1.2, 'Palačinke s marmeladom', 6),
 ('Doručak', 1.0, 'Čokoladno pecivo', 6),
 ('Doručak', 1.1, 'Kukuruzni kruh s maslacem', 6),
@@ -352,7 +434,7 @@ INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
 ('Večera', 2.7, 'Riblji file s povrćem', 6),
 ('Večera', 2.1, 'Pohana riba s tartarom', 6);
 
--- Menza Veterina (ID: 7)
+-- Menza Ekonomija (ID: 7)
 INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
 ('Doručak', 1.3, 'Jaja na oko s kobasicom', 7),
 ('Doručak', 1.0, 'Sendvič s mortadelom', 7),
@@ -364,7 +446,7 @@ INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
 ('Večera', 2.5, 'Tuna salata s kukuruzom', 7),
 ('Večera', 2.0, 'Pizza s kulenom', 7),
 
--- Menza FER - LINIJA 1 (ID: 8)
+-- Menza Kefa (ID: 8)
 ('Doručak', 1.5, 'Kajgana sa špekom', 8),
 ('Doručak', 1.0, 'Jogurt s pahuljicama', 8),
 ('Doručak', 1.2, 'Kruh s maslacem i medom', 8),
@@ -375,7 +457,7 @@ INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
 ('Večera', 2.5, 'Pizza Funghi', 8),
 ('Večera', 2.2, 'Sendvič s povrćem', 8),
 
--- Menza FER - BRZA (ID: 9)
+-- Menza na Medicinskom fakultetu (ID: 9)
 ('Doručak', 1.3, 'Pecivo sa sirom', 9),
 ('Doručak', 1.0, 'Sendvič s maslacem', 9),
 ('Doručak', 1.2, 'Zobena kaša s voćem', 9),
@@ -386,7 +468,7 @@ INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
 ('Večera', 2.3, 'Špageti Bolonjez', 9),
 ('Večera', 2.1, 'Vegetarijanski wrap', 9),
 
--- Menza Stjepan Radić BRZA (ID: 10)
+-- Menza Veterinarski fakultet (ID: 10)
 ('Doručak', 1.5, 'Omlet s gljivama', 10),
 ('Doručak', 1.2, 'Kiflica sa šunkom i sirom', 10),
 ('Doručak', 1.0, 'Jogurt s medom', 10),
@@ -397,7 +479,7 @@ INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
 ('Večera', 2.7, 'Pileći wok s rezancima', 10),
 ('Večera', 2.3, 'Salata s jajima', 10),
 
--- Menza Stjepan Radić RESTORAN 1 (ID: 11)
+-- Menza ALU (ID: 11)
 ('Doručak', 1.5, 'Palačinke s nutellom', 11),
 ('Doručak', 1.3, 'Sendvič s puretinom', 11),
 ('Doručak', 1.0, 'Kiflica s margarinom', 11),
@@ -408,7 +490,7 @@ INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
 ('Večera', 2.5, 'Špageti s umakom od rajčice', 11),
 ('Večera', 2.3, 'Pizza Vegetariana', 11);
 
--- Menza Stjepan Radić RESTORAN 2 (ID: 12)
+-- Menza Agronomija i Šumarstvo (ID: 12)
 INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
 ('Doručak', 1.5, 'Pecivo s čokoladnim namazom', 12),
 ('Doručak', 1.3, 'Kajgana s povrćem', 12),
@@ -420,7 +502,7 @@ INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
 ('Večera', 2.7, 'Pizza Quattro Formaggi', 12),
 ('Večera', 2.4, 'Tuna salata s maslinama', 12),
 
--- Menza Građevinski fakultet (ID: 13)
+-- Menza Gaudeamus (ID: 13)
 ('Doručak', 1.4, 'Sendvič s tunjevinom', 13),
 ('Doručak', 1.2, 'Kroasan s marmeladom', 13),
 ('Doručak', 1.0, 'Žitarice s mlijekom', 13),
@@ -431,7 +513,7 @@ INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
 ('Večera', 2.7, 'Pasta Carbonara', 13),
 ('Večera', 2.0, 'Sendvič s avokadom', 13),
 
--- Menza Fakultet elektrotehnike i računarstva (ID: 14)
+-- Menza Savska LINIJA LIJEVO (ID: 14)
 ('Doručak', 1.4, 'Sendvič s pršutom i sirom', 14),
 ('Doručak', 1.3, 'Kiflica s maslacem', 14),
 ('Doručak', 1.1, 'Zobena kaša s grožđicama', 14),
@@ -442,8 +524,7 @@ INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
 ('Večera', 2.7, 'Taco s piletinom i salsom', 14),
 ('Večera', 2.4, 'Salata od tune s tjesteninom', 14);
 
-
--- Menza Prirodoslovno-matematički fakultet (ID: 15)
+-- Menza Savska LINIJA DESNO (ID: 15)
 INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
 ('Doručak', 1.4, 'Zobena kaša s bademima', 15),
 ('Doručak', 1.2, 'Sendvič s pečenicom', 15),
@@ -455,7 +536,7 @@ INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
 ('Večera', 2.6, 'Pasta Primavera', 15),
 ('Večera', 2.3, 'Salata od krumpira s jajima', 15),
 
--- Menza Kineziološki fakultet (ID: 16)
+-- Menza Express (ID: 16)
 ('Doručak', 1.3, 'Pecivo s maslacem i džemom', 16),
 ('Doručak', 1.2, 'Jogurt s granolom', 16),
 ('Doručak', 1.0, 'Kruh s maslinovim uljem', 16),
@@ -466,9 +547,7 @@ INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
 ('Večera', 2.6, 'Burger s cheddar sirom', 16),
 ('Večera', 2.4, 'Zapečena tjestenina', 16);
 
-
-
--- Menza Agronomski fakultet (ID: 17)
+-- Menza TTF (ID: 17)
 INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
 ('Doručak', 1.5, 'Omlet sa sirom i šunkom', 17),
 ('Doručak', 1.2, 'Kroasan s maslacem', 17),
@@ -480,7 +559,7 @@ INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
 ('Večera', 2.5, 'Pohana mozzarella', 17),
 ('Večera', 2.3, 'Pizza s povrćem', 17),
 
--- Menza PMF (ID: 18)
+-- Menza RGNF-PBF (ID: 18)
 ('Doručak', 1.4, 'Zobena kaša s borovnicama', 18),
 ('Doručak', 1.3, 'Pecivo s jogurtom', 18),
 ('Doručak', 1.0, 'Kruh s namazom od lješnjaka', 18),
@@ -491,7 +570,7 @@ INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
 ('Večera', 2.6, 'Pizza Prosciutto', 18),
 ('Večera', 2.4, 'Tuna salata s tjesteninom', 18),
 
--- Menza Muzička akademija (ID: 19)
+-- Menza SC-a NSK (ID: 19)
 ('Doručak', 1.3, 'Kiflica sa sirom', 19),
 ('Doručak', 1.2, 'Sendvič s povrćem i feta sirom', 19),
 ('Doručak', 1.0, 'Jogurt s medom', 19),
@@ -501,3 +580,81 @@ INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
 ('Večera', 2.5, 'Pizza Margherita', 19),
 ('Večera', 2.6, 'Pileći kebab', 19),
 ('Večera', 2.4, 'Tjestenina Carbonara', 19);
+
+-- Restoran Filozofski fakultet (ID: 20)
+('Doručak', 1.4, 'Omlet s povrćem', 20),
+('Doručak', 1.2, 'Palačinke s marmeladom', 20),
+('Doručak', 1.1, 'Čokolino', 20),
+('Ručak', 3.1, 'Punjene paprike s pire krumpirom', 20),
+('Ručak', 3.0, 'Pečeni losos s povrćem na pari', 20),
+('Ručak', 2.9, 'Musaka od krumpira i mljevenog mesa', 20),
+('Večera', 2.7, 'Tortilja s piletinom i povrćem', 20),
+('Večera', 2.5, 'Quiche s brokulom i sirom', 20),
+('Večera', 2.6, 'Burger s piletinom i umakom od jogurta', 20);
+
+-- Menza ZUK Borongaj (ID: 21)
+('Doručak', 1.5, 'Croissant s čokoladom', 21),
+('Doručak', 1.3, 'Kajgana s tostom', 21),
+('Doručak', 1.2, 'Voćni jogurt', 21),
+('Ručak', 3.2, 'Pohana piletina s krumpir salatom', 21),
+('Ručak', 3.1, 'Grah s kobasicom', 21),
+('Ručak', 2.9, 'Tjestenina s pestom i povrćem', 21),
+('Večera', 2.6, 'Burger s goveđim mesom', 21),
+('Večera', 2.7, 'Hot dog s umakom od senfa', 21),
+('Večera', 2.5, 'Pečena palačinka s povrćem i sirom', 21);
+
+
+--  Menza TVZ (ID:22)
+('Doručak', 1.4, 'Tost sa šunkom i sirom', 22),
+('Doručak', 1.3, 'Jogurt s müsli žitaricama', 22),
+('Doručak', 1.2, 'Medena kiflica', 22),
+('Ručak', 3.1, 'Pečena svinjetina s kroketima', 22),
+('Ručak', 3.0, 'Čevapi s lepinjom i ajvarom', 22),
+('Ručak', 2.8, 'Špageti s tunom i maslinama', 22),
+('Večera', 2.6, 'Tost pizza s povrćem', 22),
+('Večera', 2.7, 'Zapečene lazanje s tikvicama', 22),
+('Večera', 2.5, 'Krem juha od rajčice s krutonima', 22);
+
+-- Menza Cassandra (ID:23)
+('Doručak', 1.5, 'Mliječni kruh s maslacem i marmeladom', 23),
+('Doručak', 1.4, 'Omlet s gljivama', 23),
+('Doručak', 1.2, 'Banana s kikiriki maslacem', 23),
+('Ručak', 3.2, 'Bečki odrezak s rižom i povrćem', 23),
+('Ručak', 3.0, 'Pileći file u umaku od gljiva', 23),
+('Ručak', 2.9, 'Vegetarijanski burger s pečenim krumpirom', 23),
+('Večera', 2.7, 'Rižoto s morskim plodovima', 23),
+('Večera', 2.6, 'Tjestenina s umakom od rajčice i parmezanom', 23),
+('Večera', 2.5, 'Pita od špinata i sira', 23);
+
+-- Menza Cassandra BRZA (ID: 24)
+('Doručak', 1.4, 'Čokoladni muffin', 24),
+('Doručak', 1.3, 'Tost s avokadom', 24),
+('Doručak', 1.2, 'Smoothie od banane i jagode', 24),
+('Ručak', 3.3, 'Pečena riba s blitvom i krumpirom', 24),
+('Ručak', 3.1, 'Musaka od tikvica i mesa', 24),
+('Ručak', 2.9, 'Pohana puretina s pireom od batata', 24),
+('Večera', 2.8, 'Zapečeni njoki sa sirom', 24),
+('Večera', 2.7, 'Švedske mesne okruglice s pireom', 24),
+('Večera', 2.5, 'Palačinke s nutellom i šlagom', 24);
+
+-- Menza Odeon (ID: 25)
+('Doručak', 1.4, 'Pekarski sendvič s jajima', 25),
+('Doručak', 1.3, 'Jogurt s medom i orasima', 25),
+('Doručak', 1.2, 'Krafna s marmeladom', 25),
+('Ručak', 3.2, 'Janjetina s restanim krumpirom', 25),
+('Ručak', 3.0, 'Punjena paprika s pire krumpirom', 25),
+('Ručak', 2.9, 'Tjestenina s četiri vrste sira', 25),
+('Večera', 2.7, 'Pohani sir s tartar umakom', 25),
+('Večera', 2.6, 'Krumpiruša s jogurtom', 25),
+('Večera', 2.5, 'Krem juha od brokule', 25);
+
+-- Menza VEMAG (ID: 26)
+('Doručak', 1.5, 'Brioche s krem sirom i šunkom', 26),
+('Doručak', 1.3, 'Omlet s paprikom i sirom', 26),
+('Doručak', 1.2, 'Voćna salata s jogurtom', 26),
+('Ručak', 3.4, 'Svinjski kotlet s pečenim povrćem', 26),
+('Ručak', 3.2, 'Pileći paprikaš s njokima', 26),
+('Ručak', 3.0, 'Lazanje s povrćem', 26),
+('Večera', 2.8, 'Pohani oslić s krumpir salatom', 26),
+('Večera', 2.7, 'Zapečeni sendvič sa šunkom i sirom', 26),
+('Večera', 2.5, 'Pita od jabuka s cimetom', 26);
