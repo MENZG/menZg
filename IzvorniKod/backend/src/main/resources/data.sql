@@ -579,7 +579,7 @@ INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
 ('Ručak', 2.7, 'Rižoto od povrća', 19),
 ('Večera', 2.5, 'Pizza Margherita', 19),
 ('Večera', 2.6, 'Pileći kebab', 19),
-('Večera', 2.4, 'Tjestenina Carbonara', 19);
+('Večera', 2.4, 'Tjestenina Carbonara', 19),
 
 -- Restoran Filozofski fakultet (ID: 20)
 ('Doručak', 1.4, 'Omlet s povrćem', 20),
@@ -590,7 +590,7 @@ INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
 ('Ručak', 2.9, 'Musaka od krumpira i mljevenog mesa', 20),
 ('Večera', 2.7, 'Tortilja s piletinom i povrćem', 20),
 ('Večera', 2.5, 'Quiche s brokulom i sirom', 20),
-('Večera', 2.6, 'Burger s piletinom i umakom od jogurta', 20);
+('Večera', 2.6, 'Burger s piletinom i umakom od jogurta', 20),
 
 -- Menza ZUK Borongaj (ID: 21)
 ('Doručak', 1.5, 'Croissant s čokoladom', 21),
@@ -601,7 +601,7 @@ INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
 ('Ručak', 2.9, 'Tjestenina s pestom i povrćem', 21),
 ('Večera', 2.6, 'Burger s goveđim mesom', 21),
 ('Večera', 2.7, 'Hot dog s umakom od senfa', 21),
-('Večera', 2.5, 'Pečena palačinka s povrćem i sirom', 21);
+('Večera', 2.5, 'Pečena palačinka s povrćem i sirom', 21),
 
 
 --  Menza TVZ (ID:22)
@@ -613,7 +613,7 @@ INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
 ('Ručak', 2.8, 'Špageti s tunom i maslinama', 22),
 ('Večera', 2.6, 'Tost pizza s povrćem', 22),
 ('Večera', 2.7, 'Zapečene lazanje s tikvicama', 22),
-('Večera', 2.5, 'Krem juha od rajčice s krutonima', 22);
+('Večera', 2.5, 'Krem juha od rajčice s krutonima', 22),
 
 -- Menza Cassandra (ID:23)
 ('Doručak', 1.5, 'Mliječni kruh s maslacem i marmeladom', 23),
@@ -624,7 +624,7 @@ INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
 ('Ručak', 2.9, 'Vegetarijanski burger s pečenim krumpirom', 23),
 ('Večera', 2.7, 'Rižoto s morskim plodovima', 23),
 ('Večera', 2.6, 'Tjestenina s umakom od rajčice i parmezanom', 23),
-('Večera', 2.5, 'Pita od špinata i sira', 23);
+('Večera', 2.5, 'Pita od špinata i sira', 23),
 
 -- Menza Cassandra BRZA (ID: 24)
 ('Doručak', 1.4, 'Čokoladni muffin', 24),
@@ -635,7 +635,7 @@ INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
 ('Ručak', 2.9, 'Pohana puretina s pireom od batata', 24),
 ('Večera', 2.8, 'Zapečeni njoki sa sirom', 24),
 ('Večera', 2.7, 'Švedske mesne okruglice s pireom', 24),
-('Večera', 2.5, 'Palačinke s nutellom i šlagom', 24);
+('Večera', 2.5, 'Palačinke s nutellom i šlagom', 24),
 
 -- Menza Odeon (ID: 25)
 ('Doručak', 1.4, 'Pekarski sendvič s jajima', 25),
@@ -646,7 +646,7 @@ INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
 ('Ručak', 2.9, 'Tjestenina s četiri vrste sira', 25),
 ('Večera', 2.7, 'Pohani sir s tartar umakom', 25),
 ('Večera', 2.6, 'Krumpiruša s jogurtom', 25),
-('Večera', 2.5, 'Krem juha od brokule', 25);
+('Večera', 2.5, 'Krem juha od brokule', 25),
 
 -- Menza VEMAG (ID: 26)
 ('Doručak', 1.5, 'Brioche s krem sirom i šunkom', 26),
