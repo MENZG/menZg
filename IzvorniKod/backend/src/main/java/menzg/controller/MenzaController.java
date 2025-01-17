@@ -2,6 +2,7 @@ package menzg.controller;
 
 import java.util.List;
 
+import menzg.model.Ocjena;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -168,4 +169,22 @@ public class MenzaController {
 	}
 
 
+	@GetMapping("/{id}/ocjene")
+	// @PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or
+	// hasRole('ROLE_DJELATNIK')")
+	public ResponseEntity<List<Ocjena>> getOcjene(@PathVariable Long id) {
+		// Dohvaćanje menze prema ID-u
+		Menza menza = menzaService.getMenzaData(id);
+
+		if (menza == null) {
+			// Ako menza nije pronađena, vraća se status 404
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		// Dohvat jelovnika za pronađenu menzu
+		List<Ocjena> ocjene = menza.getOcjene();
+
+		// Ako jelovnik postoji, vraća se kao odgovor
+		return new ResponseEntity<>(ocjene, HttpStatus.OK);
+	}
 }

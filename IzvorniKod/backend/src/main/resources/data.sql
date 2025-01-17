@@ -65,7 +65,7 @@ VALUES
     ('Menza Cassandra', 'Ulica grada Vukovara 39, Zagreb'), --23
     ('Menza Cassandra BRZA', 'Ulica grada Vukovara 39, Zagreb'), --24
     ('Menza Odeon', 'Ulica Andrije Kačića Miošića 26, Zagreb'), --25
-    ('Menza VEMAG', 'Horvatovac 102a, Zagreb'), --26
+    ('Menza VEMAG', 'Horvatovac 102a, Zagreb'); --26
 
 INSERT INTO korisnik_menza (id_Korisnik, id_Menza) VALUES
 (1, 1), -- Nikolina omiljena menza je Menza 1

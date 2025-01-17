@@ -22,6 +22,7 @@ public class Ocjena {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "idOcjena")
 	private Long idOcjena;
 
 	@Column(name = "rating", nullable = false)

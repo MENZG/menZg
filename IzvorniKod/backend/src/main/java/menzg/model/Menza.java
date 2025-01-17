@@ -44,4 +44,7 @@ public class Menza {
 	@OneToMany(mappedBy = "menza")
 	private List<Jelo> jelovnik;
 
+	@OneToMany(mappedBy = "menza")
+	private List<Ocjena> ocjene;
+
 }
