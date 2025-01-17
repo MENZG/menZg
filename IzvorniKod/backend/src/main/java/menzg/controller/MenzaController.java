@@ -1,8 +1,12 @@
 package menzg.controller;
 
 import java.util.List;
+import java.util.Optional;
 
-import menzg.model.Ocjena;
+import menzg.model.*;
+import menzg.repo.OcjenaRepository;
+import menzg.service.KorisnikService;
+import menzg.service.OcjenaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,16 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import menzg.model.Jelo;
-import menzg.model.Menza;
-import menzg.model.RadnoVrijeme;
 import menzg.service.MenzaService;
 
 @RestController
@@ -34,6 +30,10 @@ public class MenzaController {
 
 	@Autowired
 	private MenzaService menzaService;
+	@Autowired
+	private KorisnikService korisnikService;
+	@Autowired
+	private OcjenaService ocjenaService;
 
 	// vraca sve menze
 	@GetMapping("")
@@ -186,5 +186,105 @@ public class MenzaController {
 
 		// Ako jelovnik postoji, vraća se kao odgovor
 		return new ResponseEntity<>(ocjene, HttpStatus.OK);
+	}
+
+	@GetMapping("/{id}/prosjecna-ocjena")
+	// @PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or
+	// hasRole('ROLE_DJELATNIK')")
+	public ResponseEntity<Double> getAverageRating(@PathVariable Long id) {
+		// Dohvaćanje menze prema ID-u
+		Menza menza = menzaService.getMenzaData(id);
+
+		if (menza == null) {
+			// Ako menza nije pronađena, vraća se status 404
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		// Dohvat jelovnika za pronađenu menzu
+		List<Ocjena> ocjene = menza.getOcjene();
+
+		Double averageRating =  ocjene.stream().mapToDouble(Ocjena::getRating).average().orElse(0.0);
+
+		// Ako jelovnik postoji, vraća se kao odgovor
+		return new ResponseEntity<>(averageRating, HttpStatus.OK);
+	}
+
+
+
+	//ovdje ce trebat poslat ili korisnika ili samo id korisnika !!!pitat frontendase
+	@GetMapping("/{idMenze}/{idKorisnik}/ocjene")
+	// @PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or
+	// hasRole('ROLE_DJELATNIK')")
+	public ResponseEntity<Ocjena> getOcjeneByKorisnik(@PathVariable Long idMenze, @PathVariable Long idKorisnik ) {
+		// Dohvaćanje menze prema ID-u
+		Menza menza = menzaService.getMenzaData(idMenze);
+		Optional<Korisnik> korisnik =  korisnikService.findById(idKorisnik);
+
+		if (menza == null) {
+			// Ako menza nije pronađena, vraća se status 404
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		if (!(korisnik.isPresent())) {
+			// Ako menza nije pronađena, vraća se status 404
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+
+		Ocjena ocjenaByUser = null;
+		// Dohvat jelovnika za pronađenu menzu
+		List<Ocjena> ocjene = menza.getOcjene();
+		for ( Ocjena ocjena: ocjene ) {
+			if(ocjena.getKorisnik().getIdKorisnik().equals(idKorisnik)) {
+				ocjenaByUser = ocjena;
+			}
+		}
+		//ili ovako?
+		/*Optional<Ocjena> ocjenaByUser = menza.getOcjene().stream()
+				.filter(ocjena -> ocjena.getKorisnik().getIdKorisnik().equals(idKorisnik))
+				.findFirst();
+		*/
+
+		if(ocjenaByUser == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		// Ako jelovnik postoji, vraća se kao odgovor
+		return new ResponseEntity<>(ocjenaByUser, HttpStatus.OK);
+	}
+
+
+	@PostMapping("/{idMenze}/{idKorisnik}/ocjene")
+	public ResponseEntity<String> dodajOcjenu(@PathVariable Long idMenza, @PathVariable Long idKorisnik, @RequestBody Integer rating){
+		Menza menza =  menzaService.getMenzaData(idMenza);
+		Optional<Korisnik> korisnik = korisnikService.findById(idKorisnik);
+
+		if (menza == null) {
+			// Ako menza nije pronađena, vraća se status 404
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		if (!(korisnik.isPresent())) {
+			// Ako menza nije pronađena, vraća se status 404
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		Korisnik korisnikObject = korisnik.get();
+
+
+		List<Ocjena> ocjene = menza.getOcjene();
+		for ( Ocjena ocjena: ocjene ) {
+			if(ocjena.getKorisnik().getIdKorisnik().equals(idKorisnik)) {
+				 ocjena.setRating(rating); //ako prondajemo da je korisnik ve cocjenio menzu postavljamo tj refreshamo ocjenu
+				ocjenaService.saveOcjena(ocjena);
+				return new ResponseEntity<>("Ocjena ažurirana.", HttpStatus.OK);
+			}
+		}
+		// Ako ocjena ne postoji, stvori novu
+		Ocjena novaOcjena = new Ocjena();
+		novaOcjena.setMenza(menza);
+		novaOcjena.setKorisnik(korisnikObject);
+		novaOcjena.setRating(rating);
+
+		ocjenaService.saveOcjena(novaOcjena); // Spremanje nove ocjene
+
+		return new ResponseEntity<>("Ocjena dodana.", HttpStatus.CREATED);
 	}
 }
