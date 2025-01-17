@@ -305,9 +305,9 @@ INSERT INTO radno_vrijeme (dan, pocetak, kraj, id_Menza)
 VALUES
     ('Ponedjeljak', '10:30:00', '16:00:00', 21),
     ('Utorak', '10:30:00', '16:00:00', 21),
-    ('Srijeda', '1O:30:00', '16:00:00', 21),
+    ('Srijeda', '10:30:00', '16:00:00', 21),
     ('Četvrtak', '10:30:00', '16:00:00', 21),
-    ('Petak', '1O:30:00', '15:00:00', 21),
+    ('Petak', '10:30:00', '15:00:00', 21),
     ('Subota', NULL, NULL, 21),
     ('Nedjelja', NULL, NULL, 21);
 
