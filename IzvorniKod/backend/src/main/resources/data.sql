@@ -525,7 +525,6 @@ INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
 ('Večera', 2.4, 'Salata od tune s tjesteninom', 14);
 
 -- Menza Savska LINIJA DESNO (ID: 15)
-INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
 ('Doručak', 1.4, 'Zobena kaša s bademima', 15),
 ('Doručak', 1.2, 'Sendvič s pečenicom', 15),
 ('Doručak', 1.0, 'Kruh s medom', 15),
@@ -545,10 +544,9 @@ INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
 ('Ručak', 2.7, 'Povrtni curry s rižom', 16),
 ('Večera', 2.5, 'Pizza Capricciosa', 16),
 ('Večera', 2.6, 'Burger s cheddar sirom', 16),
-('Večera', 2.4, 'Zapečena tjestenina', 16);
+('Večera', 2.4, 'Zapečena tjestenina', 16),
 
 -- Menza TTF (ID: 17)
-INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
 ('Doručak', 1.5, 'Omlet sa sirom i šunkom', 17),
 ('Doručak', 1.2, 'Kroasan s maslacem', 17),
 ('Doručak', 1.0, 'Kiflica s marmeladom', 17),
@@ -602,7 +600,6 @@ INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
 ('Večera', 2.6, 'Burger s goveđim mesom', 21),
 ('Večera', 2.7, 'Hot dog s umakom od senfa', 21),
 ('Večera', 2.5, 'Pečena palačinka s povrćem i sirom', 21),
-
 
 --  Menza TVZ (ID:22)
 ('Doručak', 1.4, 'Tost sa šunkom i sirom', 22),
