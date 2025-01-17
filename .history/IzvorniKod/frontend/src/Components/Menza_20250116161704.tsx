@@ -15,7 +15,7 @@ import { MdLocationOn } from "react-icons/md";
 import { TbUserHeart } from "react-icons/tb";
 import { IoChatbubbleOutline, IoFastFoodOutline } from "react-icons/io5";
 import { PiArmchair } from "react-icons/pi";
-import { FaRegStar } from "react-icons/fa";
+import { FaRegStar, FaStar } from "react-icons/fa";
 
 const initialRestaurantData = {
   idMenza: "1",
@@ -229,7 +229,9 @@ function Menza() {
   return (
     <>
       <NavBar />
-      <div className={`container ${showRatingForm ? "blurred" : ""}`}>
+      <div
+        className={`container ${showRatingForm || isChatOpen ? "blurred" : ""}`}
+      >
         <Card className="menza-card">
           <Card.Img
             variant="top"
@@ -352,7 +354,7 @@ function Menza() {
           </div>
         </div>
       </div>
-      <button className="chat-icon-btn" onClick={() => setIsChatOpen(true)}>
+      <button className="open-chat-btn" onClick={() => setIsChatOpen(true)}>
         <IoChatbubbleOutline />
       </button>
       {isChatOpen && (
@@ -362,95 +364,42 @@ function Menza() {
             className="close-chat-btn"
             onClick={() => setIsChatOpen(false)}
           >
-            Close
+            Zatvori
           </button>
         </div>
       )}
 
       {showRatingForm && (
-        <div className="chat-popup rate">
-          <h3>Ocijenite menzu</h3>
-          <form>
-            <div className="rating-category">
-              <label>
-                <IoFastFoodOutline className="ocjena-ikona" /> Hrana
-              </label>
-              <div className="stars">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <input
-                    key={`Hrana-${star}`}
-                    type="radio"
-                    name="Hrana"
-                    value={star}
-                    id={`Hrana-${star}`}
-                  />
-                ))}
-                {[1, 2, 3, 4, 5].map(() => (
-                  <FaRegStar className="star" />
-                ))}
-              </div>
-            </div>
-            <div className="rating-category">
-              <label>
-                <TbUserHeart className="ocjena-ikona" /> Ljubaznost
-              </label>
-              <div className="stars">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <input
-                    key={`Ljubaznost-${star}`}
-                    type="radio"
-                    name="Ljubaznost"
-                    value={star}
-                    id={`Ljubaznost-${star}`}
-                  />
-                ))}
-                {[1, 2, 3, 4, 5].map(() => (
-                  <FaRegStar className="star" />
-                ))}
-              </div>
-            </div>
-            <div className="rating-category">
-              <label>
-                <PiArmchair className="ocjena-ikona" /> Ambijent
-              </label>
-              <div className="stars">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <input
-                    key={`Ambijent-${star}`}
-                    type="radio"
-                    name="Ambijent"
-                    value={star}
-                    id={`Ambijent-${star}`}
-                  />
-                ))}
-                {[1, 2, 3, 4, 5].map(() => (
-                  <FaRegStar className="star" />
-                ))}
-              </div>
-            </div>
-            <div className="rating-category">
-              <label>
-                <MdLocationOn className="ocjena-ikona" /> Lokacija
-              </label>
-              <div className="stars">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <input
-                    key={`Lokacija-${star}`}
-                    type="radio"
-                    name="Lokacija"
-                    value={star}
-                    id={`Lokacija-${star}`}
-                  />
-                ))}
-                {[1, 2, 3, 4, 5].map(() => (
-                  <FaRegStar className="star" />
-                ))}
-              </div>
-            </div>
-          </form>
-          <button onClick={closeRatingForm} className="close-chat-btn">
-            Zatvori
-          </button>
+        <div className="chat-popup">
+          <div className="popup-form">
+            <h3>Ocijenite menzu</h3>
+            <form>
+              {["Hrana", "Ljubaznost", "Ambijent", "Lokacija"].map(
+                (category) => (
+                  <div key={category} className="rating-category">
+                    <label>{category}:</label>
+                    <div className="stars">
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <input
+                          key={star}
+                          type="radio"
+                          name={category}
+                          value={star}
+                          id={`${category}-${star}`}
+                        />
+                      ))}
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <FaRegStar className="star" />
+                      ))}
+                    </div>
+                  </div>
+                )
+              )}
+            </form>
+            <button onClick={closeRatingForm} className="close-chat-btn">
+              Zatvori
+            </button>
+          </div>
         </div>
       )}
     </>

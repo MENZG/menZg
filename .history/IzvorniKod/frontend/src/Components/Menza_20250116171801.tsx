@@ -373,7 +373,7 @@ function Menza() {
           <form>
             <div className="rating-category">
               <label>
-                <IoFastFoodOutline className="ocjena-ikona" /> Hrana
+                <IoFastFoodOutline className="ocjena-ikona" /> Hrana:
               </label>
               <div className="stars">
                 {[1, 2, 3, 4, 5].map((star) => (
@@ -392,7 +392,7 @@ function Menza() {
             </div>
             <div className="rating-category">
               <label>
-                <TbUserHeart className="ocjena-ikona" /> Ljubaznost
+                <TbUserHeart className="ocjena-ikona" /> Ljubaznost:
               </label>
               <div className="stars">
                 {[1, 2, 3, 4, 5].map((star) => (
@@ -411,7 +411,7 @@ function Menza() {
             </div>
             <div className="rating-category">
               <label>
-                <PiArmchair className="ocjena-ikona" /> Ambijent
+                <PiArmchair className="ocjena-ikona" /> Ambijent:
               </label>
               <div className="stars">
                 {[1, 2, 3, 4, 5].map((star) => (
@@ -430,7 +430,7 @@ function Menza() {
             </div>
             <div className="rating-category">
               <label>
-                <MdLocationOn className="ocjena-ikona" /> Lokacija
+                <MdLocationOn className="ocjena-ikona" /> Lokacija:
               </label>
               <div className="stars">
                 {[1, 2, 3, 4, 5].map((star) => (

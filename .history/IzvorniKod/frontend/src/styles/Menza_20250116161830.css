@@ -102,35 +102,19 @@ body {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-.rate{
-  box-shadow: none;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
 .chat-icon-btn {
-  background-color: #0098b3; /* Teal color */
+  position: fixed;
   bottom: 20px;
   right: 20px;
-  position: fixed;
+  background-color: #0098b3;
+  color: #fff;
   border: none;
-  border-radius: 50%; /* Makes the button circular */
-  width: 60px; /* Adjust size as needed */
-  height: 60px; /* Adjust size as needed */
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  border-radius: 50px;
   cursor: pointer;
-  color: white;
-  font-size: 28px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Optional shadow for emphasis */
 }
 
-.chat-icon-btn:hover {
-  transform: scale(1.1); /* Slight zoom effect on hover */
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+.open-chat-btn:hover {
+  background-color: #00758a;
 }
 
 /* Close chat button */
@@ -215,13 +199,8 @@ body {
 }
 
 .rating-category {
-  margin-bottom: 10px;
-  margin-top: 10px;
+  margin-bottom: 20px;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  font-size: 20px;
 }
 
 .stars {
@@ -238,6 +217,21 @@ body {
   cursor: pointer;
 }
 
-.star{
-  color: rgb(255, 204, 0);
+.stars input[type="radio"]:checked ~ label,
+.stars input[type="radio"]:checked + label {
+  color: gold;
+}
+
+.close-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  background-color: #0056b3;
 }

@@ -1,4 +1,3 @@
-// Add this state and handler to Menza component
 import { faPaintBrush } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
@@ -13,9 +12,8 @@ import YouTubeLiveStream from "./YouTubeLiveStream";
 import KameraIkona from "./KameraIkona";
 import { MdLocationOn } from "react-icons/md";
 import { TbUserHeart } from "react-icons/tb";
-import { IoChatbubbleOutline, IoFastFoodOutline } from "react-icons/io5";
+import { IoFastFoodOutline } from "react-icons/io5";
 import { PiArmchair } from "react-icons/pi";
-import { FaRegStar } from "react-icons/fa";
 
 const initialRestaurantData = {
   idMenza: "1",
@@ -72,18 +70,9 @@ function Menza() {
   const [editModeIndex, setEditModeIndex] = useState<number | null>(null);
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [muxError, setMuxError] = useState(false);
-  const [showRatingForm, setShowRatingForm] = useState(false);
 
   const handleMuxError = () => {
     setMuxError(true);
-  };
-
-  const handleOcjeniMenzu = () => {
-    setShowRatingForm(true);
-  };
-
-  const closeRatingForm = () => {
-    setShowRatingForm(false);
   };
 
   useEffect(() => {
@@ -229,7 +218,7 @@ function Menza() {
   return (
     <>
       <NavBar />
-      <div className={`container ${showRatingForm ? "blurred" : ""}`}>
+      <div className={`container ${isChatOpen ? "blurred" : ""}`}>
         <Card className="menza-card">
           <Card.Img
             variant="top"
@@ -241,6 +230,11 @@ function Menza() {
             <Card.Header className="header">
               <Card.Title>{restaurantData.imeMenze}</Card.Title>
               <div className="location">
+                {/*<img
+                  src="/locationPin2.png"
+                  alt="location pin"
+                  className="location-pin-img"
+                />*/}
                 <MdLocationOn className="location-pin-img" />
 
                 <Card.Text>
@@ -248,27 +242,18 @@ function Menza() {
                 </Card.Text>
               </div>
               <div className="ocjene">
-                <div className="ocjena hrana">
-                  <IoFastFoodOutline className="ocjena-ikona" />
-                  <p className="ocjena-broj">4.73</p>
+                <div className="ocjena-hrana">
+                  <IoFastFoodOutline />
                 </div>
-                <div className="ocjena ljubaznost">
-                  <TbUserHeart className="ocjena-ikona" />
-                  <p className="ocjena-broj">4.73</p>
+                <div className="ocjena-ljubaznost">
+                  <TbUserHeart />
                 </div>
-                <div className="ocjena ambijent">
-                  <PiArmchair className="ocjena-ikona" />
-                  <p className="ocjena-broj">4.73</p>
+                <div className="ocjena-ambijent">
+                  <PiArmchair />
                 </div>
-                <div className="ocjena lokacija">
-                  <MdLocationOn className="ocjena-ikona"></MdLocationOn>
-                  <p className="ocjena-broj">4.73</p>
+                <div className="ocjena-lokacija">
+                  <MdLocationOn></MdLocationOn>
                 </div>
-              </div>
-              <div className="ocjeni-btn-div">
-                <button onClick={handleOcjeniMenzu} className="ocjeni-btn">
-                  Ocjeni menzu
-                </button>
               </div>
             </Card.Header>
 
@@ -288,8 +273,8 @@ function Menza() {
                             handleTimeChange(index, "pocetak", e.target.value)
                           }
                           placeholder="Početak"
-                        />{" "}
-                        -{" "}
+                        />
+                        {" - "}
                         <Form.Control
                           type="text"
                           value={time.kraj || ""}
@@ -352,8 +337,8 @@ function Menza() {
           </div>
         </div>
       </div>
-      <button className="chat-icon-btn" onClick={() => setIsChatOpen(true)}>
-        <IoChatbubbleOutline />
+      <button className="open-chat-btn" onClick={() => setIsChatOpen(true)}>
+        Open Chat
       </button>
       {isChatOpen && (
         <div className="chat-popup">
@@ -363,93 +348,6 @@ function Menza() {
             onClick={() => setIsChatOpen(false)}
           >
             Close
-          </button>
-        </div>
-      )}
-
-      {showRatingForm && (
-        <div className="chat-popup rate">
-          <h3>Ocijenite menzu</h3>
-          <form>
-            <div className="rating-category">
-              <label>
-                <IoFastFoodOutline className="ocjena-ikona" /> Hrana
-              </label>
-              <div className="stars">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <input
-                    key={`Hrana-${star}`}
-                    type="radio"
-                    name="Hrana"
-                    value={star}
-                    id={`Hrana-${star}`}
-                  />
-                ))}
-                {[1, 2, 3, 4, 5].map(() => (
-                  <FaRegStar className="star" />
-                ))}
-              </div>
-            </div>
-            <div className="rating-category">
-              <label>
-                <TbUserHeart className="ocjena-ikona" /> Ljubaznost
-              </label>
-              <div className="stars">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <input
-                    key={`Ljubaznost-${star}`}
-                    type="radio"
-                    name="Ljubaznost"
-                    value={star}
-                    id={`Ljubaznost-${star}`}
-                  />
-                ))}
-                {[1, 2, 3, 4, 5].map(() => (
-                  <FaRegStar className="star" />
-                ))}
-              </div>
-            </div>
-            <div className="rating-category">
-              <label>
-                <PiArmchair className="ocjena-ikona" /> Ambijent
-              </label>
-              <div className="stars">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <input
-                    key={`Ambijent-${star}`}
-                    type="radio"
-                    name="Ambijent"
-                    value={star}
-                    id={`Ambijent-${star}`}
-                  />
-                ))}
-                {[1, 2, 3, 4, 5].map(() => (
-                  <FaRegStar className="star" />
-                ))}
-              </div>
-            </div>
-            <div className="rating-category">
-              <label>
-                <MdLocationOn className="ocjena-ikona" /> Lokacija
-              </label>
-              <div className="stars">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <input
-                    key={`Lokacija-${star}`}
-                    type="radio"
-                    name="Lokacija"
-                    value={star}
-                    id={`Lokacija-${star}`}
-                  />
-                ))}
-                {[1, 2, 3, 4, 5].map(() => (
-                  <FaRegStar className="star" />
-                ))}
-              </div>
-            </div>
-          </form>
-          <button onClick={closeRatingForm} className="close-chat-btn">
-            Zatvori
           </button>
         </div>
       )}
