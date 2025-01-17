@@ -37,7 +37,6 @@ INSERT INTO radno_vrijeme (dan, pocetak, kraj) VALUES
 ('subota', '17:00:00', '21:00:00'),
 ('nedjelja', NULL, NULL); -- Nedjelja zatvoreno
 
-
 INSERT INTO menza (ime_Menze, lokacija)
 VALUES
     ('Menza Lašćina', 'Laščinska cesta 32, Zagreb'), --1
@@ -432,7 +431,7 @@ INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
 ('Ručak', 2.6, 'Grah s kobasicom', 6),
 ('Večera', 2.3, 'Pizza Capricciosa', 6),
 ('Večera', 2.7, 'Riblji file s povrćem', 6),
-('Večera', 2.1, 'Pohana riba s tartarom', 6);
+('Večera', 2.1, 'Pohana riba s tartarom', 6),
 
 -- Menza Ekonomija (ID: 7)
 ('Doručak', 1.3, 'Jaja na oko s kobasicom', 7),
