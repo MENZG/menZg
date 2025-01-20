@@ -1,8 +1,10 @@
 package menzg.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import menzg.DTO.OcjenaDTO;
 import menzg.model.*;
 import menzg.repo.OcjenaRepository;
 import menzg.service.KorisnikService;
@@ -191,7 +193,7 @@ public class MenzaController {
 	@GetMapping("/{id}/prosjecna-ocjena")
 	// @PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or
 	// hasRole('ROLE_DJELATNIK')")
-	public ResponseEntity<Double> getAverageRating(@PathVariable Long id) {
+	public ResponseEntity<List<Double>> getAverageRating(@PathVariable Long id) {
 		// Dohvaćanje menze prema ID-u
 		Menza menza = menzaService.getMenzaData(id);
 
@@ -200,11 +202,18 @@ public class MenzaController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 
-		// Dohvat jelovnika za pronađenu menzu
+		// Dohvat ocjena za pronađenu menzu
 		List<Ocjena> ocjene = menza.getOcjene();
+		List<Double> averageRating = new ArrayList<>();
 
-		Double averageRating =  ocjene.stream().mapToDouble(Ocjena::getRating).average().orElse(0.0);
-
+		Double averageHranaRating =  ocjene.stream().mapToDouble(Ocjena::getHranaRating).average().orElse(0.0);
+		Double averageLokacijaRating =  ocjene.stream().mapToDouble(Ocjena::getLokacijaRating).average().orElse(0.0);
+		Double averageLjubaznostRating =  ocjene.stream().mapToDouble(Ocjena::getLjubaznostRating).average().orElse(0.0);
+		Double averageAmbijentRating =  ocjene.stream().mapToDouble(Ocjena::getAmbijentRating).average().orElse(0.0);
+		averageRating.add(averageHranaRating);
+		averageRating.add(averageLjubaznostRating);
+		averageRating.add(averageAmbijentRating);
+		averageRating.add(averageLokacijaRating);
 		// Ako jelovnik postoji, vraća se kao odgovor
 		return new ResponseEntity<>(averageRating, HttpStatus.OK);
 	}
@@ -254,7 +263,7 @@ public class MenzaController {
 
 
 	@PostMapping("/{idMenze}/{idKorisnik}/ocjene")
-	public ResponseEntity<String> dodajOcjenu(@PathVariable Long idMenza, @PathVariable Long idKorisnik, @RequestBody Integer rating){
+	public ResponseEntity<String> dodajOcjenu(@PathVariable Long idMenza, @PathVariable Long idKorisnik, @RequestBody OcjenaDTO ocjenaRequest){
 		Menza menza =  menzaService.getMenzaData(idMenza);
 		Optional<Korisnik> korisnik = korisnikService.findById(idKorisnik);
 
@@ -272,7 +281,13 @@ public class MenzaController {
 		List<Ocjena> ocjene = menza.getOcjene();
 		for ( Ocjena ocjena: ocjene ) {
 			if(ocjena.getKorisnik().getIdKorisnik().equals(idKorisnik)) {
-				 ocjena.setRating(rating); //ako prondajemo da je korisnik ve cocjenio menzu postavljamo tj refreshamo ocjenu
+
+				//ocjena.setRating(rating); //ako prondajemo da je korisnik ve cocjenio menzu postavljamo tj refreshamo ocjenu
+				ocjena.setHranaRating(ocjenaRequest.getHranaRating());
+				ocjena.setLjubaznostRating(ocjenaRequest.getLjubaznostRating());
+				ocjena.setAmbijentRating(ocjenaRequest.getAmbijentRating());
+				ocjena.setLokacijaRating(ocjenaRequest.getLokacijaRating());
+
 				ocjenaService.saveOcjena(ocjena);
 				return new ResponseEntity<>("Ocjena ažurirana.", HttpStatus.OK);
 			}
@@ -281,7 +296,12 @@ public class MenzaController {
 		Ocjena novaOcjena = new Ocjena();
 		novaOcjena.setMenza(menza);
 		novaOcjena.setKorisnik(korisnikObject);
-		novaOcjena.setRating(rating);
+		//novaOcjena.setRating(rating);
+		novaOcjena.setHranaRating(ocjenaRequest.getHranaRating());
+		novaOcjena.setLjubaznostRating(ocjenaRequest.getLjubaznostRating());
+		novaOcjena.setAmbijentRating(ocjenaRequest.getAmbijentRating());
+		novaOcjena.setLokacijaRating(ocjenaRequest.getLokacijaRating());
+
 
 		ocjenaService.saveOcjena(novaOcjena); // Spremanje nove ocjene
 

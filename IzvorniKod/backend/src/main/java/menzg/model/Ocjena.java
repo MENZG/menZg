@@ -25,8 +25,14 @@ public class Ocjena {
 	@Column(name = "idOcjena")
 	private Long idOcjena;
 
-	@Column(name = "rating", nullable = false)
-	private int rating;
+	@Column(name = "hranaRating", nullable = false)
+	private int hranaRating;
+	@Column(name = "ljubaznostRating", nullable = false)
+	private int ljubaznostRating;
+	@Column(name = "ambijentRating", nullable = false)
+	private int ambijentRating;
+	@Column(name = "lokacijaRating", nullable = false)
+	private int lokacijaRating;
 
 	@Column(name = "kategorija", nullable = false)
 	private String kategorija; // Kategorija ocjene (npr. "hrana", "usluga" itd.)
