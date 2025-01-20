@@ -156,7 +156,7 @@ public class KorisnikController {
 	}
 
 	@DeleteMapping("/{id}")
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	// @PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<String> deleteKorisnik(@PathVariable Long id) {
 		if (korisnikService.findById(id).isPresent()) {
 			korisnikService.deleteById(id);
@@ -168,7 +168,8 @@ public class KorisnikController {
 
 	// GET: Dohvaća korisnika po mailu
 	@GetMapping("/username/{username}")
-	@PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
+	// @PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or
+	// hasRole('ROLE_DJELATNIK')")
 	public ResponseEntity<Korisnik> getKorisnikByUsername(@PathVariable String username) {
 		Optional<Korisnik> korisnik = korisnikService.findByUsername(username);
 		if (korisnik.isPresent()) {
