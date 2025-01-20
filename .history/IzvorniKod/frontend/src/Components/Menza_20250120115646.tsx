@@ -84,7 +84,7 @@ function Menza() {
     const fetchOcjene = async () => {
       try {
         const response = await axios.get(
-          `${apiUrl}/menza/${restaurantData.idMenza}/prosjecna-ocjena`
+          `${apiUrl}/menza/${restaurantData.idMenza}/ocjene`
         );
         setOcjene(response.data);
         console.log("Here", response.data);

@@ -83,9 +83,7 @@ function Menza() {
   useEffect(() => {
     const fetchOcjene = async () => {
       try {
-        const response = await axios.get(
-          `${apiUrl}/menza/${restaurantData.idMenza}/prosjecna-ocjena`
-        );
+        const response = await axios.get(`${apiUrl}/menza/${id}/ocjene`);
         setOcjene(response.data);
         console.log("Here", response.data);
       } catch (error) {

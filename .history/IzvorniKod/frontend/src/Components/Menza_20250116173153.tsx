@@ -73,28 +73,6 @@ function Menza() {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [muxError, setMuxError] = useState(false);
   const [showRatingForm, setShowRatingForm] = useState(false);
-  const [ocjene, setOcjene] = useState<{
-    hrana: number;
-    ljubaznost: number;
-    ambijent: number;
-    lokacija: number;
-  } | null>(null);
-
-  useEffect(() => {
-    const fetchOcjene = async () => {
-      try {
-        const response = await axios.get(
-          `${apiUrl}/menza/${restaurantData.idMenza}/prosjecna-ocjena`
-        );
-        setOcjene(response.data);
-        console.log("Here", response.data);
-      } catch (error) {
-        console.error("Error fetching ocjene data:", error);
-      }
-    };
-
-    fetchOcjene();
-  }, [id]);
 
   const handleMuxError = () => {
     setMuxError(true);
@@ -274,33 +252,24 @@ function Menza() {
               <div className="ocjene">
                 <div className="ocjena hrana">
                   <IoFastFoodOutline className="ocjena-ikona" />
-                  <p className="ocjena-broj">
-                    {ocjene?.hrana?.toFixed(2) || "N/A"}
-                  </p>
+                  <p className="ocjena-broj">4.73</p>
                 </div>
                 <div className="ocjena ljubaznost">
                   <TbUserHeart className="ocjena-ikona" />
-                  <p className="ocjena-broj">
-                    {ocjene?.ljubaznost?.toFixed(2) || "N/A"}
-                  </p>
+                  <p className="ocjena-broj">4.73</p>
                 </div>
                 <div className="ocjena ambijent">
                   <PiArmchair className="ocjena-ikona" />
-                  <p className="ocjena-broj">
-                    {ocjene?.ambijent?.toFixed(2) || "N/A"}
-                  </p>
+                  <p className="ocjena-broj">4.73</p>
                 </div>
                 <div className="ocjena lokacija">
-                  <MdLocationOn className="ocjena-ikona" />
-                  <p className="ocjena-broj">
-                    {ocjene?.lokacija?.toFixed(2) || "N/A"}
-                  </p>
+                  <MdLocationOn className="ocjena-ikona"></MdLocationOn>
+                  <p className="ocjena-broj">4.73</p>
                 </div>
               </div>
-
               <div className="ocjeni-btn-div">
                 <button onClick={handleOcjeniMenzu} className="ocjeni-btn">
-                  Ocijeni menzu
+                  Ocjeni menzu
                 </button>
               </div>
             </Card.Header>
@@ -395,7 +364,7 @@ function Menza() {
             className="close-chat-btn"
             onClick={() => setIsChatOpen(false)}
           >
-            Zatvori
+            Close
           </button>
         </div>
       )}

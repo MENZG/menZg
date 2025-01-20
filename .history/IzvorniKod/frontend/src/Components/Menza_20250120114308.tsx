@@ -83,12 +83,9 @@ function Menza() {
   useEffect(() => {
     const fetchOcjene = async () => {
       try {
-        const response = await axios.get(
-          `${apiUrl}/menza/${restaurantData.idMenza}/prosjecna-ocjena`
-        );
-        setOcjene(response.data);
-        console.log("Here", response.data);
-      } catch (error) {
+        const response = await axios.get(`${apiUrl}/menza/${id}/ocjene`);
+        setOcjene(response.data); 
+        console.log(response.data); 
         console.error("Error fetching ocjene data:", error);
       }
     };
@@ -274,30 +271,21 @@ function Menza() {
               <div className="ocjene">
                 <div className="ocjena hrana">
                   <IoFastFoodOutline className="ocjena-ikona" />
-                  <p className="ocjena-broj">
-                    {ocjene?.hrana?.toFixed(2) || "N/A"}
-                  </p>
+                  <p className="ocjena-broj">4.73</p>
                 </div>
                 <div className="ocjena ljubaznost">
                   <TbUserHeart className="ocjena-ikona" />
-                  <p className="ocjena-broj">
-                    {ocjene?.ljubaznost?.toFixed(2) || "N/A"}
-                  </p>
+                  <p className="ocjena-broj">4.73</p>
                 </div>
                 <div className="ocjena ambijent">
                   <PiArmchair className="ocjena-ikona" />
-                  <p className="ocjena-broj">
-                    {ocjene?.ambijent?.toFixed(2) || "N/A"}
-                  </p>
+                  <p className="ocjena-broj">4.73</p>
                 </div>
                 <div className="ocjena lokacija">
-                  <MdLocationOn className="ocjena-ikona" />
-                  <p className="ocjena-broj">
-                    {ocjene?.lokacija?.toFixed(2) || "N/A"}
-                  </p>
+                  <MdLocationOn className="ocjena-ikona"></MdLocationOn>
+                  <p className="ocjena-broj">4.73</p>
                 </div>
               </div>
-
               <div className="ocjeni-btn-div">
                 <button onClick={handleOcjeniMenzu} className="ocjeni-btn">
                   Ocijeni menzu
