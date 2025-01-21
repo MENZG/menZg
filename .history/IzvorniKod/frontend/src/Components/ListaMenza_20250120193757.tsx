@@ -6,6 +6,8 @@ import { KorisnikFull, Menza, UlogiraniKorisnik } from "../types.ts";
 import NavBar from "./NavBar";
 import "/src/styles/ListaMenza.css";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
+import KameraIkona from "./KameraIkona.tsx";
+import Chat from "./Chat.tsx";
 
 axios.defaults.withCredentials = true;
 
@@ -46,7 +48,7 @@ const ListaMenza = () => {
     // Call streamStart every 60 seconds
     const interval = setInterval(() => {
       streamStart();
-    }, 5000);
+    }, 60000);
 
     // Clear the interval on component unmount
     return () => {
@@ -221,6 +223,9 @@ const ListaMenza = () => {
                         {formatTime(rv.kraj)}
                       </div>
                     ))}
+                </div>
+                <div className="camera-icon">
+                  <KameraIkona></KameraIkona>
                 </div>
               </div>
             </div>

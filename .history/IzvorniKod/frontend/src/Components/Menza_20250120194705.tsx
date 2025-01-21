@@ -10,6 +10,7 @@ import Chat from "./Chat";
 import NavBar from "./NavBar";
 import MuxPlayer from "@mux/mux-player-react";
 import YouTubeLiveStream from "./YouTubeLiveStream";
+import KameraIkona from "./KameraIkona";
 import { MdLocationOn } from "react-icons/md";
 import { TbUserHeart } from "react-icons/tb";
 import { IoChatbubbleOutline, IoFastFoodOutline } from "react-icons/io5";
@@ -357,6 +358,9 @@ function Menza() {
                   </ListGroup.Item>
                 ))}
               </ListGroup>
+            </div>
+            <div className="camera-icon">
+              <KameraIkona></KameraIkona>
             </div>
           </Card.Body>
         </Card>

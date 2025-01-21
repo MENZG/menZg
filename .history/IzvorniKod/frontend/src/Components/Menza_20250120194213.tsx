@@ -10,6 +10,7 @@ import Chat from "./Chat";
 import NavBar from "./NavBar";
 import MuxPlayer from "@mux/mux-player-react";
 import YouTubeLiveStream from "./YouTubeLiveStream";
+import KameraIkona from "./KameraIkona";
 import { MdLocationOn } from "react-icons/md";
 import { TbUserHeart } from "react-icons/tb";
 import { IoChatbubbleOutline, IoFastFoodOutline } from "react-icons/io5";
@@ -247,6 +248,27 @@ function Menza() {
     }
   };
 
+  useEffect(() => {
+    const streamStart = async () => {
+      try {
+        const streamStartResponse = await axios.post(`${apiUrl}/start/stream`);
+        console.log("Stream started successfully", streamStartResponse);
+      } catch (error) {
+        console.error("Error starting stream:", error);
+      }
+    };
+
+    // Call streamStart every 60 seconds
+    const interval = setInterval(() => {
+      streamStart();
+    }, 5000);
+
+    // Clear the interval on component unmount
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
   return (
     <>
       <NavBar />
@@ -357,6 +379,9 @@ function Menza() {
                   </ListGroup.Item>
                 ))}
               </ListGroup>
+            </div>
+            <div className="camera-icon">
+              <KameraIkona></KameraIkona>
             </div>
           </Card.Body>
         </Card>

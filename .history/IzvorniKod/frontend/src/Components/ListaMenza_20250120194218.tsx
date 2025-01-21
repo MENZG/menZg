@@ -6,6 +6,8 @@ import { KorisnikFull, Menza, UlogiraniKorisnik } from "../types.ts";
 import NavBar from "./NavBar";
 import "/src/styles/ListaMenza.css";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
+import KameraIkona from "./KameraIkona.tsx";
+import Chat from "./Chat.tsx";
 
 axios.defaults.withCredentials = true;
 
@@ -32,27 +34,6 @@ const ListaMenza = () => {
   const [error, setError] = useState<string | null>(null);
   const [korisnik, setKorisnik] = useState<UlogiraniKorisnik | null>(null);
   const [korisnikFull, setKorisnikFull] = useState<KorisnikFull | null>(null);
-
-  useEffect(() => {
-    const streamStart = async () => {
-      try {
-        const streamStartResponse = await axios.post(`${apiUrl}/start/stream`);
-        console.log("Stream started successfully", streamStartResponse);
-      } catch (error) {
-        console.error("Error starting stream:", error);
-      }
-    };
-
-    // Call streamStart every 60 seconds
-    const interval = setInterval(() => {
-      streamStart();
-    }, 5000);
-
-    // Clear the interval on component unmount
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
 
   // Fetch all "menze"
   useEffect(() => {
@@ -221,6 +202,9 @@ const ListaMenza = () => {
                         {formatTime(rv.kraj)}
                       </div>
                     ))}
+                </div>
+                <div className="camera-icon">
+                  <KameraIkona></KameraIkona>
                 </div>
               </div>
             </div>

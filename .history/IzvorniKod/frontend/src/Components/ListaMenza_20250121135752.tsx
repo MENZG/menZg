@@ -6,6 +6,7 @@ import { KorisnikFull, Menza, UlogiraniKorisnik } from "../types.ts";
 import NavBar from "./NavBar";
 import "/src/styles/ListaMenza.css";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
+import KameraIkona from "./KameraIkona.tsx";
 
 axios.defaults.withCredentials = true;
 
