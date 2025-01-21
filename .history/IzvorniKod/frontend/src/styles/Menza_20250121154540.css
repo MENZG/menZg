@@ -157,7 +157,7 @@ body {
   align-items: center;
 }
 
-@media (max-width: 426px) {
+@media (max-width: 425px) {
   .ocjene {
     flex-direction: column;
   }

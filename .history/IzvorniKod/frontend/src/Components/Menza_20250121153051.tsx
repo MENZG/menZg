@@ -87,8 +87,7 @@ function Menza() {
         const response = await axios.get(
           `${apiUrl}/menza/${restaurantData.idMenza}/prosjecna-ocjena`
         );
-        const [hrana, ljubaznost, ambijent, lokacija] = response.data; // Destructure the array
-        setOcjene({ hrana, ljubaznost, ambijent, lokacija });
+        setOcjene(response.data);
         console.log("Here", response.data);
       } catch (error) {
         console.error("Error fetching ocjene data:", error);
@@ -97,8 +96,6 @@ function Menza() {
 
     fetchOcjene();
   }, [id]);
-
-  console.log("hrana", ocjene?.hrana);
 
   const handleMuxError = () => {
     setMuxError(true);
@@ -150,6 +147,12 @@ function Menza() {
 
   useEffect(() => {
     const fetchRestaurantData = async () => {
+      try {
+        const streamStartResponse = axios.post(`${apiUrl}/stream/start`);
+        console.log("Stream started successfully", streamStartResponse);
+      } catch (error) {
+        console.error("Error starting stream:", error);
+      }
       try {
         const response = await axios.get(`${apiUrl}/menza/${id}`);
 
