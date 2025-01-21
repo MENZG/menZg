@@ -1,7 +1,7 @@
   .card-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr); /* Maksimalno 3 stupca */
-    gap: 1rem;
+    gap: 20px;
     padding: 1rem;
     justify-items: center;
     justify-content: center;
@@ -113,12 +113,3 @@
 .error-message{
   color: white;
 }
-
-body {
-  display: flex;
-  justify-content: center; /* Centers horizontally */
-  align-items: center; /* Centers vertically */
-  min-height: 100vh; /* Ensures the body takes the full height of the viewport */
-  margin: 0; /* Removes default margin */
-}
-

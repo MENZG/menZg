@@ -98,6 +98,8 @@ function Menza() {
     fetchOcjene();
   }, [id]);
 
+  console.log("hrana", ocjene?.hrana);
+
   const handleMuxError = () => {
     setMuxError(true);
   };

@@ -114,6 +114,15 @@
   color: white;
 }
 
+.dodaj-djelatnika-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers the children horizontally */
+  justify-content: center; /* Centers the children vertically, if needed */
+  text-align: center; 
+  padding-top: 24vh;
+}
+
 body {
   display: flex;
   justify-content: center; /* Centers horizontally */

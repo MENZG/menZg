@@ -1,0 +1,110 @@
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Max 3 columns */
+  gap: 20px;
+  padding: 1rem;
+  justify-items: center;
+  align-items: start;
+  margin-top: 20vh;
+  max-width: 75vw; /* Keeps container width manageable */
+  margin-left: auto;
+  margin-right: auto; /* Centers the container */
+}
+
+/* Adjust to 2 columns for medium screens */
+@media (max-width: 768px) {
+  .card-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Adjust to 1 column for small screens (mobile) */
+@media (max-width: 480px) {
+  .card-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+  border: 1px solid white;
+  position: relative;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card img {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  object-fit: cover;
+  height: 25vh;
+  width: 100%; /* Ensure the image spans full width */
+}
+
+.card-body {
+  position: relative;
+  padding: 1rem;
+}
+
+.custom-link {
+  text-decoration: none;
+  color: inherit; /* Ensures it inherits the text color */
+}
+
+.favorite-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  background-color: white;
+  border-radius: 50%;
+  height: 28px;
+  width: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  cursor: pointer;
+}
+
+.camera-icon {
+  position: absolute;
+  top: 10px;
+  right: 7px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+}
+
+/* Show icons on hover */
+.card:hover .favorite-icon,
+.card:hover .camera-icon {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.btn-primary {
+  background-color: #0098b3;
+  color: azure;
+  border-color: #0098b3;
+}
+
+.btn-primary:hover {
+  background-color: #00758a;
+  border-color: #00758a;
+}
+
+.button-container {
+  text-align: center;
+}
+
+.error-message {
+  color: white;
+}

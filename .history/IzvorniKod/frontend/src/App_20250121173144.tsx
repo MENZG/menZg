@@ -10,6 +10,7 @@ import "./styles/App.css";
 import LoginForm from "./Components/LoginForm.tsx";
 import ListaMenza from "./Components/ListaMenza.tsx";
 import Profil from "./Components/Profil.tsx";
+import ListaMenzaEmployee from "./Components/ListaMenzaEmployee.tsx";
 import Menza from "./Components/Menza.tsx";
 import Korisnici from "./Components/Korisnici.tsx";
 import Favoriti from "./Components/Favoriti.tsx";
@@ -24,6 +25,7 @@ function App() {
         <Route path="/menze" element={<ListaMenza />} />
         <Route path="/favoriti" element={<Favoriti />} />
         <Route path="/profil" element={<Profil />} />
+        <Route path="/djelatnik/menze" element={<ListaMenzaEmployee />} />
         <Route path="menza/:id" element={<Menza />} />
         <Route path="korisnici" element={<Korisnici />} />
       </Routes>
