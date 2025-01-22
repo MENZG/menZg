@@ -14,7 +14,6 @@ import { TbUserHeart } from "react-icons/tb";
 import { IoChatbubbleOutline, IoFastFoodOutline } from "react-icons/io5";
 import { PiArmchair } from "react-icons/pi";
 import { FaRegStar, FaStar } from "react-icons/fa6";
-import { IoClose } from "react-icons/io5";
 
 const initialRestaurantData = {
   idMenza: "1",
@@ -466,7 +465,7 @@ function Menza() {
             className="close-chat-btn"
             onClick={() => setIsChatOpen(false)}
           >
-            <IoClose></IoClose>
+            x
           </button>
         </div>
       )}
@@ -513,7 +512,7 @@ function Menza() {
             Spremi
           </button>
           <button onClick={closeRatingForm} className="close-chat-btn">
-            <IoClose></IoClose>
+            x
           </button>
         </div>
       )}

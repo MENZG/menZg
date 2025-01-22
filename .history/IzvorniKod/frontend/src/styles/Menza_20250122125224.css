@@ -146,6 +146,7 @@ body {
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  font-size: larger;
 }
 
 .close-chat-btn:hover {

@@ -466,7 +466,7 @@ function Menza() {
             className="close-chat-btn"
             onClick={() => setIsChatOpen(false)}
           >
-            <IoClose></IoClose>
+            x
           </button>
         </div>
       )}

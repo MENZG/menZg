@@ -134,9 +134,6 @@ body {
 
 /* Close chat button */
 .close-chat-btn {
-  top: 10px;
-  right: 10px;
-  position: fixed;
   color: #373737;
   border: none;
   border-radius: 50%;

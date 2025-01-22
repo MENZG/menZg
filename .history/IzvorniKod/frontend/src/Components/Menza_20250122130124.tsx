@@ -324,199 +324,199 @@ function Menza() {
   };
   return (
     <>
-      <NavBar />
-      <div
-        className={`container ${showRatingForm || isChatOpen ? "blurred" : ""}`}
-      >
-        <Card className="menza-card">
-          <Card.Img
-            variant="top"
-            src={`/slika_menza_${restaurantData.idMenza}.jpg`}
-            alt={`Slika menze ${restaurantData.imeMenze}`}
-            style={{ height: "35vh" }}
-          />
-          <Card.Body>
-            <Card.Header className="header">
-              <Card.Title>{restaurantData.imeMenze}</Card.Title>
-              <div className="location">
-                <MdLocationOn className="location-pin-img" />
+      <div className={`${showRatingForm || isChatOpen ? "blur" : ""}`}>
+        <NavBar />
+        <div className="container">
+          <Card className="menza-card">
+            <Card.Img
+              variant="top"
+              src={`/slika_menza_${restaurantData.idMenza}.jpg`}
+              alt={`Slika menze ${restaurantData.imeMenze}`}
+              style={{ height: "35vh" }}
+            />
+            <Card.Body>
+              <Card.Header className="header">
+                <Card.Title>{restaurantData.imeMenze}</Card.Title>
+                <div className="location">
+                  <MdLocationOn className="location-pin-img" />
 
-                <Card.Text>
-                  <strong>Adresa:</strong> {restaurantData.lokacija}
-                </Card.Text>
-              </div>
-              <div className="ocjene">
-                <div className="ocjena hrana">
-                  <IoFastFoodOutline className="ocjena-ikona" />
-                  <p className="ocjena-broj">
-                    {ocjene?.hrana?.toFixed(2) || "N/A"}
-                  </p>
+                  <Card.Text>
+                    <strong>Adresa:</strong> {restaurantData.lokacija}
+                  </Card.Text>
                 </div>
-                <div className="ocjena ljubaznost">
-                  <TbUserHeart className="ocjena-ikona" />
-                  <p className="ocjena-broj">
-                    {ocjene?.ljubaznost?.toFixed(2) || "N/A"}
-                  </p>
+                <div className="ocjene">
+                  <div className="ocjena hrana">
+                    <IoFastFoodOutline className="ocjena-ikona" />
+                    <p className="ocjena-broj">
+                      {ocjene?.hrana?.toFixed(2) || "N/A"}
+                    </p>
+                  </div>
+                  <div className="ocjena ljubaznost">
+                    <TbUserHeart className="ocjena-ikona" />
+                    <p className="ocjena-broj">
+                      {ocjene?.ljubaznost?.toFixed(2) || "N/A"}
+                    </p>
+                  </div>
+                  <div className="ocjena ambijent">
+                    <PiArmchair className="ocjena-ikona" />
+                    <p className="ocjena-broj">
+                      {ocjene?.ambijent?.toFixed(2) || "N/A"}
+                    </p>
+                  </div>
+                  <div className="ocjena lokacija">
+                    <MdLocationOn className="ocjena-ikona" />
+                    <p className="ocjena-broj">
+                      {ocjene?.lokacija?.toFixed(2) || "N/A"}
+                    </p>
+                  </div>
                 </div>
-                <div className="ocjena ambijent">
-                  <PiArmchair className="ocjena-ikona" />
-                  <p className="ocjena-broj">
-                    {ocjene?.ambijent?.toFixed(2) || "N/A"}
-                  </p>
-                </div>
-                <div className="ocjena lokacija">
-                  <MdLocationOn className="ocjena-ikona" />
-                  <p className="ocjena-broj">
-                    {ocjene?.lokacija?.toFixed(2) || "N/A"}
-                  </p>
-                </div>
-              </div>
 
-              <div className="ocjeni-btn-div">
-                <button onClick={handleOcjeniMenzu} className="ocjeni-btn">
-                  Ocijeni menzu
-                </button>
-              </div>
-            </Card.Header>
+                <div className="ocjeni-btn-div">
+                  <button onClick={handleOcjeniMenzu} className="ocjeni-btn">
+                    Ocijeni menzu
+                  </button>
+                </div>
+              </Card.Header>
 
-            <div className="working-hours">
-              <h4>Radno vrijeme</h4>
+              <div className="working-hours">
+                <h4>Radno vrijeme</h4>
 
-              <ListGroup variant="flush">
-                {editableTimes.map((time, index) => (
-                  <ListGroup.Item key={index} className="list-group-item">
-                    {time.dan}:{" "}
-                    {editModeIndex === index ? (
-                      <>
-                        <Form.Control
-                          type="text"
-                          value={time.pocetak || ""}
-                          onChange={(e) =>
-                            handleTimeChange(index, "pocetak", e.target.value)
-                          }
-                          placeholder="Početak"
-                        />{" "}
-                        -{" "}
-                        <Form.Control
-                          type="text"
-                          value={time.kraj || ""}
-                          onChange={(e) =>
-                            handleTimeChange(index, "kraj", e.target.value)
-                          }
-                          placeholder="Kraj"
-                        />
-                        <Button
-                          variant="primary"
-                          onClick={() => handleSaveTime(index)}
-                          className="float-right"
-                        >
-                          Save
-                        </Button>
-                      </>
-                    ) : (
-                      <>
-                        {time.pocetak && time.kraj
-                          ? `${time.pocetak} - ${time.kraj}`
-                          : "Ne radi"}
-                        {role === 2 && (
+                <ListGroup variant="flush">
+                  {editableTimes.map((time, index) => (
+                    <ListGroup.Item key={index} className="list-group-item">
+                      {time.dan}:{" "}
+                      {editModeIndex === index ? (
+                        <>
+                          <Form.Control
+                            type="text"
+                            value={time.pocetak || ""}
+                            onChange={(e) =>
+                              handleTimeChange(index, "pocetak", e.target.value)
+                            }
+                            placeholder="Početak"
+                          />{" "}
+                          -{" "}
+                          <Form.Control
+                            type="text"
+                            value={time.kraj || ""}
+                            onChange={(e) =>
+                              handleTimeChange(index, "kraj", e.target.value)
+                            }
+                            placeholder="Kraj"
+                          />
                           <Button
                             variant="primary"
-                            onClick={() => toggleEditMode(index)}
-                            className="float-right paint-brush"
+                            onClick={() => handleSaveTime(index)}
+                            className="float-right"
                           >
-                            <FontAwesomeIcon icon={faPaintBrush} />
+                            Save
                           </Button>
-                        )}
-                      </>
-                    )}
-                  </ListGroup.Item>
-                ))}
-              </ListGroup>
-            </div>
-          </Card.Body>
-        </Card>
+                        </>
+                      ) : (
+                        <>
+                          {time.pocetak && time.kraj
+                            ? `${time.pocetak} - ${time.kraj}`
+                            : "Ne radi"}
+                          {role === 2 && (
+                            <Button
+                              variant="primary"
+                              onClick={() => toggleEditMode(index)}
+                              className="float-right paint-brush"
+                            >
+                              <FontAwesomeIcon icon={faPaintBrush} />
+                            </Button>
+                          )}
+                        </>
+                      )}
+                    </ListGroup.Item>
+                  ))}
+                </ListGroup>
+              </div>
+            </Card.Body>
+          </Card>
 
-        <div className="live-stream">
-          <h4>Uživo red u menzi</h4>
-          <div className="video-container">
-            {!muxError ? (
-              <MuxPlayer
-                streamType="live"
-                playbackId="RBm68dXx7KP9dIw1DYVipDX9zz8QmUqt01YtDoYP4kcU"
-                metadataVideoTitle="Placeholder (optional)"
-                metadata-viewer-user-id="Placeholder (optional)"
-                primary-color="#ffffff"
-                secondary-color="#000000"
-                accent-color="#fa50b5"
-                autoPlay={true}
-              />
-            ) : (
-              <YouTubeLiveStream videoId="wBVq_Qoegmo" />
-            )}
+          <div className="live-stream">
+            <h4>Uživo red u menzi</h4>
+            <div className="video-container">
+              {!muxError ? (
+                <MuxPlayer
+                  streamType="live"
+                  playbackId="RBm68dXx7KP9dIw1DYVipDX9zz8QmUqt01YtDoYP4kcU"
+                  metadataVideoTitle="Placeholder (optional)"
+                  metadata-viewer-user-id="Placeholder (optional)"
+                  primary-color="#ffffff"
+                  secondary-color="#000000"
+                  accent-color="#fa50b5"
+                  autoPlay={true}
+                />
+              ) : (
+                <YouTubeLiveStream videoId="wBVq_Qoegmo" />
+              )}
+            </div>
           </div>
         </div>
-      </div>
-      <button className="chat-icon-btn" onClick={() => setIsChatOpen(true)}>
-        <IoChatbubbleOutline />
-      </button>
-      {isChatOpen && (
-        <div className="chat-popup">
-          <Chat />
-          <button
-            className="close-chat-btn"
-            onClick={() => setIsChatOpen(false)}
-          >
-            <IoClose></IoClose>
-          </button>
-        </div>
-      )}
+        <button className="chat-icon-btn" onClick={() => setIsChatOpen(true)}>
+          <IoChatbubbleOutline />
+        </button>
+        {isChatOpen && (
+          <div className="chat-popup">
+            <Chat />
+            <button
+              className="close-chat-btn"
+              onClick={() => setIsChatOpen(false)}
+            >
+              <IoClose></IoClose>
+            </button>
+          </div>
+        )}
 
-      {showRatingForm && (
-        <div className="chat-popup rate">
-          <h3>Ocijenite menzu</h3>
-          <form>
-            {[
-              {
-                name: "Hrana",
-                icon: IoFastFoodOutline,
-                key: "hrana" as keyof Ocjena, // Explicitly cast to keyof Ocjena
-              },
-              {
-                name: "Ljubaznost",
-                icon: TbUserHeart,
-                key: "ljubaznost" as keyof Ocjena, // Explicitly cast to keyof Ocjena
-              },
-              {
-                name: "Ambijent",
-                icon: PiArmchair,
-                key: "ambijent" as keyof Ocjena, // Explicitly cast to keyof Ocjena
-              },
-              {
-                name: "Lokacija",
-                icon: MdLocationOn,
-                key: "lokacija" as keyof Ocjena, // Explicitly cast to keyof Ocjena
-              },
-            ].map(({ name, icon: Icon, key }) => (
-              <div className="rating-category" key={key}>
-                <label>
-                  <Icon className="ocjena-ikona" /> {name}
-                </label>
-                <RatingStars
-                  category={key} // Type is now valid
-                  value={rating[key]}
-                  onChange={handleRatingChange}
-                />
-              </div>
-            ))}
-          </form>
-          <button onClick={submitRating} className="save-rating-btn">
-            Spremi
-          </button>
-          <button onClick={closeRatingForm} className="close-chat-btn">
-            <IoClose></IoClose>
-          </button>
-        </div>
-      )}
+        {showRatingForm && (
+          <div className="chat-popup rate">
+            <h3>Ocijenite menzu</h3>
+            <form>
+              {[
+                {
+                  name: "Hrana",
+                  icon: IoFastFoodOutline,
+                  key: "hrana" as keyof Ocjena, // Explicitly cast to keyof Ocjena
+                },
+                {
+                  name: "Ljubaznost",
+                  icon: TbUserHeart,
+                  key: "ljubaznost" as keyof Ocjena, // Explicitly cast to keyof Ocjena
+                },
+                {
+                  name: "Ambijent",
+                  icon: PiArmchair,
+                  key: "ambijent" as keyof Ocjena, // Explicitly cast to keyof Ocjena
+                },
+                {
+                  name: "Lokacija",
+                  icon: MdLocationOn,
+                  key: "lokacija" as keyof Ocjena, // Explicitly cast to keyof Ocjena
+                },
+              ].map(({ name, icon: Icon, key }) => (
+                <div className="rating-category" key={key}>
+                  <label>
+                    <Icon className="ocjena-ikona" /> {name}
+                  </label>
+                  <RatingStars
+                    category={key} // Type is now valid
+                    value={rating[key]}
+                    onChange={handleRatingChange}
+                  />
+                </div>
+              ))}
+            </form>
+            <button onClick={submitRating} className="save-rating-btn">
+              Spremi
+            </button>
+            <button onClick={closeRatingForm} className="close-chat-btn">
+              <IoClose></IoClose>
+            </button>
+          </div>
+        )}
+      </div>
     </>
   );
 }

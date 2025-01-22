@@ -466,7 +466,7 @@ function Menza() {
             className="close-chat-btn"
             onClick={() => setIsChatOpen(false)}
           >
-            <IoClose></IoClose>
+            x
           </button>
         </div>
       )}
@@ -510,10 +510,10 @@ function Menza() {
             ))}
           </form>
           <button onClick={submitRating} className="save-rating-btn">
-            Spremi
+            <IoClose></IoClose>
           </button>
           <button onClick={closeRatingForm} className="close-chat-btn">
-            <IoClose></IoClose>
+            x
           </button>
         </div>
       )}

@@ -134,23 +134,17 @@ body {
 
 /* Close chat button */
 .close-chat-btn {
-  top: 10px;
-  right: 10px;
-  position: fixed;
-  color: #373737;
+  margin-top: 10px;
+  padding: 5px 10px;
+  background-color: #f50f8e;
+  color: #fff;
   border: none;
-  border-radius: 50%;
-  width: 25px;
-  height: 25px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  border-radius: 50px;
   cursor: pointer;
 }
 
 .close-chat-btn:hover {
-  background-color: #0098b3;
-  color: white;
+  background-color: #e70e86;
 }
 
 .menza-card:hover{
