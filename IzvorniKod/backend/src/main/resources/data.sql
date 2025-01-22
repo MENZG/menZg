@@ -652,3 +652,12 @@ INSERT INTO jelo (kategorija, cijena, naziv_jela, id_menza) VALUES
 ('Večera', 2.8, 'Pohani oslić s krumpir salatom', 26),
 ('Večera', 2.7, 'Zapečeni sendvič sa šunkom i sirom', 26),
 ('Večera', 2.5, 'Pita od jabuka s cimetom', 26);
+
+-- Dodavanje nekoliko primjera ocjena u tablicu
+INSERT INTO ocjena (hrana_rating, ljubaznost_rating, ambijent_rating, lokacija_rating, kategorija, id_korisnik, id_menza)
+VALUES
+  (5, 4, 4, 5, 'Hrana', 1, 2),
+  (4, 5, 3, 4, 'Usluga', 2, 2),
+  (3, 3, 4, 4, 'Ambijent', 3, 2),
+  (4, 4, 4, 4, 'Sveukupno', 4, 2),
+  (5, 5, 5, 5, 'Odlična kombinacija svih faktora', 5, 1);

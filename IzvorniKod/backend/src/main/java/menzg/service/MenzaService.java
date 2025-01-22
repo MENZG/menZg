@@ -3,12 +3,11 @@ package menzg.service;
 import java.util.List;
 import java.util.Optional;
 
-import menzg.model.Jelo;
+import menzg.model.*;
+import menzg.repo.KorisnikRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import menzg.model.Menza;
-import menzg.model.RadnoVrijeme;
 import menzg.repo.MenzaRepository;
 
 @Service
@@ -16,6 +15,8 @@ public class MenzaService {
 
 	@Autowired
 	MenzaRepository menzaRepo;
+	@Autowired
+	KorisnikRepository korisnikRepo;
 
 	public List<Menza> listAll() {
 
@@ -106,5 +107,38 @@ public class MenzaService {
 		return true;
 	}
 
+	public boolean azurirajOcjenu(Long idMenze, Long idKorisnika,  Ocjena ocjena) {
+		Menza menza = menzaRepo.findById(idMenze).orElse(null);
+		Optional<Korisnik> korisnik = korisnikRepo.findById(idKorisnika);
+
+		if (menza == null) {
+			return false; // Menza s navedenim ID-jem ne postoji
+		}
+		if(!korisnik.isPresent()){
+			return false;
+		}
+		Korisnik korisnikOcjene = korisnik.get();
+		Ocjena postojecaOcjena = menza.getOcjene().stream()
+				.filter(o -> o.getKorisnik().equals(korisnikOcjene))
+				.findFirst().orElse(null);
+		if(postojecaOcjena != null) {
+			postojecaOcjena.setHranaRating(ocjena.getHranaRating());
+			postojecaOcjena.setLjubaznostRating(ocjena.getLjubaznostRating());
+			postojecaOcjena.setAmbijentRating(ocjena.getAmbijentRating());
+			postojecaOcjena.setLokacijaRating(ocjena.getLokacijaRating());
+		} else {
+			Ocjena novaOcjena = new Ocjena();
+			novaOcjena.setMenza(menza);
+			novaOcjena.setKorisnik(korisnikOcjene);
+			novaOcjena.setHranaRating(ocjena.getHranaRating());
+			novaOcjena.setLjubaznostRating(ocjena.getLjubaznostRating());
+			novaOcjena.setAmbijentRating(ocjena.getAmbijentRating());
+			novaOcjena.setLokacijaRating(ocjena.getLokacijaRating());
+
+			menza.getOcjene().add(novaOcjena);
+		}
+		menzaRepo.save(menza);
+		return true;
+	}
 
 }

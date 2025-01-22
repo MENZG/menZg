@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import menzg.DTO.OcjenaDTO;
+import menzg.DTO.OcjenaDohvatDTO;
 import menzg.model.*;
 import menzg.repo.OcjenaRepository;
 import menzg.service.KorisnikService;
@@ -174,7 +175,7 @@ public class MenzaController {
 	@GetMapping("/{id}/ocjene")
 	// @PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or
 	// hasRole('ROLE_DJELATNIK')")
-	public ResponseEntity<List<Ocjena>> getOcjene(@PathVariable Long id) {
+	public ResponseEntity<List<OcjenaDohvatDTO>> getOcjene(@PathVariable Long id) {
 		// Dohvaćanje menze prema ID-u
 		Menza menza = menzaService.getMenzaData(id);
 
@@ -185,9 +186,14 @@ public class MenzaController {
 
 		// Dohvat jelovnika za pronađenu menzu
 		List<Ocjena> ocjene = menza.getOcjene();
+		List<OcjenaDohvatDTO> ocjeneDohvat = new ArrayList<>();
+		for (Ocjena ocjena : ocjene) {
+			OcjenaDohvatDTO ocjenaDohvatDTO = new OcjenaDohvatDTO(ocjena.getHranaRating(), ocjena.getLjubaznostRating(), ocjena.getAmbijentRating(), ocjena.getLokacijaRating(), ocjena.getKorisnik().getIdKorisnik(), ocjena.getMenza().getIdMenza());
+			ocjeneDohvat.add(ocjenaDohvatDTO);
+		}
 
 		// Ako jelovnik postoji, vraća se kao odgovor
-		return new ResponseEntity<>(ocjene, HttpStatus.OK);
+		return new ResponseEntity<>(ocjeneDohvat, HttpStatus.OK);
 	}
 
 	@GetMapping("/{id}/prosjecna-ocjena")
@@ -224,7 +230,7 @@ public class MenzaController {
 	@GetMapping("/{idMenze}/{idKorisnik}/ocjene")
 	// @PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or
 	// hasRole('ROLE_DJELATNIK')")
-	public ResponseEntity<Ocjena> getOcjeneByKorisnik(@PathVariable Long idMenze, @PathVariable Long idKorisnik ) {
+	public ResponseEntity<OcjenaDohvatDTO> getOcjeneByKorisnik(@PathVariable Long idMenze, @PathVariable Long idKorisnik ) {
 		// Dohvaćanje menze prema ID-u
 		Menza menza = menzaService.getMenzaData(idMenze);
 		Optional<Korisnik> korisnik =  korisnikService.findById(idKorisnik);
@@ -238,13 +244,23 @@ public class MenzaController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 
+		// Filtriranje ocjena
+		/*Optional<Ocjena> ocjenaByUser = menza.getOcjene().stream()
+				.filter(ocjena -> ocjena.getKorisnik().getIdKorisnik().equals(idKorisnik))
+				.findFirst();
+		*/
 
-		Ocjena ocjenaByUser = null;
+		OcjenaDohvatDTO ocjenaByUser = new OcjenaDohvatDTO();
 		// Dohvat jelovnika za pronađenu menzu
 		List<Ocjena> ocjene = menza.getOcjene();
 		for ( Ocjena ocjena: ocjene ) {
 			if(ocjena.getKorisnik().getIdKorisnik().equals(idKorisnik)) {
-				ocjenaByUser = ocjena;
+				ocjenaByUser.setHranaRating(ocjena.getHranaRating());
+				ocjenaByUser.setLjubaznostRating(ocjena.getLjubaznostRating());
+				ocjenaByUser.setAmbijentRating(ocjena.getAmbijentRating());
+				ocjenaByUser.setLokacijaRating(ocjena.getLokacijaRating());
+				ocjenaByUser.setIdKorisnik(ocjena.getKorisnik().getIdKorisnik());
+				ocjenaByUser.setIdMenza(ocjena.getMenza().getIdMenza());
 			}
 		}
 		//ili ovako?
@@ -276,35 +292,27 @@ public class MenzaController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		Korisnik korisnikObject = korisnik.get();
+		Ocjena ocjenaByUser = null;
 
-
+		/*
 		List<Ocjena> ocjene = menza.getOcjene();
-		for ( Ocjena ocjena: ocjene ) {
-			if(ocjena.getKorisnik().getIdKorisnik().equals(idKorisnik)) {
+		List<OcjenaDohvatDTO> ocjenzeDTO = new ArrayList<>();
+		for(Ocjena ocjena : ocjene){
+			OcjenaDohvatDTO ocjenaDohvatDTO = new OcjenaDohvatDTO(ocjena.getHranaRating(), ocjena.getLjubaznostRating(), ocjena.getAmbijentRating(), ocjena.getLokacijaRating(), ocjena.getKorisnik().getIdKorisnik(), ocjena.getMenza().getIdMenza());
+			ocjenzeDTO.add(ocjenaDohvatDTO);
+		}*/
 
-				//ocjena.setRating(rating); //ako prondajemo da je korisnik ve cocjenio menzu postavljamo tj refreshamo ocjenu
-				ocjena.setHranaRating(ocjenaRequest.getHranaRating());
-				ocjena.setLjubaznostRating(ocjenaRequest.getLjubaznostRating());
-				ocjena.setAmbijentRating(ocjenaRequest.getAmbijentRating());
-				ocjena.setLokacijaRating(ocjenaRequest.getLokacijaRating());
 
-				ocjenaService.saveOcjena(ocjena);
-				return new ResponseEntity<>("Ocjena ažurirana.", HttpStatus.OK);
-			}
+
+		Ocjena novaOcjena =  new Ocjena(ocjenaRequest.getHranaRating(), ocjenaRequest.getLjubaznostRating(), ocjenaRequest.getAmbijentRating(), ocjenaRequest.getLokacijaRating(), korisnikObject, menza);
+
+		boolean uspjeh = menzaService.azurirajOcjenu(idMenza,idKorisnik, novaOcjena);
+		if (uspjeh) {
+			return ResponseEntity.ok("Osjene uspješno ažurirane za menzu " + idMenza);
+		} else {
+			return ResponseEntity.badRequest().body("Ažuriranje ocjena nije uspjelo. Provjerite ID menze: " + idMenza);
 		}
-		// Ako ocjena ne postoji, stvori novu
-		Ocjena novaOcjena = new Ocjena();
-		novaOcjena.setMenza(menza);
-		novaOcjena.setKorisnik(korisnikObject);
-		//novaOcjena.setRating(rating);
-		novaOcjena.setHranaRating(ocjenaRequest.getHranaRating());
-		novaOcjena.setLjubaznostRating(ocjenaRequest.getLjubaznostRating());
-		novaOcjena.setAmbijentRating(ocjenaRequest.getAmbijentRating());
-		novaOcjena.setLokacijaRating(ocjenaRequest.getLokacijaRating());
 
-
-		ocjenaService.saveOcjena(novaOcjena); // Spremanje nove ocjene
-
-		return new ResponseEntity<>("Ocjena dodana.", HttpStatus.CREATED);
+		//return new ResponseEntity<>("Ocjena dodana.", HttpStatus.CREATED);
 	}
 }

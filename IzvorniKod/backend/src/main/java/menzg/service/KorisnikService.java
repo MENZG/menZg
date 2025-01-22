@@ -109,7 +109,9 @@ public class KorisnikService {
 
 		// Postavi novi status
 		korisnik.setBlocked(blocked);
-		repo.save(korisnik);
+
+		//treba li biti korisnik .save??
+		//repo.save(korisnik);
 		// Spremi promjenu u bazu
 		return korisnik;
 	}
