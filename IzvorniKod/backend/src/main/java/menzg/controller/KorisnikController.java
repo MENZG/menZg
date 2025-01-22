@@ -67,7 +67,7 @@ public class KorisnikController {
 	}
 
 	@PutMapping("/{id}/newRole/{brojNoveRole}")
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	// @PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<String> promijeniRoluKorisniku(@PathVariable Long id, @PathVariable int brojNoveRole) {
 		Optional<Korisnik> korisnikOpt = korisnikService.findById(id);
 
