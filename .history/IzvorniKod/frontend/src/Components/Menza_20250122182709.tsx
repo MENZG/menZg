@@ -139,7 +139,6 @@ function Menza() {
         const [hrana, ljubaznost, ambijent, lokacija] = response.data; // Destructure the array
         setOcjene({ hrana, ljubaznost, ambijent, lokacija });
         console.log("Here", response.data);
-        console.log("id menze: ", restaurantData.idMenza);
       } catch (error) {
         console.error("Error fetching ocjene data:", error);
       }
@@ -467,7 +466,7 @@ function Menza() {
       </button>
       {isChatOpen && (
         <div className="chat-popup">
-          <Chat />
+          <Chat2></Chat2>
           <button
             className="close-chat-btn"
             onClick={() => setIsChatOpen(false)}

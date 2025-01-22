@@ -6,8 +6,6 @@ import { Button, Card, Form, ListGroup, Spinner } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import "../styles/Menza.css";
 import Chat from "./Chat";
-import Chat2 from "./Chat2";
-
 import NavBar from "./NavBar";
 import MuxPlayer from "@mux/mux-player-react";
 import YouTubeLiveStream from "./YouTubeLiveStream";
@@ -139,7 +137,6 @@ function Menza() {
         const [hrana, ljubaznost, ambijent, lokacija] = response.data; // Destructure the array
         setOcjene({ hrana, ljubaznost, ambijent, lokacija });
         console.log("Here", response.data);
-        console.log("id menze: ", restaurantData.idMenza);
       } catch (error) {
         console.error("Error fetching ocjene data:", error);
       }

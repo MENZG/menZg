@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
-import io from "socket.io-client";
+import { Client } from "@stomp/stompjs";
 import "../styles/Chat.css";
 
-const socket = io("http://localhost:5000"); // Replace with your server URL
-
 interface Message {
-  username: string;
-  text: string;
-  timestamp: string;
+  username: string; // The username of the sender of the message
+  text: string; // The content of the message
+  timestamp: string; // The time at which the message was sent, in string format
 }
 
 const Chat: React.FC = () => {
@@ -16,25 +14,42 @@ const Chat: React.FC = () => {
   const [username, setUsername] = useState("");
   const [isUsernameSet, setIsUsernameSet] = useState(false);
 
+  let stompClient: Client | null = null;
+
   useEffect(() => {
-    socket.on("receive_message", (data: Message) => {
-      setMessages((prev) => [...prev, data]);
+    stompClient = new Client({
+      brokerURL: "ws://localhost:8080/chat/websocket",
+      connectHeaders: {},
+      onConnect: () => {
+        console.log("Connected");
+        stompClient?.subscribe("/topic/messages", (message) => {
+          if (message.body) {
+            setMessages((prev) => [...prev, JSON.parse(message.body)]);
+          }
+        });
+      },
+      onStompError: (error) => {
+        console.error("STOMP error:", error);
+      },
     });
+    stompClient.activate();
 
     return () => {
-      socket.off("receive_message");
+      stompClient?.deactivate();
     };
   }, []);
 
   const sendMessage = () => {
-    if (message.trim() && isUsernameSet) {
+    if (message.trim() && isUsernameSet && stompClient?.connected) {
       const newMessage = {
         username,
         text: message,
-        timestamp: new Date().toLocaleTimeString(),
+        timestamp: new Date().toISOString(),
       };
-      socket.emit("send_message", newMessage);
-      setMessages((prev) => [...prev, newMessage]);
+      stompClient.publish({
+        destination: "/app/sendMessage",
+        body: JSON.stringify(newMessage),
+      });
       setMessage("");
     }
   };
@@ -68,7 +83,9 @@ const Chat: React.FC = () => {
             {messages.map((msg, index) => (
               <div key={index} className="messageItem">
                 <strong>{msg.username}:</strong> {msg.text}
-                <span className="timestamp">{msg.timestamp}</span>
+                <span className="timestamp">
+                  {new Date(msg.timestamp).toLocaleTimeString()}
+                </span>
               </div>
             ))}
           </div>

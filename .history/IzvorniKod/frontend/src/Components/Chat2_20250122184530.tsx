@@ -1,8 +1,19 @@
 import React, { useState, useEffect } from "react";
-import io from "socket.io-client";
+import { Client } from "@stomp/stompjs";
+import SockJS from "sockjs-client";
 import "../styles/Chat.css";
 
-const socket = io("http://localhost:5000"); // Replace with your server URL
+const apiUrl = import.meta.env.VITE_API_URL;
+
+const client = new Client({
+  brokerURL: "ws://localhost:8080/chat-websocket", // WebSocket URL
+  connectHeaders: {},
+  debug: (str) => console.log(str),
+  reconnectDelay: 5000,
+  heartbeatIncoming: 4000,
+  heartbeatOutgoing: 4000,
+  webSocketFactory: () => new SockJS(`${apiUrl}/chat-websocket`),
+});
 
 interface Message {
   username: string;
@@ -17,12 +28,17 @@ const Chat: React.FC = () => {
   const [isUsernameSet, setIsUsernameSet] = useState(false);
 
   useEffect(() => {
-    socket.on("receive_message", (data: Message) => {
-      setMessages((prev) => [...prev, data]);
-    });
+    client.onConnect = () => {
+      client.subscribe("/topic/messages", (message) => {
+        if (message.body) {
+          setMessages((prev) => [...prev, JSON.parse(message.body)]);
+        }
+      });
+    };
+    client.activate();
 
     return () => {
-      socket.off("receive_message");
+      client.deactivate();
     };
   }, []);
 
@@ -31,10 +47,11 @@ const Chat: React.FC = () => {
       const newMessage = {
         username,
         text: message,
-        timestamp: new Date().toLocaleTimeString(),
       };
-      socket.emit("send_message", newMessage);
-      setMessages((prev) => [...prev, newMessage]);
+      client.publish({
+        destination: "/app/sendMessage",
+        body: JSON.stringify(newMessage),
+      });
       setMessage("");
     }
   };

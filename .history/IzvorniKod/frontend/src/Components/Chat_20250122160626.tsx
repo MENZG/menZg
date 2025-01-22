@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
-import io from "socket.io-client";
+import SockJS from "sockjs-client";
+import Stomp from "stompjs";
 import "../styles/Chat.css";
 
-const socket = io("http://localhost:5000"); // Replace with your server URL
+const WEBSOCKET_URL = "http://localhost:5000/ws"; // Replace with your WebSocket endpoint
 
 interface Message {
-  username: string;
-  text: string;
-  timestamp: string;
+  sender: string;
+  content: string;
+  type: "CHAT" | "JOIN" | "LEAVE";
+  timestamp?: string;
 }
 
 const Chat: React.FC = () => {
@@ -16,25 +18,46 @@ const Chat: React.FC = () => {
   const [username, setUsername] = useState("");
   const [isUsernameSet, setIsUsernameSet] = useState(false);
 
-  useEffect(() => {
-    socket.on("receive_message", (data: Message) => {
-      setMessages((prev) => [...prev, data]);
-    });
+  let stompClient: Stomp.Client | null = null;
 
-    return () => {
-      socket.off("receive_message");
-    };
-  }, []);
+  useEffect(() => {
+    if (isUsernameSet) {
+      const socket = new SockJS(WEBSOCKET_URL);
+      stompClient = Stomp.over(socket);
+
+      stompClient.connect({}, () => {
+        stompClient?.subscribe("/topic/public", (payload: any) => {
+          const message: Message = JSON.parse(payload.body);
+          setMessages((prev) => [...prev, message]);
+        });
+
+        // Send JOIN message to the server
+        stompClient?.send(
+          "/app/chat.addUser",
+          {},
+          JSON.stringify({ sender: username, type: "JOIN" })
+        );
+      });
+
+      return () => {
+        stompClient?.disconnect();
+      };
+    }
+  }, [isUsernameSet, username]);
 
   const sendMessage = () => {
-    if (message.trim() && isUsernameSet) {
-      const newMessage = {
-        username,
-        text: message,
+    if (message.trim() && stompClient) {
+      const chatMessage: Message = {
+        sender: username,
+        content: message,
+        type: "CHAT",
         timestamp: new Date().toLocaleTimeString(),
       };
-      socket.emit("send_message", newMessage);
-      setMessages((prev) => [...prev, newMessage]);
+      stompClient.send(
+        "/app/chat.sendMessage",
+        {},
+        JSON.stringify(chatMessage)
+      );
       setMessage("");
     }
   };
@@ -66,9 +89,20 @@ const Chat: React.FC = () => {
           <h2>Live Chat</h2>
           <div className="messagesContainer">
             {messages.map((msg, index) => (
-              <div key={index} className="messageItem">
-                <strong>{msg.username}:</strong> {msg.text}
-                <span className="timestamp">{msg.timestamp}</span>
+              <div
+                key={index}
+                className={`messageItem ${msg.type.toLowerCase()}`}
+              >
+                {msg.type === "CHAT" ? (
+                  <>
+                    <strong>{msg.sender}:</strong> {msg.content}
+                  </>
+                ) : (
+                  <span>{msg.content}</span>
+                )}
+                {msg.timestamp && (
+                  <span className="timestamp">{msg.timestamp}</span>
+                )}
               </div>
             ))}
           </div>
