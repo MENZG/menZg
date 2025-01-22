@@ -15,7 +15,6 @@ import { TbUserHeart } from "react-icons/tb";
 import { IoChatbubbleOutline, IoFastFoodOutline } from "react-icons/io5";
 import { PiArmchair } from "react-icons/pi";
 import { FaRegStar } from "react-icons/fa";
-import MenuCard from "./MenuCard";
 
 const initialRestaurantData = {
   idMenza: "1",
@@ -88,8 +87,7 @@ function Menza() {
         const response = await axios.get(
           `${apiUrl}/menza/${restaurantData.idMenza}/prosjecna-ocjena`
         );
-        const [hrana, ljubaznost, ambijent, lokacija] = response.data; // Destructure the array
-        setOcjene({ hrana, ljubaznost, ambijent, lokacija });
+        setOcjene(response.data);
         console.log("Here", response.data);
       } catch (error) {
         console.error("Error fetching ocjene data:", error);
@@ -151,6 +149,12 @@ function Menza() {
 
   useEffect(() => {
     const fetchRestaurantData = async () => {
+      try {
+        const streamStartResponse = axios.post(`${apiUrl}/stream/start`);
+        console.log("Stream started successfully", streamStartResponse);
+      } catch (error) {
+        console.error("Error starting stream:", error);
+      }
       try {
         const response = await axios.get(`${apiUrl}/menza/${id}`);
 
@@ -360,8 +364,6 @@ function Menza() {
             </div>
           </Card.Body>
         </Card>
-
-        <MenuCard menzaId={id || ''} role={role} />
 
         <div className="live-stream">
           <h4>Uživo red u menzi</h4>
