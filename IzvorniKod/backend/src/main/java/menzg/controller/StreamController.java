@@ -31,7 +31,7 @@ public class StreamController {
 
 		System.out.println("zahtijevano je pocinjanje streama ------------- ");
 		try {
-			String message = ffmpegService.startStreaming(inputUrl, outputUrl);
+			String message = ffmpegService.startStreaming();
 			return ResponseEntity.ok(message);
 
 		} catch (Exception e) {

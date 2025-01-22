@@ -9,12 +9,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class FFmpegService {
 
+	private final String inputUrl = "rtsp://menza:FenzaFer9@161.53.65.70:554/Streaming/channels/101";
+	private final String outputUrl = "rtmp://global-live.mux.com:5222/app/2ff4bbc6-0336-f1e3-95fd-94f81aa1fb08";
+
 	// private static final String WINDOWS_FFMPEG = "ffmpeg_windows.exe";
 	// private static final String MACOS_FFMPEG = "ffmpeg_mac";
 
 	private final Map<String, Process> processMap = new ConcurrentHashMap<>();
 
-	public String startStreaming(String inputUrl, String outputUrl) throws IOException {
+	public String startStreaming() throws IOException {
 
 		if (processMap.containsKey(outputUrl) && processMap.get(outputUrl).isAlive()) {
 
