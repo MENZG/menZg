@@ -35,4 +35,11 @@ public class Jelo {
 	@JoinColumn(name = "idMenza") // Ovdje je strani ključ prema Menza tablici
 	@JsonBackReference // ne printa
 	private Menza menza; // Svako radno vrijeme je povezano s jednom menzom
+
+	public Jelo(String kategorija, Float cijena, String nazivJela, Menza menza){
+		this.kategorija = kategorija;
+		this.cijena = cijena;
+		this.nazivJela = nazivJela;
+		this.menza = menza;
+	}
 }

@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import menzg.controller.MenzaController;
 import menzg.model.*;
+import menzg.repo.JeloRepository;
 import menzg.repo.KorisnikRepository;
 import menzg.repo.OcjenaRepository;
 import org.slf4j.Logger;
@@ -26,6 +27,8 @@ public class MenzaService {
 
 	@Autowired
 	OcjenaRepository ocjenaRepo;
+	@Autowired
+	JeloRepository jeloRepo;
 
 	public List<Menza> listAll() {
 
@@ -106,6 +109,8 @@ public class MenzaService {
 			updatedJelo.setKategorija(novoJelo.getKategorija());
 			updatedJelo.setNazivJela(novoJelo.getNazivJela());
 			menza.getJelovnik().add(updatedJelo);
+			//treba li ovo ??
+			jeloRepo.save(updatedJelo);
 			//return false; // Jelo s danim ID-jem ne postoji u toj menzi
 		}
 
@@ -156,6 +161,31 @@ public class MenzaService {
 		menzaRepo.save(menza);
 		logger.info("Ažuriranje uspješno završeno za menzu ID {}", idMenze);
 		return true;
+	}
+
+	public boolean dodajJelo(Long idMenze, Jelo jelo){
+		Menza menza = menzaRepo.findById(idMenze).orElse(null);
+		if (menza == null) {
+			return false; // Menza s navedenim ID-jem ne postoji
+		}
+		menza.getJelovnik().add(jelo);
+		jeloRepo.save(jelo);
+		menzaRepo.save(menza);
+		return true;
+	}
+
+	public boolean obrisiJelo(Jelo jelo){
+		Menza menza = jelo.getMenza();
+		//menza.getJelovnik().remove(jelo);
+		//jeloRepo.delete(jelo);
+		//menzaRepo.save(menza);
+
+		if(menza != null && menza.getJelovnik().remove(jelo)) {
+			jeloRepo.delete(jelo); // Briše jelo iz baze
+			menzaRepo.save(menza); // Spremi promjene u menzu
+			return true;
+		}
+		return false;
 	}
 
 }

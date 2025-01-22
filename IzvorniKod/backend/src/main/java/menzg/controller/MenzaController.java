@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import menzg.DTO.JeloDTO;
 import menzg.DTO.OcjenaDTO;
 import menzg.DTO.OcjenaDohvatDTO;
 import menzg.model.*;
 import menzg.repo.OcjenaRepository;
+import menzg.service.JeloService;
 import menzg.service.KorisnikService;
 import menzg.service.OcjenaService;
 import org.slf4j.Logger;
@@ -37,6 +39,9 @@ public class MenzaController {
 	private KorisnikService korisnikService;
 	@Autowired
 	private OcjenaService ocjenaService;
+
+	@Autowired
+	private JeloService jeloService;
 
 	// vraca sve menze
 	@GetMapping("")
@@ -325,4 +330,45 @@ public class MenzaController {
 
 		//return new ResponseEntity<>("Ocjena dodana.", HttpStatus.CREATED);
 	}
+
+
+	@PostMapping("/{idMenze}/novoJelo")
+	public ResponseEntity<String> dodajJelo(@PathVariable Long idMenze, @RequestBody JeloDTO novoJelo){
+		Menza menza =  menzaService.getMenzaData(idMenze);
+		if (menza == null) {
+			// Ako menza nije pronađena, vraća se status 404
+			logger.warn("Menza s ID {} nije pronađena.", idMenze);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		Jelo dodanoJelo = new Jelo(novoJelo.getKategorija(), novoJelo.getCijena(), novoJelo.getNazivJela(), menza);
+		boolean uspjeh = menzaService.dodajJelo(idMenze, dodanoJelo);
+
+		if (uspjeh) {
+			logger.info("Jelo uspješno uneseno za menzu {}", idMenze);
+			return ResponseEntity.ok("Jelo uspješno uneseno za menzu " + idMenze);
+		} else {
+			logger.error("Dodavanje jela nije uspjelo za menzu {}", idMenze);
+			return ResponseEntity.badRequest().body("dodavanje jela nije uspjelo. Provjerite ID menze: " + idMenze);
+		}
+	}
+
+	@DeleteMapping("/{idJela}")
+	public ResponseEntity<String> obrisiJelo(@PathVariable Long idJela){
+		Jelo jelo = jeloService.getJeloData(idJela);
+		if (jelo == null) {
+			// Ako menza nije pronađena, vraća se status 404
+			logger.warn("Jelo s ID {} nije pronađena.", idJela);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		boolean uspjeh = menzaService.obrisiJelo(jelo);
+		if (uspjeh) {
+			logger.info("Jelo uspješno obrisano za menzu {}", idJela);
+			return ResponseEntity.ok("Jelo uspješno obrisano za menzu " + idJela);
+		} else {
+			logger.error("Brisanje jela nije uspjelo za menzu {}", idJela);
+			return ResponseEntity.badRequest().body("Brisanje jela nije uspjelo. Provjerite ID menze: " + idJela);
+		}
+	}
+
 }
