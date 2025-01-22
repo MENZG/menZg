@@ -111,7 +111,7 @@ public class KorisnikService {
 		korisnik.setBlocked(blocked);
 
 		//treba li biti korisnik .save??
-		//repo.save(korisnik);
+		repo.save(korisnik);
 		// Spremi promjenu u bazu
 		return korisnik;
 	}
