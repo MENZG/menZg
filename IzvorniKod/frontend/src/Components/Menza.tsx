@@ -1,4 +1,3 @@
-// Add this state and handler to Menza component
 import { faPaintBrush } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
@@ -10,12 +9,13 @@ import Chat from "./Chat";
 import NavBar from "./NavBar";
 import MuxPlayer from "@mux/mux-player-react";
 import YouTubeLiveStream from "./YouTubeLiveStream";
-import KameraIkona from "./KameraIkona";
 import { MdLocationOn } from "react-icons/md";
 import { TbUserHeart } from "react-icons/tb";
 import { IoChatbubbleOutline, IoFastFoodOutline } from "react-icons/io5";
 import { PiArmchair } from "react-icons/pi";
-import { FaRegStar } from "react-icons/fa";
+import { FaRegStar, FaStar } from "react-icons/fa6";
+import { IoClose } from "react-icons/io5";
+import MenuCard from "./MenuCard";
 
 const initialRestaurantData = {
   idMenza: "1",
@@ -54,31 +54,79 @@ interface Korisnik {
   roleName: string;
 }
 
+interface Ocjena {
+  hrana: number;
+  ljubaznost: number;
+  ambijent: number;
+  lokacija: number;
+}
+
 const apiUrl = import.meta.env.VITE_API_URL;
 axios.defaults.withCredentials = true;
 
+interface RatingStarsProps {
+  category: keyof Ocjena;
+  value: number;
+  onChange: (category: keyof Ocjena, value: number) => void;
+}
+
+const RatingStars: React.FC<RatingStarsProps> = ({
+  category,
+  value,
+  onChange,
+}) => {
+  const [hoveredValue, setHoveredValue] = useState<number>(0);
+
+  return (
+    <div className="stars">
+      {[1, 2, 3, 4, 5].map((star) => (
+        <span
+          key={`${category}-${star}`}
+          onMouseEnter={() => setHoveredValue(star)}
+          onMouseLeave={() => setHoveredValue(0)}
+          onClick={() => onChange(category, star)}
+        >
+          {star <= (hoveredValue || value) ? (
+            <FaStar className="star filled" />
+          ) : (
+            <FaRegStar className="star" />
+          )}
+        </span>
+      ))}
+    </div>
+  );
+};
+
 function Menza() {
-  const { id } = useParams();
-  const [loading, setLoading] = useState(true);
+  const { id } = useParams<{ id: string }>();
+  const [loading, setLoading] = useState<boolean>(true);
   const [restaurantData, setRestaurantData] = useState<RestaurantData>(
     initialRestaurantData
   );
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [korisnik, setKorisnik] = useState<Korisnik | null>(null);
-  const [role, setRole] = useState(1);
+  const [role, setRole] = useState<number>(1);
   const [editableTimes, setEditableTimes] = useState(
     initialRestaurantData.radnaVremena
   );
   const [editModeIndex, setEditModeIndex] = useState<number | null>(null);
-  const [isChatOpen, setIsChatOpen] = useState(false);
-  const [muxError, setMuxError] = useState(false);
-  const [showRatingForm, setShowRatingForm] = useState(false);
-  const [ocjene, setOcjene] = useState<{
-    hrana: number;
-    ljubaznost: number;
-    ambijent: number;
-    lokacija: number;
-  } | null>(null);
+  const [isChatOpen, setIsChatOpen] = useState<boolean>(false);
+  const [muxError, setMuxError] = useState<boolean>(false);
+  const [showRatingForm, setShowRatingForm] = useState<boolean>(false);
+  const [ocjene, setOcjene] = useState<Ocjena | null>(null);
+  const [rating, setRating] = useState<Ocjena>({
+    hrana: 0,
+    ljubaznost: 0,
+    ambijent: 0,
+    lokacija: 0,
+  });
+
+  const handleRatingChange = (category: keyof Ocjena, value: number) => {
+    setRating((prevRating) => ({
+      ...prevRating,
+      [category]: value,
+    }));
+  };
 
   useEffect(() => {
     const fetchOcjene = async () => {
@@ -86,7 +134,8 @@ function Menza() {
         const response = await axios.get(
           `${apiUrl}/menza/${restaurantData.idMenza}/prosjecna-ocjena`
         );
-        setOcjene(response.data);
+        const [hrana, ljubaznost, ambijent, lokacija] = response.data; // Destructure the array
+        setOcjene({ hrana, ljubaznost, ambijent, lokacija });
         console.log("Here", response.data);
       } catch (error) {
         console.error("Error fetching ocjene data:", error);
@@ -146,12 +195,6 @@ function Menza() {
 
   useEffect(() => {
     const fetchRestaurantData = async () => {
-      try {
-        const streamStartResponse = axios.post(`${apiUrl}/stream/start`);
-        console.log("Stream started successfully", streamStartResponse);
-      } catch (error) {
-        console.error("Error starting stream:", error);
-      }
       try {
         const response = await axios.get(`${apiUrl}/menza/${id}`);
 
@@ -248,6 +291,38 @@ function Menza() {
     }
   };
 
+  const submitRating = async () => {
+    if (!korisnik || !restaurantData) {
+      alert("Korisnik ili menza nisu učitani.");
+      return;
+    }
+
+    const payload = {
+      hranaRating: rating.hrana,
+      ljubaznostRating: rating.ljubaznost,
+      ambijentRating: rating.ambijent,
+      lokacijaRating: rating.lokacija,
+    };
+
+    console.log(
+      "URL:",
+      `${apiUrl}/menza/${restaurantData.idMenza}/${korisnik.idKorisnik}/ocjene`
+    );
+    console.log("Payload:", payload);
+    try {
+      console.log("restaurantData.idMenza:", restaurantData.idMenza);
+
+      await axios.post(
+        `${apiUrl}/menza/${restaurantData.idMenza}/${korisnik.idKorisnik}/ocjene`,
+        payload
+      );
+      alert("Vaša ocjena je uspješno poslana!");
+      setShowRatingForm(false);
+    } catch (error) {
+      console.error("Error submitting rating:", error);
+      alert("Došlo je do pogreške prilikom slanja ocjene.");
+    }
+  };
   return (
     <>
       <NavBar />
@@ -359,11 +434,10 @@ function Menza() {
                 ))}
               </ListGroup>
             </div>
-            <div className="camera-icon">
-              <KameraIkona></KameraIkona>
-            </div>
           </Card.Body>
         </Card>
+
+        <MenuCard menzaId={id || ""} role={role} />
 
         <div className="live-stream">
           <h4>Uživo red u menzi</h4>
@@ -395,7 +469,7 @@ function Menza() {
             className="close-chat-btn"
             onClick={() => setIsChatOpen(false)}
           >
-            Zatvori
+            <IoClose></IoClose>
           </button>
         </div>
       )}
@@ -404,85 +478,45 @@ function Menza() {
         <div className="chat-popup rate">
           <h3>Ocijenite menzu</h3>
           <form>
-            <div className="rating-category">
-              <label>
-                <IoFastFoodOutline className="ocjena-ikona" /> Hrana
-              </label>
-              <div className="stars">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <input
-                    key={`Hrana-${star}`}
-                    type="radio"
-                    name="Hrana"
-                    value={star}
-                    id={`Hrana-${star}`}
-                  />
-                ))}
-                {[1, 2, 3, 4, 5].map(() => (
-                  <FaRegStar className="star" />
-                ))}
+            {[
+              {
+                name: "Hrana",
+                icon: IoFastFoodOutline,
+                key: "hrana" as keyof Ocjena, // Explicitly cast to keyof Ocjena
+              },
+              {
+                name: "Ljubaznost",
+                icon: TbUserHeart,
+                key: "ljubaznost" as keyof Ocjena, // Explicitly cast to keyof Ocjena
+              },
+              {
+                name: "Ambijent",
+                icon: PiArmchair,
+                key: "ambijent" as keyof Ocjena, // Explicitly cast to keyof Ocjena
+              },
+              {
+                name: "Lokacija",
+                icon: MdLocationOn,
+                key: "lokacija" as keyof Ocjena, // Explicitly cast to keyof Ocjena
+              },
+            ].map(({ name, icon: Icon, key }) => (
+              <div className="rating-category" key={key}>
+                <label>
+                  <Icon className="ocjena-ikona" /> {name}
+                </label>
+                <RatingStars
+                  category={key} // Type is now valid
+                  value={rating[key]}
+                  onChange={handleRatingChange}
+                />
               </div>
-            </div>
-            <div className="rating-category">
-              <label>
-                <TbUserHeart className="ocjena-ikona" /> Ljubaznost
-              </label>
-              <div className="stars">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <input
-                    key={`Ljubaznost-${star}`}
-                    type="radio"
-                    name="Ljubaznost"
-                    value={star}
-                    id={`Ljubaznost-${star}`}
-                  />
-                ))}
-                {[1, 2, 3, 4, 5].map(() => (
-                  <FaRegStar className="star" />
-                ))}
-              </div>
-            </div>
-            <div className="rating-category">
-              <label>
-                <PiArmchair className="ocjena-ikona" /> Ambijent
-              </label>
-              <div className="stars">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <input
-                    key={`Ambijent-${star}`}
-                    type="radio"
-                    name="Ambijent"
-                    value={star}
-                    id={`Ambijent-${star}`}
-                  />
-                ))}
-                {[1, 2, 3, 4, 5].map(() => (
-                  <FaRegStar className="star" />
-                ))}
-              </div>
-            </div>
-            <div className="rating-category">
-              <label>
-                <MdLocationOn className="ocjena-ikona" /> Lokacija
-              </label>
-              <div className="stars">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <input
-                    key={`Lokacija-${star}`}
-                    type="radio"
-                    name="Lokacija"
-                    value={star}
-                    id={`Lokacija-${star}`}
-                  />
-                ))}
-                {[1, 2, 3, 4, 5].map(() => (
-                  <FaRegStar className="star" />
-                ))}
-              </div>
-            </div>
+            ))}
           </form>
+          <button onClick={submitRating} className="save-rating-btn">
+            Spremi
+          </button>
           <button onClick={closeRatingForm} className="close-chat-btn">
-            Zatvori
+            <IoClose></IoClose>
           </button>
         </div>
       )}

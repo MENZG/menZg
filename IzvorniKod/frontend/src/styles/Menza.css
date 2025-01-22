@@ -6,7 +6,7 @@ body {
   margin-top: 1.5rem !important;
 }
 
-.container{
+.container {
   margin-top: 20vh;
   width: 65vw;
   margin-bottom: 6vh;
@@ -36,7 +36,7 @@ body {
 
 .list-group-item {
   display: flex;
-  justify-content:center;
+  justify-content: center;
   align-items: center;
 }
 
@@ -44,7 +44,7 @@ body {
   margin-left: auto;
 }
 
-.header{
+.header {
   text-align: center;
   background-color: white;
   display: flex;
@@ -52,19 +52,18 @@ body {
   align-items: center;
 }
 
-.location{
+.location {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
 .location-pin-img {
-    margin-right: 0.5em; /* Space between the pin and the text */
-    object-fit: contain; /* Maintains aspect ratio and avoids cropping */
-    color: #0098b3;
-    font-size: 18px;
+  margin-right: 0.5em; /* Space between the pin and the text */
+  object-fit: contain; /* Maintains aspect ratio and avoids cropping */
+  color: #0098b3;
+  font-size: 18px;
 }
-
 
 .live-stream {
   margin-top: 20px;
@@ -77,7 +76,7 @@ body {
   font-size: 1.2rem;
 }
 
-.paint-brush{
+.paint-brush {
   border-radius: 50px;
 }
 
@@ -87,11 +86,11 @@ body {
 }
 
 .chat-popup {
-  position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  position: fixed;
   z-index: 1000;
+  transform: translate(-50%, -50%);
   background: #fff;
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -101,7 +100,7 @@ body {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-.rate{
+.rate {
   box-shadow: none;
   display: flex;
   flex-direction: column;
@@ -134,27 +133,39 @@ body {
 
 /* Close chat button */
 .close-chat-btn {
-  margin-top: 10px;
-  padding: 5px 10px;
-  background-color: #f50f8e;
-  color: #fff;
+  top: 10px;
+  right: 10px;
+  position: fixed;
+  color: #373737;
   border: none;
-  border-radius: 50px;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
 }
 
 .close-chat-btn:hover {
-  background-color: #e70e86;
+  background-color: #0098b3;
+  color: white;
 }
 
-.menza-card:hover{
+.menza-card:hover {
   transform: none;
-
 }
-.ocjene{
+
+.ocjene {
   display: flex;
-  justify-content:space-between;
+  justify-content: space-between;
   align-items: center;
+}
+
+@media (max-width: 426px) {
+  .ocjene {
+    flex-direction: column;
+  }
 }
 
 .ocjena{
@@ -165,15 +176,15 @@ body {
   font-size: 18px;
 }
 
-.ocjena-broj{
+.ocjena-broj {
   margin: 0 0 0 4px;
 }
 
-.ocjena-ikona{
+.ocjena-ikona {
   color: #0098b3;
 }
 
-.ocjeni-btn{
+.ocjeni-btn {
   border: none;
   border-radius: 50px;
   background-color: #0098b3;
@@ -182,11 +193,11 @@ body {
   font-size: 14px;
 }
 
-.ocjeni-btn:hover{
+.ocjeni-btn:hover {
   background-color: #00758a;
 }
 
-.ocjeni-btn-div{
+.ocjeni-btn-div {
   margin-top: 10px;
   margin-bottom: 10px;
 }
@@ -237,6 +248,15 @@ body {
   cursor: pointer;
 }
 
-.star{
+.star {
   color: rgb(255, 204, 0);
+}
+
+.save-rating-btn{  
+  border: none;
+  border-radius: 50px;
+  background-color: #0098b3;
+  color: white;
+  padding: 6px 12px 6px 12px;
+  font-size: 14px;
 }
