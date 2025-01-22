@@ -22,7 +22,13 @@ interface MenuCardProps {
 
 function MenuCard({ menzaId, role }: MenuCardProps) {
   const [menu, setMenu] = useState<MenuItem[]>([]);
-  const [isEditMode, setIsEditMode] = useState(false);
+  const [editMode, setEditMode] = useState<{ [key: number]: boolean }>({});
+  const [newItem, setNewItem] = useState<{
+    [key: string]: { nazivJela: string; cijena: number };
+  }>({});
+  const [showNewItemInputs, setShowNewItemInputs] = useState<{
+    [key: string]: boolean;
+  }>({});
 
   useEffect(() => {
     const fetchMenu = async () => {
@@ -38,47 +44,62 @@ function MenuCard({ menzaId, role }: MenuCardProps) {
     fetchMenu();
   }, [menzaId]);
 
-  const handleEditToggle = () => {
-    if (isEditMode) handleSave();
-    setIsEditMode(!isEditMode);
+  const handleEditClick = (itemId: number) => {
+    setEditMode((prev) => ({ ...prev, [itemId]: !prev[itemId] }));
   };
 
-  const handleSave = async () => {
-    try {
-      const response = await axios.put(`${apiUrl}/menza/${menzaId}/jelovnik`, menu);
-      console.log("Menu saved successfully:", response.data);
-    } catch (error) {
-      console.error("Error saving menu data:", error);
-    }
+  const handleRemoveClick = (itemId: number) => {
+    setMenu((prevMenu) => prevMenu.filter((item) => item.idJela !== itemId));
   };
 
-  const handleAddItem = (kategorija: string) => {
-    const newItem: MenuItem = {
-      idJela: Date.now(),
-      kategorija: kategorija,
-      nazivJela: "Novi artikl",
-      cijena: 1,
-    };
-    setMenu([...menu, newItem]);
-  };
-
-  const handleRemoveItem = (id: number) => {
-    const updatedMenu = menu.filter((item) => item.idJela !== id);
-    setMenu(updatedMenu);
-  };
-
-  interface HandleInputChangeParams {
-    id: number;
-    field: keyof MenuItem;
-    value: string | number;
-  }
-
-  const handleInputChange = ({ id, field, value }: HandleInputChangeParams) => {
+  const handleInputChange = (
+    itemId: number,
+    field: string,
+    value: string | number
+  ) => {
     setMenu((prevMenu) =>
       prevMenu.map((item) =>
-        item.idJela === id ? { ...item, [field]: value } : item
+        item.idJela === itemId ? { ...item, [field]: value } : item
       )
     );
+  };
+
+  const handleNewItemChange = (
+    category: string,
+    field: string,
+    value: string | number
+  ) => {
+    setNewItem((prev) => ({
+      ...prev,
+      [category]: { ...prev[category], [field]: value },
+    }));
+  };
+
+  const handleAddNewItem = (category: string) => {
+    const newItemData = newItem[category];
+    if (!newItemData?.nazivJela || newItemData.cijena <= 0) {
+      alert("Name must not be empty and cost must be greater than 0");
+      return;
+    }
+    const newItemId = menu.length
+      ? Math.max(...menu.map((item) => item.idJela)) + 1
+      : 1;
+    const newItemToAdd = {
+      idJela: newItemId,
+      kategorija: category,
+      nazivJela: newItemData.nazivJela,
+      cijena: newItemData.cijena,
+    };
+    setMenu((prevMenu) => [...prevMenu, newItemToAdd]);
+    setNewItem((prev) => ({
+      ...prev,
+      [category]: { nazivJela: "", cijena: 0 },
+    }));
+    setShowNewItemInputs((prev) => ({ ...prev, [category]: false }));
+  };
+
+  const toggleNewItemInputs = (category: string) => {
+    setShowNewItemInputs((prev) => ({ ...prev, [category]: !prev[category] }));
   };
 
   return (
@@ -88,17 +109,6 @@ function MenuCard({ menzaId, role }: MenuCardProps) {
           <Card.Header className="header">
             <div className="title-container">
               <Card.Title>Jelovnik</Card.Title>
-              {role === 2 && (
-                <div className="button-container">
-                  <Button onClick={handleEditToggle}>
-                    {isEditMode ? (
-                      "Save"
-                    ) : (
-                      <FontAwesomeIcon icon={faPaintBrush} />
-                    )}
-                  </Button>
-                </div>
-              )}
             </div>
           </Card.Header>
           {["Doručak", "Ručak", "Večera"].map((kategorija) => (
@@ -116,41 +126,54 @@ function MenuCard({ menzaId, role }: MenuCardProps) {
                         key={item.idJela}
                         className="list-group-item"
                       >
-                        {isEditMode ? (
+                        {editMode[item.idJela] ? (
                           <>
                             <input
                               type="text"
                               value={item.nazivJela}
                               onChange={(e) =>
-                                handleInputChange({
-                                  id: item.idJela,
-                                  field: "nazivJela",
-                                  value: e.target.value,
-                                })
+                                handleInputChange(
+                                  item.idJela,
+                                  "nazivJela",
+                                  e.target.value
+                                )
                               }
                             />
                             <input
                               type="number"
                               value={item.cijena}
                               onChange={(e) =>
-                                handleInputChange({
-                                  id: item.idJela,
-                                  field: "cijena",
-                                  value: parseFloat(e.target.value),
-                                })
+                                handleInputChange(
+                                  item.idJela,
+                                  "cijena",
+                                  e.target.value
+                                )
                               }
                             />
-                            <Button
-                              variant="danger"
-                              className="remove-item-button"
-                              onClick={() => handleRemoveItem(item.idJela)}
-                            >
-                              Remove
-                            </Button>
                           </>
                         ) : (
                           <>
-                            <span>{item.nazivJela}</span>: {item.cijena}€
+                            {item.nazivJela} - {item.cijena} €
+                          </>
+                        )}
+                        {role === 2 && (
+                          <>
+                            <Button
+                              variant="primary"
+                              onClick={() => handleEditClick(item.idJela)}
+                            >
+                              {editMode[item.idJela] ? (
+                                "Save"
+                              ) : (
+                                <FontAwesomeIcon icon={faPaintBrush} />
+                              )}
+                            </Button>
+                            <Button
+                              variant="danger"
+                              onClick={() => handleRemoveClick(item.idJela)}
+                            >
+                              Remove
+                            </Button>
                           </>
                         )}
                       </ListGroup.Item>
@@ -158,14 +181,50 @@ function MenuCard({ menzaId, role }: MenuCardProps) {
                 ) : (
                   <p>No items available</p>
                 )}
-                {isEditMode && (
-                  <Button
-                    variant="primary"
-                    className="add-item-button"
-                    onClick={() => handleAddItem(kategorija)}
-                  >
-                    Add
-                  </Button>
+                {role === 2 && (
+                  <ListGroup.Item className="list-group-item">
+                    {showNewItemInputs[kategorija] ? (
+                      <>
+                        <input
+                          type="text"
+                          placeholder="Naziv jela"
+                          value={newItem[kategorija]?.nazivJela || ""}
+                          onChange={(e) =>
+                            handleNewItemChange(
+                              kategorija,
+                              "nazivJela",
+                              e.target.value
+                            )
+                          }
+                        />
+                        <input
+                          type="number"
+                          placeholder="Cijena"
+                          value={newItem[kategorija]?.cijena || ""}
+                          onChange={(e) =>
+                            handleNewItemChange(
+                              kategorija,
+                              "cijena",
+                              e.target.value
+                            )
+                          }
+                        />
+                        <Button
+                          variant="success"
+                          onClick={() => handleAddNewItem(kategorija)}
+                        >
+                          Add
+                        </Button>
+                      </>
+                    ) : (
+                      <Button
+                        variant="success"
+                        onClick={() => toggleNewItemInputs(kategorija)}
+                      >
+                        Add New Item
+                      </Button>
+                    )}
+                  </ListGroup.Item>
                 )}
               </ListGroup>
             </div>
