@@ -156,9 +156,6 @@ body {
   align-items: center;
 }
 
-<<<<<<< HEAD
-.ocjena {
-=======
 @media (max-width: 426px) {
   .ocjene {
     flex-direction: column;
@@ -166,7 +163,6 @@ body {
 }
 
 .ocjena{
->>>>>>> 6b1b55c6242459c041c1b90fe85363c7cc67a4cc
   display: flex;
   padding: 10px 10px 0 10px;
   justify-content: center;
