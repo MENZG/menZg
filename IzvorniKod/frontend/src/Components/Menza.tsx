@@ -15,6 +15,7 @@ import { IoChatbubbleOutline, IoFastFoodOutline } from "react-icons/io5";
 import { PiArmchair } from "react-icons/pi";
 import { FaRegStar, FaStar } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";
+import MenuCard from "./MenuCard";
 
 const initialRestaurantData = {
   idMenza: "1",
@@ -435,6 +436,8 @@ function Menza() {
             </div>
           </Card.Body>
         </Card>
+
+        <MenuCard menzaId={id || ""} role={role} />
 
         <div className="live-stream">
           <h4>Uživo red u menzi</h4>
