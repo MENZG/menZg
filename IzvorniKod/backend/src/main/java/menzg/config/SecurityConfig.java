@@ -57,7 +57,7 @@ public class SecurityConfig {
 
 			List<SimpleGrantedAuthority> authorities = korisnikService.getAuthorities(korisnik);
 
-			System.out.println("security config se obradjujeee -----------");
+			System.out.println("security config se obradjujeee ------------------------------- \n\n\n");
 
 			UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
 					oAuth2User, null, authorities);

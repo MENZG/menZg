@@ -1,6 +1,8 @@
 package menzg.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,7 +17,7 @@ public class StreamController {
 	private FFmpegService ffmpegService;
 
 	@PostMapping("/start")
-	public String startStream() {
+	public ResponseEntity<String> startStream() {
 
 		System.out.println("\n\n\n\n");
 
@@ -29,11 +31,13 @@ public class StreamController {
 
 		System.out.println("zahtijevano je pocinjanje streama ------------- ");
 		try {
-			ffmpegService.startStreaming(inputUrl, outputUrl);
-			return "Streaming started successfully!!!!!!! \n\n";
+			String message = ffmpegService.startStreaming(inputUrl, outputUrl);
+			return ResponseEntity.ok(message);
+
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "Error starting streaming!!!!!: " + e.getMessage();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("Failed to start streaming: " + e.getMessage());
 		}
 	}
 }

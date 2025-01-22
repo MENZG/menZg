@@ -1,6 +1,5 @@
 package menzg.service;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -10,50 +9,25 @@ import org.springframework.stereotype.Service;
 @Service
 public class FFmpegService {
 
-	private static final String WINDOWS_FFMPEG = "ffmpeg_windows.exe";
-	private static final String MACOS_FFMPEG = "ffmpeg_mac";
+	// private static final String WINDOWS_FFMPEG = "ffmpeg_windows.exe";
+	// private static final String MACOS_FFMPEG = "ffmpeg_mac";
 
 	private final Map<String, Process> processMap = new ConcurrentHashMap<>();
 
-	public void startStreaming(String inputUrl, String outputUrl) throws IOException {
+	public String startStreaming(String inputUrl, String outputUrl) throws IOException {
 
-		String ffmpegExecutable = "AAAAA";
+		if (processMap.containsKey(outputUrl) && processMap.get(outputUrl).isAlive()) {
+
+			return "stream je vec u tijeku ------";
+		}
 
 		String os = System.getProperty("os.name").toLowerCase();
 
-		boolean osOk = false;
-
-		if (os.contains("win")) {
-			ffmpegExecutable = "src/main/resources/ffmpeg/" + WINDOWS_FFMPEG;
-
-			osOk = true;
-
-		} else if (os.contains("mac")) {
-			ffmpegExecutable = "src/main/resources/ffmpeg/" + MACOS_FFMPEG;
-			osOk = true;
-		} else {
-
-			System.out.println("NIJE MAC NIJE WINDOWS LAPTOP");
-			osOk = false;
-		}
+		System.out.println("ovo pokreces na operacijskom sustavu " + os);
 
 		String command;
 
-		if (osOk) {
-			File ffmpegFile = new File(ffmpegExecutable);
-			if (os.contains("mac") && !ffmpegFile.canExecute()) {
-				ffmpegFile.setExecutable(true);
-			}
-
-			command = String.format("%s -i %s -f flv %s", ffmpegFile.getAbsolutePath(), inputUrl, outputUrl);
-
-		} else {
-
-			System.out.println("mozda pronadjem ffmpeg naredbu u sustavu??? \n\n");
-
-			command = String.format("ffmpeg -i %s -f flv %s", inputUrl, outputUrl);
-
-		}
+		command = String.format("ffmpeg -i %s -f flv %s", inputUrl, outputUrl);
 
 		System.out.println("koristis os ----------->   " + os);
 
@@ -62,14 +36,36 @@ public class FFmpegService {
 		System.out.println(command);
 
 		ProcessBuilder processBuilder = new ProcessBuilder();
-		processBuilder.command("sh", "-c", command);
+
+		if (os.contains("win")) {
+
+			// windows racunala naredba
+			command = String.format("ffmpeg -i %s -f flv %s", inputUrl, outputUrl);
+			processBuilder.command("cmd.exe", "/c", command);
+
+		} else {
+
+			// neka druga racunala naredba
+
+			command = String.format("ffmpeg -i %s -f flv %s", inputUrl, outputUrl);
+			processBuilder.command("sh", "-c", command);
+		}
+
+		System.out.println("Koristite OS: " + os);
+		System.out.println("Puna naredba: " + command);
 
 		Process process = processBuilder.start();
+		processBuilder.redirectErrorStream(true);
+		processBuilder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
 		processMap.put(outputUrl, process);
+
+		System.out.println("Je li proces aktivan nakon pokretanja? ----->  " + process.isAlive());
 
 		System.out.println();
 
 		System.out.println("cijela proces mapa je \n" + processMap);
+
+		return "stream je zapoceo valjda -----";
 	}
 
 	public void stopStreaming(String outputUrl) {

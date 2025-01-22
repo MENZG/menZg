@@ -28,7 +28,10 @@ public class KorisnikService {
 
 		if (existingUser.isPresent()) {
 
+			Korisnik us = existingUser.get();
+
 			System.out.println("Mail vec postoji u bazi podataka ---------------------");
+			System.out.println("postojeca uloga je " + us.getRoleName());
 
 			Korisnik korisnik = existingUser.get();
 

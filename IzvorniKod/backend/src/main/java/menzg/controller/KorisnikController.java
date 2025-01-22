@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,6 +35,7 @@ import menzg.service.MenzaService;
 @RestController
 @RequestMapping("/korisnici")
 // @CrossOrigin(origins = "http://localhost:5173")
+
 public class KorisnikController {
 
 	@Autowired
@@ -48,7 +52,8 @@ public class KorisnikController {
 
 	// GET: Dohvaća sve korisnike
 	@GetMapping
-	// @PreAuthorize("hasRole('ROLE_ADMIN')") NEKA U RAZVOJU OVO BUDE DOSTUPNO SVIMA
+	// @PreAuthorize("hasRole('ROLE_ADMIN')") // NEKA U RAZVOJU OVO BUDE DOSTUPNO
+	// SVIMA
 	public ResponseEntity<List<KorisnikDTO>> getAllKorisnici() {
 		List<Korisnik> korisnici = korisnikService.findAll();
 
@@ -62,6 +67,7 @@ public class KorisnikController {
 	}
 
 	@PutMapping("/{id}/newRole/{brojNoveRole}")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<String> promijeniRoluKorisniku(@PathVariable Long id, @PathVariable int brojNoveRole) {
 		Optional<Korisnik> korisnikOpt = korisnikService.findById(id);
 
@@ -77,7 +83,20 @@ public class KorisnikController {
 
 		System.out.println("mijenjam rolu korisniku " + korisnik.getUsername() + " na " + novaRola);
 
+		// ovime mu se spremaju nove ovlasti
 		korisnikService.save(korisnik);
+
+		// MORA GOOGLE ZNATI ZA NOVE OVLASTI
+		List<SimpleGrantedAuthority> noveOvlasti = korisnikService.getAuthorities(korisnik);
+
+		System.out.println("nove ovlasti su " + noveOvlasti);
+
+		Authentication trenutnaAutentikacija = SecurityContextHolder.getContext().getAuthentication();
+
+		Authentication novaAutentikacija = new UsernamePasswordAuthenticationToken(trenutnaAutentikacija.getPrincipal(),
+				null, noveOvlasti);
+
+		SecurityContextHolder.getContext().setAuthentication(novaAutentikacija);
 
 		return ResponseEntity.ok("Rola korisnika s ID-em " + id + " uspješno promijenjena u: " + novaRola);
 
@@ -96,17 +115,16 @@ public class KorisnikController {
 		}
 	}
 
-	// najzajebanija metoda
 	@PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
 	@GetMapping("/user")
 	public Map<String, Object> user(@AuthenticationPrincipal OAuth2User principal) {
 
-		System.out.println("op op op - trazimo principala ");
 		return principal.getAttributes();
 	}
 
 	// Endpoint za osnovne informacije o korisniku
 	@GetMapping("/{id}")
+	@PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
 	public ResponseEntity<KorisnikDTO> getKorisnikBasicInfo(@PathVariable Long id) {
 		Optional<Korisnik> korisnikOptional = korisnikService.findById(id);
 
@@ -125,6 +143,7 @@ public class KorisnikController {
 
 	// POST: Kreira novog korisnika
 	@PostMapping
+	@PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
 	public ResponseEntity<Korisnik> createKorisnik(@RequestBody Korisnik korisnik) {
 		if (korisnik.getBlocked() == null) {
 			korisnik.setBlocked(false); // Postavljamo default vrijednost
@@ -156,8 +175,11 @@ public class KorisnikController {
 	}
 
 	@DeleteMapping("/{id}")
+	@PreAuthorize("hasRole('ROLE_ADMIN')") // samo admin moze brisat korisnika
 	// @PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<String> deleteKorisnik(@PathVariable Long id) {
+
+		System.out.println("proces brisanja korisnika s idijem " + id);
 		if (korisnikService.findById(id).isPresent()) {
 			korisnikService.deleteById(id);
 			return ResponseEntity.status(HttpStatus.OK).body("Korisnik uspješno obrisan.");
@@ -238,6 +260,7 @@ public class KorisnikController {
 	}
 
 	@DeleteMapping("/{korisnikId}/omiljenaMenza/{menzaId}")
+	@PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
 	// @PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or
 	// hasRole('ROLE_DJELATNIK')")
 	public ResponseEntity<String> removeOmiljenaMenza(@PathVariable Long korisnikId, @PathVariable Long menzaId) {
@@ -276,6 +299,7 @@ public class KorisnikController {
 	// @PreAuthorize("hasRole('ROLE_ADMIN')") // Samo admin može pristupiti ovom
 	// endpointu
 	@PutMapping("/{idKorisnik}/blocked")
+	@PreAuthorize("hasRole('ROLE_ADMIN')") // samo admin moze blokirati korisnika
 	public ResponseEntity<Korisnik> promijeniBlockedStatus(@PathVariable Long idKorisnik,
 			@RequestParam boolean blocked) {
 
