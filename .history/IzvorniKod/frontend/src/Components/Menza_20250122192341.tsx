@@ -145,10 +145,8 @@ function Menza() {
       }
     };
 
-    if (restaurantData.idMenza) {
-      fetchOcjene();
-    }
-  }, [restaurantData.idMenza]);
+    fetchOcjene();
+  }, [id]);
 
   const handleMuxError = () => {
     setMuxError(true);
