@@ -127,7 +127,8 @@ public class MenzaController {
 	public ResponseEntity<List<Jelo>> getJelovnik(@PathVariable Long id) {
 		// Dohvaćanje menze prema ID-u
 		Menza menza = menzaService.getMenzaData(id);
-
+		logger.info("Loger radi i prikazuje se u backendu uspješno ažurirana za menzu {}", id);
+		System.out.println("Dohvacam jelovnik");
 		if (menza == null) {
 			// Ako menza nije pronađena, vraća se status 404
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -161,6 +162,7 @@ public class MenzaController {
 	public ResponseEntity<String> azurirajJelovnik(@PathVariable Long idMenze, // ID menze dolazi iz putanje
 												   @RequestBody Jelo novoJelo) { // Novi jelovnik dolazi iz tijela zahtjeva
 		System.out.println("Stigao novi jelovnik za menzu " + idMenze + ": " + novoJelo);
+		logger.info("Loger radi i prikazuje se u backendu uspješno ažurirana za menzu {}", idMenze);
 
 		boolean uspjeh = menzaService.azurirajJelovnik(idMenze, novoJelo);
 
@@ -178,6 +180,7 @@ public class MenzaController {
 	public ResponseEntity<List<OcjenaDohvatDTO>> getOcjene(@PathVariable Long id) {
 		// Dohvaćanje menze prema ID-u
 		Menza menza = menzaService.getMenzaData(id);
+		System.out.println("dohvacam sve  ocjenu");
 
 		if (menza == null) {
 			// Ako menza nije pronađena, vraća se status 404
@@ -202,7 +205,7 @@ public class MenzaController {
 	public ResponseEntity<List<Double>> getAverageRating(@PathVariable Long id) {
 		// Dohvaćanje menze prema ID-u
 		Menza menza = menzaService.getMenzaData(id);
-
+		System.out.println("dohvacam prosjecnu ocjenu");
 		if (menza == null) {
 			// Ako menza nije pronađena, vraća se status 404
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -279,16 +282,21 @@ public class MenzaController {
 
 
 	@PostMapping("/{idMenze}/{idKorisnik}/ocjene")
-	public ResponseEntity<String> dodajOcjenu(@PathVariable Long idMenza, @PathVariable Long idKorisnik, @RequestBody OcjenaDTO ocjenaRequest){
-		Menza menza =  menzaService.getMenzaData(idMenza);
+	public ResponseEntity<String> dodajOcjenu(@PathVariable Long idMenze, @PathVariable Long idKorisnik, @RequestBody OcjenaDTO ocjenaRequest){
+		logger.info("Primljen zahtjev za ažuriranje ocjene: idMenze={}, idKorisnik={}, ocjenaRequest={}", idMenze, idKorisnik, ocjenaRequest);
+		System.out.println("saljem   ocjenu" + idMenze + "  " + idKorisnik);
+
+		Menza menza =  menzaService.getMenzaData(idMenze);
 		Optional<Korisnik> korisnik = korisnikService.findById(idKorisnik);
 
 		if (menza == null) {
 			// Ako menza nije pronađena, vraća se status 404
+			logger.warn("Menza s ID {} nije pronađena.", idMenze);
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		if (!(korisnik.isPresent())) {
 			// Ako menza nije pronađena, vraća se status 404
+			logger.warn("Korisnik s ID {} nije pronađen.", idKorisnik);
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		Korisnik korisnikObject = korisnik.get();
@@ -306,11 +314,13 @@ public class MenzaController {
 
 		Ocjena novaOcjena =  new Ocjena(ocjenaRequest.getHranaRating(), ocjenaRequest.getLjubaznostRating(), ocjenaRequest.getAmbijentRating(), ocjenaRequest.getLokacijaRating(), korisnikObject, menza);
 
-		boolean uspjeh = menzaService.azurirajOcjenu(idMenza,idKorisnik, novaOcjena);
+		boolean uspjeh = menzaService.azurirajOcjenu(idMenze,idKorisnik, novaOcjena);
 		if (uspjeh) {
-			return ResponseEntity.ok("Osjene uspješno ažurirane za menzu " + idMenza);
+			logger.info("Ocjena uspješno ažurirana za menzu {}", idMenze);
+			return ResponseEntity.ok("Osjene uspješno ažurirane za menzu " + idMenze);
 		} else {
-			return ResponseEntity.badRequest().body("Ažuriranje ocjena nije uspjelo. Provjerite ID menze: " + idMenza);
+			logger.error("Ažuriranje ocjena nije uspjelo za menzu {}", idMenze);
+			return ResponseEntity.badRequest().body("Ažuriranje ocjena nije uspjelo. Provjerite ID menze: " + idMenze);
 		}
 
 		//return new ResponseEntity<>("Ocjena dodana.", HttpStatus.CREATED);

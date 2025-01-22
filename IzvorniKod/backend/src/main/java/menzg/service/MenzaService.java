@@ -3,8 +3,12 @@ package menzg.service;
 import java.util.List;
 import java.util.Optional;
 
+import menzg.controller.MenzaController;
 import menzg.model.*;
 import menzg.repo.KorisnikRepository;
+import menzg.repo.OcjenaRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +17,15 @@ import menzg.repo.MenzaRepository;
 @Service
 public class MenzaService {
 
+	private static final Logger logger = LoggerFactory.getLogger(MenzaService.class);
+
 	@Autowired
 	MenzaRepository menzaRepo;
 	@Autowired
 	KorisnikRepository korisnikRepo;
+
+	@Autowired
+	OcjenaRepository ocjenaRepo;
 
 	public List<Menza> listAll() {
 
@@ -108,8 +117,10 @@ public class MenzaService {
 	}
 
 	public boolean azurirajOcjenu(Long idMenze, Long idKorisnika,  Ocjena ocjena) {
+		logger.info("Pokrenuto ažuriranje ocjene za menzu ID {} i korisnika ID {}", idMenze, idKorisnika);
 		Menza menza = menzaRepo.findById(idMenze).orElse(null);
 		Optional<Korisnik> korisnik = korisnikRepo.findById(idKorisnika);
+		System.out.println("saljem ali sam u servisu  ocjenu" + idMenze + "  " + idKorisnika);
 
 		if (menza == null) {
 			return false; // Menza s navedenim ID-jem ne postoji
@@ -118,15 +129,18 @@ public class MenzaService {
 			return false;
 		}
 		Korisnik korisnikOcjene = korisnik.get();
+		logger.debug("Korisnik pronađen: {}", korisnikOcjene);
 		Ocjena postojecaOcjena = menza.getOcjene().stream()
 				.filter(o -> o.getKorisnik().equals(korisnikOcjene))
 				.findFirst().orElse(null);
 		if(postojecaOcjena != null) {
+			logger.info("Postojeća ocjena pronađena za korisnika {}. Ažuriram ocjene...", idKorisnika);
 			postojecaOcjena.setHranaRating(ocjena.getHranaRating());
 			postojecaOcjena.setLjubaznostRating(ocjena.getLjubaznostRating());
 			postojecaOcjena.setAmbijentRating(ocjena.getAmbijentRating());
 			postojecaOcjena.setLokacijaRating(ocjena.getLokacijaRating());
 		} else {
+			logger.info("Postojeća ocjena nije pronađena za korisnika {}. Kreiram novu ocjenu...", idKorisnika);
 			Ocjena novaOcjena = new Ocjena();
 			novaOcjena.setMenza(menza);
 			novaOcjena.setKorisnik(korisnikOcjene);
@@ -134,10 +148,13 @@ public class MenzaService {
 			novaOcjena.setLjubaznostRating(ocjena.getLjubaznostRating());
 			novaOcjena.setAmbijentRating(ocjena.getAmbijentRating());
 			novaOcjena.setLokacijaRating(ocjena.getLokacijaRating());
+			novaOcjena.setKategorija("nova ocjena");
 
 			menza.getOcjene().add(novaOcjena);
+			ocjenaRepo.save(novaOcjena);
 		}
 		menzaRepo.save(menza);
+		logger.info("Ažuriranje uspješno završeno za menzu ID {}", idMenze);
 		return true;
 	}
 

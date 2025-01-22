@@ -660,4 +660,12 @@ VALUES
   (4, 5, 3, 4, 'Usluga', 2, 2),
   (3, 3, 4, 4, 'Ambijent', 3, 2),
   (4, 4, 4, 4, 'Sveukupno', 4, 2),
+  (5, 4, 4, 5, 'Hrana', 1, 1),
+    (4, 5, 3, 4, 'Usluga', 2, 1),
+    (3, 3, 4, 4, 'Ambijent', 3, 1),
+    (4, 4, 4, 4, 'Sveukupno', 4, 1),
+    (5, 4, 4, 5, 'Hrana', 5, 2),
+      (4, 5, 3, 4, 'Usluga', 6, 2),
+      (3, 3, 4, 4, 'Ambijent', 7, 2),
+      (4, 4, 4, 4, 'Sveukupno', 8, 2),
   (5, 5, 5, 5, 'Odlična kombinacija svih faktora', 5, 1);
