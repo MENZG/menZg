@@ -13,6 +13,11 @@ import menzg.service.FFmpegService;
 @RequestMapping("/stream")
 public class StreamController {
 
+	private final String inputUrl = "rtsp://menza:FenzaFer9@161.53.65.70:554/Streaming/channels/101";
+
+
+	private final String outputUrl = "rtmp://global-live.mux.com:5222/app/2ff4bbc6-0336-f1e3-95fd-94f81aa1fb08";
+
 	@Autowired
 	private FFmpegService ffmpegService;
 
