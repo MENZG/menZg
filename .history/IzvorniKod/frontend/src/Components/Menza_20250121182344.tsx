@@ -119,6 +119,27 @@ function Menza() {
     lokacija: 0,
   });
 
+  const submitRating = async () => {
+    if (!korisnik || !restaurantData) {
+      alert("Korisnik ili menza nisu učitani.");
+      return;
+    }
+
+    const payload = { ...rating };
+
+    try {
+      await axios.post(
+        `${apiUrl}/menza/${restaurantData.idMenza}/${korisnik.idKorisnik}/ocjene`,
+        payload
+      );
+      alert("Vaša ocjena je uspješno poslana!");
+      setShowRatingForm(false);
+    } catch (error) {
+      console.error("Error submitting rating:", error);
+      alert("Došlo je do pogreške prilikom slanja ocjene.");
+    }
+  };
+
   const handleRatingChange = (category: keyof Ocjena, value: number) => {
     setRating((prevRating) => ({
       ...prevRating,
@@ -289,28 +310,6 @@ function Menza() {
     }
   };
 
-  const submitRating = async () => {
-    if (!korisnik || !restaurantData) {
-      alert("Korisnik ili menza nisu učitani.");
-      return;
-    }
-
-    const payload = { ...rating };
-
-    try {
-      console.log("restaurantData.idMenza:", restaurantData.idMenza);
-
-      await axios.post(
-        `${apiUrl}/menza/${restaurantData.idMenza}/${korisnik.idKorisnik}/ocjene`,
-        payload
-      );
-      alert("Vaša ocjena je uspješno poslana!");
-      setShowRatingForm(false);
-    } catch (error) {
-      console.error("Error submitting rating:", error);
-      alert("Došlo je do pogreške prilikom slanja ocjene.");
-    }
-  };
   return (
     <>
       <NavBar />

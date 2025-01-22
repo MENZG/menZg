@@ -112,14 +112,26 @@ function Menza() {
   const [muxError, setMuxError] = useState<boolean>(false);
   const [showRatingForm, setShowRatingForm] = useState<boolean>(false);
   const [ocjene, setOcjene] = useState<Ocjena | null>(null);
-  const [rating, setRating] = useState<Ocjena>({
-    hrana: 0,
-    ljubaznost: 0,
-    ambijent: 0,
-    lokacija: 0,
+  const [rating, setRating] = useState<{
+    hranaRating: number;
+    ljubaznostRating: number;
+    ambijentRating: number;
+    lokacijaRating: number;
+  }>({
+    hranaRating: 0,
+    ljubaznostRating: 0,
+    ambijentRating: 0,
+    lokacijaRating: 0,
   });
 
-  const handleRatingChange = (category: keyof Ocjena, value: number) => {
+  const handleRatingChange = (
+    category:
+      | "hranaRating"
+      | "ljubaznostRating"
+      | "ambijentRating"
+      | "lokacijaRating",
+    value: number
+  ) => {
     setRating((prevRating) => ({
       ...prevRating,
       [category]: value,
@@ -132,8 +144,14 @@ function Menza() {
         const response = await axios.get(
           `${apiUrl}/menza/${restaurantData.idMenza}/prosjecna-ocjena`
         );
-        const [hrana, ljubaznost, ambijent, lokacija] = response.data; // Destructure the array
-        setOcjene({ hrana, ljubaznost, ambijent, lokacija });
+        const [hranaRating, ljubaznostRating, ambijentRating, lokacijaRating] =
+          response.data; // Destructure the array
+        setOcjene({
+          hranaRating,
+          ljubaznostRating,
+          ambijentRating,
+          lokacijaRating,
+        });
         console.log("Here", response.data);
       } catch (error) {
         console.error("Error fetching ocjene data:", error);
@@ -295,13 +313,14 @@ function Menza() {
       return;
     }
 
+    // Payload with keys ending in Rating
     const payload = { ...rating };
 
     try {
-      console.log("restaurantData.idMenza:", restaurantData.idMenza);
+      console.log("Payload being sent:", payload);
 
       await axios.post(
-        `${apiUrl}/menza/${restaurantData.idMenza}/${korisnik.idKorisnik}/ocjene`,
+        `${apiUrl}/menza/${restaurantData.idMenza}/${korisnik.idKorisnik}/rating`,
         payload
       );
       alert("Vaša ocjena je uspješno poslana!");
@@ -311,6 +330,7 @@ function Menza() {
       alert("Došlo je do pogreške prilikom slanja ocjene.");
     }
   };
+
   return (
     <>
       <NavBar />

@@ -119,6 +119,27 @@ function Menza() {
     lokacija: 0,
   });
 
+  const submitRating = async () => {
+    if (!korisnik || !restaurantData) {
+      alert("Korisnik ili menza nisu učitani.");
+      return;
+    }
+
+    const payload = { ...rating };
+
+    try {
+      const response = await axios.post(
+        `${apiUrl}/menza/${restaurantData.idMenza}/${korisnik.idKorisnik}/ocjene`,
+        payload
+      );
+      alert("Vaša ocjena je uspješno poslana!");
+      setShowRatingForm(false);
+    } catch (error) {
+      console.error("Error submitting rating:", error);
+      alert("Došlo je do pogreške prilikom slanja ocjene.");
+    }
+  };
+
   const handleRatingChange = (category: keyof Ocjena, value: number) => {
     setRating((prevRating) => ({
       ...prevRating,
@@ -289,28 +310,6 @@ function Menza() {
     }
   };
 
-  const submitRating = async () => {
-    if (!korisnik || !restaurantData) {
-      alert("Korisnik ili menza nisu učitani.");
-      return;
-    }
-
-    const payload = { ...rating };
-
-    try {
-      console.log("restaurantData.idMenza:", restaurantData.idMenza);
-
-      await axios.post(
-        `${apiUrl}/menza/${restaurantData.idMenza}/${korisnik.idKorisnik}/ocjene`,
-        payload
-      );
-      alert("Vaša ocjena je uspješno poslana!");
-      setShowRatingForm(false);
-    } catch (error) {
-      console.error("Error submitting rating:", error);
-      alert("Došlo je do pogreške prilikom slanja ocjene.");
-    }
-  };
   return (
     <>
       <NavBar />
@@ -468,22 +467,22 @@ function Menza() {
               {
                 name: "Hrana",
                 icon: IoFastFoodOutline,
-                key: "hrana" as keyof Ocjena, // Explicitly cast to keyof Ocjena
+                key: "hrana",
               },
               {
                 name: "Ljubaznost",
                 icon: TbUserHeart,
-                key: "ljubaznost" as keyof Ocjena, // Explicitly cast to keyof Ocjena
+                key: "ljubaznost",
               },
               {
                 name: "Ambijent",
                 icon: PiArmchair,
-                key: "ambijent" as keyof Ocjena, // Explicitly cast to keyof Ocjena
+                key: "ambijent",
               },
               {
                 name: "Lokacija",
                 icon: MdLocationOn,
-                key: "lokacija" as keyof Ocjena, // Explicitly cast to keyof Ocjena
+                key: "lokacija",
               },
             ].map(({ name, icon: Icon, key }) => (
               <div className="rating-category" key={key}>
@@ -491,7 +490,7 @@ function Menza() {
                   <Icon className="ocjena-ikona" /> {name}
                 </label>
                 <RatingStars
-                  category={key} // Type is now valid
+                  category={key}
                   value={rating[key]}
                   onChange={handleRatingChange}
                 />

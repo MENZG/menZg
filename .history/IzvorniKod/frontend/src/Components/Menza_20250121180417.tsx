@@ -1,3 +1,4 @@
+// Add this state and handler to Menza component
 import { faPaintBrush } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
@@ -62,18 +63,8 @@ interface Ocjena {
 const apiUrl = import.meta.env.VITE_API_URL;
 axios.defaults.withCredentials = true;
 
-interface RatingStarsProps {
-  category: keyof Ocjena;
-  value: number;
-  onChange: (category: keyof Ocjena, value: number) => void;
-}
-
-const RatingStars: React.FC<RatingStarsProps> = ({
-  category,
-  value,
-  onChange,
-}) => {
-  const [hoveredValue, setHoveredValue] = useState<number>(0);
+const RatingStars = ({ category, value, onChange }) => {
+  const [hoveredValue, setHoveredValue] = useState(0);
 
   return (
     <div className="stars">
@@ -96,30 +87,57 @@ const RatingStars: React.FC<RatingStarsProps> = ({
 };
 
 function Menza() {
-  const { id } = useParams<{ id: string }>();
-  const [loading, setLoading] = useState<boolean>(true);
+  const { id } = useParams();
+  const [loading, setLoading] = useState(true);
   const [restaurantData, setRestaurantData] = useState<RestaurantData>(
     initialRestaurantData
   );
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [korisnik, setKorisnik] = useState<Korisnik | null>(null);
-  const [role, setRole] = useState<number>(1);
+  const [role, setRole] = useState(1);
   const [editableTimes, setEditableTimes] = useState(
     initialRestaurantData.radnaVremena
   );
   const [editModeIndex, setEditModeIndex] = useState<number | null>(null);
-  const [isChatOpen, setIsChatOpen] = useState<boolean>(false);
-  const [muxError, setMuxError] = useState<boolean>(false);
-  const [showRatingForm, setShowRatingForm] = useState<boolean>(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const [muxError, setMuxError] = useState(false);
+  const [showRatingForm, setShowRatingForm] = useState(false);
   const [ocjene, setOcjene] = useState<Ocjena | null>(null);
-  const [rating, setRating] = useState<Ocjena>({
+  const [rating, setRating] = useState({
     hrana: 0,
     ljubaznost: 0,
     ambijent: 0,
     lokacija: 0,
   });
 
-  const handleRatingChange = (category: keyof Ocjena, value: number) => {
+  // Funkcija za slanje ocjena
+  const submitRating = async () => {
+    if (!korisnik || !restaurantData) {
+      alert("Korisnik ili menza nisu učitani.");
+      return;
+    }
+
+    const payload = {
+      hrana: rating.hrana,
+      ljubaznost: rating.ljubaznost,
+      ambijent: rating.ambijent,
+      lokacija: rating.lokacija,
+    };
+
+    try {
+      const response = await axios.post(
+        `${apiUrl}/menza/${restaurantData.idMenza}/${korisnik.idKorisnik}/ocjene`,
+        payload
+      );
+      alert("Vaša ocjena je uspješno poslana!");
+      setShowRatingForm(false); // Zatvaranje forme nakon uspješnog slanja
+    } catch (error) {
+      console.error("Error submitting rating:", error);
+      alert("Došlo je do pogreške prilikom slanja ocjene.");
+    }
+  };
+
+  const handleRatingChange = (category: any, value: any) => {
     setRating((prevRating) => ({
       ...prevRating,
       [category]: value,
@@ -289,28 +307,6 @@ function Menza() {
     }
   };
 
-  const submitRating = async () => {
-    if (!korisnik || !restaurantData) {
-      alert("Korisnik ili menza nisu učitani.");
-      return;
-    }
-
-    const payload = { ...rating };
-
-    try {
-      console.log("restaurantData.idMenza:", restaurantData.idMenza);
-
-      await axios.post(
-        `${apiUrl}/menza/${restaurantData.idMenza}/${korisnik.idKorisnik}/ocjene`,
-        payload
-      );
-      alert("Vaša ocjena je uspješno poslana!");
-      setShowRatingForm(false);
-    } catch (error) {
-      console.error("Error submitting rating:", error);
-      alert("Došlo je do pogreške prilikom slanja ocjene.");
-    }
-  };
   return (
     <>
       <NavBar />
@@ -468,22 +464,22 @@ function Menza() {
               {
                 name: "Hrana",
                 icon: IoFastFoodOutline,
-                key: "hrana" as keyof Ocjena, // Explicitly cast to keyof Ocjena
+                key: "hrana",
               },
               {
                 name: "Ljubaznost",
                 icon: TbUserHeart,
-                key: "ljubaznost" as keyof Ocjena, // Explicitly cast to keyof Ocjena
+                key: "ljubaznost",
               },
               {
                 name: "Ambijent",
                 icon: PiArmchair,
-                key: "ambijent" as keyof Ocjena, // Explicitly cast to keyof Ocjena
+                key: "ambijent",
               },
               {
                 name: "Lokacija",
                 icon: MdLocationOn,
-                key: "lokacija" as keyof Ocjena, // Explicitly cast to keyof Ocjena
+                key: "lokacija",
               },
             ].map(({ name, icon: Icon, key }) => (
               <div className="rating-category" key={key}>
@@ -491,7 +487,7 @@ function Menza() {
                   <Icon className="ocjena-ikona" /> {name}
                 </label>
                 <RatingStars
-                  category={key} // Type is now valid
+                  category={key}
                   value={rating[key]}
                   onChange={handleRatingChange}
                 />

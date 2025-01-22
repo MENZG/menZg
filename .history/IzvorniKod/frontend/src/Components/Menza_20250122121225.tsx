@@ -112,14 +112,26 @@ function Menza() {
   const [muxError, setMuxError] = useState<boolean>(false);
   const [showRatingForm, setShowRatingForm] = useState<boolean>(false);
   const [ocjene, setOcjene] = useState<Ocjena | null>(null);
-  const [rating, setRating] = useState<Ocjena>({
-    hrana: 0,
-    ljubaznost: 0,
-    ambijent: 0,
-    lokacija: 0,
+  const [rating, setRating] = useState<{
+    hranaRating: number;
+    ljubaznostRating: number;
+    ambijentRating: number;
+    lokacijaRating: number;
+  }>({
+    hranaRating: 0,
+    ljubaznostRating: 0,
+    ambijentRating: 0,
+    lokacijaRating: 0,
   });
 
-  const handleRatingChange = (category: keyof Ocjena, value: number) => {
+  const handleRatingChange = (
+    category:
+      | "hranaRating"
+      | "ljubaznostRating"
+      | "ambijentRating"
+      | "lokacijaRating",
+    value: number
+  ) => {
     setRating((prevRating) => ({
       ...prevRating,
       [category]: value,
@@ -132,28 +144,21 @@ function Menza() {
         const response = await axios.get(
           `${apiUrl}/menza/${restaurantData.idMenza}/prosjecna-ocjena`
         );
-        const [hrana, ljubaznost, ambijent, lokacija] = response.data; // Destructure the array
-        setOcjene({ hrana, ljubaznost, ambijent, lokacija });
-        console.log("Here", response.data);
+        const [hranaRating, ljubaznostRating, ambijentRating, lokacijaRating] =
+          response.data; // Destructure the array
+        setOcjene({
+          hrana: hranaRating,
+          ljubaznost: ljubaznostRating,
+          ambijent: ambijentRating,
+          lokacija: lokacijaRating,
+        });
       } catch (error) {
         console.error("Error fetching ocjene data:", error);
       }
     };
 
     fetchOcjene();
-  }, [id]);
-
-  const handleMuxError = () => {
-    setMuxError(true);
-  };
-
-  const handleOcjeniMenzu = () => {
-    setShowRatingForm(true);
-  };
-
-  const closeRatingForm = () => {
-    setShowRatingForm(false);
-  };
+  }, [restaurantData.idMenza]);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -172,10 +177,10 @@ function Menza() {
     if (currentUser?.email) {
       const fetchKorisnik = async () => {
         try {
-          const response1 = await axios.get(
+          const response = await axios.get(
             `${apiUrl}/korisnici/username/${currentUser.email}`
           );
-          setKorisnik(response1.data);
+          setKorisnik(response.data);
         } catch (error) {
           console.error("Error fetching user data:", error);
         }
@@ -195,7 +200,6 @@ function Menza() {
     const fetchRestaurantData = async () => {
       try {
         const response = await axios.get(`${apiUrl}/menza/${id}`);
-
         setRestaurantData(response.data);
         setLoading(false);
       } catch (error) {
@@ -207,86 +211,16 @@ function Menza() {
     fetchRestaurantData();
   }, [id]);
 
-  useEffect(() => {
-    const formatTimeWithoutSeconds = (time: string | null): string => {
-      if (!time) return ""; // Convert null to an empty string
-      const [hours, minutes] = time.split(":");
-      return `${hours}:${minutes}`;
-    };
-
-    const formattedRadnaVremena = restaurantData.radnaVremena.map((time) => ({
-      ...time,
-      pocetak: formatTimeWithoutSeconds(time.pocetak),
-      kraj: formatTimeWithoutSeconds(time.kraj),
-    }));
-
-    setEditableTimes(formattedRadnaVremena);
-  }, [restaurantData]);
-
-  const handleTimeChange = (
-    index: number,
-    field: "pocetak" | "kraj",
-    value: string
-  ) => {
-    const updatedTimes = [...editableTimes];
-    updatedTimes[index][field] = value;
-    setEditableTimes(updatedTimes);
+  const handleMuxError = () => {
+    setMuxError(true);
   };
 
-  if (loading)
-    return (
-      <Spinner animation="border" role="status">
-        <span className="visually-hidden">Loading...</span>
-      </Spinner>
-    );
-
-  const toggleEditMode = (index: number) => {
-    setEditModeIndex(editModeIndex === index ? null : index);
+  const handleOcjeniMenzu = () => {
+    setShowRatingForm(true);
   };
 
-  const validateTimeFormat = (time: string) => {
-    const timeFormat = /^([01]\d|2[0-3]):([0-5]\d)$/;
-    return timeFormat.test(time);
-  };
-
-  const handleSaveTime = (index: number) => {
-    const time = editableTimes[index];
-    if (time.pocetak === null && time.kraj === null) {
-      toggleEditMode(index);
-
-      axios
-        .put(`${apiUrl}/menza/${id}/radno-vrijeme`, {
-          dan: time.dan,
-          pocetak: null,
-          kraj: null,
-        })
-        .then((response) => {
-          console.log("Time updated successfully", response.data);
-        })
-        .catch((error) => {
-          console.error("Error updating time", error);
-        });
-    } else if (
-      validateTimeFormat(time.pocetak || "") &&
-      validateTimeFormat(time.kraj || "")
-    ) {
-      toggleEditMode(index);
-
-      axios
-        .put(`${apiUrl}/menza/${id}/radno-vrijeme`, {
-          dan: time.dan,
-          pocetak: time.pocetak,
-          kraj: time.kraj,
-        })
-        .then((response) => {
-          console.log("Time updated successfully", response.data);
-        })
-        .catch((error) => {
-          console.error("Error updating time", error);
-        });
-    } else {
-      alert("Format unosa hh:mm ili ostavite oba inputa prazna za neradni dan");
-    }
+  const closeRatingForm = () => {
+    setShowRatingForm(false);
   };
 
   const submitRating = async () => {
@@ -298,10 +232,8 @@ function Menza() {
     const payload = { ...rating };
 
     try {
-      console.log("restaurantData.idMenza:", restaurantData.idMenza);
-
       await axios.post(
-        `${apiUrl}/menza/${restaurantData.idMenza}/${korisnik.idKorisnik}/ocjene`,
+        `${apiUrl}/menza/${restaurantData.idMenza}/${korisnik.idKorisnik}/rating`,
         payload
       );
       alert("Vaša ocjena je uspješno poslana!");
@@ -311,17 +243,25 @@ function Menza() {
       alert("Došlo je do pogreške prilikom slanja ocjene.");
     }
   };
+
+  if (loading)
+    return (
+      <Spinner animation="border" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </Spinner>
+    );
+
   return (
     <>
       <NavBar />
       <div
-        className={`container ${showRatingForm || isChatOpen ? "blurred" : ""}`}
+        className={container ${showRatingForm || isChatOpen ? "blurred" : ""}}
       >
         <Card className="menza-card">
           <Card.Img
             variant="top"
-            src={`/slika_menza_${restaurantData.idMenza}.jpg`}
-            alt={`Slika menze ${restaurantData.imeMenze}`}
+            src={/slika_menza_${restaurantData.idMenza}.jpg}
+            alt={Slika menze ${restaurantData.imeMenze}}
             style={{ height: "35vh" }}
           />
           <Card.Body>
@@ -405,7 +345,7 @@ function Menza() {
                     ) : (
                       <>
                         {time.pocetak && time.kraj
-                          ? `${time.pocetak} - ${time.kraj}`
+                          ? ${time.pocetak} - ${time.kraj}
                           : "Ne radi"}
                         {role === 2 && (
                           <Button
@@ -468,22 +408,22 @@ function Menza() {
               {
                 name: "Hrana",
                 icon: IoFastFoodOutline,
-                key: "hrana" as keyof Ocjena, // Explicitly cast to keyof Ocjena
+                key: "hrana",
               },
               {
                 name: "Ljubaznost",
                 icon: TbUserHeart,
-                key: "ljubaznost" as keyof Ocjena, // Explicitly cast to keyof Ocjena
+                key: "ljubaznost",
               },
               {
                 name: "Ambijent",
                 icon: PiArmchair,
-                key: "ambijent" as keyof Ocjena, // Explicitly cast to keyof Ocjena
+                key: "ambijent",
               },
               {
                 name: "Lokacija",
                 icon: MdLocationOn,
-                key: "lokacija" as keyof Ocjena, // Explicitly cast to keyof Ocjena
+                key: "lokacija",
               },
             ].map(({ name, icon: Icon, key }) => (
               <div className="rating-category" key={key}>
@@ -491,7 +431,7 @@ function Menza() {
                   <Icon className="ocjena-ikona" /> {name}
                 </label>
                 <RatingStars
-                  category={key} // Type is now valid
+                  category={key}
                   value={rating[key]}
                   onChange={handleRatingChange}
                 />

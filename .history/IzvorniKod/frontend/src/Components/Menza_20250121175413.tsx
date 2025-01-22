@@ -1,3 +1,4 @@
+// Add this state and handler to Menza component
 import { faPaintBrush } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
@@ -13,7 +14,7 @@ import { MdLocationOn } from "react-icons/md";
 import { TbUserHeart } from "react-icons/tb";
 import { IoChatbubbleOutline, IoFastFoodOutline } from "react-icons/io5";
 import { PiArmchair } from "react-icons/pi";
-import { FaRegStar, FaStar } from "react-icons/fa6";
+import { FaRegStar } from "react-icons/fa";
 
 const initialRestaurantData = {
   idMenza: "1",
@@ -62,64 +63,58 @@ interface Ocjena {
 const apiUrl = import.meta.env.VITE_API_URL;
 axios.defaults.withCredentials = true;
 
-interface RatingStarsProps {
-  category: keyof Ocjena;
-  value: number;
-  onChange: (category: keyof Ocjena, value: number) => void;
-}
-
-const RatingStars: React.FC<RatingStarsProps> = ({
-  category,
-  value,
-  onChange,
-}) => {
-  const [hoveredValue, setHoveredValue] = useState<number>(0);
-
-  return (
-    <div className="stars">
-      {[1, 2, 3, 4, 5].map((star) => (
-        <span
-          key={`${category}-${star}`}
-          onMouseEnter={() => setHoveredValue(star)}
-          onMouseLeave={() => setHoveredValue(0)}
-          onClick={() => onChange(category, star)}
-        >
-          {star <= (hoveredValue || value) ? (
-            <FaStar className="star filled" />
-          ) : (
-            <FaRegStar className="star" />
-          )}
-        </span>
-      ))}
-    </div>
-  );
-};
-
 function Menza() {
-  const { id } = useParams<{ id: string }>();
-  const [loading, setLoading] = useState<boolean>(true);
+  const { id } = useParams();
+  const [loading, setLoading] = useState(true);
   const [restaurantData, setRestaurantData] = useState<RestaurantData>(
     initialRestaurantData
   );
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [korisnik, setKorisnik] = useState<Korisnik | null>(null);
-  const [role, setRole] = useState<number>(1);
+  const [role, setRole] = useState(1);
   const [editableTimes, setEditableTimes] = useState(
     initialRestaurantData.radnaVremena
   );
   const [editModeIndex, setEditModeIndex] = useState<number | null>(null);
-  const [isChatOpen, setIsChatOpen] = useState<boolean>(false);
-  const [muxError, setMuxError] = useState<boolean>(false);
-  const [showRatingForm, setShowRatingForm] = useState<boolean>(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const [muxError, setMuxError] = useState(false);
+  const [showRatingForm, setShowRatingForm] = useState(false);
   const [ocjene, setOcjene] = useState<Ocjena | null>(null);
-  const [rating, setRating] = useState<Ocjena>({
+  const [rating, setRating] = useState({
     hrana: 0,
     ljubaznost: 0,
     ambijent: 0,
     lokacija: 0,
   });
 
-  const handleRatingChange = (category: keyof Ocjena, value: number) => {
+  // Funkcija za slanje ocjena
+  const submitRating = async () => {
+    if (!korisnik || !restaurantData) {
+      alert("Korisnik ili menza nisu učitani.");
+      return;
+    }
+
+    const payload = {
+      hrana: rating.hrana,
+      ljubaznost: rating.ljubaznost,
+      ambijent: rating.ambijent,
+      lokacija: rating.lokacija,
+    };
+
+    try {
+      const response = await axios.post(
+        `${apiUrl}/menza/${restaurantData.idMenza}/${korisnik.idKorisnik}/ocjene`,
+        payload
+      );
+      alert("Vaša ocjena je uspješno poslana!");
+      setShowRatingForm(false); // Zatvaranje forme nakon uspješnog slanja
+    } catch (error) {
+      console.error("Error submitting rating:", error);
+      alert("Došlo je do pogreške prilikom slanja ocjene.");
+    }
+  };
+
+  const handleRatingChange = (category: any, value: any) => {
     setRating((prevRating) => ({
       ...prevRating,
       [category]: value,
@@ -289,28 +284,6 @@ function Menza() {
     }
   };
 
-  const submitRating = async () => {
-    if (!korisnik || !restaurantData) {
-      alert("Korisnik ili menza nisu učitani.");
-      return;
-    }
-
-    const payload = { ...rating };
-
-    try {
-      console.log("restaurantData.idMenza:", restaurantData.idMenza);
-
-      await axios.post(
-        `${apiUrl}/menza/${restaurantData.idMenza}/${korisnik.idKorisnik}/ocjene`,
-        payload
-      );
-      alert("Vaša ocjena je uspješno poslana!");
-      setShowRatingForm(false);
-    } catch (error) {
-      console.error("Error submitting rating:", error);
-      alert("Došlo je do pogreške prilikom slanja ocjene.");
-    }
-  };
   return (
     <>
       <NavBar />
@@ -465,36 +438,30 @@ function Menza() {
           <h3>Ocijenite menzu</h3>
           <form>
             {[
-              {
-                name: "Hrana",
-                icon: IoFastFoodOutline,
-                key: "hrana" as keyof Ocjena, // Explicitly cast to keyof Ocjena
-              },
-              {
-                name: "Ljubaznost",
-                icon: TbUserHeart,
-                key: "ljubaznost" as keyof Ocjena, // Explicitly cast to keyof Ocjena
-              },
-              {
-                name: "Ambijent",
-                icon: PiArmchair,
-                key: "ambijent" as keyof Ocjena, // Explicitly cast to keyof Ocjena
-              },
-              {
-                name: "Lokacija",
-                icon: MdLocationOn,
-                key: "lokacija" as keyof Ocjena, // Explicitly cast to keyof Ocjena
-              },
+              { name: "Hrana", icon: IoFastFoodOutline, key: "hrana" },
+              { name: "Ljubaznost", icon: TbUserHeart, key: "ljubaznost" },
+              { name: "Ambijent", icon: PiArmchair, key: "ambijent" },
+              { name: "Lokacija", icon: MdLocationOn, key: "lokacija" },
             ].map(({ name, icon: Icon, key }) => (
               <div className="rating-category" key={key}>
                 <label>
                   <Icon className="ocjena-ikona" /> {name}
                 </label>
-                <RatingStars
-                  category={key} // Type is now valid
-                  value={rating[key]}
-                  onChange={handleRatingChange}
-                />
+                <div className="stars">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <input
+                      key={`${key}-${star}`}
+                      type="radio"
+                      name={key}
+                      value={star}
+                      id={`${key}-${star}`}
+                      onChange={() => handleRatingChange(key, star)}
+                    />
+                  ))}
+                  {[1, 2, 3, 4, 5].map(() => (
+                    <FaRegStar className="star" />
+                  ))}
+                </div>
               </div>
             ))}
           </form>
