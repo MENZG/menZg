@@ -6,7 +6,7 @@ body {
   margin-top: 1.5rem !important;
 }
 
-.container{
+.container {
   margin-top: 20vh;
   width: 65vw;
   margin-bottom: 6vh;
@@ -36,7 +36,7 @@ body {
 
 .list-group-item {
   display: flex;
-  justify-content:center;
+  justify-content: center;
   align-items: center;
 }
 
@@ -44,7 +44,7 @@ body {
   margin-left: auto;
 }
 
-.header{
+.header {
   text-align: center;
   background-color: white;
   display: flex;
@@ -52,19 +52,18 @@ body {
   align-items: center;
 }
 
-.location{
+.location {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
 .location-pin-img {
-    margin-right: 0.5em; /* Space between the pin and the text */
-    object-fit: contain; /* Maintains aspect ratio and avoids cropping */
-    color: #0098b3;
-    font-size: 18px;
+  margin-right: 0.5em; /* Space between the pin and the text */
+  object-fit: contain; /* Maintains aspect ratio and avoids cropping */
+  color: #0098b3;
+  font-size: 18px;
 }
-
 
 .live-stream {
   margin-top: 20px;
@@ -77,7 +76,7 @@ body {
   font-size: 1.2rem;
 }
 
-.paint-brush{
+.paint-brush {
   border-radius: 50px;
 }
 
@@ -101,7 +100,7 @@ body {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-.rate{
+.rate {
   box-shadow: none;
   display: flex;
   flex-direction: column;
@@ -147,17 +146,17 @@ body {
   background-color: #e70e86;
 }
 
-.menza-card:hover{
+.menza-card:hover {
   transform: none;
-
 }
-.ocjene{
+
+.ocjene {
   display: flex;
-  justify-content:space-between;
+  justify-content: space-between;
   align-items: center;
 }
 
-.ocjena{
+.ocjena {
   display: flex;
   padding: 10px 10px 0 10px;
   justify-content: center;
@@ -165,15 +164,15 @@ body {
   font-size: 18px;
 }
 
-.ocjena-broj{
+.ocjena-broj {
   margin: 0 0 0 4px;
 }
 
-.ocjena-ikona{
+.ocjena-ikona {
   color: #0098b3;
 }
 
-.ocjeni-btn{
+.ocjeni-btn {
   border: none;
   border-radius: 50px;
   background-color: #0098b3;
@@ -182,11 +181,11 @@ body {
   font-size: 14px;
 }
 
-.ocjeni-btn:hover{
+.ocjeni-btn:hover {
   background-color: #00758a;
 }
 
-.ocjeni-btn-div{
+.ocjeni-btn-div {
   margin-top: 10px;
   margin-bottom: 10px;
 }
@@ -237,6 +236,6 @@ body {
   cursor: pointer;
 }
 
-.star{
+.star {
   color: rgb(255, 204, 0);
 }

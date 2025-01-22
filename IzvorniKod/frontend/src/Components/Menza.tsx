@@ -15,6 +15,7 @@ import { TbUserHeart } from "react-icons/tb";
 import { IoChatbubbleOutline, IoFastFoodOutline } from "react-icons/io5";
 import { PiArmchair } from "react-icons/pi";
 import { FaRegStar } from "react-icons/fa";
+import MenuCard from "./MenuCard";
 
 const initialRestaurantData = {
   idMenza: "1",
@@ -86,7 +87,6 @@ function Menza() {
           `${apiUrl}/menza/${restaurantData.idMenza}/prosjecna-ocjena`
         );
         setOcjene(response.data);
-        console.log("Here", response.data);
       } catch (error) {
         console.error("Error fetching ocjene data:", error);
       }
@@ -360,6 +360,8 @@ function Menza() {
             </div>
           </Card.Body>
         </Card>
+
+        <MenuCard menzaId={id || ''} role={role} />
 
         <div className="live-stream">
           <h4>Uživo red u menzi</h4>
