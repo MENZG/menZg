@@ -180,6 +180,30 @@ public class KorisnikController {
 		}
 	}
 
+	@PutMapping("/{id}/{noveGodine}/{noviSpol}")
+	@PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
+	public ResponseEntity<Korisnik> updateKorisnik(@PathVariable Long id, @PathVariable Integer noveGodine,
+			@PathVariable String noviSpol) {
+		Optional<Korisnik> existingKorisnik = korisnikService.findById(id);
+		if (existingKorisnik.isPresent()) {
+
+			System.out.println("KORISNIK S TIM IDIJEM KOJEG ZELIS AZURIRAT POSTOJI :)");
+			Korisnik korisnik = existingKorisnik.get();
+
+			// Ažurirati podatke koji se mogu mijenjati
+
+			korisnik.setGodine(noveGodine); // Ažuriramo godine
+			korisnik.setSpol(noviSpol); // Ažuriramo spol
+
+			System.out.println("novi citavi korisnik je " + korisnik + " \n\n\n");
+
+			Korisnik savedKorisnik = korisnikService.save(korisnik);
+			return ResponseEntity.ok(savedKorisnik);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
 	@DeleteMapping("/{id}")
 	@PreAuthorize("hasRole('ROLE_ADMIN')") // samo admin moze brisat korisnika
 	// @PreAuthorize("hasRole('ROLE_ADMIN')")
