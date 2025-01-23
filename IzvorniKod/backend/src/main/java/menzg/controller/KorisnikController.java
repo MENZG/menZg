@@ -172,6 +172,8 @@ public class KorisnikController {
 			korisnik.setSpol(updatedKorisnik.getSpol()); // Ažuriramo spol
 			korisnik.setBlocked(updatedKorisnik.getBlocked());
 
+			System.out.println("novi citavi korisnik je " + korisnik + " \n\n\n");
+
 			Korisnik savedKorisnik = korisnikService.save(korisnik);
 			return ResponseEntity.ok(savedKorisnik);
 		} else {
