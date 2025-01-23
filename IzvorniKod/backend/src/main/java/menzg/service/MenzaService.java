@@ -95,8 +95,10 @@ public class MenzaService {
 		}
 
 		// Provjeri postoji li jelo s danim ID-jem u toj menzi
-		Jelo postojeceJelo = menza.getJelovnik().stream().filter(j -> j.getIdJela().equals(novoJelo.getIdJela()))
+		Jelo postojeceJelo = menza.getJelovnik().stream().filter(j -> j.getNazivJela().equals(novoJelo.getNazivJela()))
 				.findFirst().orElse(null);
+
+		System.out.println("nasao sam to jelo evo ti ga " + postojeceJelo + " \n\n\n");
 
 		if (postojeceJelo != null) {
 			// Ažuriraj postojeće jelo
