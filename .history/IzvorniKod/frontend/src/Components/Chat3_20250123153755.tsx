@@ -208,7 +208,7 @@ const Chat3: React.FC = () => {
                 />
                 <button
                   type="button"
-                  className="bttn send-button"
+                  className="send-button"
                   onClick={sendValue}
                 >
                   send
@@ -246,7 +246,7 @@ const Chat3: React.FC = () => {
                 />
                 <button
                   type="button"
-                  className="bttn send-button"
+                  className="send-button"
                   onClick={sendPrivateValue}
                 >
                   send
@@ -264,7 +264,7 @@ const Chat3: React.FC = () => {
             value={userData.username}
             onChange={handleUsername}
           />
-          <button type="button" onClick={registerUser} className="bttn">
+          <button type="button" onClick={registerUser}>
             connect
           </button>
         </div>
