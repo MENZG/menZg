@@ -3,6 +3,7 @@
 }
 
 .menu-card:hover {
+  /* Remove the enlarge effect */
   transform: none;
 }
 
@@ -37,7 +38,7 @@
   padding: 4px;
   margin: 5px 0;
   border: 1px solid #ccc;
-  border-radius: 50px;
+  border-radius: 4px;
   box-sizing: border-box;
 }
 
@@ -50,14 +51,8 @@
   border-radius: 50px;
   background-color: #0098b3;
   color: white;
-  font-size: 16px;
 }
 
-.add-btn:hover{
-  background-color: #00758a;
-
+.add-btn, .add-new-btn :hover{
+  background-color: #0098b3;
 }
-.add-new-btn:hover{
-  background-color: #00758a;
-}
-

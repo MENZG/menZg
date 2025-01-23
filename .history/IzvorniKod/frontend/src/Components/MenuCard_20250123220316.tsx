@@ -163,7 +163,7 @@ function MenuCard({ menzaId, role }: MenuCardProps) {
                             <input
                               type="text"
                               value={item.nazivJela}
-                              className="input-custom input"
+                              className="input-custom"
                               onChange={(e) =>
                                 handleInputChange(
                                   item.idJela,
@@ -175,7 +175,7 @@ function MenuCard({ menzaId, role }: MenuCardProps) {
                             <input
                               type="number"
                               value={item.cijena}
-                              className="input-custom input"
+                              className="input-custom"
                               onChange={(e) =>
                                 handleInputChange(
                                   item.idJela,
@@ -194,7 +194,7 @@ function MenuCard({ menzaId, role }: MenuCardProps) {
                           <>
                             <div className="float-right">
                               <Button
-                                className={`button-custom button-custom-primary save-btn`}
+                                className={`button-custom button-custom-primary`}
                                 onClick={() => handleEditClick(item.idJela)}
                               >
                                 {editMode[item.idJela] ? (
@@ -225,7 +225,7 @@ function MenuCard({ menzaId, role }: MenuCardProps) {
                           type="text"
                           placeholder="Naziv jela"
                           value={newItem[kategorija]?.nazivJela || ""}
-                          className="input-custom input"
+                          className="input-custom"
                           onChange={(e) =>
                             handleNewItemChange(
                               kategorija,
@@ -238,7 +238,7 @@ function MenuCard({ menzaId, role }: MenuCardProps) {
                           type="number"
                           placeholder="Cijena"
                           value={newItem[kategorija]?.cijena || ""}
-                          className="input-custom input"
+                          className="input-custom"
                           onChange={(e) =>
                             handleNewItemChange(
                               kategorija,
@@ -250,7 +250,6 @@ function MenuCard({ menzaId, role }: MenuCardProps) {
                         <Button
                           variant="success"
                           onClick={() => handleAddNewItem(kategorija)}
-                          className="add-btn"
                         >
                           Add
                         </Button>
@@ -259,7 +258,6 @@ function MenuCard({ menzaId, role }: MenuCardProps) {
                       <Button
                         variant="outline-success"
                         onClick={() => toggleNewItemInputs(kategorija)}
-                        className="add-new-btn"
                       >
                         Add New Item
                       </Button>

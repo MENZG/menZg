@@ -3,6 +3,7 @@
 }
 
 .menu-card:hover {
+  /* Remove the enlarge effect */
   transform: none;
 }
 
@@ -37,7 +38,7 @@
   padding: 4px;
   margin: 5px 0;
   border: 1px solid #ccc;
-  border-radius: 50px;
+  border-radius: 4px;
   box-sizing: border-box;
 }
 
@@ -61,3 +62,6 @@
   background-color: #00758a;
 }
 
+.input{
+  border-radius: 50px;
+}
