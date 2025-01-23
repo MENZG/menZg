@@ -64,12 +64,10 @@ const Profil = () => {
       const updateUser = async () => {
         if (korisnik) {
           try {
-            await axios.put(`${apiUrl}/korisnici/${korisnik.idKorisnik}`, {
-              username: korisnik.username,
-              lozinka: "",
-              spol: selectedSex,
-              godine: age,
-            });
+            await axios.put(
+              `${apiUrl}/korisnici/${korisnik.idKorisnik}/${age}/${selectedSex}`,
+              {}
+            );
           } catch (error) {
             console.error("Error updating user data:", error);
           }
@@ -124,20 +122,8 @@ const Profil = () => {
       updatedUser.age = korisnik.godine;
       updatedUser.sex = korisnik.spol;
       setUserToPrint(updatedUser);
-      console.log(updatedUser);
     }
   }, [korisnik]);
-
-  const updateUserRole = async (id: number, newRole: number) => {
-    try {
-      const response = await axios.put(
-        `${apiUrl}/korisnici/${id}/newRole/${newRole}`
-      );
-      console.log("User role updated:", response.data);
-    } catch (error) {
-      console.error("Error updating user role:", error);
-    }
-  };
 
   return (
     <>
