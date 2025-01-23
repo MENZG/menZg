@@ -4,7 +4,7 @@ import NavBar from "./NavBar";
 import axios from "axios";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import KameraIkona from "./KameraIkona";
+import { IoRestaurantOutline } from "react-icons/io5";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -85,7 +85,21 @@ const Favoriti = () => {
       <NavBar />
       <div>
         {menze.length === 0 ? (
-          <p style={{ color: "white" }}>Nemate omiljenih menzi.</p>
+          <>
+            <div style={{ textAlign: "center" }}>
+              <IoRestaurantOutline size={200} color="#333" />
+              <p
+              style={{
+                fontSize: "2rem",
+                color: "#333",
+                marginTop: "20px",
+                fontWeight: "bold",
+              }}
+              >
+              Nemate omiljenih menzi :(
+              </p>
+            </div>
+          </>
         ) : (
           <div className="card-container">
             {menze.map((menza) => (
