@@ -222,7 +222,6 @@ function Menza() {
     const fetchRestaurantData = async () => {
       try {
         const response = await axios.get(`${apiUrl}/menza/${id}`);
-
         setRestaurantData(response.data);
         setLoading(false);
       } catch (error) {
@@ -298,13 +297,15 @@ function Menza() {
       validateTimeFormat(time.kraj || "")
     ) {
       toggleEditMode(index);
-
       axios
-        .put(`${apiUrl}/menza/${id}/radno-vrijeme`, {
-          dan: time.dan,
-          pocetak: time.pocetak,
-          kraj: time.kraj,
-        })
+        .put(
+          `${apiUrl}/menza/${id}/radno-vrijeme/${time.dan}/${time.pocetak}/${time.kraj}`,
+          {
+            //dan: time.dan,
+            //pocetak: time.pocetak,
+            //kraj: time.kraj,
+          }
+        )
         .then((response) => {
           console.log("Time updated successfully", response.data);
         })
@@ -439,7 +440,7 @@ function Menza() {
                           onClick={() => handleSaveTime(index)}
                           className="save-btn float-right custom-btn"
                         >
-                          <IoCheckmarkDoneSharp className="custom-icon-size"/>
+                          <IoCheckmarkDoneSharp className="custom-icon-size" />
                         </Button>
                       </>
                     ) : (
