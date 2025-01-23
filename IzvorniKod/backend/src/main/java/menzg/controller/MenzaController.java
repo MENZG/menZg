@@ -208,6 +208,28 @@ public class MenzaController {
 		}
 	}
 
+	@PutMapping("/{idMenze}/jelovnik/{idJela}/{kategorija}/{nazivJela}/{cijena}")
+	// @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
+	public ResponseEntity<String> azurirajJelovnik(@PathVariable Long idMenze, // ID menze dolazi iz putanje
+			@PathVariable Long idJela, @PathVariable String kategorija, @PathVariable String nazivJela,
+			@PathVariable Float cijena) {
+
+		Jelo novoJelo = new Jelo(kategorija, cijena, nazivJela, null);
+
+		// Novi jelovnik dolazi iz tijela zahtjeva
+		System.out.println("Stigao novi jelovnik za menzu " + idMenze + ": " + novoJelo);
+		logger.info("Loger radi i prikazuje se u backendu uspješno ažurirana za menzu {}", idMenze);
+
+		boolean uspjeh = menzaService.azurirajJelovnik(idMenze, novoJelo);
+
+		if (uspjeh) {
+			return ResponseEntity.ok("Jelovnik uspješno ažuriran za menzu " + idMenze);
+		} else {
+			return ResponseEntity.badRequest()
+					.body("Ažuriranje jelovnika nije uspjelo. Provjerite ID menze: " + idMenze);
+		}
+	}
+
 	@GetMapping("/{id}/ocjene")
 	// @PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or
 	// hasRole('ROLE_DJELATNIK')")
