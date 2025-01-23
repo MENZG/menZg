@@ -86,24 +86,14 @@ const Korisnici = () => {
     axios
       .delete(`${apiUrl}/korisnici/${idKorisnik}`, { withCredentials: true })
       .then(() => {
-        // Dohvat korisnika nakon uspješnog brisanja
-        axios
-          .get(`${apiUrl}/korisnici`)
-          .then((response) => {
-            setKorisnici(response.data);
-            setFilteredKorisnici(response.data);
-
-            // Ažuriranje blockedUsers seta
-            const updatedBlocked: Set<string> = new Set(
-              response.data
-                .filter((korisnik: Korisnik) => korisnik.blocked)
-                .map((korisnik: Korisnik) => korisnik.idKorisnik)
-            );
-            setBlockedUsers(updatedBlocked);
-          })
-          .catch((error) => {
-            console.error("There was an error fetching the data!", error);
-          });
+        setKorisnici((prevData) =>
+          prevData.filter((korisnik) => korisnik.idKorisnik !== idKorisnik)
+        );
+        setBlockedUsers((prev) => {
+          const updated = new Set(prev);
+          updated.delete(idKorisnik);
+          return updated;
+        });
 
         console.log(`User with ID: ${idKorisnik} deleted successfully`);
       })

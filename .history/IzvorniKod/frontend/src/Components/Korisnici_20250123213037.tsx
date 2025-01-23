@@ -81,6 +81,26 @@ const Korisnici = () => {
   useEffect(() => {
     applyFilters();
   }, [selectedRole, selectedGender, blockedFilter]);
+  /*
+  const handleDelete = (idKorisnik: string) => {
+    axios
+      .delete(`${apiUrl}/korisnici/${idKorisnik}`, { withCredentials: true })
+      .then(() => {
+        setKorisnici((prevData) =>
+          prevData.filter((korisnik) => korisnik.idKorisnik !== idKorisnik)
+        );
+        setBlockedUsers((prev) => {
+          const updated = new Set(prev);
+          updated.delete(idKorisnik);
+          return updated;
+        });
+
+        console.log(`User with ID: ${idKorisnik} deleted successfully`);
+      })
+      .catch((error) => {
+        console.error("There was an error deleting the user!", error);
+      });
+  };*/
 
   const handleDelete = (idKorisnik: string) => {
     axios
