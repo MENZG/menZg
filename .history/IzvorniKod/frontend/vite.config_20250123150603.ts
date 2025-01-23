@@ -40,7 +40,7 @@ export default defineConfig({
 
 
  //primjer s tehnickih predavanja
-import react from '@vitejs/plugin-react';
+/*import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 import rollupNodePolyFill from 'rollup-plugin-polyfill-node';
 
@@ -70,5 +70,5 @@ export default defineConfig({
     }
   }
 });
-
+*/
 

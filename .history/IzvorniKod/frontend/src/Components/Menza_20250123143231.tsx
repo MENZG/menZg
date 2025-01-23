@@ -470,7 +470,7 @@ function Menza() {
       </button>
       {isChatOpen && (
         <div className="chat-popup">
-          <Chat />
+          <Chat3 />
           <button
             className="close-chat-btn"
             onClick={() => setIsChatOpen(false)}

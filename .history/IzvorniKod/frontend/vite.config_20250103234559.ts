@@ -16,7 +16,7 @@ export default defineConfig({
   }
 });*/
 
-/*
+
  import react from '@vitejs/plugin-react';
  import { defineConfig } from 'vite';
 
@@ -35,40 +35,22 @@ export default defineConfig({
        }
      }
    }
- });*/
-
-
+ });
 
  //primjer s tehnickih predavanja
-import react from '@vitejs/plugin-react';
-import { defineConfig } from 'vite';
-import rollupNodePolyFill from 'rollup-plugin-polyfill-node';
+/*import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 
+// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  resolve: {
-    alias: {
-      util: 'rollup-plugin-polyfill-node/polyfills/util', // Polyfill for util if needed
-    },
-  },
-  build: {
-    rollupOptions: {
-      plugins: [rollupNodePolyFill()], // Adds polyfill for Node.js globals
-    },
-  },
   server: {
-    // Sluša na svim mrežnim interfejsima, možeš koristiti i "0.0.0.0"
-    host: '0.0.0.0',
-    port: 5173,
     proxy: {
-      '/api': {
-        //target: 'https://backendservice-xspx.onrender.com', // Produkcijski backend
-        target: 'https://backendservice-xspx.onrender.com',
-        changeOrigin: true,
-        // rewrite: (path) => path.replace(/^\/api/, '') // Ako želite ukloniti "/api" prefix
-      }
-    }
-  }
-});
-
+      "/api/": {
+        target: "http://localhost:8080",
+        changeOrigin: true
+      },
+    },
+  },
+})*/
 
