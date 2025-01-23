@@ -281,10 +281,10 @@ function Menza() {
       toggleEditMode(index);
 
       axios
-        .put(`${apiUrl}/menza/${id}/radno-vrijeme`, {
-          dan: time.dan,
-          pocetak: null,
-          kraj: null,
+        .put(`${apiUrl}/menza/${id}/radno-vrijeme/${time.dan}/null/null`, {
+          // dan: time.dan,
+          // pocetak: null,
+          // kraj: null,
         })
         .then((response) => {
           console.log("Time updated successfully", response.data);
