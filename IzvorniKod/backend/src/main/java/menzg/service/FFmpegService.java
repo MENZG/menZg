@@ -3,26 +3,16 @@ package menzg.service;
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import org.springframework.stereotype.Service;
+
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
-
-
-import org.springframework.stereotype.Service;
-
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
-
-import java.io.IOException;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.Map;
 
 @Service
 public class FFmpegService {
 
-
 	private final String inputUrl = "rtsp://menza:FenzaFer9@161.53.65.70:554/Streaming/channels/101";
-
 
 	private final String outputUrl = "rtmp://global-live.mux.com:5222/app/2ff4bbc6-0336-f1e3-95fd-94f81aa1fb08";
 
@@ -45,6 +35,9 @@ public class FFmpegService {
 	}
 
 	public String startStreaming(String inputUrl, String outputUrl) throws IOException {
+
+		System.out.println("start streaming pozvana --------------------\n");
+
 		if (processMap.containsKey(outputUrl) && processMap.get(outputUrl).isAlive()) {
 			return "Stream is already running.";
 		}
@@ -52,11 +45,16 @@ public class FFmpegService {
 		String os = System.getProperty("os.name").toLowerCase();
 		String command = String.format("ffmpeg -i %s -f flv %s", inputUrl, outputUrl);
 
+		System.out.println("tvoj os je " + os);
+
 		ProcessBuilder processBuilder = new ProcessBuilder();
 		if (os.contains("win")) {
 			processBuilder.command("cmd.exe", "/c", command);
+		} else if (os.contains("mac")) {
+
+			processBuilder.command(command);
 		} else {
-			processBuilder.command("sh", "-c", command);
+
 		}
 
 		processBuilder.redirectErrorStream(true);
