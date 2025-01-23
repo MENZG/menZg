@@ -211,6 +211,31 @@
 }
 
 
+@media (max-width: 426px) {
+  .container {
+    width: 90vw; /* Adjust the container width for phones */
+    margin-top: 18vh; /* Optional: Adjust top margin for better spacing */
+  }
+
+  .menza-card {
+    width: 100%; /* Make the card occupy full width on small screens */
+    margin: 0 auto; /* Center the card */
+  }
+
+  .card-body {
+    padding: 1rem; /* Adjust padding for smaller screens */
+  }
+
+  .card-title {
+    font-size: 1.2rem; /* Adjust title size for better fit */
+  }
+
+  .card-text {
+    font-size: 0.9rem; /* Adjust text size for readability */
+  }
+}
+
+
 .ocjena {
   display: flex;
   padding: 10px 10px 0 10px;
