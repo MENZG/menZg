@@ -61,6 +61,7 @@ function MenuCard({ menzaId, role }: MenuCardProps) {
         `${apiUrl}/menza/${menzaId}/jelovnik/${item.idJela}/${item.kategorija}/${item.nazivJela}/${item.cijena}`
         //item
       );
+      console.log("uspjeh");
     } catch (error) {
       console.error("Error updating menu item:", error);
     }
