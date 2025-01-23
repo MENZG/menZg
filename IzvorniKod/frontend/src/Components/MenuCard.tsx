@@ -163,6 +163,7 @@ function MenuCard({ menzaId, role }: MenuCardProps) {
                             <input
                               type="text"
                               value={item.nazivJela}
+                              className="input-custom"
                               onChange={(e) =>
                                 handleInputChange(
                                   item.idJela,
@@ -174,6 +175,7 @@ function MenuCard({ menzaId, role }: MenuCardProps) {
                             <input
                               type="number"
                               value={item.cijena}
+                              className="input-custom"
                               onChange={(e) =>
                                 handleInputChange(
                                   item.idJela,
@@ -190,22 +192,24 @@ function MenuCard({ menzaId, role }: MenuCardProps) {
                         )}
                         {role === 2 && (
                           <>
-                            <Button
-                              variant="primary"
-                              onClick={() => handleEditClick(item.idJela)}
-                            >
-                              {editMode[item.idJela] ? (
-                                "Save"
-                              ) : (
-                                <FontAwesomeIcon icon={faPaintBrush} />
-                              )}
-                            </Button>
-                            <Button
-                              variant="danger"
-                              onClick={() => handleRemoveClick(item.idJela)}
-                            >
-                              Remove
-                            </Button>
+                            <div className="float-right">
+                              <Button
+                                className={`button-custom button-custom-primary`}
+                                onClick={() => handleEditClick(item.idJela)}
+                              >
+                                {editMode[item.idJela] ? (
+                                  "Save"
+                                ) : (
+                                  <FontAwesomeIcon icon={faPaintBrush} />
+                                )}
+                              </Button>
+                              <Button
+                                className="button-custom button-custom-danger"
+                                onClick={() => handleRemoveClick(item.idJela)}
+                              >
+                                Remove
+                              </Button>
+                            </div>
                           </>
                         )}
                       </ListGroup.Item>
@@ -221,6 +225,7 @@ function MenuCard({ menzaId, role }: MenuCardProps) {
                           type="text"
                           placeholder="Naziv jela"
                           value={newItem[kategorija]?.nazivJela || ""}
+                          className="input-custom"
                           onChange={(e) =>
                             handleNewItemChange(
                               kategorija,
@@ -233,6 +238,7 @@ function MenuCard({ menzaId, role }: MenuCardProps) {
                           type="number"
                           placeholder="Cijena"
                           value={newItem[kategorija]?.cijena || ""}
+                          className="input-custom"
                           onChange={(e) =>
                             handleNewItemChange(
                               kategorija,
@@ -250,7 +256,7 @@ function MenuCard({ menzaId, role }: MenuCardProps) {
                       </>
                     ) : (
                       <Button
-                        variant="success"
+                        variant="outline-success"
                         onClick={() => toggleNewItemInputs(kategorija)}
                       >
                         Add New Item
