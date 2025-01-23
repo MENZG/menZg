@@ -87,12 +87,12 @@ const Favoriti = () => {
         {menze.length === 0 ? (
           <>
             <div style={{ textAlign: "center" }}>
-              <IoRestaurantOutline size={150} color="white" />
+              <IoRestaurantOutline size={200} color="#333" />
               <p
                 style={{
                   fontSize: "2rem",
                   color: "white",
-                  marginTop: "40px",
+                  marginTop: "20px",
                   fontWeight: "bold",
                 }}
               >
