@@ -4,6 +4,8 @@ import { Card, ListGroup, Button } from "react-bootstrap";
 import "../styles/MenuCard.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaintBrush } from "@fortawesome/free-solid-svg-icons";
+import { MdOutlineRemoveCircleOutline } from "react-icons/md";
+import { IoCheckmarkDoneSharp } from "react-icons/io5";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 axios.defaults.withCredentials = true;
@@ -192,13 +194,20 @@ function MenuCard({ menzaId, role }: MenuCardProps) {
                         )}
                         {role === 2 && (
                           <>
-                            <div className="float-right">
+                            <div
+                              className="float-right"
+                              style={{ display: "flex", gap: "10px" }}
+                            >
                               <Button
-                                className={`button-custom button-custom-primary save-btn`}
+                                className={`button-custom ${
+                                  editMode[item.idJela]
+                                    ? "button-custom-primary save-btn"
+                                    : "button-custom-primary edit-btn"
+                                }`}
                                 onClick={() => handleEditClick(item.idJela)}
                               >
                                 {editMode[item.idJela] ? (
-                                  "Save"
+                                  <IoCheckmarkDoneSharp />
                                 ) : (
                                   <FontAwesomeIcon icon={faPaintBrush} />
                                 )}
@@ -207,7 +216,15 @@ function MenuCard({ menzaId, role }: MenuCardProps) {
                                 className="button-custom button-custom-danger remove-btn"
                                 onClick={() => handleRemoveClick(item.idJela)}
                               >
-                                Remove
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                  }}
+                                >
+                                  <MdOutlineRemoveCircleOutline size={20} />
+                                </div>
                               </Button>
                             </div>
                           </>
@@ -248,7 +265,7 @@ function MenuCard({ menzaId, role }: MenuCardProps) {
                           }
                         />
                         <Button
-                          variant="success"
+                          variant="primary"
                           onClick={() => handleAddNewItem(kategorija)}
                           className="add-btn"
                         >

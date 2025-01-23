@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { Button, Card, Form, ListGroup, Spinner } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import "../styles/Menza.css";
+import { IoCheckmarkDoneSharp } from "react-icons/io5";
 import Chat from "./Chat";
 import Chat2 from "./Chat2";
 import Chat3 from "./Chat3";
@@ -436,9 +437,9 @@ function Menza() {
                         <Button
                           variant="primary"
                           onClick={() => handleSaveTime(index)}
-                          className="save-btn float-right"
+                          className="save-btn float-right custom-btn"
                         >
-                          Save
+                          <IoCheckmarkDoneSharp className="custom-icon-size"/>
                         </Button>
                       </>
                     ) : (
@@ -450,7 +451,7 @@ function Menza() {
                           <Button
                             variant="primary"
                             onClick={() => toggleEditMode(index)}
-                            className="float-right paint-brush"
+                            className="float-right paint-brush custom-btn"
                           >
                             <FontAwesomeIcon icon={faPaintBrush} />
                           </Button>
