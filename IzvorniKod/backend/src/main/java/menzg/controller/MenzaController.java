@@ -1,28 +1,38 @@
 package menzg.controller;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import menzg.DTO.JeloDTO;
-import menzg.DTO.OcjenaDTO;
-import menzg.DTO.OcjenaDohvatDTO;
-import menzg.model.*;
-import menzg.repo.OcjenaRepository;
-import menzg.service.JeloService;
-import menzg.service.KorisnikService;
-import menzg.service.OcjenaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import menzg.DTO.JeloDTO;
+import menzg.DTO.OcjenaDTO;
+import menzg.DTO.OcjenaDohvatDTO;
+import menzg.model.Jelo;
+import menzg.model.Korisnik;
+import menzg.model.Menza;
+import menzg.model.Ocjena;
+import menzg.model.RadnoVrijeme;
+import menzg.service.JeloService;
+import menzg.service.KorisnikService;
 import menzg.service.MenzaService;
+import menzg.service.OcjenaService;
 
 @RestController
 @RequestMapping("/menza")
@@ -147,7 +157,7 @@ public class MenzaController {
 	}
 
 	@PutMapping("/{idMenze}/radno-vrijeme")
-	//@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
+	// @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
 	public ResponseEntity<String> azurirajRadnoVrijeme(@PathVariable Long idMenze, // ID menze dolazi iz putanje
 			@RequestBody RadnoVrijeme radnoVrijeme) { // Radno vrijeme dolazi iz tijela zahtjeva
 
@@ -162,10 +172,29 @@ public class MenzaController {
 		}
 	}
 
+	@PutMapping("/{idMenze}/radno-vrijeme/{dan}/{pocetak}/{kraj}")
+	// @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
+	public ResponseEntity<String> azurirajRadnoVrijeme(@PathVariable Long idMenze, @PathVariable String dan,
+			@PathVariable LocalTime pocetak, @PathVariable LocalTime kraj)// ID menze do) { // Radno vrijeme dolazi iz
+																			// tijela zahtjeva
+	{
+
+		RadnoVrijeme rv = new RadnoVrijeme(idMenze, dan, pocetak, kraj, null);
+		System.out.println("objekt radnog vremena je " + rv);
+
+		boolean uspjeh = menzaService.azurirajRadnoVrijeme(idMenze, rv);
+
+		if (uspjeh) {
+			return ResponseEntity.ok("Radno vrijeme uspješno ažurirano. za menzu " + idMenze);
+		} else {
+			return ResponseEntity.badRequest().body("Ažuriranje nije uspjelo. Provjerite ID menze. -- " + idMenze);
+		}
+	}
+
 	@PutMapping("/{idMenze}/jelovnik")
-	//@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
+	// @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
 	public ResponseEntity<String> azurirajJelovnik(@PathVariable Long idMenze, // ID menze dolazi iz putanje
-												   @RequestBody Jelo novoJelo) { // Novi jelovnik dolazi iz tijela zahtjeva
+			@RequestBody Jelo novoJelo) { // Novi jelovnik dolazi iz tijela zahtjeva
 		System.out.println("Stigao novi jelovnik za menzu " + idMenze + ": " + novoJelo);
 		logger.info("Loger radi i prikazuje se u backendu uspješno ažurirana za menzu {}", idMenze);
 
@@ -174,10 +203,10 @@ public class MenzaController {
 		if (uspjeh) {
 			return ResponseEntity.ok("Jelovnik uspješno ažuriran za menzu " + idMenze);
 		} else {
-			return ResponseEntity.badRequest().body("Ažuriranje jelovnika nije uspjelo. Provjerite ID menze: " + idMenze);
+			return ResponseEntity.badRequest()
+					.body("Ažuriranje jelovnika nije uspjelo. Provjerite ID menze: " + idMenze);
 		}
 	}
-
 
 	@GetMapping("/{id}/ocjene")
 	// @PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or
@@ -196,7 +225,9 @@ public class MenzaController {
 		List<Ocjena> ocjene = menza.getOcjene();
 		List<OcjenaDohvatDTO> ocjeneDohvat = new ArrayList<>();
 		for (Ocjena ocjena : ocjene) {
-			OcjenaDohvatDTO ocjenaDohvatDTO = new OcjenaDohvatDTO(ocjena.getHranaRating(), ocjena.getLjubaznostRating(), ocjena.getAmbijentRating(), ocjena.getLokacijaRating(), ocjena.getKorisnik().getIdKorisnik(), ocjena.getMenza().getIdMenza());
+			OcjenaDohvatDTO ocjenaDohvatDTO = new OcjenaDohvatDTO(ocjena.getHranaRating(), ocjena.getLjubaznostRating(),
+					ocjena.getAmbijentRating(), ocjena.getLokacijaRating(), ocjena.getKorisnik().getIdKorisnik(),
+					ocjena.getMenza().getIdMenza());
 			ocjeneDohvat.add(ocjenaDohvatDTO);
 		}
 
@@ -220,10 +251,10 @@ public class MenzaController {
 		List<Ocjena> ocjene = menza.getOcjene();
 		List<Double> averageRating = new ArrayList<>();
 
-		Double averageHranaRating =  ocjene.stream().mapToDouble(Ocjena::getHranaRating).average().orElse(0.0);
-		Double averageLokacijaRating =  ocjene.stream().mapToDouble(Ocjena::getLokacijaRating).average().orElse(0.0);
-		Double averageLjubaznostRating =  ocjene.stream().mapToDouble(Ocjena::getLjubaznostRating).average().orElse(0.0);
-		Double averageAmbijentRating =  ocjene.stream().mapToDouble(Ocjena::getAmbijentRating).average().orElse(0.0);
+		Double averageHranaRating = ocjene.stream().mapToDouble(Ocjena::getHranaRating).average().orElse(0.0);
+		Double averageLokacijaRating = ocjene.stream().mapToDouble(Ocjena::getLokacijaRating).average().orElse(0.0);
+		Double averageLjubaznostRating = ocjene.stream().mapToDouble(Ocjena::getLjubaznostRating).average().orElse(0.0);
+		Double averageAmbijentRating = ocjene.stream().mapToDouble(Ocjena::getAmbijentRating).average().orElse(0.0);
 		averageRating.add(averageHranaRating);
 		averageRating.add(averageLjubaznostRating);
 		averageRating.add(averageAmbijentRating);
@@ -232,16 +263,16 @@ public class MenzaController {
 		return new ResponseEntity<>(averageRating, HttpStatus.OK);
 	}
 
-
-
-	//ovdje ce trebat poslat ili korisnika ili samo id korisnika !!!pitat frontendase
+	// ovdje ce trebat poslat ili korisnika ili samo id korisnika !!!pitat
+	// frontendase
 	@GetMapping("/{idMenze}/{idKorisnik}/ocjene")
 	// @PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or
 	// hasRole('ROLE_DJELATNIK')")
-	public ResponseEntity<OcjenaDohvatDTO> getOcjeneByKorisnik(@PathVariable Long idMenze, @PathVariable Long idKorisnik ) {
+	public ResponseEntity<OcjenaDohvatDTO> getOcjeneByKorisnik(@PathVariable Long idMenze,
+			@PathVariable Long idKorisnik) {
 		// Dohvaćanje menze prema ID-u
 		Menza menza = menzaService.getMenzaData(idMenze);
-		Optional<Korisnik> korisnik =  korisnikService.findById(idKorisnik);
+		Optional<Korisnik> korisnik = korisnikService.findById(idKorisnik);
 
 		if (menza == null) {
 			// Ako menza nije pronađena, vraća se status 404
@@ -253,16 +284,16 @@ public class MenzaController {
 		}
 
 		// Filtriranje ocjena
-		/*Optional<Ocjena> ocjenaByUser = menza.getOcjene().stream()
-				.filter(ocjena -> ocjena.getKorisnik().getIdKorisnik().equals(idKorisnik))
-				.findFirst();
-		*/
+		/*
+		 * Optional<Ocjena> ocjenaByUser = menza.getOcjene().stream() .filter(ocjena ->
+		 * ocjena.getKorisnik().getIdKorisnik().equals(idKorisnik)) .findFirst();
+		 */
 
 		OcjenaDohvatDTO ocjenaByUser = new OcjenaDohvatDTO();
 		// Dohvat jelovnika za pronađenu menzu
 		List<Ocjena> ocjene = menza.getOcjene();
-		for ( Ocjena ocjena: ocjene ) {
-			if(ocjena.getKorisnik().getIdKorisnik().equals(idKorisnik)) {
+		for (Ocjena ocjena : ocjene) {
+			if (ocjena.getKorisnik().getIdKorisnik().equals(idKorisnik)) {
 				ocjenaByUser.setHranaRating(ocjena.getHranaRating());
 				ocjenaByUser.setLjubaznostRating(ocjena.getLjubaznostRating());
 				ocjenaByUser.setAmbijentRating(ocjena.getAmbijentRating());
@@ -271,13 +302,13 @@ public class MenzaController {
 				ocjenaByUser.setIdMenza(ocjena.getMenza().getIdMenza());
 			}
 		}
-		//ili ovako?
-		/*Optional<Ocjena> ocjenaByUser = menza.getOcjene().stream()
-				.filter(ocjena -> ocjena.getKorisnik().getIdKorisnik().equals(idKorisnik))
-				.findFirst();
-		*/
+		// ili ovako?
+		/*
+		 * Optional<Ocjena> ocjenaByUser = menza.getOcjene().stream() .filter(ocjena ->
+		 * ocjena.getKorisnik().getIdKorisnik().equals(idKorisnik)) .findFirst();
+		 */
 
-		if(ocjenaByUser == null) {
+		if (ocjenaByUser == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 
@@ -285,13 +316,14 @@ public class MenzaController {
 		return new ResponseEntity<>(ocjenaByUser, HttpStatus.OK);
 	}
 
-
 	@PostMapping("/{idMenze}/{idKorisnik}/ocjene")
-	public ResponseEntity<String> dodajOcjenu(@PathVariable Long idMenze, @PathVariable Long idKorisnik, @RequestBody OcjenaDTO ocjenaRequest){
-		logger.info("Primljen zahtjev za ažuriranje ocjene: idMenze={}, idKorisnik={}, ocjenaRequest={}", idMenze, idKorisnik, ocjenaRequest);
+	public ResponseEntity<String> dodajOcjenu(@PathVariable Long idMenze, @PathVariable Long idKorisnik,
+			@RequestBody OcjenaDTO ocjenaRequest) {
+		logger.info("Primljen zahtjev za ažuriranje ocjene: idMenze={}, idKorisnik={}, ocjenaRequest={}", idMenze,
+				idKorisnik, ocjenaRequest);
 		System.out.println("saljem   ocjenu" + idMenze + "  " + idKorisnik);
 
-		Menza menza =  menzaService.getMenzaData(idMenze);
+		Menza menza = menzaService.getMenzaData(idMenze);
 		Optional<Korisnik> korisnik = korisnikService.findById(idKorisnik);
 
 		if (menza == null) {
@@ -308,18 +340,18 @@ public class MenzaController {
 		Ocjena ocjenaByUser = null;
 
 		/*
-		List<Ocjena> ocjene = menza.getOcjene();
-		List<OcjenaDohvatDTO> ocjenzeDTO = new ArrayList<>();
-		for(Ocjena ocjena : ocjene){
-			OcjenaDohvatDTO ocjenaDohvatDTO = new OcjenaDohvatDTO(ocjena.getHranaRating(), ocjena.getLjubaznostRating(), ocjena.getAmbijentRating(), ocjena.getLokacijaRating(), ocjena.getKorisnik().getIdKorisnik(), ocjena.getMenza().getIdMenza());
-			ocjenzeDTO.add(ocjenaDohvatDTO);
-		}*/
+		 * List<Ocjena> ocjene = menza.getOcjene(); List<OcjenaDohvatDTO> ocjenzeDTO =
+		 * new ArrayList<>(); for(Ocjena ocjena : ocjene){ OcjenaDohvatDTO
+		 * ocjenaDohvatDTO = new OcjenaDohvatDTO(ocjena.getHranaRating(),
+		 * ocjena.getLjubaznostRating(), ocjena.getAmbijentRating(),
+		 * ocjena.getLokacijaRating(), ocjena.getKorisnik().getIdKorisnik(),
+		 * ocjena.getMenza().getIdMenza()); ocjenzeDTO.add(ocjenaDohvatDTO); }
+		 */
 
+		Ocjena novaOcjena = new Ocjena(ocjenaRequest.getHranaRating(), ocjenaRequest.getLjubaznostRating(),
+				ocjenaRequest.getAmbijentRating(), ocjenaRequest.getLokacijaRating(), korisnikObject, menza);
 
-
-		Ocjena novaOcjena =  new Ocjena(ocjenaRequest.getHranaRating(), ocjenaRequest.getLjubaznostRating(), ocjenaRequest.getAmbijentRating(), ocjenaRequest.getLokacijaRating(), korisnikObject, menza);
-
-		boolean uspjeh = menzaService.azurirajOcjenu(idMenze,idKorisnik, novaOcjena);
+		boolean uspjeh = menzaService.azurirajOcjenu(idMenze, idKorisnik, novaOcjena);
 		if (uspjeh) {
 			logger.info("Ocjena uspješno ažurirana za menzu {}", idMenze);
 			return ResponseEntity.ok("Osjene uspješno ažurirane za menzu " + idMenze);
@@ -328,13 +360,12 @@ public class MenzaController {
 			return ResponseEntity.badRequest().body("Ažuriranje ocjena nije uspjelo. Provjerite ID menze: " + idMenze);
 		}
 
-		//return new ResponseEntity<>("Ocjena dodana.", HttpStatus.CREATED);
+		// return new ResponseEntity<>("Ocjena dodana.", HttpStatus.CREATED);
 	}
 
-
 	@PostMapping("/{idMenze}/novoJelo")
-	public ResponseEntity<String> dodajJelo(@PathVariable Long idMenze, @RequestBody JeloDTO novoJelo){
-		Menza menza =  menzaService.getMenzaData(idMenze);
+	public ResponseEntity<String> dodajJelo(@PathVariable Long idMenze, @RequestBody JeloDTO novoJelo) {
+		Menza menza = menzaService.getMenzaData(idMenze);
 		if (menza == null) {
 			// Ako menza nije pronađena, vraća se status 404
 			logger.warn("Menza s ID {} nije pronađena.", idMenze);
@@ -353,7 +384,7 @@ public class MenzaController {
 	}
 
 	@DeleteMapping("/{idJela}")
-	public ResponseEntity<String> obrisiJelo(@PathVariable Long idJela){
+	public ResponseEntity<String> obrisiJelo(@PathVariable Long idJela) {
 		Jelo jelo = jeloService.getJeloData(idJela);
 		if (jelo == null) {
 			// Ako menza nije pronađena, vraća se status 404
