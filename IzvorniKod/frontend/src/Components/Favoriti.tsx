@@ -87,16 +87,16 @@ const Favoriti = () => {
         {menze.length === 0 ? (
           <>
             <div style={{ textAlign: "center" }}>
-              <IoRestaurantOutline size={200} />
+              <IoRestaurantOutline size={200} color="#333" />
               <p
-                style={{
-                  fontSize: "2rem",
-                  color: "#333",
-                  marginTop: "20px",
-                  fontWeight: "bold",
-                }}
+              style={{
+                fontSize: "2rem",
+                color: "#333",
+                marginTop: "20px",
+                fontWeight: "bold",
+              }}
               >
-                Nemate omiljenih menzi :(
+              Nemate omiljenih menzi :(
               </p>
             </div>
           </>
