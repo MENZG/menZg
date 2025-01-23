@@ -35,7 +35,6 @@ function MenuCard({ menzaId, role }: MenuCardProps) {
       try {
         const response = await axios.get(`${apiUrl}/menza/${menzaId}/jelovnik`);
         setMenu(response.data);
-        console.log(response.data);
       } catch (error) {
         console.error("Error fetching menu data:", error);
       }
@@ -45,11 +44,35 @@ function MenuCard({ menzaId, role }: MenuCardProps) {
   }, [menzaId]);
 
   const handleEditClick = (itemId: number) => {
+    if (editMode[itemId]) {
+      const itemToUpdate = menu.find((item) => item.idJela === itemId);
+      if (itemToUpdate) {
+        saveItem(itemToUpdate);
+      }
+    }
     setEditMode((prev) => ({ ...prev, [itemId]: !prev[itemId] }));
   };
 
+  const saveItem = async (item: MenuItem) => {
+    try {
+      await axios.put(`${apiUrl}/menza/${menzaId}/jelovnik`, item);
+    } catch (error) {
+      console.error("Error updating menu item:", error);
+    }
+  };
+
   const handleRemoveClick = (itemId: number) => {
+    removeItem(itemId);
+
     setMenu((prevMenu) => prevMenu.filter((item) => item.idJela !== itemId));
+  };
+
+  const removeItem = async (itemId: number) => {
+    try {
+      await axios.delete(`${apiUrl}/menza/${itemId}`);
+    } catch (error) {
+      console.error("Error removing menu item:", error);
+    }
   };
 
   const handleInputChange = (
@@ -96,6 +119,15 @@ function MenuCard({ menzaId, role }: MenuCardProps) {
       [category]: { nazivJela: "", cijena: 0 },
     }));
     setShowNewItemInputs((prev) => ({ ...prev, [category]: false }));
+    saveNewItem(newItemToAdd);
+  };
+
+  const saveNewItem = async (item: MenuItem) => {
+    try {
+      await axios.post(`${apiUrl}/menza/${menzaId}/novoJelo`, item);
+    } catch (error) {
+      console.error("Error saving new menu item:", error);
+    }
   };
 
   const toggleNewItemInputs = (category: string) => {
