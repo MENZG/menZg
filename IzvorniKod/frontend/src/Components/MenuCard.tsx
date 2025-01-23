@@ -57,7 +57,10 @@ function MenuCard({ menzaId, role }: MenuCardProps) {
 
   const saveItem = async (item: MenuItem) => {
     try {
-      await axios.put(`${apiUrl}/menza/${menzaId}/jelovnik`, item);
+      await axios.put(
+        `${apiUrl}/menza/${menzaId}/jelovnik/${item.idJela}/${item.kategorija}/${item.nazivJela}/${item.cijena}`
+        //item
+      );
     } catch (error) {
       console.error("Error updating menu item:", error);
     }
