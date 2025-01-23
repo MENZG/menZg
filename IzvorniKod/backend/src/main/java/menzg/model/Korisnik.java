@@ -93,7 +93,7 @@ public class Korisnik {
 	private String spol; // Spremanje spola korisnika (M/F ili ne
 
 	// je li korisnik blokiran ili nije
-	@Column(name = "blocked", nullable = false)
+	@Column(name = "blocked", nullable = true)
 	private Boolean blocked = false; // Oznaka je li korisnik blokiran, podrazumijevano false
 
 	// Utility method to get role name
