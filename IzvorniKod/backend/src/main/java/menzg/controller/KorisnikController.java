@@ -60,7 +60,8 @@ public class KorisnikController {
 		// Pretvaranje svih korisnika u osnovne informacije (DTO)
 		List<KorisnikDTO> korisniciBasicInfo = korisnici.stream()
 				.map(korisnik -> new KorisnikDTO(korisnik.getIdKorisnik(), korisnik.getLozinka(),
-						korisnik.getUsername(), korisnik.getRole(), korisnik.getGodine(), korisnik.getSpol()))
+						korisnik.getUsername(), korisnik.getRole(), korisnik.getGodine(), korisnik.getSpol(),
+						korisnik.getBlocked()))
 				.collect(Collectors.toList());
 
 		return ResponseEntity.ok(korisniciBasicInfo);

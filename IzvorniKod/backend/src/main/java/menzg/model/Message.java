@@ -1,4 +1,4 @@
-package menzg.controller;
+package menzg.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

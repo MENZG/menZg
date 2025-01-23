@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { over } from "stompjs";
+import "../styles/Chat3.css";
+
+
+import SockJS from 'sockjs-client';
+
 
 (window as any).global = window;
 {
   /*import "global";*/
 }
-import SockJS from "sockjs-client";
-import "../styles/Chat3.css";
 
 let stompClient: any = null;
 const apiUrl = import.meta.env.VITE_API_URL; // Ensure the API URL is imported from environment variables
@@ -41,11 +44,24 @@ const Chat3: React.FC = () => {
   useEffect(() => {
     console.log(userData);
   }, [userData]);
-
   const connect = () => {
-    const Sock = new SockJS(`${apiUrl}/ws`); // Use apiUrl for WebSocket connection
-    stompClient = over(Sock);
-    stompClient.connect({}, onConnected, onError);
+
+    console.log(apiUrl);  // Provjerava ispravan API URL
+    const sockJsUrl = `http://localhost:8080/ws`;  // Ovo je ispravan WebSocket URL za lokalni server
+    console.log("Connecting to WebSocket URL:", sockJsUrl);  // Debug log: provjerite da li je URL ispravan
+
+    // Provjerite da URL počinje sa ws:// ili wss://
+    if (!sockJsUrl.startsWith("ws://") && !sockJsUrl.startsWith("wss://")) {
+      console.error("Invalid WebSocket URL:", sockJsUrl);  // Greška ako URL nije ispravan
+      return;
+    }
+
+    // Inicijalizacija SockJS
+    const Sock = new SockJS(sockJsUrl);  // Kreiramo SockJS vezu
+    stompClient = over(Sock);  // StompClient za slanje i primanje poruka preko WebSocket-a
+
+    // Pokušaj povezivanja
+    stompClient.connect({}, onConnected, onError);  // Povezivanje na WebSocket
   };
 
   const onConnected = () => {
@@ -96,6 +112,8 @@ const Chat3: React.FC = () => {
   };
 
   const onError = (err: any) => {
+
+    console.log("greska pri otvaranju soketaaaaaaa -- ---  - - -");
     console.error(err);
   };
 
@@ -183,9 +201,8 @@ const Chat3: React.FC = () => {
               <ul className="chat-messages">
                 {publicChats.map((chat, index) => (
                   <li
-                    className={`message ${
-                      chat.senderName === userData.username && "self"
-                    }`}
+                    className={`message ${chat.senderName === userData.username && "self"
+                      }`}
                     key={index}
                   >
                     {chat.senderName !== userData.username && (
@@ -221,9 +238,8 @@ const Chat3: React.FC = () => {
               <ul className="chat-messages">
                 {[...(privateChats.get(tab) || [])].map((chat, index) => (
                   <li
-                    className={`message ${
-                      chat.senderName === userData.username && "self"
-                    }`}
+                    className={`message ${chat.senderName === userData.username && "self"
+                      }`}
                     key={index}
                   >
                     {chat.senderName !== userData.username && (

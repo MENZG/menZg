@@ -42,6 +42,7 @@ public class SecurityConfig {
 				auth -> auth.requestMatchers("/h2-console/**").permitAll().requestMatchers(HttpMethod.OPTIONS, "/**")
 						.permitAll() // Dozvoli OPTIONS zahtjeve za sve rute// Dopuštanje pristupa H2 konzoli
 						//
+						.requestMatchers("/ws/**").permitAll() //
 						.requestMatchers("/menza/**").permitAll() // OVO MAKNUT U PRODUKCIJI
 						.requestMatchers("/korisnici/**").permitAll() // OVO MAKNUT U PRODUKCIJI!!!!
 						.requestMatchers("/stream/**").permitAll() // OVO STOJI OK U PRODUKCIJI
