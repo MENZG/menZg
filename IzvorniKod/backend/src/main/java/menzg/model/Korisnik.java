@@ -2,6 +2,7 @@ package menzg.model;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,6 +13,7 @@ import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -80,7 +82,7 @@ public class Korisnik {
 	@Column(name = "username", nullable = false, unique = true)
 	private String username;
 
-	@Column(name = "role", nullable = false)
+	@Column(name = "role", nullable = true)
 	private Integer role = 1; // možeš inicijalno dodijeliti ulogu "ROLE_USER"
 	// 1 je user, 2 je teta u menzi, 3 je admin
 
@@ -93,7 +95,6 @@ public class Korisnik {
 	// je li korisnik blokiran ili nije
 	@Column(name = "blocked", nullable = false)
 	private Boolean blocked = false; // Oznaka je li korisnik blokiran, podrazumijevano false
-
 
 	// Utility method to get role name
 	public String getRoleName() {
@@ -112,5 +113,9 @@ public class Korisnik {
 	@ManyToMany
 	@JoinTable(name = "korisnik_menza", joinColumns = @JoinColumn(name = "idKorisnik"), inverseJoinColumns = @JoinColumn(name = "idMenza"))
 	private List<Menza> omiljeneMenza;
+
+	// Ako želite imati kolekciju ocjena (nije obavezno)
+	@OneToMany(mappedBy = "korisnik", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Ocjena> ocjene;
 
 }

@@ -3,17 +3,20 @@ package menzg.service;
 import java.util.List;
 import java.util.Optional;
 
-import menzg.controller.MenzaController;
-import menzg.model.*;
-import menzg.repo.JeloRepository;
-import menzg.repo.KorisnikRepository;
-import menzg.repo.OcjenaRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import menzg.model.Jelo;
+import menzg.model.Korisnik;
+import menzg.model.Menza;
+import menzg.model.Ocjena;
+import menzg.model.RadnoVrijeme;
+import menzg.repo.JeloRepository;
+import menzg.repo.KorisnikRepository;
 import menzg.repo.MenzaRepository;
+import menzg.repo.OcjenaRepository;
 
 @Service
 public class MenzaService {
@@ -92,10 +95,8 @@ public class MenzaService {
 		}
 
 		// Provjeri postoji li jelo s danim ID-jem u toj menzi
-		Jelo postojeceJelo = menza.getJelovnik().stream()
-				.filter(j -> j.getIdJela().equals(novoJelo.getIdJela()))
-				.findFirst()
-				.orElse(null);
+		Jelo postojeceJelo = menza.getJelovnik().stream().filter(j -> j.getIdJela().equals(novoJelo.getIdJela()))
+				.findFirst().orElse(null);
 
 		if (postojeceJelo != null) {
 			// Ažuriraj postojeće jelo
@@ -103,15 +104,15 @@ public class MenzaService {
 			postojeceJelo.setKategorija(novoJelo.getKategorija());
 			postojeceJelo.setCijena(novoJelo.getCijena());
 		} else {
-			Jelo updatedJelo =  new Jelo();
+			Jelo updatedJelo = new Jelo();
 			updatedJelo.setMenza(novoJelo.getMenza());
 			updatedJelo.setCijena(novoJelo.getCijena());
 			updatedJelo.setKategorija(novoJelo.getKategorija());
 			updatedJelo.setNazivJela(novoJelo.getNazivJela());
 			menza.getJelovnik().add(updatedJelo);
-			//treba li ovo ??
+			// treba li ovo ??
 			jeloRepo.save(updatedJelo);
-			//return false; // Jelo s danim ID-jem ne postoji u toj menzi
+			// return false; // Jelo s danim ID-jem ne postoji u toj menzi
 		}
 
 		// Spremi promjene u bazi
@@ -121,7 +122,7 @@ public class MenzaService {
 		return true;
 	}
 
-	public boolean azurirajOcjenu(Long idMenze, Long idKorisnika,  Ocjena ocjena) {
+	public boolean azurirajOcjenu(Long idMenze, Long idKorisnika, Ocjena ocjena) {
 		logger.info("Pokrenuto ažuriranje ocjene za menzu ID {} i korisnika ID {}", idMenze, idKorisnika);
 		Menza menza = menzaRepo.findById(idMenze).orElse(null);
 		Optional<Korisnik> korisnik = korisnikRepo.findById(idKorisnika);
@@ -130,15 +131,14 @@ public class MenzaService {
 		if (menza == null) {
 			return false; // Menza s navedenim ID-jem ne postoji
 		}
-		if(!korisnik.isPresent()){
+		if (!korisnik.isPresent()) {
 			return false;
 		}
 		Korisnik korisnikOcjene = korisnik.get();
 		logger.debug("Korisnik pronađen: {}", korisnikOcjene);
-		Ocjena postojecaOcjena = menza.getOcjene().stream()
-				.filter(o -> o.getKorisnik().equals(korisnikOcjene))
+		Ocjena postojecaOcjena = menza.getOcjene().stream().filter(o -> o.getKorisnik().equals(korisnikOcjene))
 				.findFirst().orElse(null);
-		if(postojecaOcjena != null) {
+		if (postojecaOcjena != null) {
 			logger.info("Postojeća ocjena pronađena za korisnika {}. Ažuriram ocjene...", idKorisnika);
 			postojecaOcjena.setHranaRating(ocjena.getHranaRating());
 			postojecaOcjena.setLjubaznostRating(ocjena.getLjubaznostRating());
@@ -163,7 +163,7 @@ public class MenzaService {
 		return true;
 	}
 
-	public boolean dodajJelo(Long idMenze, Jelo jelo){
+	public boolean dodajJelo(Long idMenze, Jelo jelo) {
 		Menza menza = menzaRepo.findById(idMenze).orElse(null);
 		if (menza == null) {
 			return false; // Menza s navedenim ID-jem ne postoji
@@ -174,13 +174,13 @@ public class MenzaService {
 		return true;
 	}
 
-	public boolean obrisiJelo(Jelo jelo){
+	public boolean obrisiJelo(Jelo jelo) {
 		Menza menza = jelo.getMenza();
-		//menza.getJelovnik().remove(jelo);
-		//jeloRepo.delete(jelo);
-		//menzaRepo.save(menza);
+		// menza.getJelovnik().remove(jelo);
+		// jeloRepo.delete(jelo);
+		// menzaRepo.save(menza);
 
-		if(menza != null && menza.getJelovnik().remove(jelo)) {
+		if (menza != null && menza.getJelovnik().remove(jelo)) {
 			jeloRepo.delete(jelo); // Briše jelo iz baze
 			menzaRepo.save(menza); // Spremi promjene u menzu
 			return true;

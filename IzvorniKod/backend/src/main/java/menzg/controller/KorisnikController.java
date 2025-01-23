@@ -31,6 +31,7 @@ import menzg.model.Korisnik;
 import menzg.model.Menza;
 import menzg.service.KorisnikService;
 import menzg.service.MenzaService;
+import menzg.service.OcjenaService;
 
 @RestController
 @RequestMapping("/korisnici")
@@ -44,12 +45,13 @@ public class KorisnikController {
 	@Autowired
 	private MenzaService menzaService;
 
+	@Autowired
+	private OcjenaService ocjenaService;
 //	@GetMapping("")
 //	public List<Korisnik> listKorisnici() {
 //		return korisnikService.listAll();
 
 //	}
-
 	// GET: Dohvaća sve korisnike
 	@GetMapping
 	// @PreAuthorize("hasRole('ROLE_ADMIN')") // NEKA U RAZVOJU OVO BUDE DOSTUPNO
@@ -135,7 +137,8 @@ public class KorisnikController {
 			Korisnik korisnik = korisnikOptional.get();
 			// Kreirajte DTO sa osnovnim podacima
 			KorisnikDTO korisnikBasicInfo = new KorisnikDTO(korisnik.getIdKorisnik(), korisnik.getLozinka(),
-					korisnik.getUsername(), korisnik.getRole(), korisnik.getGodine(), korisnik.getSpol(), korisnik.getBlocked());
+					korisnik.getUsername(), korisnik.getRole(), korisnik.getGodine(), korisnik.getSpol(),
+					korisnik.getBlocked());
 			return ResponseEntity.ok(korisnikBasicInfo);
 		} else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -167,6 +170,7 @@ public class KorisnikController {
 			korisnik.setUsername(updatedKorisnik.getUsername());
 			korisnik.setGodine(updatedKorisnik.getGodine()); // Ažuriramo godine
 			korisnik.setSpol(updatedKorisnik.getSpol()); // Ažuriramo spol
+			korisnik.setBlocked(updatedKorisnik.getBlocked());
 
 			Korisnik savedKorisnik = korisnikService.save(korisnik);
 			return ResponseEntity.ok(savedKorisnik);
@@ -182,6 +186,10 @@ public class KorisnikController {
 
 		System.out.println("proces brisanja korisnika s idijem " + id);
 		if (korisnikService.findById(id).isPresent()) {
+			// ocjenaService.deleteByKorisnikId(id);
+
+			System.out.println("izbrisao sam prvo ocjene toga korisnika \n\n\n");
+
 			korisnikService.deleteById(id);
 			return ResponseEntity.status(HttpStatus.OK).body("Korisnik uspješno obrisan.");
 		} else {
