@@ -189,7 +189,7 @@
 @media (max-width: 426px) {
   .container {
     width: 90vw; /* Adjust the container width for phones */
-    margin-top: 14vh; /* Optional: Adjust top margin for better spacing */
+    margin-top: 10vh; /* Optional: Adjust top margin for better spacing */
   }
 
   .menza-card {
