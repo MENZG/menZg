@@ -167,10 +167,9 @@ public class KorisnikController {
 			Korisnik korisnik = existingKorisnik.get();
 
 			// Ažurirati podatke koji se mogu mijenjati
-			korisnik.setUsername(updatedKorisnik.getUsername());
+
 			korisnik.setGodine(updatedKorisnik.getGodine()); // Ažuriramo godine
 			korisnik.setSpol(updatedKorisnik.getSpol()); // Ažuriramo spol
-			korisnik.setBlocked(updatedKorisnik.getBlocked());
 
 			System.out.println("novi citavi korisnik je " + korisnik + " \n\n\n");
 
