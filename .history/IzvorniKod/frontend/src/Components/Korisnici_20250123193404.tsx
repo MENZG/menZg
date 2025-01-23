@@ -34,10 +34,9 @@ const Korisnici = () => {
         setKorisnici(response.data);
         setFilteredKorisnici(response.data);
 
-        // Dodavanje korisnika sa blocked === true u blockedUsers
         const initialBlocked: Set<string> = new Set(
           response.data
-            .filter((korisnik: Korisnik) => korisnik.blocked)
+            .filter((korisnik: Korisnik) => korisnik.roleName === "Blocked")
             .map((korisnik: Korisnik) => korisnik.idKorisnik)
         );
         setBlockedUsers(initialBlocked);
