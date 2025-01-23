@@ -199,9 +199,6 @@ function Menza() {
             `${apiUrl}/korisnici/username/${currentUser.email}`
           );
           setKorisnik(response1.data);
-          if (korisnik?.role === 1) {
-            setUserIsStudent(true);
-          }
         } catch (error) {
           console.error("Error fetching user data:", error);
         }

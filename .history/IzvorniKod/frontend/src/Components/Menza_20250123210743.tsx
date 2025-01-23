@@ -124,7 +124,6 @@ function Menza() {
     ambijent: 0,
     lokacija: 0,
   });
-  const [userIsStudent, setUserIsStudent] = useState<boolean>(false);
 
   const handleRatingChange = (category: keyof Ocjena, value: number) => {
     setRating((prevRating) => ({
@@ -199,9 +198,6 @@ function Menza() {
             `${apiUrl}/korisnici/username/${currentUser.email}`
           );
           setKorisnik(response1.data);
-          if (korisnik?.role === 1) {
-            setUserIsStudent(true);
-          }
         } catch (error) {
           console.error("Error fetching user data:", error);
         }
