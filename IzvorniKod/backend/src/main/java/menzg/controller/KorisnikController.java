@@ -135,7 +135,7 @@ public class KorisnikController {
 			Korisnik korisnik = korisnikOptional.get();
 			// Kreirajte DTO sa osnovnim podacima
 			KorisnikDTO korisnikBasicInfo = new KorisnikDTO(korisnik.getIdKorisnik(), korisnik.getLozinka(),
-					korisnik.getUsername(), korisnik.getRole(), korisnik.getGodine(), korisnik.getSpol());
+					korisnik.getUsername(), korisnik.getRole(), korisnik.getGodine(), korisnik.getSpol(), korisnik.getBlocked());
 			return ResponseEntity.ok(korisnikBasicInfo);
 		} else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

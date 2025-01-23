@@ -162,7 +162,6 @@ function Menza() {
 
   const closeRatingForm = () => {
     setShowRatingForm(false);
-    window.location.reload();
   };
 
   useEffect(() => {

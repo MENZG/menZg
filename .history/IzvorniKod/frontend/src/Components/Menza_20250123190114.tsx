@@ -162,7 +162,6 @@ function Menza() {
 
   const closeRatingForm = () => {
     setShowRatingForm(false);
-    window.location.reload();
   };
 
   useEffect(() => {
@@ -326,7 +325,8 @@ function Menza() {
       );
       //alert("Vaša ocjena je uspješno poslana!");
       setSuccessMessage("Vaša ocjena je uspješno poslana!");
-      //setShowRatingForm(false);
+      setShowRatingForm(false);
+      window.location.reload();
     } catch (error) {
       console.error("Error submitting rating:", error);
       alert("Došlo je do pogreške prilikom slanja ocjene.");
@@ -483,61 +483,71 @@ function Menza() {
         </div>
       )}
 
-      {showRatingForm && (
-        <div className="chat-popup rate">
-          {successMessage ? (
-            <>
-              <p className="success-message">{successMessage}</p>
-              <button onClick={closeRatingForm} className="close-chat-btn">
-                <IoClose />
-              </button>
-            </>
-          ) : (
-            <>
-              <h3>Ocijenite menzu</h3>
-              <form>
-                {[
-                  {
-                    name: "Hrana",
-                    icon: IoFastFoodOutline,
-                    key: "hrana" as keyof Ocjena,
-                  },
-                  {
-                    name: "Ljubaznost",
-                    icon: TbUserHeart,
-                    key: "ljubaznost" as keyof Ocjena,
-                  },
-                  {
-                    name: "Ambijent",
-                    icon: PiArmchair,
-                    key: "ambijent" as keyof Ocjena,
-                  },
-                  {
-                    name: "Lokacija",
-                    icon: MdLocationOn,
-                    key: "lokacija" as keyof Ocjena,
-                  },
-                ].map(({ name, icon: Icon, key }) => (
-                  <div className="rating-category" key={key}>
-                    <label>
-                      <Icon className="ocjena-ikona" /> {name}
-                    </label>
-                    <RatingStars
-                      category={key}
-                      value={rating[key]}
-                      onChange={handleRatingChange}
-                    />
-                  </div>
-                ))}
-              </form>
-              <button onClick={submitRating} className="save-rating-btn">
-                Spremi
-              </button>
-              <button onClick={closeRatingForm} className="close-chat-btn">
-                <IoClose />
-              </button>
-            </>
-          )}
+{showRatingForm && (
+  <div className="chat-popup rate">
+    {successMessage ? (
+      <>
+        <p className="success-message">{successMessage}</p>
+        <button onClick={closeRatingForm} className="close-chat-btn">
+          <IoClose />
+        </button>
+      </>
+    ) : (
+      <>
+        <h3>Ocijenite menzu</h3>
+        <form>
+          {[
+            {
+              name: "Hrana",
+              icon: IoFastFoodOutline,
+              key: "hrana" as keyof Ocjena,
+            },
+            {
+              name: "Ljubaznost",
+              icon: TbUserHeart,
+              key: "ljubaznost" as keyof Ocjena,
+            },
+            {
+              name: "Ambijent",
+              icon: PiArmchair,
+              key: "ambijent" as keyof Ocjena,
+            },
+            {
+              name: "Lokacija",
+              icon: MdLocationOn,
+              key: "lokacija" as keyof Ocjena,
+            },
+          ].map(({ name, icon: Icon, key }) => (
+            <div className="rating-category" key={key}>
+              <label>
+                <Icon className="ocjena-ikona" /> {name}
+              </label>
+              <RatingStars
+                category={key}
+                value={rating[key]}
+                onChange={handleRatingChange}
+              />
+            </div>
+          ))}
+        </form>
+        <button onClick={submitRating} className="save-rating-btn">
+          Spremi
+        </button>
+        <button onClick={closeRatingForm} className="close-chat-btn">
+          <IoClose />
+        </button>
+      </>
+    )}
+  </div>
+)}
+
+
+          <button onClick={submitRating} className="save-rating-btn">
+            Spremi
+          </button>
+          <button onClick={closeRatingForm} className="close-chat-btn">
+            <IoClose></IoClose>
+          </button>
         </div>
       )}
     </>

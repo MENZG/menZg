@@ -48,8 +48,7 @@ const Korisnici = () => {
   useEffect(() => {
     const blockedKorisnici = async () => {
       try {
-        const response = await axios.get(`${apiUrl}/korisnici`);
-        console.log(response.data);
+        const response = await axios.get(`${apiUrl}/korisnici/blocked`);
       } catch (error) {
         console.error("There was an error fetching the data!", error);
       }

@@ -162,7 +162,6 @@ function Menza() {
 
   const closeRatingForm = () => {
     setShowRatingForm(false);
-    window.location.reload();
   };
 
   useEffect(() => {
@@ -326,7 +325,7 @@ function Menza() {
       );
       //alert("Vaša ocjena je uspješno poslana!");
       setSuccessMessage("Vaša ocjena je uspješno poslana!");
-      //setShowRatingForm(false);
+      setShowRatingForm(false);
     } catch (error) {
       console.error("Error submitting rating:", error);
       alert("Došlo je do pogreške prilikom slanja ocjene.");
@@ -486,12 +485,7 @@ function Menza() {
       {showRatingForm && (
         <div className="chat-popup rate">
           {successMessage ? (
-            <>
-              <p className="success-message">{successMessage}</p>
-              <button onClick={closeRatingForm} className="close-chat-btn">
-                <IoClose />
-              </button>
-            </>
+            <p className="success-message">{successMessage}</p>
           ) : (
             <>
               <h3>Ocijenite menzu</h3>
@@ -530,14 +524,15 @@ function Menza() {
                   </div>
                 ))}
               </form>
-              <button onClick={submitRating} className="save-rating-btn">
-                Spremi
-              </button>
-              <button onClick={closeRatingForm} className="close-chat-btn">
-                <IoClose />
-              </button>
             </>
           )}
+
+          <button onClick={submitRating} className="save-rating-btn">
+            Spremi
+          </button>
+          <button onClick={closeRatingForm} className="close-chat-btn">
+            <IoClose></IoClose>
+          </button>
         </div>
       )}
     </>

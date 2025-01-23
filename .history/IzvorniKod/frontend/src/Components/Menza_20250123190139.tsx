@@ -162,7 +162,6 @@ function Menza() {
 
   const closeRatingForm = () => {
     setShowRatingForm(false);
-    window.location.reload();
   };
 
   useEffect(() => {
@@ -326,7 +325,8 @@ function Menza() {
       );
       //alert("Vaša ocjena je uspješno poslana!");
       setSuccessMessage("Vaša ocjena je uspješno poslana!");
-      //setShowRatingForm(false);
+      setShowRatingForm(false);
+      window.location.reload();
     } catch (error) {
       console.error("Error submitting rating:", error);
       alert("Došlo je do pogreške prilikom slanja ocjene.");
