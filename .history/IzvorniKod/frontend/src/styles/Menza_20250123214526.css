@@ -67,32 +67,39 @@
   border-radius: 30%;
 }
 
+.live-stream h4 {
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+}
+
 .video-container {
   position: relative;
   overflow: hidden; /* osigurava da sve ostaje unutar okvira */
 }
+
 .video-overlay {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 50px; /* visina tamnog sloja samo pri vrhu */
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  pointer-events: none; /* omogućuje interakciju s videom */
-  background: rgba(0, 0, 0, 0.6); /* tamniji sloj radi boljeg kontrasta */
+  pointer-events: none; /* omogućuje da video ostane klikabilan */
+  background: rgba(0, 0, 0, 0.3); /* lagani tamni sloj preko videa */
 }
 
 .video-overlay h4 {
   color: #ffffff;
-  font-size: 18px;
+  font-size: 24px;
   font-weight: bold;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
   text-align: center;
   margin: 0;
-  z-index: 1; /* naslov iznad tamnog sloja */
+  z-index: 1; /* osigurava da je tekst iznad svega */
 }
+
 
 .paint-brush {
   border-radius: 50px;

@@ -468,9 +468,8 @@ function Menza() {
 
         <div className="live-stream">
           <div className="video-container">
-            <div className="video-overlay">
-              <h4>Uživo red u menzi</h4>
-            </div>
+            <h4>Uživo red u menzi</h4>
+
             {!muxError ? (
               <MuxPlayer
                 streamType="live"
