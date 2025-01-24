@@ -1,10 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { GrUserAdmin } from "react-icons/gr";
+import { LuChefHat } from "react-icons/lu";
+import { PiStudent } from "react-icons/pi";
 import NavBar from "./NavBar";
 import "/src/styles/Korisnici.css";
-import { PiStudent } from "react-icons/pi";
-import { LuChefHat } from "react-icons/lu";
-import { GrUserAdmin } from "react-icons/gr";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -27,12 +27,19 @@ const Korisnici = () => {
   const [selectedGender, setSelectedGender] = useState<string>(""); // Gender filter
   const [blockedFilter, setBlockedFilter] = useState<string>(""); // Blocked filter
 
+  const sortKorisnici = (filteredSorted: Korisnik[]) => {
+    filteredSorted.sort(
+      (a, b) => parseInt(a.idKorisnik) - parseInt(b.idKorisnik)
+    );
+    setFilteredKorisnici(filteredSorted);
+  };
+
   useEffect(() => {
     axios
       .get(`${apiUrl}/korisnici`)
       .then((response) => {
         setKorisnici(response.data);
-        setFilteredKorisnici(response.data);
+        sortKorisnici(response.data);
 
         // Dodavanje korisnika sa blocked === true u blockedUsers
         const initialBlocked: Set<string> = new Set(
@@ -61,7 +68,7 @@ const Korisnici = () => {
   }, []);
 
   const applyFilters = () => {
-    setFilteredKorisnici(
+    sortKorisnici(
       korisnici.filter((korisnik) => {
         const roleMatch =
           selectedRole === "" || korisnik.role.toString() === selectedRole;
@@ -91,7 +98,7 @@ const Korisnici = () => {
           .get(`${apiUrl}/korisnici`)
           .then((response) => {
             setKorisnici(response.data);
-            setFilteredKorisnici(response.data);
+            sortKorisnici(response.data);
 
             // Ažuriranje blockedUsers seta
             const updatedBlocked: Set<string> = new Set(

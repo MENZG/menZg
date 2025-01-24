@@ -2,7 +2,10 @@ package menzg.service;
 
 import java.io.IOException;
 import java.util.Map;
-import java.util.concurrent.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +27,7 @@ public class FFmpegService {
 	public void startStreamingOnStartup() {
 		try {
 			startStreaming(inputUrl, outputUrl);
+			System.out.println("kamera je pocela s radom \n");
 			logger.info("Streaming started automatically on application startup.");
 		} catch (IOException e) {
 			logger.error("Error starting stream: {}", e.getMessage());
@@ -38,8 +42,14 @@ public class FFmpegService {
 	}
 
 	public String startStreaming(String inputUrl, String outputUrl) throws IOException {
+
 		if (processMap.containsKey(outputUrl) && processMap.get(outputUrl).isAlive()) {
-			return "Stream is already running.";
+
+			System.out.println("ponovno ga pokrecem opet -------------   ");
+
+			stopStreaming(outputUrl);
+
+			System.out.println("nastavljam dalje 2. pokusaj \n\n\n");
 		}
 
 		String os = System.getProperty("os.name").toLowerCase();

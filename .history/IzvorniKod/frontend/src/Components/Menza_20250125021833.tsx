@@ -3,20 +3,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Button, Card, Form, ListGroup, Spinner } from "react-bootstrap";
-import { IoCheckmarkDoneSharp } from "react-icons/io5";
 import { useParams } from "react-router-dom";
 import "../styles/Menza.css";
+import { IoCheckmarkDoneSharp } from "react-icons/io5";
 
-import MuxPlayer from "@mux/mux-player-react";
-import { FaRegStar, FaStar } from "react-icons/fa6";
-import { IoChatbubbleOutline, IoClose, IoFastFoodOutline } from "react-icons/io5";
-import { MdLocationOn } from "react-icons/md";
-import { PiArmchair } from "react-icons/pi";
-import { TbUserHeart } from "react-icons/tb";
-import Chat from "./Chat";
-import MenuCard from "./MenuCard";
 import NavBar from "./NavBar";
+import MuxPlayer from "@mux/mux-player-react";
 import YouTubeLiveStream from "./YouTubeLiveStream";
+import { MdLocationOn } from "react-icons/md";
+import { TbUserHeart } from "react-icons/tb";
+import { IoChatbubbleOutline, IoFastFoodOutline } from "react-icons/io5";
+import { PiArmchair } from "react-icons/pi";
+import { FaRegStar, FaStar } from "react-icons/fa6";
+import { IoClose } from "react-icons/io5";
+import MenuCard from "./MenuCard";
 
 const initialRestaurantData = {
   idMenza: "1",
@@ -513,8 +513,7 @@ function Menza() {
       </button>
       {isChatOpen && (
         <div className="chat-popup">
-
-          <Chat />
+          {/**/}
           <button
             className="close-chat-btn"
             onClick={() => setIsChatOpen(false)}

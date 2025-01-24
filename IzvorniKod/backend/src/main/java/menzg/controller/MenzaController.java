@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -56,31 +54,24 @@ public class MenzaController {
 
 	// vraca sve menze
 	@GetMapping("")
-	// @PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or
-	// hasRole('ROLE_DJELATNIK')")
-	public ResponseEntity<List<Menza>> listMenzas(@AuthenticationPrincipal OAuth2User principal) {
+	@PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
+	public ResponseEntity<List<Menza>> listMenzas() {
 		List<Menza> menze = menzaService.listAll();
-
-		System.out.println("\n");
-		System.out.println(principal.getAttributes() + " ------------ BACKEND PORUKA");
-
-		// Ako nije pronasaoo nijednu menzu, vraca 404 Not Found, ne nego vraca praznu
-		// listu
 
 		// korisnikService.saveOrUpdateGoogleUser(oAuth2User);
 
 		System.out.println("Korisnik trazi listu menzi - BACKEND PORUKA: ------------");
 
 		if (menze.isEmpty()) {
-			return new ResponseEntity<>(HttpStatus.OK);
+			return new ResponseEntity<>(HttpStatus.BANDWIDTH_LIMIT_EXCEEDED);
 		}
 		// Inače vraca listu menza s statusom 200 OK
-		return new ResponseEntity<>(menze, HttpStatus.OK);
+
+		return ResponseEntity.ok(menze);
 	}
 
 	@GetMapping("/{id}")
-	// @PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or
-	// hasRole('ROLE_DJELATNIK')") // Ova ruta će biti
+	@PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')") // Ova ruta će biti
 	public ResponseEntity<Menza> getMenzaData(@PathVariable Long id) {
 
 		System.out.println("zatrazio si SVE INFORMACIJE o MENZAMA ------ ");
@@ -97,8 +88,7 @@ public class MenzaController {
 
 	}
 
-	// @PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or
-	// hasRole('ROLE_DJELATNIK')") // Ova ruta će biti
+	@PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')") // Ova ruta će biti
 	@GetMapping("/radnovrime/{id}")
 	public ResponseEntity<List<RadnoVrijeme>> getRadnoVrijeme(@PathVariable Long id) {
 		// Fetch the working hours for the given Menza id
@@ -110,7 +100,7 @@ public class MenzaController {
 	}
 
 	@PutMapping("/{id}")
-//	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
 	public ResponseEntity<Menza> updateMenza(@PathVariable Long id, @RequestBody Menza menzaDetails) {
 		// Pronađi postojeću menzu po ID-u
 		Menza existingMenza = menzaService.getMenzaData(id);
@@ -138,8 +128,7 @@ public class MenzaController {
 	}
 
 	@GetMapping("/{id}/jelovnik")
-	// @PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or
-	// hasRole('ROLE_DJELATNIK')")
+	@PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
 	public ResponseEntity<List<Jelo>> getJelovnik(@PathVariable Long id) {
 		// Dohvaćanje menze prema ID-u
 		Menza menza = menzaService.getMenzaData(id);
@@ -158,7 +147,7 @@ public class MenzaController {
 	}
 
 	@PutMapping("/{idMenze}/radno-vrijeme")
-	// @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
 	public ResponseEntity<String> azurirajRadnoVrijeme(@PathVariable Long idMenze, // ID menze dolazi iz putanje
 			@RequestBody RadnoVrijeme radnoVrijeme) { // Radno vrijeme dolazi iz tijela zahtjeva
 
@@ -174,7 +163,7 @@ public class MenzaController {
 	}
 
 	@PutMapping("/{idMenze}/radno-vrijeme/{dan}/{pocetak}/{kraj}")
-	// @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
 	public ResponseEntity<String> azurirajRadnoVrijeme(@PathVariable Long idMenze, @PathVariable String dan,
 			@PathVariable LocalTime pocetak, @PathVariable LocalTime kraj)// ID menze do) { // Radno vrijeme dolazi iz
 																			// tijela zahtjeva
@@ -193,8 +182,8 @@ public class MenzaController {
 	}
 
 	@PutMapping("/{idMenze}/jelovnik")
-	@PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
-	// @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
+
 	public ResponseEntity<String> azurirajJelovnik(@PathVariable Long idMenze, // ID menze dolazi iz putanje
 			@RequestBody Jelo novoJelo) { // Novi jelovnik dolazi iz tijela zahtjeva
 		System.out.println("Stigao novi jelovnik za menzu " + idMenze + ": " + novoJelo);
@@ -211,7 +200,7 @@ public class MenzaController {
 	}
 
 	@PutMapping("/{idMenze}/jelovnik/{idJela}/{kategorija}/{nazivJela}/{cijena}")
-	@PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
 
 	public ResponseEntity<String> azurirajJelovnik(@PathVariable Long idMenze, // ID menze dolazi iz putanje
 			@PathVariable Long idJela, @PathVariable String kategorija, @PathVariable String nazivJela,
@@ -236,8 +225,7 @@ public class MenzaController {
 	}
 
 	@GetMapping("/{id}/ocjene")
-	// @PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or
-	// hasRole('ROLE_DJELATNIK')")
+	@PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
 	public ResponseEntity<List<OcjenaDohvatDTO>> getOcjene(@PathVariable Long id) {
 		// Dohvaćanje menze prema ID-u
 		Menza menza = menzaService.getMenzaData(id);
@@ -263,8 +251,7 @@ public class MenzaController {
 	}
 
 	@GetMapping("/{id}/prosjecna-ocjena")
-	// @PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or
-	// hasRole('ROLE_DJELATNIK')")
+	@PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
 	public ResponseEntity<List<Double>> getAverageRating(@PathVariable Long id) {
 		// Dohvaćanje menze prema ID-u
 		Menza menza = menzaService.getMenzaData(id);
@@ -293,8 +280,7 @@ public class MenzaController {
 	// ovdje ce trebat poslat ili korisnika ili samo id korisnika !!!pitat
 	// frontendase
 	@GetMapping("/{idMenze}/{idKorisnik}/ocjene")
-	// @PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or
-	// hasRole('ROLE_DJELATNIK')")
+	@PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
 	public ResponseEntity<OcjenaDohvatDTO> getOcjeneByKorisnik(@PathVariable Long idMenze,
 			@PathVariable Long idKorisnik) {
 		// Dohvaćanje menze prema ID-u
@@ -344,6 +330,7 @@ public class MenzaController {
 	}
 
 	@PostMapping("/{idMenze}/{idKorisnik}/ocjene")
+	@PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
 	public ResponseEntity<String> dodajOcjenu(@PathVariable Long idMenze, @PathVariable Long idKorisnik,
 			@RequestBody OcjenaDTO ocjenaRequest) {
 		logger.info("Primljen zahtjev za ažuriranje ocjene: idMenze={}, idKorisnik={}, ocjenaRequest={}", idMenze,
@@ -391,6 +378,7 @@ public class MenzaController {
 	}
 
 	@PostMapping("/{idMenze}/novoJelo")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
 	public ResponseEntity<String> dodajJelo(@PathVariable Long idMenze, @RequestBody JeloDTO novoJelo) {
 		Menza menza = menzaService.getMenzaData(idMenze);
 		if (menza == null) {
@@ -411,6 +399,7 @@ public class MenzaController {
 	}
 
 	@DeleteMapping("/{idJela}")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
 	public ResponseEntity<String> obrisiJelo(@PathVariable Long idJela) {
 		Jelo jelo = jeloService.getJeloData(idJela);
 		if (jelo == null) {

@@ -54,6 +54,8 @@ public class KorisnikController {
 	@GetMapping
 	// @PreAuthorize("hasRole('ROLE_ADMIN')") // NEKA U RAZVOJU OVO BUDE DOSTUPNO
 	// SVIMA
+
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<List<KorisnikDTO>> getAllKorisnici() {
 		List<Korisnik> korisnici = korisnikService.findAll();
 
@@ -68,7 +70,7 @@ public class KorisnikController {
 	}
 
 	@PutMapping("/{id}/newRole/{brojNoveRole}")
-	// @PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<String> promijeniRoluKorisniku(@PathVariable Long id, @PathVariable int brojNoveRole) {
 		Optional<Korisnik> korisnikOpt = korisnikService.findById(id);
 
@@ -203,8 +205,7 @@ public class KorisnikController {
 	}
 
 	@DeleteMapping("/{id}")
-	@PreAuthorize("hasRole('ROLE_ADMIN')") // samo admin moze brisat korisnika
-	// @PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<String> deleteKorisnik(@PathVariable Long id) {
 
 		System.out.println("proces brisanja korisnika s id-ijem " + id);
@@ -222,8 +223,7 @@ public class KorisnikController {
 
 	// GET: Dohvaća korisnika po mailu
 	@GetMapping("/username/{username}")
-	// @PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or
-	// hasRole('ROLE_DJELATNIK')")
+	@PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
 	public ResponseEntity<Korisnik> getKorisnikByUsername(@PathVariable String username) {
 		Optional<Korisnik> korisnik = korisnikService.findByUsername(username);
 		if (korisnik.isPresent()) {
@@ -331,7 +331,7 @@ public class KorisnikController {
 	// @PreAuthorize("hasRole('ROLE_ADMIN')") // Samo admin može pristupiti ovom
 	// endpointu
 	@PutMapping("/{idKorisnik}/blocked")
-	@PreAuthorize("hasRole('ROLE_ADMIN')") // samo admin moze blokirati korisnika
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<Korisnik> promijeniBlockedStatus(@PathVariable Long idKorisnik,
 			@RequestParam boolean blocked) {
 
@@ -340,6 +340,8 @@ public class KorisnikController {
 	}
 
 	@PostMapping("/odjavi")
+	// @PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or
+	// hasRole('ROLE_DJELATNIK')")
 	public ResponseEntity<String> logout(HttpServletRequest request) {
 		SecurityContextHolder.getContext().setAuthentication(null);
 		request.getSession().invalidate();

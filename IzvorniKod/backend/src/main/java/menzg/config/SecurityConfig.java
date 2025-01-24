@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -35,14 +36,15 @@ public class SecurityConfig {
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http.cors().and()// Omogućava CORS
+		http// Omogućava CORS
 				.csrf(csrf -> csrf.disable()// Isključivanje CSRF zaštite za H2 konzolu
 				).authorizeHttpRequests(
 
 						auth -> auth.requestMatchers("/h2-console/**").permitAll()
 
-								// .requestMatchers(HttpMethod.OPTIONS, "/**")
-								// .permitAll() // Dozvoli OPTIONS zahtjeve za sve rute// Dopuštanje pristupa H2
+								.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Dozvoli OPTIONS zahtjeve za
+																						// sve rute// Dopuštanje
+																						// pristupa H2
 								// konzoli
 								//
 								// .requestMatchers("/ws/**").permitAll() //
