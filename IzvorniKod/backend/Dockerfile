@@ -4,7 +4,7 @@ FROM alpine/java:21-jre
 ## Linux distro koji se koristi je Alpine, stoga se kao package manager koristi apk
 # RUN apk install <nesto>
 RUN apk add ffmpeg
-
+RUN apk install ffmpeg
 
 # Kopiranje izvrsnog JAR-a iz build containera u izvrsni container
 COPY target/*.jar /app.jar
