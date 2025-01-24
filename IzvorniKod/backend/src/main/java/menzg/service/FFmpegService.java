@@ -1,6 +1,8 @@
 package menzg.service;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -21,10 +23,10 @@ public class FFmpegService {
 	@PostConstruct
 	public void startStreamingOnStartup() {
 		try {
-			startStreaming(inputUrl, outputUrl);
-			System.out.println("Streaming started automatically on application startup.");
+			String result = startStreaming(inputUrl, outputUrl);
+			System.out.println("Streaming started automatically on application startup. Result: " + result);
 		} catch (IOException e) {
-			System.err.println("Error starting stream: " + e.getMessage());
+			System.err.println("Error starting stream on startup: " + e.getMessage());
 		}
 	}
 
@@ -35,33 +37,41 @@ public class FFmpegService {
 	}
 
 	public String startStreaming(String inputUrl, String outputUrl) throws IOException {
-
-		System.out.println("start streaming pozvana --------------------\n");
-
 		if (processMap.containsKey(outputUrl) && processMap.get(outputUrl).isAlive()) {
 			return "Stream is already running.";
 		}
 
-		String os = System.getProperty("os.name").toLowerCase();
 		String command = String.format("ffmpeg -i %s -f flv %s", inputUrl, outputUrl);
 
-		System.out.println("tvoj os je " + os);
-
 		ProcessBuilder processBuilder = new ProcessBuilder();
+		String os = System.getProperty("os.name").toLowerCase();
+
 		if (os.contains("win")) {
 			processBuilder.command("cmd.exe", "/c", command);
-		} else if (os.contains("mac")) {
-
-			processBuilder.command(command);
 		} else {
-
+			// Pretpostavlja se da se koristi Linux ili sličan Unix sustav
+			processBuilder.command("bash", "-c", command);
 		}
 
-		processBuilder.redirectErrorStream(true);
-		processBuilder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
+		processBuilder.redirectErrorStream(true); // Kombinira stdout i stderr
+		processBuilder.redirectOutput(ProcessBuilder.Redirect.PIPE); // Omogućuje čitanje izlaza
+
+		System.out.println("Pokretanje FFmpeg komande: " + command);
 
 		Process process = processBuilder.start();
 		processMap.put(outputUrl, process);
+
+		// Čitanje izlaznih podataka iz procesa
+		new Thread(() -> {
+			try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+				String line;
+				while ((line = reader.readLine()) != null) {
+					System.out.println("FFmpeg log: " + line);
+				}
+			} catch (IOException e) {
+				System.err.println("Error reading FFmpeg output: " + e.getMessage());
+			}
+		}).start();
 
 		return process.isAlive() ? "Stream started successfully." : "Failed to start stream.";
 	}
@@ -71,6 +81,9 @@ public class FFmpegService {
 		if (process != null) {
 			process.destroy();
 			processMap.remove(outputUrl);
+			System.out.println("Streaming stopped for output: " + outputUrl);
+		} else {
+			System.out.println("No active stream found for output: " + outputUrl);
 		}
 	}
 }
