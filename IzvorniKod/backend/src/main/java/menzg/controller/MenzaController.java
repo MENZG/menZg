@@ -41,7 +41,7 @@ import menzg.service.OcjenaService;
 // @CrossOrigin(origins = "http://localhost:5173")
 //@CrossOrigin(origins = "*")
 //@CrossOrigin(origins = "https://frontendservice-l0s1.onrender.com")
-@CrossOrigin(origins = "https://frontendservice-l0s1.onrender.com")
+@CrossOrigin(origins = "*")
 public class MenzaController {
 
 	private static final Logger logger = LoggerFactory.getLogger(MenzaController.class); // Definirajte logger

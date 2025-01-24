@@ -26,7 +26,7 @@ import menzg.service.KorisnikService;
 public class SecurityConfig {
 
 	@Value("${progi.frontend.url}/menze") // cisti frontend --> dalje slat
-	private String frontendUrl;
+	private String redirectURLString;
 
 	@Value("${progi.frontend.url}") // cisti frontend --> dalje slat
 	private String loginPage;
@@ -66,7 +66,7 @@ public class SecurityConfig {
 			SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
 			// Nastavite s default redirectom
-			response.sendRedirect(frontendUrl);
+			response.sendRedirect(redirectURLString);
 		}));
 
 		return http.build();
