@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -192,6 +193,7 @@ public class MenzaController {
 	}
 
 	@PutMapping("/{idMenze}/jelovnik")
+	@PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
 	// @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
 	public ResponseEntity<String> azurirajJelovnik(@PathVariable Long idMenze, // ID menze dolazi iz putanje
 			@RequestBody Jelo novoJelo) { // Novi jelovnik dolazi iz tijela zahtjeva
@@ -209,16 +211,19 @@ public class MenzaController {
 	}
 
 	@PutMapping("/{idMenze}/jelovnik/{idJela}/{kategorija}/{nazivJela}/{cijena}")
-	// @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
+	@PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
+
 	public ResponseEntity<String> azurirajJelovnik(@PathVariable Long idMenze, // ID menze dolazi iz putanje
 			@PathVariable Long idJela, @PathVariable String kategorija, @PathVariable String nazivJela,
 			@PathVariable Float cijena) {
 
 		Jelo novoJelo = new Jelo(kategorija, cijena, nazivJela, null);
+		novoJelo.setIdJela(idJela);
 
 		// Novi jelovnik dolazi iz tijela zahtjeva
 		System.out.println("Stigao novi jelovnik za menzu " + idMenze + ": " + novoJelo);
-		logger.info("Loger radi i prikazuje se u backendu uspješno ažurirana za menzu {}", idMenze);
+		// logger.info("Loger radi i prikazuje se u backendu uspješno ažurirana za menzu
+		// {}", idMenze);
 
 		boolean uspjeh = menzaService.azurirajJelovnik(idMenze, novoJelo);
 
