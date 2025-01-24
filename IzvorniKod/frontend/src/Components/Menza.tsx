@@ -115,7 +115,7 @@ function Menza() {
   const [editModeIndex, setEditModeIndex] = useState<number | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [isChatOpen, setIsChatOpen] = useState<boolean>(false);
-  const [muxError, setMuxError] = useState<boolean>(false);
+  const [muxError, ] = useState<boolean>(false);
   const [showRatingForm, setShowRatingForm] = useState<boolean>(false);
   const [ocjene, setOcjene] = useState<Ocjena | null>(null);
   const [rating, setRating] = useState<Ocjena>({
