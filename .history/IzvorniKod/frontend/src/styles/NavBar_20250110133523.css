@@ -1,0 +1,142 @@
+.logo-img {
+    height: 14vh;
+    margin: 0;
+}
+
+/* Stil za navigacijske botune */
+.nav-item .nav-btn {
+    background: none;
+    border: none;
+    color: #333;
+    font-weight: normal;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: none;
+    margin: 0 20px;
+}
+
+.nav-item .nav-btn:hover {
+    color: #0098b3;
+    background: none;
+}
+
+.nav-btn-container {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+/* Stil za pozadinu navbara */
+.navbar-bg {
+    background-color: white !important;
+}
+
+/* Navbar - fiksna pozicija i stil */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    height: 16vh;
+}
+
+/* Kontejner za elemente unutar navbara */
+.navbar .container-fluid {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Logo lijevo, ostatak desno */
+    position: relative;
+}
+
+/* Centriranje logo-a */
+.logo-img {
+    margin-right: auto; /* Osigurava da logo ostane skroz lijevo */
+}
+
+.log-btn{
+    color: white;
+    background-color: #0098b3;
+    border-radius: 50px;
+    font-size: small;
+}
+
+.role-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    font-size: small;
+}
+
+.role-p{
+    margin-bottom: 0;
+    margin-right: 10px;
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .hamburger span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: #333;
+    border-radius: 3px;
+  }
+  
+  @media (max-width: 768px) {
+    .hamburger {
+      display: flex;
+    }
+  
+    .nav-menu {
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      position: absolute;
+      top: 60px;
+      right: 20px;
+      background-color: white;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+
+    .role-div{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .role-p{
+        margin: 0;
+    }
+  
+    .nav-menu.show {
+      display: flex;
+    }
+
+    .nav-item .nav-btn{
+        margin: 0;
+    }
+
+    .log-btn{
+        border: none;
+        padding: 2px 8px 2px 8px;
+    }
+  }
+  
+
+

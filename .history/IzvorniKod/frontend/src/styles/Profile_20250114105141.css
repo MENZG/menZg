@@ -1,0 +1,75 @@
+.profile-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background: linear-gradient(to right, #0098b3, #feb47b);
+  color: white;
+}
+
+.profile-container {
+  margin-top: 16vh;;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  width: 80%;
+}
+
+.profile-header {
+  margin-bottom: 20px;
+}
+
+.profile-picture {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border: 3px solid white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.profile-name {
+  margin-top: 10px;
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.profile-details {
+  margin-bottom: 20px;
+}
+
+.profile-email,
+.profile-role,
+.profile-age,
+.profile-sex {
+  margin: 5px 0;
+}
+
+.profile-dropdown {
+  margin-top: 20px;
+}
+
+.profile-dropdown button {
+  background-color: #ff7e5f;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.profile-dropdown button:hover {
+  background-color: #feb47b;
+}
+
+.profile-age {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.age-input {
+  width: 70px;
+}

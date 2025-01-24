@@ -1,0 +1,177 @@
+.naslov-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.naslov {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+  color: white;
+}
+
+.filters {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.filter-select {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 50px;
+  font-size: 16px;
+  min-width: 150px;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s ease;
+}
+
+.filter-select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+@media (max-width: 768px) {
+  .filters {
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+}
+
+
+.korisnici-container {
+  padding: 20px;
+  margin-top: 18vh;
+  margin-bottom: 4vh;
+}
+
+.korisnici-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+}
+
+.korisnici-table th,
+.korisnici-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.korisnici-table th {
+  background-color: #f2f2f2;
+  text-align: left;
+}
+
+.admin-btn {
+  color: white;
+  background-color: #0098b3;
+  border-radius: 50px;
+  font-size: small;
+  border: none;
+  padding: 6px 10px;
+}
+
+.admin-btn:hover {
+  background-color: #007a8a;
+}
+
+.select-role {
+  border-radius: 50px;
+  padding: 5px;
+}
+
+.option-role {
+  border-radius: 50px;
+}
+
+.blocked-row {
+  background-color: rgb(255, 85, 85);
+  color: white; /* Ensure text is readable on red background */
+}
+
+.ikona-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* Ensures it uses the full height of the row */
+  border: none; /* Removes cell border */
+  padding: 0; /* Removes extra padding */
+}
+
+.ikona {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%; /* Round background */
+  background-color: #dbd9d9; /* Gray background */
+  color: #0098b3; /* Turquoise color for icons */
+  padding: 10px; /* Space inside the circle */
+  width: 40px; /* Circle width */
+  height: 40px; /* Circle height */
+  font-size: 20px; /* Icon size */
+}
+
+.table-responsive {
+  overflow-x: auto; /* Enables horizontal scrolling on smaller screens */
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling for iOS */
+  scrollbar-width: thin; /* Thin scrollbar for better aesthetics */
+}
+
+@media (max-width: 768px) {
+  .korisnici-table th,
+  .korisnici-table td {
+    font-size: 12px; /* Adjust font size for smaller screens */
+    padding: 8px;
+  }
+
+  .naslov-div h1 {
+    font-size: 18px; /* Adjust title size */
+  }
+
+  .admin-btn {
+    font-size: 0.9em; /* Scale button font size */
+    padding: 4px 8px; /* Adjust padding for smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .korisnici-table {
+    display: block; /* Stack table rows */
+  }
+
+  .korisnici-table thead {
+    display: none; /* Hide table headers */
+  }
+
+  .korisnici-table tr {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  .korisnici-table td {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+  }
+
+  .korisnici-table td::before {
+    content: attr(data-label); /* Use data-label for context */
+    font-weight: bold;
+    text-transform: capitalize;
+    margin-right: 10px;
+  }
+
+  .ikona {
+    width: 30px; /* Adjust circle size */
+    height: 30px;
+    font-size: 16px; /* Smaller icon size */
+  }
+}

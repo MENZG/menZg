@@ -1,156 +1,352 @@
 package menzg.controller;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import menzg.model.AppAdmin;
+import jakarta.servlet.http.HttpServletRequest;
+import menzg.DTO.KorisnikDTO;
 import menzg.model.Korisnik;
-import menzg.model.Student;
-import menzg.service.AppAdminService;
+import menzg.model.Menza;
 import menzg.service.KorisnikService;
-import menzg.service.StudentService;
+import menzg.service.MenzaService;
+import menzg.service.OcjenaService;
 
-@Profile({ "oauth-security" })
 @RestController
-@RequestMapping("")
+@RequestMapping("/korisnici")
 // @CrossOrigin(origins = "http://localhost:5173")
-@CrossOrigin(origins = "*")
+
 public class KorisnikController {
-
-	@Autowired
-	private StudentService studentService;
-
-	@Autowired
-	private AppAdminService appAdminService;
 
 	@Autowired
 	private KorisnikService korisnikService;
 
+	@Autowired
+	private MenzaService menzaService;
+
+	@Autowired
+	private OcjenaService ocjenaService;
 //	@GetMapping("")
 //	public List<Korisnik> listKorisnici() {
 //		return korisnikService.listAll();
+
 //	}
+	// GET: Dohvaća sve korisnike
+	@GetMapping
+	// @PreAuthorize("hasRole('ROLE_ADMIN')") // NEKA U RAZVOJU OVO BUDE DOSTUPNO
+	// SVIMA
+	public ResponseEntity<List<KorisnikDTO>> getAllKorisnici() {
+		List<Korisnik> korisnici = korisnikService.findAll();
 
-	@GetMapping("/student/{id}")
-	public ResponseEntity<Student> getStudentData(@PathVariable Long id) {
+		// Pretvaranje svih korisnika u osnovne informacije (DTO)
+		List<KorisnikDTO> korisniciBasicInfo = korisnici.stream()
+				.map(korisnik -> new KorisnikDTO(korisnik.getIdKorisnik(), korisnik.getLozinka(),
+						korisnik.getUsername(), korisnik.getRole(), korisnik.getGodine(), korisnik.getSpol(),
+						korisnik.getBlocked()))
+				.collect(Collectors.toList());
 
-		Student st = studentService.getStudentData(id);
-
-		System.out.println("iz baze sam izvukao " + st);
-
-		if (st == null) {
-			System.out.println("nisam pronasao trazenog studenta");
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-		return new ResponseEntity<>(st, HttpStatus.OK);
+		return ResponseEntity.ok(korisniciBasicInfo);
 	}
 
-	@PostMapping("/student")
-	public ResponseEntity<String> createStudent(@RequestBody Map<String, Object> studentRequest) {
+	@PutMapping("/{id}/newRole/{brojNoveRole}")
+	// @PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<String> promijeniRoluKorisniku(@PathVariable Long id, @PathVariable int brojNoveRole) {
+		Optional<Korisnik> korisnikOpt = korisnikService.findById(id);
 
-		// Ispisivanje svih podataka iz request bodyja
-		System.out.println("Podaci o studentu: " + studentRequest);
+		if (!korisnikOpt.isPresent()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Korisnik s ID-em " + id + " nije pronađen.");
+		}
 
-		// primjer post metode
+		Korisnik korisnik = korisnikOpt.get();
 
-		/*
-		 * 
-		 * 
-		 * 
-		 * OVO JE OBLIK KOJI FRONTEND SALJE! { "username": "newStudent1",
-		 *  "lozinka": "newPassword1",  "spol": "M",  "dob": 21 }
-		 * 
-		 * 
-		 * 
-		 * 
-		 */
-		// Pristup svakom svojstvu pomoću ključeva
+		String novaRola = mapirajBrojNaRolu(brojNoveRole);
 
-		try {
+		korisnik.setRole(brojNoveRole);
 
-			String username;
-			String lozinka;
-			String spol;
-			Integer dob;
+		System.out.println("mijenjam rolu korisniku " + korisnik.getUsername() + " na " + novaRola);
 
-			username = (String) studentRequest.get("username");
-			lozinka = (String) studentRequest.get("lozinka");
-			spol = (String) studentRequest.get("spol");
-			dob = (Integer) studentRequest.get("dob");
+		// ovime mu se spremaju nove ovlasti
+		korisnikService.save(korisnik);
 
-			// Ispisivanje svakog svojstva
-			System.out.println("Username: " + username);
-			System.out.println("Lozinka: " + lozinka);
-			System.out.println("Spol: " + spol);
-			System.out.println("Dob: " + dob);
+		// MORA GOOGLE ZNATI ZA NOVE OVLASTI
+		List<SimpleGrantedAuthority> noveOvlasti = korisnikService.getAuthorities(korisnik);
 
-			// Kreiranje korisnika
-			Korisnik korisnik = new Korisnik();
-			korisnik.setUsername(username);
-			korisnik.setLozinka(lozinka);
+		System.out.println("nove ovlasti su " + noveOvlasti);
 
-			System.out.println("prvi print");
+		Authentication trenutnaAutentikacija = SecurityContextHolder.getContext().getAuthentication();
 
-			System.out.println(korisnik);
+		Authentication novaAutentikacija = new UsernamePasswordAuthenticationToken(trenutnaAutentikacija.getPrincipal(),
+				null, noveOvlasti);
+
+		SecurityContextHolder.getContext().setAuthentication(novaAutentikacija);
+
+		return ResponseEntity.ok("Rola korisnika s ID-em " + id + " uspješno promijenjena u: " + novaRola);
+
+	}
+
+	private String mapirajBrojNaRolu(int broj) {
+		switch (broj) {
+		case 1:
+			return "ROLE_STUDENT";
+		case 2:
+			return "ROLE_DJELATNIK";
+		case 3:
+			return "ROLE_ADMIN";
+		default:
+			return "ROLE_UNKNOWN"; // Nevažeći broj role
+		}
+	}
+
+	@PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
+	@GetMapping("/user")
+	public Map<String, Object> user(@AuthenticationPrincipal OAuth2User principal) {
+
+		return principal.getAttributes();
+	}
+
+	// Endpoint za osnovne informacije o korisniku
+	@GetMapping("/{id}")
+	@PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
+	public ResponseEntity<KorisnikDTO> getKorisnikBasicInfo(@PathVariable Long id) {
+		Optional<Korisnik> korisnikOptional = korisnikService.findById(id);
+
+		if (korisnikOptional.isPresent()) {
+			System.out.println("----------------- DTO\n");
+
+			Korisnik korisnik = korisnikOptional.get();
+			// Kreirajte DTO sa osnovnim podacima
+			KorisnikDTO korisnikBasicInfo = new KorisnikDTO(korisnik.getIdKorisnik(), korisnik.getLozinka(),
+					korisnik.getUsername(), korisnik.getRole(), korisnik.getGodine(), korisnik.getSpol(),
+					korisnik.getBlocked());
+			return ResponseEntity.ok(korisnikBasicInfo);
+		} else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+	}
+
+	// POST: Kreira novog korisnika
+	@PostMapping
+	@PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
+	public ResponseEntity<Korisnik> createKorisnik(@RequestBody Korisnik korisnik) {
+		if (korisnik.getBlocked() == null) {
+			korisnik.setBlocked(false); // Postavljamo default vrijednost
+		}
+		Korisnik savedKorisnik = korisnikService.save(korisnik);
+		return ResponseEntity.ok(savedKorisnik);
+	}
+
+	// PUT: Ažurira korisnika po ID-u
+	@PutMapping("/{id}")
+	@PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
+	public ResponseEntity<Korisnik> updateKorisnik(@PathVariable Long id, @RequestBody Korisnik updatedKorisnik) {
+		Optional<Korisnik> existingKorisnik = korisnikService.findById(id);
+		if (existingKorisnik.isPresent()) {
+
+			System.out.println("KORISNIK S TIM IDIJEM KOJEG ZELIS AZURIRAT POSTOJI :)");
+			Korisnik korisnik = existingKorisnik.get();
+
+			// Ažurirati podatke koji se mogu mijenjati
+
+			korisnik.setGodine(updatedKorisnik.getGodine()); // Ažuriramo godine
+			korisnik.setSpol(updatedKorisnik.getSpol()); // Ažuriramo spol
+
+			System.out.println("novi citavi korisnik je " + korisnik + " \n\n\n");
 
 			Korisnik savedKorisnik = korisnikService.save(korisnik);
-
-			System.out.println("drugi print");
-			System.out.println(savedKorisnik);
-
-			if (savedKorisnik != null) {
-				System.out.println("korisnik je spremljen");
-			}
-			// Kreiranje studenta
-			Student student = new Student();
-			student.setKorisnik(savedKorisnik);
-			student.setSpol(spol);
-			student.setDob(dob);
-
-			// Spremanje studenta u bazu podataka
-			Student savedStudent = studentService.save(student); // Pretpostavljam da imate servis za studenta
-
-			System.out.println("treci print ");
-			System.out.println(savedStudent);
-			if (savedStudent != null) {
-				System.out.println("student je spremljen u bazu");
-			}
-
-		} catch (Exception e) {
-			System.out.println("ne mogu parsirati podatke s frontenda o studentu");
+			return ResponseEntity.ok(savedKorisnik);
+		} else {
+			return ResponseEntity.notFound().build();
 		}
-
-		return new ResponseEntity<>("Student je uspješno spremljen u bazu podataka", HttpStatus.CREATED);
 	}
 
-	// Putanja za dohvat admina
-	@GetMapping("/admin/{id}")
-	public ResponseEntity<AppAdmin> getAdminData(@PathVariable Long id) {
+	@PutMapping("/{id}/{noveGodine}/{noviSpol}")
+	@PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
+	public ResponseEntity<Korisnik> updateKorisnik(@PathVariable Long id, @PathVariable Integer noveGodine,
+			@PathVariable String noviSpol) {
+		Optional<Korisnik> existingKorisnik = korisnikService.findById(id);
+		if (existingKorisnik.isPresent()) {
 
-		// Dohvati podatke o adminu iz servisa
-		AppAdmin admin = appAdminService.getAdminData(id);
+			System.out.println("KORISNIK S TIM IDIJEM KOJEG ZELIS AZURIRAT POSTOJI :)");
+			Korisnik korisnik = existingKorisnik.get();
 
-		// Ako admin nije pronađen, vraćamo NOT_FOUND
-		if (admin == null) {
-			System.out.println("Nisam pronašao traženog admina.");
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			// Ažurirati podatke koji se mogu mijenjati
+
+			korisnik.setGodine(noveGodine); // Ažuriramo godine
+			korisnik.setSpol(noviSpol); // Ažuriramo spol
+
+			System.out.println("novi citavi korisnik je " + korisnik + " \n\n\n");
+
+			Korisnik savedKorisnik = korisnikService.save(korisnik);
+			return ResponseEntity.ok(savedKorisnik);
+		} else {
+			return ResponseEntity.notFound().build();
 		}
-
-		// Ako je admin pronađen, vraćamo podatke s HTTP statusom OK
-		return new ResponseEntity<>(admin, HttpStatus.OK);
 	}
 
+	@DeleteMapping("/{id}")
+	@PreAuthorize("hasRole('ROLE_ADMIN')") // samo admin moze brisat korisnika
+	// @PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<String> deleteKorisnik(@PathVariable Long id) {
+
+		System.out.println("proces brisanja korisnika s idijem " + id);
+		if (korisnikService.findById(id).isPresent()) {
+			// ocjenaService.deleteByKorisnikId(id);
+
+			System.out.println("izbrisao sam prvo ocjene toga korisnika \n\n\n");
+
+			korisnikService.deleteById(id);
+			return ResponseEntity.status(HttpStatus.OK).body("Korisnik uspješno obrisan.");
+		} else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Korisnik s ID-em " + id + " nije pronađen.");
+		}
+	}
+
+	// GET: Dohvaća korisnika po mailu
+	@GetMapping("/username/{username}")
+	// @PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or
+	// hasRole('ROLE_DJELATNIK')")
+	public ResponseEntity<Korisnik> getKorisnikByUsername(@PathVariable String username) {
+		Optional<Korisnik> korisnik = korisnikService.findByUsername(username);
+		if (korisnik.isPresent()) {
+			return ResponseEntity.ok(korisnik.get());
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
+	// GET: Dohvaća naziv uloge korisnika po ID-u
+	@GetMapping("/{id}/role")
+	@PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
+	public ResponseEntity<String> getRoleNameById(@PathVariable Long id) {
+		Optional<Korisnik> korisnik = korisnikService.findById(id);
+		if (korisnik.isPresent()) {
+			String roleName = korisnik.get().getRoleName();
+			return ResponseEntity.ok(roleName);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
+	@GetMapping("/{id}/najdraze")
+	@PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
+	public ResponseEntity<List<Menza>> getOmiljeneMenza(@PathVariable Long id) {
+		Optional<Korisnik> korisnik = korisnikService.findById(id);
+
+		if (korisnik.isPresent()) {
+			List<Menza> omiljeneMenza = korisnik.get().getOmiljeneMenza();
+			return ResponseEntity.ok(omiljeneMenza);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
+	// KorisnikController.java
+
+	@PostMapping("/{korisnikId}/omiljenaMenza/{menzaId}")
+	@PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
+	public ResponseEntity<String> addOmiljenaMenza(@PathVariable Long korisnikId, @PathVariable Long menzaId) {
+		// Provjera postoji li korisnik
+		Optional<Korisnik> korisnikOpt = korisnikService.findById(korisnikId);
+		if (!korisnikOpt.isPresent()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Korisnik nije pronađen.");
+		}
+
+		// Provjera postoji li menza
+		Optional<Menza> menzaOpt = menzaService.findById(menzaId);
+
+		if (!menzaOpt.isPresent()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Menza nije pronađena.");
+		}
+
+		Korisnik korisnik = korisnikOpt.get();
+		Menza menza = menzaOpt.get();
+
+		/// je li vec medju omiljenim menzama
+		if (korisnik.getOmiljeneMenza().contains(menza)) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("Menza je već među omiljenim menzama.");
+		}
+		// Dodaj menzu u listu omiljenih menzi korisnika
+		korisnik.getOmiljeneMenza().add(menza);
+		korisnikService.save(korisnik); // Spremi korisnika s ažuriranom listom
+
+		return ResponseEntity.status(HttpStatus.OK).body("Menza dodana u omiljene.");
+	}
+
+	@DeleteMapping("/{korisnikId}/omiljenaMenza/{menzaId}")
+	@PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DJELATNIK')")
+	// @PreAuthorize("hasRole('ROLE_STUDENT') or hasRole('ROLE_ADMIN') or
+	// hasRole('ROLE_DJELATNIK')")
+	public ResponseEntity<String> removeOmiljenaMenza(@PathVariable Long korisnikId, @PathVariable Long menzaId) {
+		// Provjera postoji li korisnik
+		Optional<Korisnik> korisnikOpt = korisnikService.findById(korisnikId);
+		if (!korisnikOpt.isPresent()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body("Korisnik s idijem " + korisnikId + "nije pronadjen");
+		}
+
+		// Provjera postoji li menza
+		Optional<Menza> menzaOpt = menzaService.findById(menzaId);
+		if (!menzaOpt.isPresent()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body("Menza s tim id-jem nije pronađena u bazi podataka");
+		}
+
+		Korisnik korisnik = korisnikOpt.get();
+		Menza menza = menzaOpt.get();
+
+		// Provjera je li menza u listi omiljenih menzi korisnika
+		if (!korisnik.getOmiljeneMenza().contains(menza)) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body("Menza nije među omiljenim menzama korisnika " + korisnikId);
+		}
+
+		// Uklanjanje menze iz liste omiljenih menzi korisnika
+		korisnik.getOmiljeneMenza().remove(menza);
+		korisnikService.save(korisnik); // Spremi korisnika s ažuriranom listom
+
+		return ResponseEntity.status(HttpStatus.OK).body("Menza uklonjena iz omiljenih menzi korisnika " + korisnikId);
+	}
+
+	// PUT endpoint za promjenu statusa 'blocked'
+	// PUT http://localhost:8080/api/korisnici/1/blocked?blocked=true
+	// @PreAuthorize("hasRole('ROLE_ADMIN')") // Samo admin može pristupiti ovom
+	// endpointu
+	@PutMapping("/{idKorisnik}/blocked")
+	@PreAuthorize("hasRole('ROLE_ADMIN')") // samo admin moze blokirati korisnika
+	public ResponseEntity<Korisnik> promijeniBlockedStatus(@PathVariable Long idKorisnik,
+			@RequestParam boolean blocked) {
+
+		Korisnik azuriraniKorisnik = korisnikService.promijeniBlockedStatus(idKorisnik, blocked);
+		return ResponseEntity.ok(azuriraniKorisnik);
+	}
+
+	@PostMapping("/odjavi")
+	public ResponseEntity<String> logout(HttpServletRequest request) {
+		SecurityContextHolder.getContext().setAuthentication(null);
+		request.getSession().invalidate();
+		return ResponseEntity.ok("Logged out successfully");
+	}
 //	@PostMapping("")
 //	public Korisnik createKorisnik(Korisnik korisnik) {
 //		return korisnikService.createKorisnik(korisnik);

@@ -1,0 +1,16 @@
+.kamera-btn{
+    color: white;
+    cursor: pointer;
+    position: absolute;
+    /*bottom: 3px;*/
+    top: 135px;
+    right: 3px;
+    background-color: #0098b3;
+    border-radius: 50%;
+    height: 28px;
+    width: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+}

@@ -1,0 +1,112 @@
+  .card-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Maksimalno 3 stupca */
+    gap: 1rem;
+    padding: 1rem;
+    justify-items: center;
+    justify-content: center;
+    align-items: start;
+    margin-top: 20vh;
+    max-width: 75vw; /* Održite ovu širinu za udaljenost od rubova */
+    margin-left: auto; /* Centriranje pomoću automatskih margina */
+    margin-right: auto;
+  }
+  
+  /* Smanji na 2 stupca za srednje ekrane */
+  @media (max-width: 768px) {
+    .card-container {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  /* Smanji na 1 stupac za male ekrane (mobitele) */
+  @media (max-width: 480px) {
+    .card-container {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  .card {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+    border-color: white;
+  }
+
+  .custom-link {
+    text-decoration: none;
+    color: inherit; /* Ensures it inherits the text color */
+  }
+  
+  .card:hover {
+    transform: scale(1.05);
+  }
+  
+  .card img {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    object-fit: cover;
+    height: 25vh;
+  }
+
+  .btn-primary{
+    background-color: #0098b3;
+    color: azure;
+    border-color: #0098b3;
+  }
+
+  .btn-primary:hover{
+    background-color: #00758a;
+    border-color: #00758a;
+  }
+  
+  .button-container {
+    text-align: center;
+  }
+
+  .favorite-icon {
+    color: rgb(255, 0, 123);
+    cursor: pointer;
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    background-color: white;
+    border-radius: 50%;
+    height: 28px;
+    width: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+  }
+
+  .favorite-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+}
+
+.camera-icon{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+}
+
+.card:hover .favorite-icon,
+.card:hover .camera-icon {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card:hover .card-img-top {
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.4);
+}
+  

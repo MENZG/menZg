@@ -1,0 +1,67 @@
+.menu-card {
+  margin-top: 50px;
+}
+
+.menu-card:hover {
+  transform: none;
+}
+
+.button-custom {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-right: 10px;
+}
+
+.button-custom-primary {
+  color: white;
+  border-radius: 30px;
+}
+
+.button-custom-danger {
+  background-color: #dc3545;
+  color: white;
+}
+
+.button-custom-danger:hover {
+  background-color: #c82333;
+}
+
+.float-right {
+  float: right;
+}
+
+.input-custom {
+  padding: 4px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.input-custom:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.add-btn, .add-new-btn{
+  border-radius: 50px;
+  background-color: #0098b3;
+  color: white;
+  font-size: 16px;
+}
+
+.add-btn:hover{
+  background-color: #00758a;
+
+}
+.add-new-btn:hover{
+  background-color: #00758a;
+}
+
+.input{
+  border-radius: 50px;
+  font-size: 14px;
+}

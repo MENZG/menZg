@@ -2,7 +2,7 @@
   margin-top: 1.5rem !important;
 }
 
-.container{
+.container {
   margin-top: 20vh;
   width: 65vw;
   margin-bottom: 6vh;
@@ -11,6 +11,10 @@
 .card {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: none;
+}
+
+@media (max-width: 426px) {
 }
 
 .card-title {
@@ -30,11 +34,16 @@
 }
 
 .list-group-item {
-  font-size: 1rem;
-  color: #555;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.header{
+.float-right {
+  margin-left: auto;
+}
+
+.header {
   text-align: center;
   background-color: white;
   display: flex;
@@ -42,15 +51,277 @@
   align-items: center;
 }
 
-.location{
+.location {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
 .location-pin-img {
-    max-width: 1em; /* Limits the width to match the text size */
-    max-height: 1em; /* Limits the height to match the text size */
-    margin-right: 0.5em; /* Space between the pin and the text */
-    object-fit: contain; /* Maintains aspect ratio and avoids cropping */
+  margin-right: 0.5em; /* Space between the pin and the text */
+  object-fit: contain; /* Maintains aspect ratio and avoids cropping */
+  color: #0098b3;
+  font-size: 18px;
+}
+
+.live-stream {
+  margin-top: 20px;
+  text-align: center;
+  border-radius: 30%;
+}
+
+.video-container {
+  position: relative;
+  overflow: hidden; /* osigurava da sve ostaje unutar okvira */
+}
+.video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50px; /* visina tamnog sloja samo pri vrhu */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none; /* omogućuje interakciju s videom */
+  background: rgba(0, 0, 0, 0.6); /* tamniji sloj radi boljeg kontrasta */
+}
+
+.video-overlay h4 {
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: bold;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+  text-align: center;
+  margin: 0;
+  z-index: 1; /* naslov iznad tamnog sloja */
+}
+
+.paint-brush {
+  border-radius: 50px;
+}
+
+.container.blurred {
+  filter: blur(5px);
+  pointer-events: none;
+}
+
+.chat-popup {
+  top: 50%;
+  left: 50%;
+  position: fixed;
+  z-index: 1000;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  max-width: 400px;
+  width: 80vw;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.rate {
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.chat-icon-btn {
+  background-color: #0098b3; /* Teal color */
+  bottom: 20px;
+  right: 20px;
+  position: fixed;
+  border: none;
+  border-radius: 50%; /* Makes the button circular */
+  width: 60px; /* Adjust size as needed */
+  height: 60px; /* Adjust size as needed */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: white;
+  font-size: 28px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Optional shadow for emphasis */
+}
+
+.chat-icon-btn:hover {
+  transform: scale(1.1); /* Slight zoom effect on hover */
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Close chat button */
+.close-chat-btn {
+  top: 10px;
+  right: 10px;
+  position: fixed;
+  color: #373737;
+  border: none;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.close-chat-btn:hover {
+  background-color: #0098b3;
+  color: white;
+}
+
+.menza-card:hover {
+  transform: none;
+}
+
+.ocjene {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media (max-width: 426px) {
+  .ocjene {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 426px) {
+  .container {
+    width: 90vw; /* Adjust the container width for phones */
+    margin-top: 18vh; /* Optional: Adjust top margin for better spacing */
+  }
+
+  .menza-card {
+    width: 100%; /* Make the card occupy full width on small screens */
+    margin: 0 auto; /* Center the card */
+  }
+
+  .card-body {
+    padding: 1rem; /* Adjust padding for smaller screens */
+  }
+
+  .card-title {
+    font-size: 1.2rem; /* Adjust title size for better fit */
+  }
+
+  .card-text {
+    font-size: 0.9rem; /* Adjust text size for readability */
+  }
+}
+
+
+.ocjena {
+  display: flex;
+  padding: 10px 10px 0 10px;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+}
+
+.ocjena-broj {
+  margin: 0 0 0 4px;
+}
+
+.ocjena-ikona {
+  color: #0098b3;
+}
+
+.ocjeni-btn {
+  border: none;
+  border-radius: 50px;
+  background-color: #0098b3;
+  color: white;
+  padding: 6px 12px 6px 12px;
+  font-size: 14px;
+}
+
+.ocjeni-btn:hover {
+  background-color: #00758a;
+}
+
+.ocjeni-btn-div {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-form {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 500px;
+}
+
+.rating-category {
+  margin-bottom: 10px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+}
+
+.stars {
+  display: flex;
+}
+
+.stars input[type="radio"] {
+  display: none;
+}
+
+.stars label {
+  font-size: 24px;
+  color: #ddd;
+  cursor: pointer;
+}
+
+.star {
+  color: rgb(255, 204, 0);
+}
+
+.save-rating-btn {
+  border: none;
+  border-radius: 50px;
+  background-color: #0098b3;
+  color: white;
+  padding: 6px 12px 6px 12px;
+  font-size: 14px;
+}
+
+.custom-btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-right: 10px;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-icon-size{
+  font-size: larger;
 }
