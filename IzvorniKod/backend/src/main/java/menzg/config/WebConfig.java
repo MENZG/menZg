@@ -45,11 +45,14 @@ public class WebConfig {
 
 	@Bean
 	public WebMvcConfigurer corsConfigurer() {
+
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				// Dodaj dinamički učitani frontend URL
-				registry.addMapping("/**").allowedOrigins(frontendUrl) // Dozvoljeni izvor iz application.properties
+				registry.addMapping("/**").allowedOrigins("https://frontendservice-l0s1.onrender.com") // Dozvoljeni
+																										// izvor iz
+																										// application.properties
 						.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Dozvoljene HTTP metode
 						.allowedHeaders("*") // Dozvoljeni svi zaglavlja
 						.allowCredentials(true); // Dozvoli kolačiće (ako je potrebno)
