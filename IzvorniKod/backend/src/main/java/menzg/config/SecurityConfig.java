@@ -35,41 +35,42 @@ public class SecurityConfig {
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http.csrf(csrf -> csrf.disable()// Isključivanje CSRF zaštite za H2 konzolu
-		).authorizeHttpRequests(
+		http.cors().and()// Omogućava CORS
+				.csrf(csrf -> csrf.disable()// Isključivanje CSRF zaštite za H2 konzolu
+				).authorizeHttpRequests(
 
-				auth -> auth.requestMatchers("/h2-console/**").permitAll()
+						auth -> auth.requestMatchers("/h2-console/**").permitAll()
 
-						// .requestMatchers(HttpMethod.OPTIONS, "/**")
-						// .permitAll() // Dozvoli OPTIONS zahtjeve za sve rute// Dopuštanje pristupa H2
-						// konzoli
-						//
-						// .requestMatchers("/ws/**").permitAll() //
-						// .requestMatchers("/menza/**").permitAll() // OVO MAKNUT U PRODUKCIJI
-						// .requestMatchers("/korisnici/**").permitAll() // OVO MAKNUT U PRODUKCIJI!!!!
-						// .requestMatchers("/stream/**").permitAll() // OVO STOJI OK U PRODUKCIJI
+								// .requestMatchers(HttpMethod.OPTIONS, "/**")
+								// .permitAll() // Dozvoli OPTIONS zahtjeve za sve rute// Dopuštanje pristupa H2
+								// konzoli
+								//
+								// .requestMatchers("/ws/**").permitAll() //
+								// .requestMatchers("/menza/**").permitAll() // OVO MAKNUT U PRODUKCIJI
+								// .requestMatchers("/korisnici/**").permitAll() // OVO MAKNUT U PRODUKCIJI!!!!
+								// .requestMatchers("/stream/**").permitAll() // OVO STOJI OK U PRODUKCIJI
 
-						.anyRequest().authenticated() // Sve ostale// sve
-		// autentifikaciju
-		).headers(headers -> headers.frameOptions().sameOrigin() // Omogućavanje iframe za H2 konzolu
-		).oauth2Login(oauth -> oauth.successHandler((request, response, authentication) -> {
-			// Pozovite KorisnikService da spremi ili ažurira korisnika
+								.anyRequest().authenticated() // Sve ostale// sve
+				// autentifikaciju
+				).headers(headers -> headers.frameOptions().sameOrigin() // Omogućavanje iframe za H2 konzolu
+				).oauth2Login(oauth -> oauth.successHandler((request, response, authentication) -> {
+					// Pozovite KorisnikService da spremi ili ažurira korisnika
 
-			OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
-			Korisnik korisnik = korisnikService.saveOrUpdateGoogleUser(oAuth2User);
+					OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
+					Korisnik korisnik = korisnikService.saveOrUpdateGoogleUser(oAuth2User);
 
-			List<SimpleGrantedAuthority> authorities = korisnikService.getAuthorities(korisnik);
+					List<SimpleGrantedAuthority> authorities = korisnikService.getAuthorities(korisnik);
 
-			System.out.println("security config se obradjujeee ------------------------------- \n\n\n");
+					System.out.println("security config se obradjujeee ------------------------------- \n\n\n");
 
-			UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-					oAuth2User, null, authorities);
+					UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+							oAuth2User, null, authorities);
 
-			SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+					SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
-			// Nastavite s default redirectom
-			response.sendRedirect(redirectURLString);
-		}));
+					// Nastavite s default redirectom
+					response.sendRedirect(redirectURLString);
+				}));
 
 		return http.build();
 	}
