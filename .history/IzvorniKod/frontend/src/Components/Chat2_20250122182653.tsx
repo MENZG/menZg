@@ -4,7 +4,7 @@ import Stomp from "stompjs";
 import "../styles/Chat.css";
 const apiUrl = import.meta.env.VITE_API_URL;
 
-const WEBSOCKET_URL = `${apiUrl}/ws`; // Replace with your WebSocket endpoint
+const WEBSOCKET_URL = `${apiUrl}/ws`;
 
 interface Message {
   sender: string;
@@ -32,7 +32,7 @@ const Chat: React.FC = () => {
           setMessages((prev) => [...prev, message]);
         });
 
-        // Send JOIN message to the server
+
         stompClient?.send(
           "/app/chat.addUser",
           {},

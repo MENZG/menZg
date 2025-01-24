@@ -89,7 +89,7 @@ public class MenzaController {
 		// System.out.println("iz baze sam izvukao " + mz);
 
 		if (mz == null) {
-			System.out.println("nisam pronasao trazenu manzu");
+			System.out.println("nisam pronasao trazenu menzu");
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 
@@ -167,7 +167,7 @@ public class MenzaController {
 		boolean uspjeh = menzaService.azurirajRadnoVrijeme(idMenze, radnoVrijeme);
 
 		if (uspjeh) {
-			return ResponseEntity.ok("Radno vrijeme uspješno ažurirano. za menzu " + idMenze);
+			return ResponseEntity.ok("Radno vrijeme uspješno ažurirano za menzu " + idMenze);
 		} else {
 			return ResponseEntity.badRequest().body("Ažuriranje nije uspjelo. Provjerite ID menze. -- " + idMenze);
 		}
@@ -186,7 +186,7 @@ public class MenzaController {
 		boolean uspjeh = menzaService.azurirajRadnoVrijeme(idMenze, rv);
 
 		if (uspjeh) {
-			return ResponseEntity.ok("Radno vrijeme uspješno ažurirano. za menzu " + idMenze);
+			return ResponseEntity.ok("Radno vrijeme uspješno ažurirano za menzu " + idMenze);
 		} else {
 			return ResponseEntity.badRequest().body("Ažuriranje nije uspjelo. Provjerite ID menze. -- " + idMenze);
 		}
@@ -241,7 +241,7 @@ public class MenzaController {
 	public ResponseEntity<List<OcjenaDohvatDTO>> getOcjene(@PathVariable Long id) {
 		// Dohvaćanje menze prema ID-u
 		Menza menza = menzaService.getMenzaData(id);
-		System.out.println("dohvacam sve  ocjenu");
+		System.out.println("dohvacam sve ocjene");
 
 		if (menza == null) {
 			// Ako menza nije pronađena, vraća se status 404
@@ -348,7 +348,7 @@ public class MenzaController {
 			@RequestBody OcjenaDTO ocjenaRequest) {
 		logger.info("Primljen zahtjev za ažuriranje ocjene: idMenze={}, idKorisnik={}, ocjenaRequest={}", idMenze,
 				idKorisnik, ocjenaRequest);
-		System.out.println("saljem   ocjenu" + idMenze + "  " + idKorisnik);
+		System.out.println("saljem ocjenu" + idMenze + "  " + idKorisnik);
 
 		Menza menza = menzaService.getMenzaData(idMenze);
 		Optional<Korisnik> korisnik = korisnikService.findById(idKorisnik);

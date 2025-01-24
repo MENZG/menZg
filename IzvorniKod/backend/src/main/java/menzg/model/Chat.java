@@ -24,7 +24,7 @@ public class Chat {
 	@Column(name = "idChat")
 	private Long idChat;
 
-	@OneToOne // jedan chat ej na jedan restoran!!!
+	@OneToOne // jedan chat je na jedan restoran!!!
 	@JoinColumn(name = "idMenza", nullable = false) // Spoljni ključ koji referencira Restoran
 	private Menza menza; // Povezivanje s entitetom Restoran
 

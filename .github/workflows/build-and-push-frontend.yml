@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'IzvorniKod/frontend/**'      # Trigger only on changes in the /frontend directory
+      - 'IzvorniKod/frontend/**'
   workflow_dispatch:
 
 jobs:

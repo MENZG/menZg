@@ -163,7 +163,7 @@ public class KorisnikController {
 		Optional<Korisnik> existingKorisnik = korisnikService.findById(id);
 		if (existingKorisnik.isPresent()) {
 
-			System.out.println("KORISNIK S TIM IDIJEM KOJEG ZELIS AZURIRAT POSTOJI :)");
+			System.out.println("KORISNIK S TIM ID-IJEM KOJEG ZELIS AZURIRAT POSTOJI :)");
 			Korisnik korisnik = existingKorisnik.get();
 
 			// Ažurirati podatke koji se mogu mijenjati
@@ -187,7 +187,7 @@ public class KorisnikController {
 		Optional<Korisnik> existingKorisnik = korisnikService.findById(id);
 		if (existingKorisnik.isPresent()) {
 
-			System.out.println("KORISNIK S TIM IDIJEM KOJEG ZELIS AZURIRAT POSTOJI :)");
+			System.out.println("KORISNIK S TIM ID-IJEM KOJEG ZELIS AZURIRAT POSTOJI :)");
 			Korisnik korisnik = existingKorisnik.get();
 
 			// Ažurirati podatke koji se mogu mijenjati
@@ -209,7 +209,7 @@ public class KorisnikController {
 	// @PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<String> deleteKorisnik(@PathVariable Long id) {
 
-		System.out.println("proces brisanja korisnika s idijem " + id);
+		System.out.println("proces brisanja korisnika s id-ijem " + id);
 		if (korisnikService.findById(id).isPresent()) {
 			// ocjenaService.deleteByKorisnikId(id);
 
@@ -218,7 +218,7 @@ public class KorisnikController {
 			korisnikService.deleteById(id);
 			return ResponseEntity.status(HttpStatus.OK).body("Korisnik uspješno obrisan.");
 		} else {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Korisnik s ID-em " + id + " nije pronađen.");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Korisnik s ID-jem " + id + " nije pronađen.");
 		}
 	}
 
@@ -302,7 +302,7 @@ public class KorisnikController {
 		Optional<Korisnik> korisnikOpt = korisnikService.findById(korisnikId);
 		if (!korisnikOpt.isPresent()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
-					.body("Korisnik s idijem " + korisnikId + "nije pronadjen");
+					.body("Korisnik s id-ijem " + korisnikId + "nije pronadjen");
 		}
 
 		// Provjera postoji li menza

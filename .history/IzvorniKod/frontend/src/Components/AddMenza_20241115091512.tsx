@@ -26,7 +26,7 @@ const AddMenza: React.FC = () => {
     endTime: "",
   });
   const [, setMenze] = useState<Product[]>([]);
-  const [currentId, setCurrentId] = useState(1); // State for managing ID increment
+  const [currentId, setCurrentId] = useState(1);
 
   useEffect(() => {
     axios
@@ -34,7 +34,7 @@ const AddMenza: React.FC = () => {
       .then((response) => {
         console.log("Dohvaćene menze:", response.data);
         setMenze(response.data); // Postavljanje menzi u state
-        // Optionally, set the currentId based on the max ID in menze
+
         const maxId = response.data.reduce(
           (max: number, item: Product) => Math.max(max, item.id),
           0
@@ -60,7 +60,7 @@ const AddMenza: React.FC = () => {
   const submitHandler = (event: FormEvent) => {
     event.preventDefault();
 
-    const newProduct = { ...product, id: currentId }; // Assign currentId as the ID
+    const newProduct = { ...product, id: currentId };
 
     axios
       .post("/api/menze", newProduct, {
@@ -79,8 +79,8 @@ const AddMenza: React.FC = () => {
           broj: "",
           startTime: "",
           endTime: "",
-        }); // Reset input fields
-        setCurrentId((prevId) => prevId + 1); // Increment currentId
+        });
+        setCurrentId((prevId) => prevId + 1);
       })
       .catch((error) => {
         console.error("Error adding product:", error);

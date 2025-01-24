@@ -35,7 +35,7 @@
 
   .custom-link {
     text-decoration: none;
-    color: inherit; /* Ensures it inherits the text color */
+    color: inherit;
   }
   
   .card:hover {
@@ -116,9 +116,9 @@
 
 body {
   display: flex;
-  justify-content: center; /* Centers horizontally */
-  align-items: center; /* Centers vertically */
-  min-height: 100vh; /* Ensures the body takes the full height of the viewport */
-  margin: 0; /* Removes default margin */
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
 }
 

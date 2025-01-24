@@ -4,7 +4,7 @@ import SockJS from "sockjs-client";
 import "../styles/Chat.css";
 
 const client = new Client({
-  brokerURL: "ws://localhost:5000/chat-websocket", // WebSocket URL
+  brokerURL: "ws://localhost:5000/chat-websocket",
   connectHeaders: {},
   debug: (str) => console.log(str),
   reconnectDelay: 5000,

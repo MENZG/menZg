@@ -3,7 +3,7 @@ import SockJS from "sockjs-client";
 import Stomp from "stompjs";
 import "../styles/Chat.css";
 
-const WEBSOCKET_URL = "http://localhost:5000/ws"; // Replace with your WebSocket endpoint
+const WEBSOCKET_URL = "http://localhost:5000/ws";
 
 interface Message {
   sender: string;
@@ -31,7 +31,7 @@ const Chat: React.FC = () => {
           setMessages((prev) => [...prev, message]);
         });
 
-        // Send JOIN message to the server
+
         stompClient?.send(
           "/app/chat.addUser",
           {},

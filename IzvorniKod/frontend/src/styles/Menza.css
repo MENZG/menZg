@@ -58,8 +58,8 @@
 }
 
 .location-pin-img {
-  margin-right: 0.5em; /* Space between the pin and the text */
-  object-fit: contain; /* Maintains aspect ratio and avoids cropping */
+  margin-right: 0.5em;
+  object-fit: contain;
   color: #0098b3;
   font-size: 18px;
 }
@@ -130,25 +130,25 @@
 }
 
 .chat-icon-btn {
-  background-color: #0098b3; /* Teal color */
+  background-color: #0098b3;
   bottom: 20px;
   right: 20px;
   position: fixed;
   border: none;
-  border-radius: 50%; /* Makes the button circular */
-  width: 60px; /* Adjust size as needed */
-  height: 60px; /* Adjust size as needed */
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   color: white;
   font-size: 28px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Optional shadow for emphasis */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 .chat-icon-btn:hover {
-  transform: scale(1.1); /* Slight zoom effect on hover */
+  transform: scale(1.1);
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
 }
 
@@ -191,25 +191,25 @@
 
 @media (max-width: 426px) {
   .container {
-    width: 90vw; /* Adjust the container width for phones */
-    margin-top: 18vh; /* Optional: Adjust top margin for better spacing */
+    width: 90vw;
+    margin-top: 18vh;
   }
 
   .menza-card {
-    width: 100%; /* Make the card occupy full width on small screens */
-    margin: 0 auto; /* Center the card */
+    width: 100%;
+    margin: 0 auto;
   }
 
   .card-body {
-    padding: 1rem; /* Adjust padding for smaller screens */
+    padding: 1rem;
   }
 
   .card-title {
-    font-size: 1.2rem; /* Adjust title size for better fit */
+    font-size: 1.2rem;
   }
 
   .card-text {
-    font-size: 0.9rem; /* Adjust text size for readability */
+    font-size: 0.9rem;
   }
 }
 

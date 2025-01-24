@@ -48,7 +48,7 @@ export default defineConfig({
    plugins: [react()],
    resolve: {
      alias: {
-       util: 'rollup-plugin-polyfill-node/polyfills/util', // Polyfill for util if needed
+       util: 'rollup-plugin-polyfill-node/polyfills/util',
      },
    },
    define: {
