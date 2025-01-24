@@ -47,4 +47,9 @@ public class Menza {
 	@OneToMany(mappedBy = "menza")
 	private List<Ocjena> ocjene;
 
+	@Override
+	public String toString() {
+		return "Menza{id=" + idMenza + ", naziv='" + imeMenze + "'}";
+	}
+
 }

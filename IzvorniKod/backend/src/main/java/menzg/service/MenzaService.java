@@ -89,6 +89,7 @@ public class MenzaService {
 	public boolean azurirajJelovnik(Long idMenze, Jelo novoJelo) {
 
 		System.out.println("\n\n novo jelo je eee " + novoJelo);
+
 		// Pronađi menzu prema ID-ju
 		Menza menza = menzaRepo.findById(idMenze).orElse(null);
 
@@ -102,27 +103,27 @@ public class MenzaService {
 		Jelo postojeceJelo = menza.getJelovnik().stream().filter(j -> j.getIdJela().equals(novoJelo.getIdJela()))
 				.findFirst().orElse(null);
 
-		if (postojeceJelo == null) {
-
-			System.out.println("u PROBLEMU SMO \n\n\n");
-			return false;
-
-		} else {
-			System.out.println("nismo u problemu \n\n");
-
-			System.out.println("-----------------------");
-
+		// Ako jelo postoji, ažuriraj ga
+		if (postojeceJelo != null) {
 			System.out.println("postojece jelo je " + postojeceJelo);
+			postojeceJelo.setNazivJela(novoJelo.getNazivJela());
+			postojeceJelo.setKategorija(novoJelo.getKategorija());
+			postojeceJelo.setCijena(novoJelo.getCijena());
+		} else {
+			// Ako jelo ne postoji, dodaj novo jelo
+			System.out.println("dodajem novo jelo jer ne postoji");
+
+			Jelo updatedJelo = new Jelo();
+			updatedJelo.setMenza(menza); // Poveži novo jelo s menzom
+			updatedJelo.setCijena(novoJelo.getCijena());
+			updatedJelo.setKategorija(novoJelo.getKategorija());
+			updatedJelo.setNazivJela(novoJelo.getNazivJela());
+
+			menza.getJelovnik().add(updatedJelo); // Dodaj novo jelo u jelovnik menze
+			jeloRepo.save(updatedJelo); // Spremi novo jelo u bazu
 		}
 
-		System.out.println("nasao sam to jelo evo ti ga " + postojeceJelo + " \n\n\n");
-
-		// Ažuriraj postojeće jelo
-		postojeceJelo.setNazivJela(novoJelo.getNazivJela());
-		postojeceJelo.setKategorija(novoJelo.getKategorija());
-		postojeceJelo.setCijena(novoJelo.getCijena());
-
-		// Spremi promjene u bazi
+		// Spremi promjene u menzi
 		menzaRepo.save(menza);
 
 		System.out.println("Jelovnik ažuriran za menzu " + idMenze + ": " + novoJelo);
