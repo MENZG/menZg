@@ -34,14 +34,7 @@ const ListaMenza = () => {
   const [korisnikFull, setKorisnikFull] = useState<KorisnikFull | null>(null);
 
   useEffect(() => {
-    const streamStart = async () => {
-      try {
-        const streamStartResponse = await axios.post(`${apiUrl}/start/stream`);
-        console.log("Stream started successfully", streamStartResponse);
-      } catch (error) {
-        console.error("Error starting stream:", error);
-      }
-    };
+
 
     // Call streamStart every 60 seconds
     const interval = setInterval(() => {

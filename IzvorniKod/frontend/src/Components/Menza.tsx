@@ -6,9 +6,8 @@ import { Button, Card, Form, ListGroup, Spinner } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import "../styles/Menza.css";
 import { IoCheckmarkDoneSharp } from "react-icons/io5";
-import Chat from "./Chat";
-import Chat2 from "./Chat2";
-import Chat3 from "./Chat3";
+
+
 
 import NavBar from "./NavBar";
 import MuxPlayer from "@mux/mux-player-react";
@@ -154,9 +153,7 @@ function Menza() {
     }
   }, [restaurantData.idMenza]);
 
-  const handleMuxError = () => {
-    setMuxError(true);
-  };
+
 
   const handleOcjeniMenzu = () => {
     setShowRatingForm(true);

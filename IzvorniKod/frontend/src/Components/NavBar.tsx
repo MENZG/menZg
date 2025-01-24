@@ -34,7 +34,7 @@ const MobileNavBar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [role, setRole] = useState("");
   const [korisnik, setKorisnik] = useState<UlogiraniKorisnik | undefined>();
-  const [korisnikFull, setKorisnikFull] = useState<KorisnikFull | undefined>();
+  const [, setKorisnikFull] = useState<KorisnikFull | undefined>();
   const [menuOpen, setMenuOpen] = useState(false); // Kontrola hamburger menija
 
   const determineRole = (role: number): string => {
@@ -216,7 +216,7 @@ const DesktopNavBar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [role, setRole] = useState("");
   const [korisnik, setKorisnik] = useState<UlogiraniKorisnik | undefined>();
-  const [korisnikFull, setKorisnikFull] = useState<KorisnikFull | undefined>();
+  const [, setKorisnikFull] = useState<KorisnikFull | undefined>();
 
   const determineRole = (role: number): string => {
     switch (role) {

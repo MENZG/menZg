@@ -9,7 +9,7 @@ import { IoRestaurantOutline } from "react-icons/io5";
 const apiUrl = import.meta.env.VITE_API_URL;
 
 const Favoriti = () => {
-  const [isFavorite, setIsFavorite] = useState(true);
+  const [isFavorite, ] = useState(true);
   const [loading, setLoading] = useState(true);
   const [korisnik, setKorisnik] = useState<UlogiraniKorisnik | null>(null);
   const [korisnikFull, setKorisnikFull] = useState<KorisnikFull>();
