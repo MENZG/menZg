@@ -277,18 +277,14 @@ function Menza() {
 
   const handleSaveTime = (index: number) => {
     const time = editableTimes[index];
-    console.log(time);
-    if (time.pocetak === null && time.kraj === null) {
+    if (time.pocetak === "" && time.kraj === "") {
       toggleEditMode(index);
       axios
-        .put(
-          `${apiUrl}/menza/${id}/radno-vrijeme/${time.dan}/${null}/${null}`,
-          {
-            // dan: time.dan,
-            // pocetak: null,
-            // kraj: null,
-          }
-        )
+        .put(`${apiUrl}/menza/${id}/radno-vrijeme/${time.dan}/null/null`, {
+          // dan: time.dan,
+          // pocetak: null,
+          // kraj: null,
+        })
         .then((response) => {
           console.log("Time updated successfully", response.data);
         })
